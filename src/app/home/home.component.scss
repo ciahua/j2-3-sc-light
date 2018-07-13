@@ -1,0 +1,224 @@
+.home {
+    .wrap{
+        overflow-x: hidden;
+    }
+    // 手机模式
+    @media (max-width: 576px){
+        .logo {
+            display: none;
+        }
+        .sidebar-collapse {
+            .sidebar-dark-primary {
+                left: -250px; // 改用动画
+            }
+        }
+        .header-margin.sidebar-collapse {
+            margin-left: 0 !important;
+        }
+    }
+    // 头部
+        // background
+    .dark-primary{
+         background-color: #333;
+    }
+    .login-nav {
+    height: 48px;
+    line-height: 48px;
+    color: #fff;
+    position: fixed;
+    z-index: 100;
+    width: 100vw;
+    .push-menu{
+        padding-right: 1rem;
+        padding-left: 1rem;
+        color: #fff;
+    }
+    .login-nav-paren {
+        position: relative;
+        img {
+            height: 48px;
+        }
+    }
+
+    .nav-user {
+        text-align: right;
+        display: inline-block;
+        position: absolute;
+        right: 0;
+        a {
+            padding-right: 20px;
+        }
+    }
+    .push-menu-parent {
+        display: inline-block;
+    }
+
+
+
+    }
+
+    // 中间布局
+
+
+
+    .header-margin {
+        // margin-top: 48px;
+        margin-left: 250px;
+        padding-left:0px;
+    }
+
+    // 侧边栏
+    // 动画
+    .main-sidebar, .main-sidebar:before {
+        transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+        width: 250px;
+    }
+
+
+    @media screen and (prefers-reduced-motion: reduce) {
+    .main-sidebar, .main-sidebar:before {
+        transition: none;
+    }
+    }
+
+    .sidebar .nav-item p,
+    .main-sidebar .brand-text,
+    .sidebar .user-panel .info {
+    transition: margin-left 0.3s linear, opacity 0.5s ease;
+    }
+
+    @media screen and (prefers-reduced-motion: reduce) {
+    .sidebar .nav-item p,
+    .main-sidebar .brand-text,
+    .sidebar .user-panel .info {
+        transition: none;
+    }
+    }
+
+    // hover
+    @media (min-width: 992px){
+        .sidebar-collapse .main-sidebar:hover {
+            width: 250px;
+            .nav-link {
+                width: 210px;
+            }
+            li {
+                 width: 210px;
+            }
+            p{
+                opacity: 1;
+            }
+
+            // img {
+            //     width: 230px;
+            // }
+
+        }
+
+
+    }
+
+
+    .header-margin.sidebar-collapse {
+        margin-left: 100px;
+    }
+
+    // collapse
+    .sidebar-collapse{
+
+        .login-nav-paren {
+            img {
+                    width: 100px;
+            }
+        }
+        .sidebar-dark-primary{
+            margin-left: 0;
+            width: 100px;
+
+    
+
+            p{
+                opacity: 0;
+            }
+            // ul {
+            //     li {
+            //         width: 55px;
+            //     }
+            // }   
+        }
+    }
+    // open
+    .sidebar-open{
+
+        .login-nav-paren {
+            img {
+                    width: 250px;
+            }
+        }
+
+        .sidebar-dark-primary{
+            width: 250px;
+            min-width: 250px;
+            // img {
+            //     width: 230px;
+            // }
+        }
+
+    }
+
+    // sidebar
+    .sidebar-dark-primary {
+        background-color: #343a40;
+        height: 100vh;
+        padding-right: 20px;
+        padding-left: 20px;
+
+        position: fixed;
+        top:48px;
+        z-index: 100;
+        .nav-icon{
+            text-align: center;
+            width: 1.6rem;
+            font-size: 1.2rem;
+            margin-right: .2rem;
+        }
+
+        p{
+        display: inline-block;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        a{
+            color: #fff;
+            border-radius: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+           
+        }
+        li:active,li:focus {
+            color: #c2c7d0;
+        }
+        .nav-item:hover>.nav-link {
+            color: #fff;
+            background-color: rgba(255,255,255,.1);
+
+
+        }
+    }
+    .active {
+         background-color:#007bff !important;
+    }
+   
+    .nav-icon {
+        text-align: center;
+        width: 1.6rem;
+        font-size: 1.2rem;
+        margin-right: .2rem;
+    }
+
+}

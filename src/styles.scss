@@ -1,1 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+$fa-font-path: "../node_modules/font-awesome/fonts";
+@import '~font-awesome/scss/font-awesome.scss';
+@import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
+// @import '~src/app/main.css';
+.container-fluid {
+    padding:0;
+}
+.cur-pointer {
+    cursor: pointer;
+}
+.active {
+    color: tomato;
+}

@@ -1,0 +1,53 @@
+<p>
+  right works!
+</p>
+<!-- 新建角色 -->
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+        <h4 class="modal-title">新建角色</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+  <div class="modal-body">
+    <!-- <p>One fine body&hellip;</p> -->
+    <div class="row">
+      <div class="col-6">
+        <p>浏览权限</p>
+        <div>
+          <ul id="guitree" class="ztree"></ul>
+        </div>
+
+      </div>
+      <div class="col-6">数据权限</div>
+    </div>
+  </div>
+  <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">关闭</button>
+      </div>
+</ng-template>
+<div class="btn-group btn-parent">
+
+  <button class="btn btn-default" (click)="open(content)">新建角色</button>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <tr>
+      <th>角色</th>
+      <th>权限</th>
+      <th>操作</th>
+  
+    </tr>
+    <tr>
+      <td class="active">...</td>
+      <td class="success">...</td>
+      <td class="warning">...</td>
+      <!-- <td class="danger">...</td>
+        <td class="info">...</td> -->
+    </tr>
+  </table>
+  </div>
+  <div>
+    <ul id="treeDemo" class="ztree"></ul>
+  </div>

@@ -1,0 +1,72 @@
+<div class="home">
+  <div [ngClass]="{'sidebar-open':open === true,'sidebar-collapse':!open}" class="wrap">
+      <nav class="login-nav dark-primary">
+        <div class="login-nav-paren">
+
+          <img class="logo" src="../../assets/imgs/head3.jpg" alt="logo">
+          <div class="cur-pointer push-menu-parent">
+            <a class="push-menu" data-widget="pushmenu" (click)="open=!open">
+              <i class="fa fa-bars"></i>
+            </a>
+          </div>
+          <div class="nav-user">
+            <i class="fa fa-user-circle-o nav-icon" aria-hidden="true"></i>
+            <a class="cur-pointer" *ngIf="loginName">您好，{{loginName}}</a>
+            <a (click)="logout()" class="cur-pointer ">退出登录</a>
+          </div>
+        </div>
+      
+      
+      </nav>
+      
+      <aside class="sidebar-dark-primary main-sidebar">
+      
+        <ul>
+          <li *ngFor="let routes of routeTree " class="cur-pointer nav-item">
+            <!-- 没有字菜单 -->
+            <a *ngIf="!routes.children" [routerLink]="[routes.routeLink]" routerLinkActive="active" class="nav-link">
+              <i class={{routes.icon}}></i>
+              <p>{{routes.routeTitel}}</p>
+            </a>
+            <!-- 有子菜单 -->
+            <a *ngIf="routes.children" (click)="routes.isCollapsed = !routes.isCollapsed" class="nav-link">
+              <i class={{routes.icon}}></i>
+              <p>{{routes.routeTitel}}</p>
+            </a>
+            <ul [ngbCollapse]="routes.isCollapsed" *ngIf="routes.children" >
+              <li *ngFor="let children of routes.children" class="cur-pointer nav-item">
+                <a [routerLink]="[children.routeLink]" routerLinkActive="active" class="nav-link">
+                  <i class={{children.icon}}></i>
+                  <p>{{children.routeTitel}}</p>
+                </a>
+              </li>
+      
+            </ul>
+          </li>
+      
+      
+        </ul>
+      
+      </aside>
+      
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div cllas="row">
+            <div class="col-12 col-md-12 header-margin header-padding" [ngClass]="{'sidebar-open':open === true,'sidebar-collapse':!open}">
+              <router-outlet></router-outlet>
+            </div>
+          </div>
+        </div>
+      </section>
+  </div>
+
+
+
+
+
+
+
+
+
+</div>

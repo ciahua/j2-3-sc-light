@@ -1,0 +1,35 @@
+<div class="row align-items-center justify-content-center login-center">
+
+<div class="col-md-3 col-10">
+  <div >
+    <h3 style="font-size: 24px" class="text-center login-titel">{{'欢迎登录后台管理系统'}}</h3>
+  </div>
+  <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate class="login-form">
+    <div class="form-group inner-addon left-addon ">
+      <div class=" ar-error">
+        <div *ngIf="f.submitted && !username.valid" class="help-block">{{'请输入用户名'}}</div>
+        <div *ngIf="f.submitted && !password.valid && username.valid" class="help-block ">{{'请输入密码'}}</div>
+        <div *ngIf="error" class="">{{error}}</div>
+      </div>
+      <div class="form-group" style="margin-bottom: 25px" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+        <i class="fa fa-user fa-lg fa-fw text-primary login-icon"></i>
+        <input type="text" class="form-control border-none login-input" name="username" id="username" placeholder="{{'用户名'}}" autocomplete [(ngModel)]="model.username"
+          #username="ngModel" required (keydown)="onKeydown($event)" autocomplete="off" />
+      </div>
+      <div class="form-group" style="margin-bottom: 25px" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+        <i class="fa fa-lock fa-lg fa-fw text-primary login-icon"></i>
+        <input type="text" class="form-control border-none login-input" id="password" name="password" placeholder="{{'密码'}}" autocomplete [(ngModel)]="model.password"
+          #password="ngModel" required (keydown)="onKeydown($event)" onfocus="this.type='password'" />
+      </div>
+      <div class="form-group">
+        <button [disabled]="loading" class="btn btn-primary col-md-12 btn-login">
+          <span>登录</span>
+        </button>
+      </div>
+    </div>
+
+  </form>
+
+</div>
+</div>
+
