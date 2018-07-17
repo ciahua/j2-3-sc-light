@@ -12,3 +12,15 @@ $fa-font-path: "../node_modules/font-awesome/fonts";
 .active {
     color: tomato;
 }
+.i-circle{
+    border-radius: 50%;
+    color: white;
+    white-space: nowrap;
+    font-size: 12px;
+    text-align: center;
+    cursor: pointer;
+
+}
+// .i-circle:hover, .i-circle >a:hover {
+//     background: tomato;
+// }

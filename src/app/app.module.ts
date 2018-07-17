@@ -30,6 +30,7 @@ import { WindowRef } from './windowserver';
 import { DialogService } from './service/dialog.service';
 import { BeiduAPIService } from './servers/baiduApi';
 import { BeiduMAPService } from './servers/baiduMap';
+import { MonitorService } from './service/monitor.server';
 
 
 
@@ -84,7 +85,7 @@ import { LogsComponent } from './home/logs/logs.component';
   ],
   exports: [
   ],
-  providers: [AuthGuard, AuthService, WindowRef, BeiduAPIService, BeiduMAPService],
+  providers: [AuthGuard, AuthService, WindowRef, BeiduAPIService, BeiduMAPService, MonitorService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
