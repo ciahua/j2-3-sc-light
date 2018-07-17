@@ -110,10 +110,10 @@ export class MonitorComponent implements OnInit {
     this.monitorService.getRegion(sw, ne, zoom).subscribe({
       next: function (val) {
         value = val;
-        console.log(value);
+
       },
       complete: function () {
-        console.log(value);
+
         that.addCirCle(value, length, color, mouseoverColor);
       },
       error: function (error) {

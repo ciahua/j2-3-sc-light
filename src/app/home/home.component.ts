@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../guard/auth.service';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie';
-import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCollapse} from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ROUTETREE } from '../data/route-tree';
 
 @Component({
@@ -15,11 +16,15 @@ export class HomeComponent implements OnInit {
   loginName: string;
   isCollapsed = false;
   routeTree: any;
-  open = true;
+  open = false;
 
 
-  constructor(public authService: AuthService, public router: Router, private _cookieService: CookieService) {
+  constructor(public authService: AuthService, public router: Router, private _cookieService: CookieService,
+    config: NgbDropdownConfig) {
     this.routeTree = ROUTETREE;
+    // customize default values of dropdowns used by this component tree
+    config.placement = 'bottom-right';
+    // config.autoClose = false;
   }
 
   ngOnInit() {

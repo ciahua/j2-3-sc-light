@@ -3,17 +3,45 @@
       <nav class="login-nav dark-primary">
         <div class="login-nav-paren">
 
-          <img class="logo" src="../../assets/imgs/head3.jpg" alt="logo">
-          <div class="cur-pointer push-menu-parent">
+          <img class="logo" src="../../assets/imgs/logo.png" alt="logo">
+          <div class="cur-pointer push-menu-parent" *ngIf="isCollapsed === true">
             <a class="push-menu" data-widget="pushmenu" (click)="open=!open">
               <i class="fa fa-bars"></i>
             </a>
           </div>
-          <div class="nav-user">
-            <i class="fa fa-user-circle-o nav-icon" aria-hidden="true"></i>
-            <a class="cur-pointer" *ngIf="loginName">您好，{{loginName}}</a>
-            <a (click)="logout()" class="cur-pointer ">退出登录</a>
+          <div class="nav-user cur-pointer">
+            <!-- Single button -->
+
+
+            <div ngbDropdown class="d-inline-block">
+                <span class="cl-blue" id="dropdownBasic1" ngbDropdownToggle>
+                  <i class="fa fa-bell-o nav-icon " aria-hidden="true"></i>
+                </span>
+                <ul ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu-right">
+                  <li class="dropdown-item">Action - 1</li>
+                  <li class="dropdown-item">Another Action</li>
+                  <li class="dropdown-item">Something else is here</li>
+                </ul>
+            </div>
+            <div ngbDropdown class="d-inline-block">
+              <span class="cl-blue" id="dropdownBasic2" ngbDropdownToggle>
+                <i class="fa fa-user-circle-o nav-icon cl-blue" aria-hidden="true"></i>
+              </span>
+              <ul ngbDropdownMenu aria-labelledby="dropdownBasic2" class="dropdown-menu-right">
+                <li class="dropdown-item">{{loginName}}</li>
+                <li class="dropdown-item">
+                  <a (click)="logout()" class="cur-pointer ">退出登录</a>
+                </li>
+                <li class="dropdown-item">用户管理</li>
+              </ul>
+            </div>
+            <!-- <span><i class="fa fa-user-circle-o nav-icon cl-blue" aria-hidden="true"></i></span> -->
+
+
+            <!-- <a class="cur-pointer" *ngIf="loginName">您好，{{loginName}}</a> -->
+            
           </div>
+
         </div>
       
       
@@ -22,7 +50,7 @@
       <aside class="sidebar-dark-primary main-sidebar">
       
         <ul>
-          <li *ngFor="let routes of routeTree " class="cur-pointer nav-item">
+          <li *ngFor="let routes of routeTree " class="cur-pointer nav-item b-bottom">
             <!-- 没有字菜单 -->
             <a *ngIf="!routes.children" [routerLink]="[routes.routeLink]" routerLinkActive="active" class="nav-link">
               <i class={{routes.icon}}></i>
@@ -34,7 +62,7 @@
               <p>{{routes.routeTitel}}</p>
             </a>
             <ul [ngbCollapse]="routes.isCollapsed" *ngIf="routes.children" >
-              <li *ngFor="let children of routes.children" class="cur-pointer nav-item">
+              <li *ngFor="let children of routes.children" class="cur-pointer nav-item b-top">
                 <a [routerLink]="[children.routeLink]" routerLinkActive="active" class="nav-link">
                   <i class={{children.icon}}></i>
                   <p>{{children.routeTitel}}</p>

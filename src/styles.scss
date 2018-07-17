@@ -10,7 +10,8 @@ $fa-font-path: "../node_modules/font-awesome/fonts";
     cursor: pointer;
 }
 .active {
-    color: tomato;
+     background-color:#007bff !important;
+     color: #fff !important;
 }
 .i-circle{
     border-radius: 50%;
@@ -24,3 +25,10 @@ $fa-font-path: "../node_modules/font-awesome/fonts";
 // .i-circle:hover, .i-circle >a:hover {
 //     background: tomato;
 // }
+// 主题样色
+.bg-blue {
+    background: #007bff;
+}
+.cl-blue {
+    color: #007bff;
+}
