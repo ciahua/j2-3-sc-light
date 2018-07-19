@@ -1,80 +1,80 @@
-<p>
-  monitor works!
-</p>
-<!-- <div class="i-circle ime">
-  <a>罗湖</a>
+
+
+<div ngbDropdown class="d-inline-block sel-area-block" (mouseleave)="citylistMouseleave()">
+
+  <span class="cl-blue cur-pointer" (mouseover)="showCiyt()">
+    <span class="filter" *ngIf="currentCity">{{currentCity.name}}</span>
+    <span class="filter" *ngIf="!currentCity">选择城市</span>
+    <!-- <i class="fa fa-bell-o nav-icon " aria-hidden="true"></i> -->
+  </span>
+  <div id="city-panel" class="city-panel"  *ngIf="cityshow">
+    <dl *ngFor="let item of cityList">
+      <dt>{{item.name}}</dt>
+      <dd *ngIf="item.children && item.children.length > 0">
+        <a  title="智慧城市" *ngFor="let itemc of item.children" (click)="selecteCity(itemc)">{{itemc.name}}</a>
+      </dd>
+    </dl>
+
+    <!-- <div class="blank">
+      <a href="https://www.anjuke.com/sy-city.html" class="moreCity">更多城市&gt;</a>
+    </div> -->
+  </div>
+
+</div>
+<div  class="d-inline-block sel-area-block" (mouseleave)="arealistMouseleave()">
+
+  <span class="cl-blue cur-pointer" (mouseover)="showArea()" >
+    <span class="filter">选择区域</span>
+    <!-- <i class="fa fa-bell-o nav-icon " aria-hidden="true"></i> -->
+  </span>
+
+  <div class="arealist-wrap"   *ngIf="areashow">
+    <ul class="arealist" data-type="area">
+      <li data-val="0" class="arealist-item" (mouseover)="arealistMouseNone()">
+        <em>不限</em>
+      </li>
+      <li class="arealist-item" *ngFor="let node of currentChildren" (mouseover)="arealistMouseover(node)" >
+        <em>{{node.name}}</em>
+      </li>
+
+    </ul>
+    <ul class="blocklist" data-type="block" *ngIf="currentBlock" >
+      <li data-val="0">不限</li>
+      <li *ngFor="let node of currentBlock" >{{node.name}}</li>
+
+    </ul>
+
+  </div>
+
+</div>
+<div ngbDropdown class="d-inline-block sel-area-block">
+
+  <span class="cl-blue cur-pointer" id="dropdownBasic3" ngbDropdownToggle>
+    <span class="filter">选择设备</span>
+    <!-- <i class="fa fa-bell-o nav-icon " aria-hidden="true"></i> -->
+  </span>
+  <div id="device-panel" class="device-panel" ngbDropdownMenu aria-labelledby="dropdownBasic3">
+    <dl>
+      <dt>
+        <a>不限</a>
+      </dt>
+    </dl>
+    <dl *ngFor="let device of deviceList">
+      <dt>
+        <a title="智慧城市">{{device.name}}</a>
+      </dt>
+      <dd *ngIf="device.children && device.children.length > 0">
+        <a title="智慧城市" *ngFor="let itemc of device.children">{{itemc.name}}</a>
+      </dd>
+    </dl>
+  </div>
+
+</div>
+<!-- <div class="d-inline-block">
+  <select [(ngModel)]='cityList'>
+    <option value="">请选择</option> //此处用的是value，而不是[value]
+    <option *ngFor="let item of cityList" [value]='item'>{{item.name}}</option>
+  </select>
+  
 </div> -->
   <div #map3 id="map_container3" class="map_container"></div>
-  <!-- <div id="r-result">请输入:
-    <input type="text" id="suggestId" size="20" value="百度" style="width:150px;" />
-  </div>
-  <div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
-  <div id="left-panel" class="" style="height: 867px;">
-    <div id="searchbox" class="clearfix">
-      <div id="searchbox-container">
-        <div id="sole-searchbox-content" class="searchbox-content" style="display: block;">
-          <input id="sole-input" class="searchbox-content-common" type="text" name="word" autocomplete="off" maxlength="256" placeholder="搜地点、查公交、找路线"
-            value="">
-          <div class="input-clear" title="清空" style="display: none;"></div>
-          <div class="searchbox-content-button right-button route-button loading-button" data-title="路线" data-tooltip="2">
-          </div>
-        </div>
-        <div id="route-searchbox-content" class="searchbox-content route-searchbox-content bus" style="display: none;">
-          <div class="route-header">
-            <div class="searchbox-content-common route-tabs">
-              <div class="tab-item bus-tab" data-index="bus">
-                <i></i>
-                <span>公交</span>
-              </div>
-              <div class="tab-item drive-tab" data-index="drive">
-                <i></i>
-                <span>驾车</span>
-              </div>
-              <div class="tab-item walk-tab" data-index="walk">
-                <i></i>
-                <span>步行</span>
-              </div>
-              <div class="tab-item bike-tab" data-index="bike">
-                <i></i>
-                <span>骑行</span>
-              </div>
-              <div class="arrow-wrap"></div>
-            </div>
-            <div class="searchbox-content-button right-button cancel-button loading-button" data-title="关闭路线" data-tooltip="3">
-            </div>
-          </div>
-          <div class="routebox">
-            <div class="searchbox-content-common routebox-content">
-              <div class="routebox-revert" title="切换起终点">
-                <div class="routebox-revert-icon"> </div>
-              </div>
-              <div class="routebox-inputs">
-                <div class="routebox-input route-start">
-                  <div class="route-input-icon"> </div>
-                  <input autocomplete="off" maxlength="256" placeholder="输入起点或在图区上选点" class="route-start-input" type="text"
-                    value="">
-                  <div class="input-clear" title="清空" style="display: none;"> </div>
-                  <div class="route-input-add-icon"> </div>
-                </div>
-                <div class="routebox-input route-end">
-                  <div class="route-input-icon"> </div>
-                  <input autocomplete="off" maxlength="256" placeholder="输入终点" class="route-end-input" type="text" value="">
-                  <div class="input-clear" title="清空" style="display: none;"> </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <button id="search-button" data-title="搜索" data-tooltip="1"></button>
-      <div id="toast-wrapper">
-        <div id="toast">
-          <img class="info-tip-img" src="/wolfman/static/common/images/transparent.gif" alt="">
-          <span class="info-tip-text"></span>
-        </div>
-      </div>
-    </div>
-    <ul id="cards-level0" class="cardlist"></ul>
-    <ul id="cards-level1" class="cardlist"></ul>
-    <ul id="cards-level2" class="cardlist"></ul>
-  </div> -->

@@ -3,11 +3,158 @@
     height: 100vh;
 }
 
+.dropdown-menu{
+    top: 29px !important;
+    min-width: 90px!important;
+}
 
-.ime {
-    
-    width: 90px;    
-    height: 90px;
-    line-height: 90px;
-    background-color: #62ab00;
+// 城市列表
+.city-panel, .device-panel {
+    position: absolute;
+    z-index: 3000;
+    border: 1px solid #d8d8d8;
+    background-color: #f9f9f9;
+    width: 250px;
+    padding: 7px 0 0 0;
+    left: 0;
+    // top: 22px;
+    top: 31px;
+    border-radius: 0 0 4px 4px;
+    font-size: 12px;
+}
+.city-panel ,.device-panel{
+    dl {
+        width: 222px;
+        padding: 7px 0 6px 0;
+        margin: 0 13px;
+        border: 0;
+        border-bottom: 1px solid #ccc;
+        line-height: 23px;
+        overflow: hidden;
+        zoom: 1;
+    }
+    dt {
+        width: 48px;
+        float: left;
+        color: #666;
+    }
+    dd {
+        float: left;
+        width: 150px;
+        overflow: hidden;
+        zoom: 1;
+        a {
+            float: left;
+            padding: 0 11px 0 0;
+            white-space: nowrap;
+
+        }
+    }
+}
+.device-panel {
+    width: 150px;
+    dl {
+        width: 122px;
+    }
+    dt {
+        width: 120px;
+        a {
+            width: 100%;
+            float: left;
+            padding: 0 11px 0 0;
+            white-space: nowrap;
+
+        }
+    }
+
+}
+
+
+.device-panel dt a:link, .moreCity:link, .device-panel dt a:visited, .moreCity:visited, .device-panel dt a:active, .moreCity:active {
+    color: #1a519f;
+    text-decoration: none;
+}
+.city-panel dd a:link, .moreCity:link, .city-panel dd a:visited, .moreCity:visited, .city-panel dd a:active, .moreCity:active {
+    color: #1a519f;
+    text-decoration: none;
+}
+.filter{
+
+    display: inline-block;
+    width: 80px;
+    text-align: center;
+}
+
+// 
+.sel-area-block,  {
+    width: 100px;
+    cursor: pointer;
+    position: relative;
+    background-color: #fff;
+    border: 1px solid #e3e3e3;
+    line-height: 32px;
+    height: 32px;
+    font-size: 14px;
+    margin-left: 21px;
+    // float: left;
+}
+
+//
+.arealist-wrap {
+    position: absolute;
+    padding: 0;
+    margin: 0px;
+    // width: 90px;
+    // width: 212px;
+    top: 33px;
+    left: -1px;
+    z-index: 99;
+}
+.arealist {
+    position: relative;
+    padding: 0;
+    margin: 0px;
+    padding-left:0;
+    margin-bottom: 0;
+    width: 90px;
+    font-size: 12px;
+    z-index: 99;
+    border: 1px solid #e6e6e6;
+    border-top-width: 0;
+    background: #f6f6f6;
+    box-shadow: 0 0 4px 0 rgba(0,0,0,0.10);
+    max-height: 300px;
+    overflow-y: auto;
+    cursor: pointer;
+}
+.arealist-item {
+    text-indent: 15px;
+    font-size: 12px;
+}
+.arealist .arealist-item:hover {
+    background: #fff;
+    .blocklist{
+    display: block;
+    }
+}
+.arealist .arealist-item:hover em {
+    color:#f60;
+}
+
+
+.blocklist {
+    // display: none;
+    position: absolute;
+    padding-left:0;
+    left: 90px;
+    top: 0;
+    width: 120px;
+    background: #fff;
+    border: 1px solid #e6e6e6;
+    border-left-width: 0;
+    height: 300px;
+    z-index: 100;
+    overflow-y: auto;
+    text-indent: 15px;
+    font-size: 12px;
 }

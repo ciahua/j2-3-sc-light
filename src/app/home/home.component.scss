@@ -20,7 +20,8 @@
     // 头部
         // background
     .dark-primary{
-        background-color: #fafafa;
+        // background-color: #e7e7e7;
+        background-color: #f0f0f0;
         // background: rgba(0,0,0,0.04);;
         border-bottom: 1px solid #dee2e6;
     }
@@ -83,7 +84,7 @@
 
 
     .header-margin {
-        // margin-top: 48px;
+        margin-top: 80px;
         margin-left: 250px;
         padding-left:0px;
     }
@@ -91,6 +92,7 @@
     // 侧边栏
         // sidebar
     .sidebar-dark-primary {
+        // background-color: #f0f0f0;
         background-color: #fff;
         height: 100vh;
         padding-right: 20px;
@@ -99,7 +101,7 @@
 
         position: fixed;
         top:80px;
-        z-index: 100;
+        z-index: 4000;
         .nav-icon{
             text-align: center;
             width: 1.6rem;
@@ -111,6 +113,9 @@
         }
         .b-top{
             border-top:1px solid #dee2e6;
+        }
+        .p-left{
+            padding-left: 32px;
         }
 
 

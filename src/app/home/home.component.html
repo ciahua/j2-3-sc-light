@@ -29,10 +29,11 @@
               </span>
               <ul ngbDropdownMenu aria-labelledby="dropdownBasic2" class="dropdown-menu-right">
                 <li class="dropdown-item">{{loginName}}</li>
+                <li class="dropdown-item">用户管理</li>
                 <li class="dropdown-item">
                   <a (click)="logout()" class="cur-pointer ">退出登录</a>
                 </li>
-                <li class="dropdown-item">用户管理</li>
+
               </ul>
             </div>
             <!-- <span><i class="fa fa-user-circle-o nav-icon cl-blue" aria-hidden="true"></i></span> -->
@@ -50,6 +51,7 @@
       <aside class="sidebar-dark-primary main-sidebar">
       
         <ul>
+          <!-- 一级菜单 -->
           <li *ngFor="let routes of routeTree " class="cur-pointer nav-item b-bottom">
             <!-- 没有字菜单 -->
             <a *ngIf="!routes.children" [routerLink]="[routes.routeLink]" routerLinkActive="active" class="nav-link">
@@ -61,11 +63,12 @@
               <i class={{routes.icon}}></i>
               <p>{{routes.routeTitel}}</p>
             </a>
+            <!-- 二级菜单 -->
             <ul [ngbCollapse]="routes.isCollapsed" *ngIf="routes.children" >
               <li *ngFor="let children of routes.children" class="cur-pointer nav-item b-top">
                 <a [routerLink]="[children.routeLink]" routerLinkActive="active" class="nav-link">
                   <i class={{children.icon}}></i>
-                  <p>{{children.routeTitel}}</p>
+                  <p class="p-left">{{children.routeTitel}}</p>
                 </a>
               </li>
       
@@ -81,7 +84,7 @@
       <section class="content">
         <div class="container-fluid">
           <div cllas="row">
-            <div class="col-12 col-md-12 header-margin header-padding" [ngClass]="{'sidebar-open':open === true,'sidebar-collapse':!open}">
+            <div class="col-12 col-md-12 header-margin " [ngClass]="{'sidebar-open':open === true,'sidebar-collapse':!open}">
               <router-outlet></router-outlet>
             </div>
           </div>

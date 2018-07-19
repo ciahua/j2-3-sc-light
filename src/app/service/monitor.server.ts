@@ -11,6 +11,8 @@ import { WindowRef } from '../windowserver';
 import { REGIONLIST } from '../data/region-list';
 import { BLOCKLIST } from '../data/block-list';
 import { COMMUNITYLIST } from '../data/community-list';
+import { CITYLIST } from '../data/city-list';
+import { DEVICELIIST } from '../data/device-list';
 import { Point } from '../data/point.type';
 // baidu map
 
@@ -23,13 +25,52 @@ export class MonitorService {
 
     }
 
+    getDefaultZone(): Observable<any> {
+        // console.log(sw, ne, zoom);
+        return of(CITYLIST)
+            .pipe(
+                delay(1000),
+                tap(val => {
+                    console.log(val);
+                    return val;
+                })
+            );
+
+    }
+
+    getCity(): Observable<any> {
+        // console.log(sw, ne, zoom);
+        return of(CITYLIST)
+            .pipe(
+                delay(1000),
+                tap(val => {
+                    console.log(val);
+                    return val;
+                })
+            );
+
+    }
+
+    getDevice(): Observable<any> {
+        // console.log(sw, ne, zoom);
+        return of(DEVICELIIST)
+            .pipe(
+                delay(1000),
+                tap(val => {
+                    console.log(val);
+                    return val;
+                })
+            );
+
+    }
+
     getRegion(sw: Point, ne: Point, zoom: Number): Observable<any> {
         // console.log(sw, ne, zoom);
         return of(REGIONLIST.val.region_list)
         .pipe(
             delay(1000),
             tap(val => {
-                console.log(val);
+                // console.log(val);
                 return val;
             })
         );
@@ -42,7 +83,7 @@ export class MonitorService {
         .pipe(
             delay(1000),
             tap(val => {
-                console.log(val);
+                // console.log(val);
                 return val;
             })
         );
@@ -53,7 +94,7 @@ export class MonitorService {
         return of(COMMUNITYLIST.val.community_list).pipe(
             delay(1000),
             tap(val => {
-                console.log(val);
+                // console.log(val);
                 return val;
             })
         );

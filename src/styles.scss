@@ -3,6 +3,18 @@ $fa-font-path: "../node_modules/font-awesome/fonts";
 @import '~font-awesome/scss/font-awesome.scss';
 @import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
 // @import '~src/app/main.css';
+body {
+    color: #333;
+    font-family: "Microsoft YaHei","宋体",Arial,"\5B8B\4F53",Helvetica,sans-serif;
+    font-size: 14px;
+}
+ol, ul {
+    list-style: none;
+}
+address, cite, code, em, th, i, strong {
+    font-style: normal;
+    font-weight: normal;
+}
 .container-fluid {
     padding:0;
 }
