@@ -5,6 +5,7 @@ import { CookieService } from 'ngx-cookie';
 import { NgbCollapse} from '@ng-bootstrap/ng-bootstrap';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ROUTETREE } from '../data/route-tree';
+import { MessageService } from '../service/message.serice';
 
 @Component({
   selector: 'app-home',
@@ -17,9 +18,11 @@ export class HomeComponent implements OnInit {
   isCollapsed = false;
   routeTree: any;
   open = false;
+  messageList: any; // 消息列表
 
 
   constructor(public authService: AuthService, public router: Router, private _cookieService: CookieService,
+     private messageService: MessageService,
     config: NgbDropdownConfig) {
     this.routeTree = ROUTETREE;
     // customize default values of dropdowns used by this component tree
@@ -30,8 +33,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.currentUser = this._cookieService.getObject('currentUser');
     this.loginName = this.currentUser.loginName;
-    console.log(this.currentUser);
-    console.log(this.loginName);
+    this.getMessage();
   }
 
   logout() {
@@ -43,6 +45,25 @@ export class HomeComponent implements OnInit {
   switchSidebar() {
     this.open = !this.open;
     console.log(this.open);
+  }
+
+  // 获取消息列表
+  getMessage() {
+    const that = this;
+
+    this.messageService.getMessage().subscribe({
+      next: function (val) {
+        console.log(val);
+        that.messageList = val.list;
+
+      },
+      complete: function () {
+
+      },
+      error: function (error) {
+        console.log(error);
+      }
+    });
   }
 
 }

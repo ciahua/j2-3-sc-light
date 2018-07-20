@@ -1,103 +1,120 @@
 export const ROUTETREE = [
     {
         id: 1,
-        icon: 'fa fa-bell-o nav-icon',
+        icon: 'fa fa-desktop nav-icon',
         routeLink: 'monitor',
-        routeTitel: '设备监控',
+        routeTitel: '操作台',
         isCollapsed: false,
         hasRight: true,
     },
     {
         id: 1,
-        icon: 'nav-icon fa fa-pie-chart',
+        icon: 'fa fa-bullhorn nav-icon ',
         routeLink: 'survey',
-        routeTitel: '设备概览',
+        routeTitel: '报警规则设置',
         isCollapsed: false,
         hasRight: false,
     },
     {
-        id: 2,
-        icon: 'fa fa-camera-retro nav-icon',
-        routeLink: 'device',
-        routeTitel: '设备管理',
+        id: 1,
+        icon: 'fa fa-sliders nav-icon ',
+        routeLink: 'survey',
+        routeTitel: '控制策略设置',
+        isCollapsed: false,
+        hasRight: false,
+    },
+    {
+        id: 1,
+        icon: 'fa fa-bar-chart nav-icon',
+        routeLink: 'survey',
+        routeTitel: '能源管理',
         isCollapsed: true,
         hasRight: false,
-        children: [{
-            id: 11,
-            icon: 'fa fa-circle-o nav-icon',
-            routeLink: 'device/new-device',
-            routeTitel: '新增设备',
-        }, {
-            id: 12,
-            icon: 'fa fa-circle-o nav-icon',
-            routeLink: 'device/add-device',
-            routeTitel: '添加设备',
-        }, {
-            id: 12,
-            icon: 'fa fa-circle-o nav-icon',
-            routeLink: 'device/del-device',
-            routeTitel: '设备报销',
-        }]
-    }, {
+        children: [
+            {
+                id: 21,
+                icon: 'fa fa-th-list nav-icon-s',
+                routeLink: 'illumination',
+                routeTitel: '概览',
+            }, {
+                id: 21,
+                icon: 'fa fa-line-chart nav-icon-s',
+                routeLink: 'WellCover',
+                routeTitel: '报表',
+            },
+        ]
+    },
+
+    {
+        id: 4,
+        icon: 'fa fa-th-large nav-icon',
+        routeLink: 'application',
+        routeTitel: '应用后台管理',
+        isCollapsed: true,
+        hasRight: true,
+        children: [
+            {
+                id: 21,
+                icon: 'fa fa-life-ring nav-icon-s',
+                routeLink: 'illumination',
+                routeTitel: '井盖监控',
+            }, {
+                id: 21,
+                icon: 'fa fa-bolt nav-icon-s',
+                routeLink: 'WellCover',
+                routeTitel: '灾害预警',
+            },
+        ]
+    },
+    {
         id: 3,
-        icon: 'fa fa-user-circle-o nav-icon',
+        icon: 'fa fa-wrench nav-icon',
         routeLink: 'user',
         routeTitel: '系统管理',
         isCollapsed: true,
         hasRight: true,
         children: [{
             id: 11,
-            icon: 'fa fa-circle-o nav-icon',
+            icon: 'fa fa-user-o nav-icon-s',
             routeLink: 'user/admin',
             routeTitel: '用户管理',
         }, {
             id: 12,
-            icon: 'fa fa-circle-o nav-icon',
+            icon: 'fa fa-user-secret nav-icon-s',
             routeLink: 'user/right',
-            routeTitel: '权限管理',
+            routeTitel: '角色管理',
         }]
-    }, {
-        id: 4,
-        icon: 'nav-icon fa fa-dashboard',
-        routeLink: 'application',
-        routeTitel: '用户应用',
-        isCollapsed: true,
-        hasRight: true,
-        children: [{
-            id: 21,
-            icon: 'fa fa-circle-o nav-icon',
-            routeLink: 'illumination',
-            routeTitel: '照明',
-        }, {
-            id: 21,
-            icon: 'fa fa-circle-o nav-icon',
-            routeLink: 'WellCover',
-            routeTitel: '井盖',
-        },
-        {
-            id: 21,
-            icon: 'fa fa-circle-o nav-icon',
-            routeLink: 'Video',
-            routeTitel: '视频',
-        },
-        {
-            id: 21,
-            icon: 'fa fa-circle-o nav-icon',
-            routeLink: 'meteorology',
-            routeTitel: '气象',
-        },
-        {
-            id: 21,
-            icon: 'fa fa-circle-o nav-icon',
-            routeLink: 'Visualization',
-            routeTitel: '可视化',
-        }]
-    }, {
-        id: 5,
-        icon: 'nav-icon fa fa-calendar',
-        routeLink: 'logs',
-        routeTitel: '日志管理',
-        isCollapsed: true,
-        hasRight: true,
-    }
+    },
+    // {
+    //     id: 2,
+    //     icon: 'fa fa-camera-retro nav-icon',
+    //     routeLink: 'device',
+    //     routeTitel: '设备管理',
+    //     isCollapsed: true,
+    //     hasRight: false,
+    //     children: [{
+    //         id: 11,
+    //         icon: 'fa fa-circle-o nav-icon',
+    //         routeLink: 'device/new-device',
+    //         routeTitel: '新增设备',
+    //     }, {
+    //         id: 12,
+    //         icon: 'fa fa-circle-o nav-icon',
+    //         routeLink: 'device/add-device',
+    //         routeTitel: '添加设备',
+    //     }, {
+    //         id: 12,
+    //         icon: 'fa fa-circle-o nav-icon',
+    //         routeLink: 'device/del-device',
+    //         routeTitel: '设备报销',
+    //     }]
+    // },
+    //  {
+    //     id: 5,
+    //     icon: 'nav-icon fa fa-calendar',
+    //     routeLink: 'logs',
+    //     routeTitel: '日志管理',
+    //     isCollapsed: true,
+    //     hasRight: true,
+    // }
 ];

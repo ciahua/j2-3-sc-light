@@ -1,6 +1,6 @@
 
-
-<div ngbDropdown class="d-inline-block sel-area-block" (mouseleave)="citylistMouseleave()">
+<!-- 城市列表 -->
+<div  class="d-inline-block sel-area-block" (mouseleave)="citylistMouseleave()">
 
   <span class="cl-blue cur-pointer" (mouseover)="showCiyt()">
     <span class="filter" *ngIf="currentCity">{{currentCity.name}}</span>
@@ -21,11 +21,12 @@
   </div>
 
 </div>
+
+<!-- 区域列表 -->
 <div  class="d-inline-block sel-area-block" (mouseleave)="arealistMouseleave()">
 
   <span class="cl-blue cur-pointer" (mouseover)="showArea()" >
     <span class="filter">选择区域</span>
-    <!-- <i class="fa fa-bell-o nav-icon " aria-hidden="true"></i> -->
   </span>
 
   <div class="arealist-wrap"   *ngIf="areashow">
@@ -47,13 +48,15 @@
   </div>
 
 </div>
-<div ngbDropdown class="d-inline-block sel-area-block">
 
-  <span class="cl-blue cur-pointer" id="dropdownBasic3" ngbDropdownToggle>
+<!-- 设备列表 -->
+<div  class="d-inline-block sel-area-block" (mouseleave)="devicelistMouseleave()">
+
+  <span class="cl-blue cur-pointer" (mouseover)="showDevice()">
     <span class="filter">选择设备</span>
-    <!-- <i class="fa fa-bell-o nav-icon " aria-hidden="true"></i> -->
+
   </span>
-  <div id="device-panel" class="device-panel" ngbDropdownMenu aria-labelledby="dropdownBasic3">
+  <div id="device-panel" class="device-panel"  *ngIf="deviceshow">
     <dl>
       <dt>
         <a>不限</a>

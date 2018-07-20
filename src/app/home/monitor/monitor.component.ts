@@ -4,12 +4,14 @@ import { BeiduAPIService } from '../../servers/baiduApi';
 import { BeiduMAPService } from '../../servers/baiduMap';
 import { DEVICEMAP } from '../../data/device-map';
 import { CircleOverlarService } from './circle-overlay.server';
-import { REGIONLIST } from '../../data/region-list';
-import { BLOCKLIST } from '../../data/block-list';
-import { COMMUNITYLIST } from '../../data/community-list';
-import { CITYLIST } from '../../data/city-list';
+// import { REGIONLIST } from '../../data/region-list';
+// import { BLOCKLIST } from '../../data/block-list';
+// import { COMMUNITYLIST } from '../../data/community-list';
+// import { CITYLIST } from '../../data/city-list';
+
 import { Point } from '../../data/point.type';
 import { MonitorService } from '../../service/monitor.server';
+
 // baidu map
 declare let BMap;
 declare let BMapLib;
@@ -29,6 +31,7 @@ export class MonitorComponent implements OnInit {
   map: any; // 地图对象
   marker: any; // 标记
   cityList: any; // 城市列表
+
   deviceList: any; // 城市列表
   defaultZone: any; // 默认城市
   currentCity: any; // 当前城市
@@ -36,6 +39,7 @@ export class MonitorComponent implements OnInit {
   currentBlock: any; // // 当前城市街道
   areashow = false; // 默认区域列表不显示
   cityshow = false; // 默认区域列表不显示
+  deviceshow = false; // 默认设备列表不显示
   parentNode = null;
   node = null;
   deviceMap = DEVICEMAP;
@@ -44,7 +48,7 @@ export class MonitorComponent implements OnInit {
   NorthEast: Point;
 
   constructor(private beiduAPIService: BeiduAPIService, private beiduMAPService: BeiduMAPService,
-    private monitorService: MonitorService, config: NgbDropdownConfig
+    private monitorService: MonitorService,  config: NgbDropdownConfig
     ) {
     this.zoom = 12; // 默认
     config.placement = 'bottom-left';
@@ -93,10 +97,8 @@ export class MonitorComponent implements OnInit {
     // map.enableScrollWheelZoom(true); // 启动滚轮放大缩小，默认禁用
     map.enableContinuousZoom(true); // 连续缩放效果，默认禁用
 
-
     this.dragendOff(map);
     this.zoomendOff(map);
-
 
   }
 
@@ -162,6 +164,10 @@ export class MonitorComponent implements OnInit {
   showCiyt() {
     this.cityshow = true;
   }
+  // 显示设备
+  showDevice() {
+    this.deviceshow = true;
+  }
 
   // 选择区域
   arealistMouseover(area) {
@@ -177,7 +183,12 @@ export class MonitorComponent implements OnInit {
   citylistMouseleave() {
     this.cityshow = false;
   }
+  // 离开设备
+  devicelistMouseleave() {
+    this.deviceshow = false;
+  }
   arealistMouseNone() {
+    this.areashow = true;
     this.currentBlock = null;
   }
 
@@ -204,6 +215,7 @@ export class MonitorComponent implements OnInit {
 
 
   // 获取数据
+
   // 获取城市列表
   getCity() {
     const that = this;
@@ -215,8 +227,7 @@ export class MonitorComponent implements OnInit {
         that.currentCity = val.currentCity;
         that.zoom = that.switchZone(val.zone.level);
         that.currentChildren = that.getNode(val.regions, val.zone.id);
-        console.log(val.zone.id);
-        console.log(that.currentChildren);
+
 
       },
       complete: function () {
@@ -319,12 +330,12 @@ export class MonitorComponent implements OnInit {
     const zoom = this.zoom;
     const sw = this.SouthWest;
     const ne = this.NorthEast;
-    let val, length, color, mouseoverColor;
+    let length, color, mouseoverColor;
     switch (zoom) {
       case 11:
       case 12:
       case 13:
-        val = REGIONLIST.val.region_list;
+        // val = REGIONLIST.val.region_list;
         length = 90;
         color = '#007bff';
         mouseoverColor = '#f60';
@@ -333,7 +344,7 @@ export class MonitorComponent implements OnInit {
       case 14:
       case 15:
       case 16:
-        val = BLOCKLIST.val.block_list;
+        // val = BLOCKLIST.val.block_list;
         length = 70;
         color = '#62ab00';
         mouseoverColor = '#f60';
@@ -343,7 +354,7 @@ export class MonitorComponent implements OnInit {
       case 18:
       case 19:
       case 20:
-        val = COMMUNITYLIST.val.community_list;
+        // val = COMMUNITYLIST.val.community_list;
         length = 20;
         color = '#e54b00';
         mouseoverColor = '#f60';
@@ -514,7 +525,6 @@ export class MonitorComponent implements OnInit {
     // 1.第一层 root 深度遍历整个JSON
     for (let i = 0; i < json.length; i++) {
       if (that.node) {
-        console.log('00000');
         break;
       }
 

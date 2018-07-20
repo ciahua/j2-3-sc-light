@@ -31,6 +31,7 @@ import { DialogService } from './service/dialog.service';
 import { BeiduAPIService } from './servers/baiduApi';
 import { BeiduMAPService } from './servers/baiduMap';
 import { MonitorService } from './service/monitor.server';
+import { MessageService } from './service/message.serice';
 
 
 
@@ -85,7 +86,7 @@ import { LogsComponent } from './home/logs/logs.component';
   ],
   exports: [
   ],
-  providers: [AuthGuard, AuthService, WindowRef, BeiduAPIService, BeiduMAPService, MonitorService],
+  providers: [AuthGuard, AuthService, WindowRef, BeiduAPIService, BeiduMAPService, MonitorService, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

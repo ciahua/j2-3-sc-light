@@ -21,16 +21,17 @@
         // background
     .dark-primary{
         // background-color: #e7e7e7;
-        background-color: #f0f0f0;
+        background-color: #fff;
         // background: rgba(0,0,0,0.04);;
-        border-bottom: 1px solid #dee2e6;
+        // border-bottom: 1px solid #dee2e6;
+        box-shadow: 0px 6px 18px #e5e5e5;
     }
     .login-nav {
     height: 80px;
     line-height: 80px;
     color: #fff;
     position: fixed;
-    z-index: 100;
+    z-index: 15000;
     width: 100vw;
     .push-menu{
         padding-right: 1rem;
@@ -41,7 +42,7 @@
         position: relative;
         // logo
         img {
-            height: 85px;
+            height: 78px;
         }
     }
 
@@ -60,19 +61,49 @@
             width: 80px;
             text-align: center;
         }
+            // 信息
+        .message{
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            border: 1px solid #e60012;
+            background: #e60012;
+            border-radius: 50%;
+            font-size: 8px;
+            color: #fff;
+            position: relative;
+            left: 50px;
+            top: -12px;
+            z-index: 10;
+        }
+        .dropdown-menu-list {
+            color: #87a2b7;
+            font-size:12px;
+        }
+
+        .nav-icon {
+            text-align: center;
+            width: 1.6rem;
+            font-size: 1.4rem;
+            margin-right: .2rem;
+        }
+
     }
+
     .push-menu-parent {
         display: inline-block;
     }
     // 下拉框
+    .dropdown-menu-si{
+        // top: 50px !important;
+    }
     .dropdown-item{
         height: 50px;
         line-height: 50px;
     }
-    .i-dropdown-menu{
-        left: none;
-        right: 0px !important;
-    }
+
+
+
 
 
 
@@ -92,21 +123,44 @@
     // 侧边栏
         // sidebar
     .sidebar-dark-primary {
-        // background-color: #f0f0f0;
+        overflow-y:auto; 
+        box-shadow: 0px 6px 18px #e5e5e5;
         background-color: #fff;
         height: 100vh;
-        padding-right: 20px;
-        padding-left: 20px;
-        border-right: 1px solid #dee2e6;
-
+        padding-top: 60px;
         position: fixed;
         top:80px;
         z-index: 4000;
+        .nav-link {
+            display: block;
+            position: relative;
+            height: 56px;
+            line-height: 56px;
+        }
+        .angle{
+            position: absolute;
+            right: 34px;
+
+        }
+        // 一级菜单图片
         .nav-icon{
             text-align: center;
             width: 1.6rem;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             margin-right: .2rem;
+            position: relative;
+            left: 20px;
+            // top: 11px;
+        }
+        // 二级菜单图片
+        .nav-icon-s{
+            text-align: center;
+            width: 1.6rem;
+            font-size: 1rem;
+            margin-right: .2rem;
+            position: relative;
+            left: 20px;
+            // top: 11px;
         }
         .b-bottom{
             border-bottom: 1px solid #dee2e6;
@@ -115,7 +169,7 @@
             border-top:1px solid #dee2e6;
         }
         .p-left{
-            padding-left: 32px;
+            padding-left: 36px;
         }
 
 
@@ -128,24 +182,46 @@
             padding-left: 0;
             white-space: nowrap;
             overflow: hidden;
+            li {
+                // height: 56px;
+                // line-height: 56px;
+            }
 
-        }
-        a{
-            color: #212529;
-            border-radius: 4px;
-            white-space: nowrap;
-            overflow: hidden;
-           
+
         }
         li:active,li:focus {
             color: #c2c7d0;
         }
         .nav-item:hover>.nav-link {
-            color: #007bff;
+            color: #56c5ff;
             background-color: rgba(255,255,255,.1);
 
 
         }
+        // 一级菜单
+        .first-menu {
+            a{
+                color: #618d99;
+                font-weight: bold;
+                border-radius: 4px;
+                white-space: nowrap;
+                overflow: hidden;
+            
+            }
+        }
+        // 二级菜单
+        .sec-menu {
+            a{
+                color: #858e90;
+                font-size: 12px;
+                border-radius: 4px;
+                white-space: nowrap;
+                overflow: hidden;
+            
+            }
+        }
+
+
     }
     // 动画
     .main-sidebar, .main-sidebar:before {
@@ -177,20 +253,20 @@
     // hover
     @media (min-width: 992px){
         .sidebar-collapse .main-sidebar:hover {
-            width: 250px;
+            width: 275px;
             .nav-link {
-                width: 210px;
+                width: 275px;
             }
             li {
-                 width: 210px;
+                 width: 275px;
             }
             p{
                 opacity: 1;
             }
+            .angle{
+             opacity: 1;
 
-            // img {
-            //     width: 230px;
-            // }
+            }
 
         }
 
@@ -219,11 +295,11 @@
             p{
                 opacity: 0;
             }
-            // ul {
-            //     li {
-            //         width: 55px;
-            //     }
-            // }   
+            .angle{
+             opacity: 0;
+
+            }
+ 
         }
     }
     // open
@@ -238,19 +314,11 @@
         .sidebar-dark-primary{
             width: 250px;
             min-width: 250px;
-            // img {
-            //     width: 230px;
-            // }
+
         }
 
     }
 
    
-    .nav-icon {
-        text-align: center;
-        width: 1.6rem;
-        font-size: 1.2rem;
-        margin-right: .2rem;
-    }
 
 }
