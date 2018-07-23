@@ -2,39 +2,65 @@
   <div [ngClass]="{'sidebar-open':open === true,'sidebar-collapse':!open}" class="wrap">
       <nav class="login-nav dark-primary">
         <div class="login-nav-paren">
+          <!-- logo -->
+          <div class="nav-log d-inline-block">
+            <img class="logo" src="../../assets/imgs/logo.jpg" alt="logo">
+          </div>
 
-          <img class="logo" src="../../assets/imgs/logo.jpg" alt="logo">
+          <!-- 菜单开和按钮 -->
           <div class="cur-pointer push-menu-parent" *ngIf="isCollapsed === true">
             <a class="push-menu" data-widget="pushmenu" (click)="open=!open">
               <i class="fa fa-bars"></i>
             </a>
           </div>
-          <div class="nav-user cur-pointer">
-            <!-- Single button -->
 
+          <!-- 滚动字幕 -->
+          <div class="d-inline-block marquee nav-message">
+            <ul>
+              <li *ngFor="let mess of messageList" (click)="goTothePoint(mess)">
+                  {{mess.message}}
+              </li>
+
+            </ul>
+
+          </div>
+          <!-- <div class="d-inline-block nav-message">
+             <marquee behavior="scroll" direction="up" height="80">
+                <ul>
+                  <li *ngFor="let mess of messageList">
+                    {{mess.message}}
+                  </li>
+                </ul>
+             </marquee>
+          </div> -->
+
+
+          <div class="nav-user cur-pointer">
+
+            <!-- Single button -->
             <div class="d-inline-block">
-              <span class="message">9</span>
+              <span class="message user-span" *ngIf="messageList">{{messageList.length}}</span>
             </div>
             <!-- 消息列表 -->
             <div ngbDropdown class="d-inline-block">
-                <span class="cl-blue" id="dropdownBasic1" ngbDropdownToggle>
+                <span class="cl-blue user-span" id="dropdownBasic1" ngbDropdownToggle>
                   <i class="fa fa-bell nav-icon " aria-hidden="true"></i>
                 </span>
-                <ul ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu-si">
-                  <li class="dropdown-item" *ngFor="let mess of messageList"><span class="dropdown-menu-list">{{mess.message}}</span></li>
+                <ul ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu-message">
+                  <li class="dropdown-item" *ngFor="let mess of messageList"><span class="dropdown-menu-list text-left">{{mess.message}}</span></li>
 
                 </ul>
             </div>
             <!-- 用户 -->
             <div ngbDropdown class="d-inline-block">
-              <span class="cl-blue" id="dropdownBasic2" ngbDropdownToggle>
+              <span class="cl-blue user-span" id="dropdownBasic2" ngbDropdownToggle>
                 <i class="fa fa-user-circle-o nav-icon cl-blue" aria-hidden="true"></i>
               </span>
-              <ul ngbDropdownMenu aria-labelledby="dropdownBasic2" class="dropdown-menu-si">
-                <li class="dropdown-item"><span class="dropdown-menu-list">{{loginName}}</span></li>
-                <li class="dropdown-item"><span class="dropdown-menu-list">用户管理</span></li>
+              <ul ngbDropdownMenu aria-labelledby="dropdownBasic2" >
+                <li class="dropdown-item"><span class="dropdown-menu-list user-span">{{loginName}}</span></li>
+                <li class="dropdown-item"><span class="dropdown-menu-list user-span">用户管理</span></li>
                 <li class="dropdown-item">
-                  <a (click)="logout()" class="cur-pointer "><span class="dropdown-menu-list">退出登录</span></a>
+                  <a (click)="logout()" class="cur-pointer "><span class="dropdown-menu-list user-span">退出登录</span></a>
                 </li>
 
               </ul>

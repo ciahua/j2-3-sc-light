@@ -1,10 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+
+import { filter, map } from 'rxjs/operators';
+declare var $: any;
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'app';
+  constructor(public router: Router) {
+
+  }
+
+  ngOnInit() {
+
+  //   this.router.events
+  //     .filter(event => event instanceof NavigationEnd)
+  //     .map(() => this.router.routerState.root)
+  //     .subscribe((event) => {
+  //       $(window).scrollTop(0);
+
+  //     });
+
+
+  }
+
+
 }

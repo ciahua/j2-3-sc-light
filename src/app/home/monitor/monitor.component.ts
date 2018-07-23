@@ -64,6 +64,27 @@ export class MonitorComponent implements OnInit {
 
   }
 
+  // 解析地址- 设置中心和地图显示级别
+  getPoint(baiduMap, city) {
+    const that = this;
+    // 创建地址解析器实例
+    const myGeo = new BMap.Geocoder();
+    const zoom = this.zoom = this.switchZone(city.level);
+    const name = city.name;
+
+    // 将地址解析结果显示在地图上,并调整地图视野，获取数据-添加标注
+    myGeo.getPoint(name, function (point) {
+      if (point) {
+        baiduMap.centerAndZoom(point, zoom);
+        // baiduMap.addOverlay(new BMap.Marker(point));
+        that.addMarker(); // 添加标注
+      } else {
+        console.log('您选择地址没有解析到结果!');
+      }
+    }, '');
+
+  }
+
 
   // 百度地图API功能
   addBeiduMap() {
@@ -190,27 +211,6 @@ export class MonitorComponent implements OnInit {
   arealistMouseNone() {
     this.areashow = true;
     this.currentBlock = null;
-  }
-
-  // 解析地址- 设置中心和地图显示级别
-  getPoint(baiduMap, city) {
-    const that = this;
-    // 创建地址解析器实例
-    const myGeo = new BMap.Geocoder();
-    const zoom = this.zoom = this.switchZone(city.level);
-    const name = city.name;
-
-    // 将地址解析结果显示在地图上,并调整地图视野，获取数据-添加标注
-    myGeo.getPoint(name, function (point) {
-      if (point) {
-        baiduMap.centerAndZoom(point, zoom);
-        baiduMap.addOverlay(new BMap.Marker(point));
-        that.addMarker(); // 添加标注
-      } else {
-        console.log('您选择地址没有解析到结果!');
-      }
-    }, '');
-
   }
 
 

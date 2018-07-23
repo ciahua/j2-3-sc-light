@@ -6,6 +6,7 @@ import { NgbCollapse} from '@ng-bootstrap/ng-bootstrap';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ROUTETREE } from '../data/route-tree';
 import { MessageService } from '../service/message.serice';
+declare let $: any;
 
 @Component({
   selector: 'app-home',
@@ -34,14 +35,23 @@ export class HomeComponent implements OnInit {
     this.currentUser = this._cookieService.getObject('currentUser');
     this.loginName = this.currentUser.loginName;
     this.getMessage();
+
   }
 
+  // 跳到控制台地图的具体的点
+  goTothePoint(item) {
+    console.log(item);
+  }
+
+  // 退出登录
   logout() {
     // console.log('ddd');
     this.authService.logout();
 
     // console.log(currentUser);
   }
+
+  // 侧边栏开合按钮
   switchSidebar() {
     this.open = !this.open;
     console.log(this.open);
@@ -58,11 +68,32 @@ export class HomeComponent implements OnInit {
 
       },
       complete: function () {
+        setTimeout(() => {
+          that.marquee();
+        }, 10);
 
       },
       error: function (error) {
         console.log(error);
       }
+    });
+  }
+
+  // 字幕动画
+  marquee() {
+    $('.marquee').marquee({
+      // duration in milliseconds of the marquee
+      duration: 3000,
+      // speed: 5000,
+      // gap in pixels between the tickers
+      gap: 0,
+      // time in milliseconds before the marquee will start animating
+      delayBeforeStart: 0,
+      // 'left' or 'right'
+      direction: 'up', // 方向
+      // true or false - should the marquee be duplicated to show an effect of continues flow
+      duplicated: true, // 重复
+      pauseOnHover: true
     });
   }
 

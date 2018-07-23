@@ -29,14 +29,14 @@
     .login-nav {
     height: 80px;
     line-height: 80px;
-    color: #fff;
+    color: #87a2b7;
     position: fixed;
     z-index: 15000;
     width: 100vw;
     .push-menu{
         padding-right: 1rem;
         padding-left: 1rem;
-        color: #fff;
+        // color: #87a2b7;
     }
     .login-nav-paren {
         position: relative;
@@ -44,6 +44,14 @@
         img {
             height: 78px;
         }
+    }
+    .nav-log {
+        position: absolute;
+    }
+    .nav-message{
+        position: absolute;
+        left: 264px;
+
     }
 
     .nav-user {
@@ -56,11 +64,15 @@
             padding-right: 20px;
         }
                 // 信息用户图标
-        span{
+        .user-span{
             display: inline-block;
             width: 80px;
             text-align: center;
         }
+        .message-span {
+            text-align: left;
+        }
+
             // 信息
         .message{
             width: 20px;
@@ -94,14 +106,38 @@
         display: inline-block;
     }
     // 下拉框
-    .dropdown-menu-si{
+    .dropdown-menu-message{
         // top: 50px !important;
+        // width: 300px !important;
     }
     .dropdown-item{
         height: 50px;
         line-height: 50px;
     }
 
+    // 字幕动画
+
+    .marquee {
+        // width: 300px; /* the plugin works for responsive layouts so width is not necessary */
+        overflow: hidden;
+        min-height: 80px;
+        height: 80px;
+        // border:1px solid #ccc;
+        margin: 0;
+        .js-marquee {
+            margin: 0 !important;
+            min-height: 80px;
+        }
+        ul {
+             margin: 0;
+                       
+            li {
+                margin: 0;
+                height: 26px;
+            }
+        }
+
+    }
 
 
 
