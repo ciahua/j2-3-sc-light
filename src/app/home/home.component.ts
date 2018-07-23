@@ -5,7 +5,8 @@ import { CookieService } from 'ngx-cookie';
 import { NgbCollapse} from '@ng-bootstrap/ng-bootstrap';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ROUTETREE } from '../data/route-tree';
-import { MessageService } from '../service/message.serice';
+import { MessageService } from '../service/message.service';
+import { MessService } from '../service/mess.service';
 declare let $: any;
 
 @Component({
@@ -20,10 +21,11 @@ export class HomeComponent implements OnInit {
   routeTree: any;
   open = false;
   messageList: any; // 消息列表
+  queryPoint: any;
 
 
   constructor(public authService: AuthService, public router: Router, private _cookieService: CookieService,
-     private messageService: MessageService,
+    private messageService: MessageService, public messService: MessService,
     config: NgbDropdownConfig) {
     this.routeTree = ROUTETREE;
     // customize default values of dropdowns used by this component tree
@@ -38,17 +40,25 @@ export class HomeComponent implements OnInit {
 
   }
 
-  // 跳到控制台地图的具体的点
-  goTothePoint(item) {
-    console.log(item);
+  // 路由跳转-传递参数-这是在html中绑定的click跳转事件
+  jumpHandle(item) {
+    this.queryPoint = item;
+    this.messService.StatusMission(this.queryPoint);
+    this.router.navigate([`home/monitor`]);
+    // this.router.navigate([`home/monitor`], {
+    //   queryParams: {
+    //     item: item
+    //   }
+    // });
+
   }
+
+
 
   // 退出登录
   logout() {
-    // console.log('ddd');
-    this.authService.logout();
 
-    // console.log(currentUser);
+    this.authService.logout();
   }
 
   // 侧边栏开合按钮
@@ -63,7 +73,7 @@ export class HomeComponent implements OnInit {
 
     this.messageService.getMessage().subscribe({
       next: function (val) {
-        console.log(val);
+
         that.messageList = val.list;
 
       },

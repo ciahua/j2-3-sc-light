@@ -31,7 +31,7 @@ export class MonitorService {
             .pipe(
                 delay(1000),
                 tap(val => {
-                    console.log(val);
+                    // console.log(val);
                     return val;
                 })
             );
@@ -44,7 +44,7 @@ export class MonitorService {
             .pipe(
                 delay(1000),
                 tap(val => {
-                    console.log(val);
+                    // console.log(val);
                     return val;
                 })
             );
@@ -57,7 +57,7 @@ export class MonitorService {
             .pipe(
                 delay(1000),
                 tap(val => {
-                    console.log(val);
+                    // console.log(val);
                     return val;
                 })
             );

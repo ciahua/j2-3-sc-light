@@ -17,7 +17,7 @@
           <!-- 滚动字幕 -->
           <div class="d-inline-block marquee nav-message">
             <ul>
-              <li *ngFor="let mess of messageList" (click)="goTothePoint(mess)">
+              <li *ngFor="let mess of messageList" >
                   {{mess.message}}
               </li>
 
@@ -47,7 +47,9 @@
                   <i class="fa fa-bell nav-icon " aria-hidden="true"></i>
                 </span>
                 <ul ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu-message">
-                  <li class="dropdown-item" *ngFor="let mess of messageList"><span class="dropdown-menu-list text-left">{{mess.message}}</span></li>
+                  <li class="dropdown-item" *ngFor="let mess of messageList" (click)="jumpHandle(mess)">
+                    <span class="dropdown-menu-list text-left">{{mess.message}}</span>
+                  </li>
 
                 </ul>
             </div>
@@ -113,7 +115,7 @@
         <div class="container-fluid">
           <div cllas="row">
             <div class="col-12 col-md-12 header-margin " [ngClass]="{'sidebar-open':open === true,'sidebar-collapse':!open}">
-              <router-outlet></router-outlet>
+              <router-outlet ></router-outlet>
             </div>
           </div>
         </div>

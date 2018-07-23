@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs/';
 import { BeiduAPIService } from '../../servers/baiduApi';
 import { BeiduMAPService } from '../../servers/baiduMap';
 import { DEVICEMAP } from '../../data/device-map';
@@ -10,7 +12,8 @@ import { CircleOverlarService } from './circle-overlay.server';
 // import { CITYLIST } from '../../data/city-list';
 
 import { Point } from '../../data/point.type';
-import { MonitorService } from '../../service/monitor.server';
+import { MonitorService } from '../../service/monitor.service';
+import { MessService } from '../../service/mess.service';
 
 // baidu map
 declare let BMap;
@@ -19,6 +22,7 @@ declare let BMAP_STATUS_SUCCESS;
 declare let BMAP_ANCHOR_TOP_LEFT;
 declare let BMAP_ANCHOR_BOTTOM_RIGHT;
 declare let BMAP_ANCHOR_BOTTOM_LEFT;
+declare let BMAP_ANIMATION_BOUNCE;
 
 @Component({
   selector: 'app-monitor',
@@ -46,21 +50,49 @@ export class MonitorComponent implements OnInit {
   zoom: any; // 地图级数
   SouthWest: Point;
   NorthEast: Point;
+  queryPoint: any; // 路由传了的数据
+  isqueryPoint = false; // 路由传了的数据
+  subscription: Subscription;
 
   constructor(private beiduAPIService: BeiduAPIService, private beiduMAPService: BeiduMAPService,
-    private monitorService: MonitorService,  config: NgbDropdownConfig
+    private monitorService: MonitorService, config: NgbDropdownConfig, private activatedRoute: ActivatedRoute,
+    public messService: MessService,
     ) {
     this.zoom = 12; // 默认
     config.placement = 'bottom-left';
+
+    this.subscription = messService.Status$.subscribe(message => {
+      this.queryPoint = message;
+      this.isqueryPoint = true;
+      console.log('this.queryPoint');
+      console.log(this.queryPoint);
+      this.goTothePoint(this.map);
+    });
+
+
 
   }
 
 
   ngOnInit() {
 
-
     this.getCity(); // 获取城市列表
     this.getDevice(); // 获取设备列表
+
+  }
+
+  // 具体的点
+
+  // 跳到控制台地图的具体的点
+  goTothePoint(baiduMap) {
+
+    const pt = new BMap.Point(this.queryPoint.lng, this.queryPoint.lat);
+    const mk = new BMap.Marker(pt);
+    baiduMap.setZoom(18);
+    baiduMap.panTo(pt);
+    this.remove_overlay(baiduMap); // 清除覆盖物
+    baiduMap.addOverlay(mk);
+    mk.setAnimation(BMAP_ANIMATION_BOUNCE); // 跳动的动画
 
   }
 
@@ -77,7 +109,7 @@ export class MonitorComponent implements OnInit {
       if (point) {
         baiduMap.centerAndZoom(point, zoom);
         // baiduMap.addOverlay(new BMap.Marker(point));
-        that.addMarker(); // 添加标注
+        that.addMarker(); // 获取数据-添加标注
       } else {
         console.log('您选择地址没有解析到结果!');
       }
@@ -133,12 +165,29 @@ export class MonitorComponent implements OnInit {
   // 监控-地图缩放事件-地图缩放后的级别。
   zoomendOff(baiduMap) {
     const that =  this;
+
+    // baiduMap.addEventListener('zoomend', function () {
+    //   that.zoom = baiduMap.getZoom();
+    //   that.remove_overlay(baiduMap);
+    //   that.addMarker(); // 添加标注
+    //   console.log('地图缩放至：' + baiduMap.getZoom() + '级');
+    // });
+
     baiduMap.addEventListener('zoomend', function () {
-      that.zoom = baiduMap.getZoom();
-      that.remove_overlay(baiduMap);
-      that.addMarker(); // 添加标注
-      console.log('地图缩放至：' + baiduMap.getZoom() + '级');
+      if (that.isqueryPoint === true) {
+
+        that.isqueryPoint = false;
+      } else {
+        console.log(555555555555);
+        that.zoom = baiduMap.getZoom();
+        that.remove_overlay(baiduMap);
+        that.addMarker(); // 添加标注
+        console.log('地图缩放至：' + baiduMap.getZoom() + '级');
+
+      }
+
     });
+
   }
 
   // 省市区街道-地图级别
@@ -171,7 +220,7 @@ export class MonitorComponent implements OnInit {
 
     console.log(id);
     console.log(name);
-    this.remove_overlay(this.map); // 清除覆盖物
+
     this.getPoint(this.map, city);  // 解析地址- 设置中心和地图显示级别
     // this.currentChildren = this.getNode(city.regions, city.id);
     this.currentChildren = city.children;
@@ -310,10 +359,7 @@ export class MonitorComponent implements OnInit {
     });
   }
 
-  // 清除覆盖物
-  remove_overlay(baiduMap) {
-    baiduMap.clearOverlays();
-  }
+
 
   // 返回地图可视区域，以地理坐标表示
   getBounds(baiduMap) {
@@ -323,8 +369,14 @@ export class MonitorComponent implements OnInit {
 
   }
 
+  // 清除覆盖物
+  remove_overlay(baiduMap) {
+    baiduMap.clearOverlays();
+  }
+
   // 根据级别获取数据-锚点
   addMarker() {
+
     this.getBounds(this.map); // 获取可视区域
     const that = this;
     const zoom = this.zoom;
@@ -375,7 +427,7 @@ export class MonitorComponent implements OnInit {
       const name = item.name;
       const mk = new BMap.Marker(pt); // 默认标注
       that.map.addOverlay(mk);
-      markers.push(mk); // 聚合
+
 
     });
 
@@ -534,8 +586,8 @@ export class MonitorComponent implements OnInit {
       if (!obj || !obj.id) {
         continue;
       }
-      console.log(nodeId);
-      console.log(obj.id);
+      // console.log(nodeId);
+      // console.log(obj.id);
       // 2.有节点就开始找，一直递归下去
       if (obj.id === nodeId) {
         // 找到了与nodeId匹配的节点，结束递归

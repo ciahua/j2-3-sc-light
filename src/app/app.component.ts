@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { filter, map } from 'rxjs/operators';
 declare var $: any;
@@ -9,7 +9,7 @@ declare var $: any;
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'app';
   constructor(public router: Router) {
 
@@ -17,13 +17,11 @@ export class AppComponent implements OnInit{
 
   ngOnInit() {
 
-  //   this.router.events
-  //     .filter(event => event instanceof NavigationEnd)
-  //     .map(() => this.router.routerState.root)
-  //     .subscribe((event) => {
-  //       $(window).scrollTop(0);
+    this.router.events
+      .subscribe((event) => {
+        $(window).scrollTop(0);
 
-  //     });
+      });
 
 
   }
