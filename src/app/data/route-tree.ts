@@ -10,7 +10,7 @@ export const ROUTETREE = [
     {
         id: 1,
         icon: 'fa fa-bullhorn nav-icon ',
-        routeLink: 'survey',
+        routeLink: 'alert',
         routeTitel: '报警规则设置',
         isCollapsed: false,
         hasRight: false,
@@ -18,7 +18,7 @@ export const ROUTETREE = [
     {
         id: 1,
         icon: 'fa fa-sliders nav-icon ',
-        routeLink: 'survey',
+        routeLink: 'control',
         routeTitel: '控制策略设置',
         isCollapsed: false,
         hasRight: false,
@@ -26,7 +26,7 @@ export const ROUTETREE = [
     {
         id: 1,
         icon: 'fa fa-bar-chart nav-icon',
-        routeLink: 'survey',
+        routeLink: 'energy',
         routeTitel: '能源管理',
         isCollapsed: true,
         hasRight: false,
@@ -34,12 +34,12 @@ export const ROUTETREE = [
             {
                 id: 21,
                 icon: 'fa fa-th-list nav-icon-s',
-                routeLink: 'illumination',
+                routeLink: 'energy/survey',
                 routeTitel: '概览',
             }, {
                 id: 21,
                 icon: 'fa fa-line-chart nav-icon-s',
-                routeLink: 'WellCover',
+                routeLink: 'energy/report',
                 routeTitel: '报表',
             },
         ]
@@ -56,12 +56,12 @@ export const ROUTETREE = [
             {
                 id: 21,
                 icon: 'fa fa-life-ring nav-icon-s',
-                routeLink: 'illumination',
+                routeLink: 'application/cover',
                 routeTitel: '井盖监控',
             }, {
                 id: 21,
                 icon: 'fa fa-bolt nav-icon-s',
-                routeLink: 'WellCover',
+                routeLink: 'application/calamity',
                 routeTitel: '灾害预警',
             },
         ]

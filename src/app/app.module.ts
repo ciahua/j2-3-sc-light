@@ -16,8 +16,11 @@ import { HomeModule } from './home/home.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
-import { ConfigComponent } from './home/config/config.component';
-import { ManageComponent } from './home/manage/manage.component';
+import { DeviceComponent } from './home/device/device.component';
+import { UserComponent } from './home/user/user.component';
+import { MonitorComponent } from './home/monitor/monitor.component';
+import { ApplicationComponent } from './home/application/application.component';
+import { EnergyComponent } from './home/energy/energy.component';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -28,26 +31,13 @@ import { AuthGuard } from './guard/auth-guard.service';
 import { AuthService } from './guard/auth.service';
 import { WindowRef } from './windowserver';
 import { DialogService } from './service/dialog.service';
-import { BeiduAPIService } from './servers/baiduApi';
-import { BeiduMAPService } from './servers/baiduMap';
+import { BeiduAPIService } from './service/servers/baiduApi';
+import { BeiduMAPService } from './service/servers/baiduMap';
 import { MonitorService } from './service/monitor.service';
 import { MessageService } from './service/message.service';
 import { MessService } from './service/mess.service';
 
-
-
 import { PageNotFoundComponent } from './not-found.component';
-import { AdminComponent } from './admin/admin.component';
-import { LicenseSystemComponent } from './home/config/license-system/license-system.component';
-import { UserSystemComponent } from './home/config/user-system/user-system.component';
-import { ContainerComponent } from './home/manage/container/container.component';
-import { StorageComponent } from './home/manage/storage/storage.component';
-
-import { MonitorComponent } from './home/monitor/monitor.component';
-import { DeviceComponent } from './home/device/device.component';
-import { UserComponent } from './home/user/user.component';
-import { ApplicationComponent } from './home/application/application.component';
-import { LogsComponent } from './home/logs/logs.component';
 
 
 
@@ -57,20 +47,14 @@ import { LogsComponent } from './home/logs/logs.component';
     AppComponent,
     LoginComponent,
     HomeComponent,
-    ConfigComponent,
-    ManageComponent,
-
     PageNotFoundComponent,
-    AdminComponent,
-    LicenseSystemComponent,
-    UserSystemComponent,
-    ContainerComponent,
-    StorageComponent,
-    MonitorComponent,
     DeviceComponent,
     UserComponent,
+    MonitorComponent,
     ApplicationComponent,
-    LogsComponent
+    EnergyComponent
+
+
   ],
   imports: [
     NgbModule.forRoot(),

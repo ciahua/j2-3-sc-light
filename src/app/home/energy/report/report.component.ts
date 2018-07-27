@@ -1,20 +1,19 @@
 
-
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
 
 import { CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridsterItemComponentInterface, GridType } from 'angular-gridster2';
-import { HKDATA } from '../../service/servers/hkong';
-// import { GUANGZHOU } from '../../service/servers/HkKJuGe_W';
-// import { SHENGZHEN } from '../../service/servers/shengzhen';
+import { HKDATA } from '../../../service/servers/hkong';
+
 declare let echarts;
 declare let BMap;
 
 @Component({
-  selector: 'app-manage',
-  templateUrl: './manage.component.html',
-  styleUrls: ['./manage.component.scss']
+  selector: 'app-report',
+  templateUrl: './report.component.html',
+  styleUrls: ['./report.component.scss']
 })
-export class ManageComponent implements AfterViewInit, OnInit {
+
+export class ReportComponent implements AfterViewInit, OnInit {
   options: GridsterConfig;
   // dashboard: Array<GridsterItem>;
   dashboard: Array<any>;

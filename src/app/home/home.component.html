@@ -18,7 +18,7 @@
           <div class="d-inline-block marquee nav-message">
             <ul>
               <li *ngFor="let mess of messageList" >
-                  {{mess.message}}
+                   {{mess.address}}-{{mess.name}}-{{mess.id}}-{{mess.message}}
               </li>
 
             </ul>
@@ -48,7 +48,7 @@
                 </span>
                 <ul ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu-message">
                   <li class="dropdown-item" *ngFor="let mess of messageList" (click)="jumpHandle(mess)">
-                    <span class="dropdown-menu-list text-left">{{mess.message}}</span>
+                    <span class="dropdown-menu-list text-left">{{mess.address}}-{{mess.name}}-{{mess.id}}-{{mess.message}}</span>
                   </li>
 
                 </ul>

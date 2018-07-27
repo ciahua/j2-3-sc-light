@@ -4,382 +4,229 @@
     "val": {
         "community_list": [
             {
-                "id": 125735,
-                "name": "\u6c99\u5c3e\u673a\u697c",
-                "address": "\u6c99\u5634\u8def36\u53f7",
-                "build_date": "1998\u5e74",
-                "lat": "22.531575",
-                "lng": "114.046007",
-                "prop_num": 48
+                "id": 323631,
+                "name": "\u82f1\u4f26\u540d\u82d1(\u4e00\u671f)",
+                "address": "\u6c99\u6cb3\u897f\u8def2025",
+                "build_date": "2003\u5e74",
+                "lat": "22.554285",
+                "lng": "113.962989",
+                "prop_num": 2
             },
             {
-                "id": 170576,
-                "name": "\u6cf0\u7136\u516c\u5bd3\u533a",
-                "address": "\u6cf0\u7136\u56db\u8def94\u53f7",
-                "build_date": "2001\u5e74",
-                "lat": "22.540319",
-                "lng": "114.032887",
-                "prop_num": 49
+                "id": 867991,
+                "name": "\u5927\u51b2\u65b0\u57ce\u82b1\u56ed",
+                "address": "\u79d1\u53d1\u8def",
+                "build_date": "2015\u5e74",
+                "lat": "22.548016",
+                "lng": "113.958769",
+                "prop_num": 999
             },
             {
-                "id": 591069,
-                "name": "\u5609\u6d32\u5bcc\u82d1",
-                "address": "\u65b0\u6d32\u6751\u724c\u574a\u8857",
-                "build_date": "2012\u5e74",
-                "lat": "22.53221",
-                "lng": "114.05236",
-                "prop_num": 76
-            },
-            {
-                "id": 176568,
-                "name": "\u4e1c\u6d77\u82b1\u56ed\u541b\u8c6a\u9601",
-                "address": "\u9999\u8f69\u8def",
-                "build_date": "2002\u5e74",
-                "lat": "22.546038",
-                "lng": "114.032842",
-                "prop_num": 6
-            },
-            {
-                "id": 237270,
-                "name": "\u6cf0\u7136\u5e7f\u573a",
-                "address": "\u6ee8\u6cb3\u5927\u90539309\u53f7",
-                "build_date": "1997\u5e74",
-                "lat": "22.534119",
-                "lng": "114.030213",
-                "prop_num": 40
-            },
-            {
-                "id": 402874,
-                "name": "\u987a\u6cf0\u516c\u5bd3",
-                "address": "\u6cf0\u7136\u4e5d\u8def",
-                "build_date": "1995\u5e74",
-                "lat": "22.534659",
-                "lng": "114.039564",
-                "prop_num": 1
-            },
-            {
-                "id": 843749,
-                "name": "\u4e7e\u6cf0\u516c\u5bd3",
-                "address": "\u6cf0\u7136\u4e09\u8def",
+                "id": 97672,
+                "name": "\u6df1\u5357\u82b1\u56ed",
+                "address": "\u79d1\u5174\u8def11\u53f7",
                 "build_date": "1996\u5e74",
-                "lat": "22.534887",
-                "lng": "114.040121",
-                "prop_num": 45
+                "lat": "22.546531",
+                "lng": "113.950846",
+                "prop_num": 283
             },
             {
-                "id": 96008,
-                "name": "\u4e1c\u65b9\u73ab\u7470\u82b1\u56ed",
-                "address": "\u6df1\u5357\u5927\u9053",
-                "build_date": "1999\u5e74",
-                "lat": "22.545896",
-                "lng": "114.048297",
-                "prop_num": 78
-            },
-            {
-                "id": 318543,
-                "name": "\u5609\u6d32\u534e\u82d1",
-                "address": "\u6ee8\u6cb3\u5927\u90539038\u53f7",
-                "build_date": "2002\u5e74",
-                "lat": "22.534805",
-                "lng": "114.051073",
-                "prop_num": 37
-            },
-            {
-                "id": 95969,
-                "name": "\u97f5\u52a8\u5bb6\u56ed",
-                "address": "\u6c99\u5634\u8def119\u53f7",
-                "build_date": "2005\u5e74",
-                "lat": "22.532346",
-                "lng": "114.04467",
-                "prop_num": 27
-            },
-            {
-                "id": 482622,
-                "name": "\u660c\u6cf0\u516c\u5bd3",
-                "address": "\u6ee8\u6cb3\u5927\u9053",
-                "build_date": "2013\u5e74",
-                "lat": "22.534669",
-                "lng": "114.039002",
-                "prop_num": 14
-            },
-            {
-                "id": 910769,
-                "name": "\u4eac\u57fa\u6ee8\u6cb3\u65f6\u4ee3\u5e7f\u573a(\u5317\u533a)",
-                "address": "\u6ee8\u6cb3\u5927\u90539289\u53f7",
+                "id": 1034006,
+                "name": "\u534e\u6da6\u57ce\u6da6\u5e9c\u4e8c\u671f",
+                "address": "\u94dc\u9f13\u8def",
                 "build_date": "2017\u5e74",
-                "lat": "22.534736",
-                "lng": "114.032775",
-                "prop_num": 226
+                "lat": "22.549787",
+                "lng": "113.961116",
+                "prop_num": 386
             },
             {
-                "id": 98001,
-                "name": "\u6cf0\u5b89\u8f69",
-                "address": "\u6cf0\u7136\u56db\u8def",
-                "build_date": "1999\u5e74",
-                "lat": "22.540455",
-                "lng": "114.03176",
-                "prop_num": 126
-            },
-            {
-                "id": 97269,
-                "name": "\u5929\u5b89\u9ad8\u5c14\u592b\u82b1\u56ed\u73d1\u56ed(\u5929\u5b89\u9ad8\u5c14\u592b\u82b1\u56ed\u4e09\u671f)",
-                "address": "\u6cf0\u7136\u4e09\u8def",
+                "id": 95504,
+                "name": "\u6c47\u666f\u8c6a\u82d1",
+                "address": "\u79d1\u5174\u8def10\u53f7",
                 "build_date": "2000\u5e74",
-                "lat": "22.539304",
-                "lng": "114.03914",
-                "prop_num": 116
+                "lat": "22.546839",
+                "lng": "113.94946",
+                "prop_num": 249
             },
             {
-                "id": 97650,
-                "name": "\u90fd\u5e02\u9633\u5149\u540d\u82d1",
-                "address": "\u6df1\u5357\u5927\u90536017\u53f7",
-                "build_date": "2005\u5e74",
-                "lat": "22.541314",
-                "lng": "114.032057",
-                "prop_num": 86
-            },
-            {
-                "id": 96099,
-                "name": "\u78a7\u6d77\u7ea2\u6811\u56ed",
-                "address": "\u798f\u8363\u8def98\u53f7",
-                "build_date": "2003\u5e74",
-                "lat": "22.532991",
-                "lng": "114.029108",
-                "prop_num": 81
-            },
-            {
-                "id": 96253,
-                "name": "\u6cf0\u5eb7\u8f69",
-                "address": "\u6cf0\u7136\u56db\u8def118\u53f7",
-                "build_date": "2003\u5e74",
-                "lat": "22.539816",
-                "lng": "114.031923",
-                "prop_num": 141
-            },
-            {
-                "id": 910767,
-                "name": "\u6d69\u94ed\u8d22\u5bcc\u5e7f\u573a",
-                "address": "\u9999\u6797\u8def7\u53f7",
-                "build_date": "2003\u5e74",
-                "lat": "22.543584",
-                "lng": "114.03296",
-                "prop_num": 33
-            },
-            {
-                "id": 96298,
-                "name": "\u798f\u5b87\u8f69",
-                "address": "\u65b0\u6c99\u8def13\u53f7",
-                "build_date": "2003\u5e74",
-                "lat": "22.534391",
-                "lng": "114.049852",
-                "prop_num": 15
-            },
-            {
-                "id": 243943,
-                "name": "\u5929\u5b89\u9ad8\u5c14\u592b\u82b1\u56ed(\u4e00\u671f)",
-                "address": "\u6ee8\u6cb3\u5927\u90539280\u53f7",
-                "build_date": "1998\u5e74",
-                "lat": "22.535691",
-                "lng": "114.039814",
-                "prop_num": 103
-            },
-            {
-                "id": 418698,
-                "name": "\u6c38\u6cf0\u516c\u5bd3",
-                "address": "\u6cf0\u7136\u4e94\u8def",
-                "build_date": "2001\u5e74",
-                "lat": "22.535093",
-                "lng": "114.038035",
-                "prop_num": 81
-            },
-            {
-                "id": 126700,
-                "name": "\u4e1c\u6d77\u82b1\u56ed(\u4e8c\u671f\u798f\u7984\u5c45)",
-                "address": "\u9999\u6797\u8def",
-                "build_date": "1999\u5e74",
-                "lat": "22.544846",
-                "lng": "114.0305",
-                "prop_num": 234
-            },
-            {
-                "id": 96475,
-                "name": "\u96cd\u7965\u5c45",
-                "address": "\u9999\u8f69\u8def28\u53f7",
-                "build_date": "2001\u5e74",
-                "lat": "22.545975",
-                "lng": "114.030832",
+                "id": 864188,
+                "name": "\u79d1\u6280\u56ed\u4e09\u5341\u516d\u533a",
+                "address": "\u79d1\u534e\u8def2\u53f7",
+                "build_date": "1995\u5e74",
+                "lat": "22.552004",
+                "lng": "113.955856",
                 "prop_num": 13
             },
             {
-                "id": 842384,
-                "name": "\u5f69\u8fbe\u697c",
-                "address": "\u6ee8\u6cb3\u5927\u9053",
+                "id": 95674,
+                "name": "\u82f1\u4f26\u540d\u82d1(\u4e8c\u671f)",
+                "address": "\u6c99\u6cb3\u897f\u8def2021\u53f7",
+                "build_date": "2003\u5e74",
+                "lat": "22.553588",
+                "lng": "113.96402",
+                "prop_num": 4
+            },
+            {
+                "id": 724900,
+                "name": "\u5927\u51b2\u57ce\u5e02\u82b1\u56ed",
+                "address": "\u5927\u51b2\u4e8c\u8def",
+                "build_date": "2014\u5e74",
+                "lat": "22.54992",
+                "lng": "113.963342",
+                "prop_num": 690
+            },
+            {
+                "id": 790585,
+                "name": "\u5927\u51b2\u90fd\u5e02\u82b1\u56ed",
+                "address": "\u94dc\u9f13\u8def",
                 "build_date": "",
-                "lat": "22.532386",
-                "lng": "114.037333",
+                "lat": "22.549515",
+                "lng": "113.959772",
+                "prop_num": 335
+            },
+            {
+                "id": 95483,
+                "name": "\u51ef\u4e3d\u82b1\u56ed",
+                "address": "\u9ad8\u65b0\u4e2d\u56db\u90536\u53f7",
+                "build_date": "1996\u5e74",
+                "lat": "22.54864",
+                "lng": "113.946335",
+                "prop_num": 140
+            },
+            {
+                "id": 189413,
+                "name": "\u79d1\u6280\u56ed\u5c0f\u533a",
+                "address": "\u7fe0\u6eaa\u8def1\u53f7",
+                "build_date": "1991\u5e74",
+                "lat": "22.551422",
+                "lng": "113.956737",
+                "prop_num": 137
+            },
+            {
+                "id": 349209,
+                "name": "\u79d1\u82d1\u5c45",
+                "address": "\u7fe0\u6eaa\u8def",
+                "build_date": "1995\u5e74",
+                "lat": "22.54861",
+                "lng": "113.950228",
+                "prop_num": 91
+            },
+            {
+                "id": 843328,
+                "name": "\u79d1\u6280\u56ed\u4f4f\u5b85\u5c0f\u533a",
+                "address": "\u9752\u68a7\u8def1\u53f7",
+                "build_date": "1998\u5e74",
+                "lat": "22.551398",
+                "lng": "113.956724",
+                "prop_num": 1
+            },
+            {
+                "id": 652107,
+                "name": "\u7ea2\u6811\u522b\u9662",
+                "address": "\u6c99\u6cb3\u897f\u8def2015\u53f7",
+                "build_date": "2014\u5e74",
+                "lat": "22.552059",
+                "lng": "113.963485",
+                "prop_num": 12
+            },
+            {
+                "id": 843275,
+                "name": "\u8b66\u5bdf\u82b1\u56ed",
+                "address": "\u9ad8\u65b0\u4e2d\u56db\u905311\u53f7",
+                "build_date": "1995\u5e74",
+                "lat": "22.547957",
+                "lng": "113.944307",
+                "prop_num": 27
+            },
+            {
+                "id": 864187,
+                "name": "\u79d1\u6280\u56ed\u4e94\u5341\u516b\u533a",
+                "address": "\u6587\u534e\u8def",
+                "build_date": "2009\u5e74",
+                "lat": "22.554039",
+                "lng": "113.957801",
+                "prop_num": 4
+            },
+            {
+                "id": 98229,
+                "name": "\u82f1\u4f26\u540d\u82d1(\u4e09\u671f)",
+                "address": "\u6c99\u6cb3\u897f\u8def2023\u53f7",
+                "build_date": "2005\u5e74",
+                "lat": "22.553472",
+                "lng": "113.96218",
                 "prop_num": 6
             },
             {
-                "id": 95983,
-                "name": "\u82b1\u6837\u5e74\u82b1\u597d\u56ed",
-                "address": "\u6ee8\u6cb3\u5927\u90539299\u53f7",
-                "build_date": "2005\u5e74",
-                "lat": "22.534315",
-                "lng": "114.032039",
-                "prop_num": 319
-            },
-            {
-                "id": 422091,
-                "name": "\u798f\u8363\u697c",
-                "address": "\u4e0a\u6c99\u6930\u6811\u8def\u4e00\u5df71\u53f7",
+                "id": 843329,
+                "name": "\u79d1\u82d1\u897f\u4f4f\u5b85\u5c0f\u533a",
+                "address": "\u79d1\u5174\u8def6\u53f7",
                 "build_date": "",
-                "lat": "22.531808",
-                "lng": "114.036878",
-                "prop_num": 1
-            },
-            {
-                "id": 188676,
-                "name": "\u5929\u5b89\u9ad8\u5c14\u592b\u6d77\u666f\u82b1\u56ed(\u5929\u5b89\u9ad8\u5c14\u592b\u82b1\u56ed\u4e8c\u671f)",
-                "address": "\u6ee8\u6cb3\u5927\u90539280\u53f7",
-                "build_date": "1999\u5e74",
-                "lat": "22.541185",
-                "lng": "114.039214",
-                "prop_num": 111
-            },
-            {
-                "id": 942512,
-                "name": "\u8da3\u56ed",
-                "address": "\u6ee8\u6cb3\u5927\u90539172\u53f7",
-                "build_date": "2003\u5e74",
-                "lat": "22.5342015058",
-                "lng": "114.0469709999",
-                "prop_num": 41
-            },
-            {
-                "id": 326514,
-                "name": "\u5eb7\u8fbe\u5c14\u516c\u5bd3",
-                "address": "\u65b0\u6d32\u4e09\u8def18\u53f7",
-                "build_date": "2000\u5e74",
-                "lat": "22.532543",
-                "lng": "114.050566",
-                "prop_num": 1
-            },
-            {
-                "id": 842222,
-                "name": "\u5b89\u534e\u516c\u5bd3",
-                "address": "\u6cf0\u7136\u516b\u8def18\u53f7",
-                "build_date": "1993\u5e74",
-                "lat": "22.537054",
-                "lng": "114.033951",
-                "prop_num": 1
-            },
-            {
-                "id": 843282,
-                "name": "\u4e45\u6cf0\u516c\u5bd3",
-                "address": "\u6ee8\u6cb3\u5927\u9053",
-                "build_date": "1987\u5e74",
-                "lat": "22.535107",
-                "lng": "114.038457",
-                "prop_num": 14
-            },
-            {
-                "id": 96180,
-                "name": "\u8354\u6811\u4eba\u5bb6",
-                "address": "\u798f\u5f3a\u8def32\u53f7",
-                "build_date": "1999\u5e74",
-                "lat": "22.532759",
-                "lng": "114.040138",
-                "prop_num": 40
-            },
-            {
-                "id": 325647,
-                "name": "\u5609\u5dde\u8c6a\u56ed",
-                "address": "\u6ee8\u6cb3\u5927\u90539013\u53f7",
-                "build_date": "2001\u5e74",
-                "lat": "22.532976",
-                "lng": "114.050758",
+                "lat": "22.548008",
+                "lng": "113.950783",
                 "prop_num": 25
             },
             {
-                "id": 96435,
-                "name": "\u5b89\u67cf\u4e3d\u6676",
-                "address": "\u6df1\u5357\u5927\u90536012\u53f7",
+                "id": 287791,
+                "name": "\u79d1\u82d1\u5c71\u5e84",
+                "address": "\u6587\u534e\u8def4\u53f7",
                 "build_date": "2003\u5e74",
-                "lat": "22.546029",
-                "lng": "114.050269",
-                "prop_num": 45
+                "lat": "22.553977",
+                "lng": "113.955825",
+                "prop_num": 9
             },
             {
-                "id": 97528,
-                "name": "\u65b0\u5149\u6d3b\u529b\u5c0f\u533a",
-                "address": "\u65b0\u6c99\u8def10\u53f7",
-                "build_date": "1997\u5e74",
-                "lat": "22.536553",
-                "lng": "114.051087",
-                "prop_num": 96
-            },
-            {
-                "id": 126446,
-                "name": "\u534e\u6d77\u5c0f\u533a",
-                "address": "\u65b0\u6c99\u8def68\u53f7",
+                "id": 843330,
+                "name": "\u79d1\u82d1\u5c0f\u533a",
+                "address": "\u79d1\u4f1f\u8def8\u53f7",
                 "build_date": "1998\u5e74",
-                "lat": "22.53451",
-                "lng": "114.048306",
+                "lat": "22.55486",
+                "lng": "113.953328",
+                "prop_num": 30
+            },
+            {
+                "id": 1032936,
+                "name": "\u79d1\u6280\u56ed\u56db\u5341\u516b\u533a",
+                "address": "\u79d1\u4f1f\u8def",
+                "build_date": "1993\u5e74",
+                "lat": "22.554224",
+                "lng": "113.953389",
                 "prop_num": 1
             },
             {
-                "id": 96096,
-                "name": "\u9526\u5dde\u82b1\u56ed",
-                "address": "\u65b0\u6d32\u4e09\u8857168\u53f7",
-                "build_date": "1997\u5e74",
-                "lat": "22.531837",
-                "lng": "114.051122",
-                "prop_num": 54
+                "id": 95496,
+                "name": "\u6717\u666f\u56ed",
+                "address": "\u79d1\u6280\u8def2\u53f7",
+                "build_date": "2001\u5e74",
+                "lat": "22.546673",
+                "lng": "113.957081",
+                "prop_num": 62
             },
             {
-                "id": 403384,
-                "name": "\u60e0\u53d1\u82b1\u56ed",
-                "address": "\u4e0a\u6c99\u6930\u6811\u6751\u5341\u516d\u5df72\u53f7",
-                "build_date": "",
-                "lat": "22.531574",
-                "lng": "114.036223",
-                "prop_num": 39
+                "id": 907366,
+                "name": "\u534e\u6da6\u57ce\u6da6\u5e9c\u4e00\u671f",
+                "address": "\u6df1\u5357\u5927\u90539672\u53f7",
+                "build_date": "2018\u5e74",
+                "lat": "22.54672",
+                "lng": "113.959844",
+                "prop_num": 535
             },
             {
-                "id": 97817,
-                "name": "\u4e1c\u6d77\u5341\u516b\u5c45",
-                "address": "\u9999\u8f69\u8def",
-                "build_date": "2006\u5e74",
-                "lat": "22.546111",
-                "lng": "114.031464",
-                "prop_num": 10
+                "id": 288065,
+                "name": "\u535a\u5ba2\u516c\u5bd3",
+                "address": "\u79d1\u4f1f\u8def2\u53f7",
+                "build_date": "2009\u5e74",
+                "lat": "22.552825",
+                "lng": "113.953534",
+                "prop_num": 12
             },
             {
-                "id": 96025,
-                "name": "\u6717\u6674\u99a8\u6d32",
-                "address": "\u6ee8\u6cb3\u5927\u90539009\u53f7",
+                "id": 170178,
+                "name": "\u83b1\u8335\u82b1\u56ed",
+                "address": "\u6c99\u6cb3\u897f\u8def2017\u53f7",
                 "build_date": "2003\u5e74",
-                "lat": "22.533261",
-                "lng": "114.052155",
-                "prop_num": 53
-            },
-            {
-                "id": 170204,
-                "name": "\u6df1\u5733\u9ad8\u5c14\u592b\u522b\u5885",
-                "address": "\u6df1\u5357\u5927\u9053",
-                "build_date": "2003\u5e74",
-                "lat": "22.54255",
-                "lng": "114.049925",
-                "prop_num": 6
-            },
-            {
-                "id": 917204,
-                "name": "\u4eac\u57fa\u6ee8\u6cb3\u65f6\u4ee3\u5e7f\u573a(\u5357\u533a)",
-                "address": "\u4e0b\u6c99\u8def",
-                "build_date": "2014\u5e74",
-                "lat": "22.533",
-                "lng": "114.033996",
-                "prop_num": 55
+                "lat": "22.55284",
+                "lng": "113.962731",
+                "prop_num": 1
             }
         ],
         "match_data": []

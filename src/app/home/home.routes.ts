@@ -1,12 +1,16 @@
 import { Route } from '@angular/router';
 import { HomeComponent } from './home.component';
 import { AuthGuard } from '../guard/auth-guard.service';
-import { ConfigRoutes } from './config/config.routes';
-import { ManageRoutes } from './manage/manage.routes';
+// import { ConfigRoutes } from './config/config.routes';
+// import { ManageRoutes } from './manage/manage.routes';
 import { MonitorRoutes } from './monitor/monitor.routes';
-import { LogsRouter } from './logs/logs.routes';
+
 import { DeviceRoutes } from './device/device.routes';
 import { UserRoutes } from './user/user.routes';
+import { AlertRoutes } from './alert/alert.routes';
+import { ControlRoutes } from './control/control.routes';
+import { ApplicationRoutes } from './application/application.routes';
+import { EnergyRoutes } from './energy/energy.routes';
 export const HomeRoutes: Route[] = [
     {
         path: '',
@@ -20,11 +24,12 @@ export const HomeRoutes: Route[] = [
         children: [
             { path: '', redirectTo: 'monitor', pathMatch: 'full' },
             ...MonitorRoutes,
-            ...ManageRoutes,
-            ...ConfigRoutes,
-            ...LogsRouter,
             ...DeviceRoutes,
             ...UserRoutes,
+            ...AlertRoutes,
+            ...ControlRoutes,
+            ...ApplicationRoutes,
+            ...EnergyRoutes
         ]
     },
 ];

@@ -1,8 +1,8 @@
 export const CITYLIST = {
     zone: {
         id: '0102',
-        name: '深圳',
-        level: 2,
+        name: '科技园',
+        level: 4,
     },
     currentCity: {
         id: '0102',

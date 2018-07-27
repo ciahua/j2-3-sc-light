@@ -2,101 +2,2166 @@ export const MESSAGELIST = {
         timestamp: '',
         list: [
             {
-                id: '',
+
                 deviceId: '',
                 issueType: '',
                 priority: '',
                 regionId: '',
                 regionName: '',
                 positionId: '',
-                name: '北京今夜到明夜将迎“台风雨” 平均大雨局地暴雨',
-                message: '北京今夜到明夜将迎“台风雨” 平均大雨局地暴雨',
-                point: {
-                    'lat': '22.540319',
-                    'lng': '114.032887'
+                message: '状态异常',
+                'id': 'JG001',
+                'name': '智安纳防盗井盖',
+                'address': '广东省, 深圳市, 南山区, 工业四路, 6号',
+                'build_date': '2003\u5e74',
+                'lat': '22.496739',
+                'lng': '113.920522',
+                'parent': {
+                    'id': '300018',
+                    'name': '井盖',
+                    'address': '广东省, 深圳市, 南山区, 沿山路, 15号',
+                    'build_date': '2003\u5e74',
+                    'lat': '22.496681',
+                    'lng': '113.919238',
+                    'parameters': [], // 设备参数
+                    'prop_num': 2,
+                    'is_active': 1, // 激活
+                    'is_online': 0, // 在线
+                    'is_disabled': 1, // 禁用
+                    'is_exception': 0, // 异常
+                    'exception_Information': [], // 异常信息
+                    'has_child': 1,
+                    'children': [
+
+                        {
+                            'id': '310181',
+                            'name': '井盖',
+                            'address': '广东省, 深圳市, 南山区, 沿山路, 15号',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.496681',
+                            'lng': '113.919238',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 0, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 0, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    'id': 'JG001',
+                                    'name': '智安纳防盗井盖',
+                                    'address': '广东省, 深圳市, 南山区, 工业四路, 6',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496739',
+                                    'lng': '113.920522',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 0, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '状态',
+                                            'value': '离线',
+                                            'Unit': '' // 单位
+                                        },
+
+                                    ],
+                                },
+                            ],
+                        },
+
+                    ]
                 },
-                'lat': '22.540319',
-                'lng': '114.032887',
             },
             {
-                id: '',
+
                 deviceId: '',
                 issueType: '',
                 priority: '',
                 regionId: '',
                 regionName: '',
                 positionId: '',
-                name: '琼州海峡全线停航 海南局地还将有特大暴雨需防范',
-                message: '琼州海峡全线停航 海南局地还将有特大暴雨需防范',
-                point: {
-                    'lat': '22.53221',
-                    'lng': '114.05236'},
-                'lat': '22.53221',
-                'lng': '114.05236',
+                message: '状态异常',
+                'id': 'JG002',
+                'name': '智安纳防盗井盖',
+                'address': '广东省, 深圳市, 南山区, 沿山路, 9-3号',
+                'build_date': '2003\u5e74',
+                'lat': '22.495395',
+                'lng': '113.919166',
+                'parent': {
+                    'id': '300019',
+                    'name': '井盖',
+                    'address': '广东省, 深圳市, 南山区, 沿山路, 9-3号',
+                    'build_date': '2003\u5e74',
+                    'lat': '22.495395',
+                    'lng': '113.919166',
+                    'parameters': [], // 设备参数
+                    'prop_num': 2,
+                    'is_active': 1, // 激活
+                    'is_online': 0, // 在线
+                    'is_disabled': 1, // 禁用
+                    'is_exception': 0, // 异常
+                    'exception_Information': [], // 异常信息
+                    'has_child': 1,
+                    'children': [
+
+                        {
+                            'id': '310191',
+                            'name': '井盖',
+                            'address': '广东省, 深圳市, 南山区, 沿山路, 9-3号',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.495395',
+                            'lng': '113.919166',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 0, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 0, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    'id': 'JG002',
+                                    'name': '智安纳防盗井盖',
+                                    'address': '广东省, 深圳市, 南山区, 沿山路, 9-3号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.495395',
+                                    'lng': '113.919166',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 0, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '状态',
+                                            'value': '离线',
+                                            'Unit': '' // 单位
+                                        },
+
+                                    ],
+                                },
+                            ],
+                        }
+                    ]
+                },
             },
             {
-                id: '',
+
                 deviceId: '',
                 issueType: '',
                 priority: '',
                 regionId: '',
                 regionName: '',
                 positionId: '',
-                name: '“山神”残余云系重入北部湾 广西涠洲岛乌云翻滚',
-                message: '“山神”残余云系重入北部湾 广西涠洲岛乌云翻滚',
-                point: {
-                    'lat': '22.546038',
-                    'lng': '114.032842'},
-                'lat': '22.546038',
-                'lng': '114.032842',
+                message: '数据异常',
+                id: 'WD003',
+                name: '智安纳温度传感器',
+                'address': '广东省, 深圳市, 南山区, 沿山路, 21-1号',
+                'build_date': '2003\u5e74',
+                'lat': '22.49757',
+                'lng': '113.920122',
+                'parent': {
+                    'id': '300003',
+                    'name': '灯柱',
+                    'address': '广东省, 深圳市, 南山区, 沿山路, 21-1号',
+                    'build_date': '2003\u5e74',
+                    'lat': '22.49757',
+                    'lng': '113.920122',
+                    'parameters': [], // 设备参数
+                    'prop_num': 2,
+                    'is_active': 1, // 激活
+                    'is_online': 1, // 在线
+                    'is_disabled': 1, // 禁用
+                    'is_exception': 1, // 正常
+                    'exception_Information': [], // 异常信息
+                    'has_child': 1,
+                    'children': [
+                        {
+                            'id': '310001',
+                            'name': '灯',
+                            'address': '广东省, 深圳市, 南山区, 沿山路, 21-1号',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.49757',
+                            'lng': '113.920122',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 0, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    'id': 'LD003',
+                                    'name': '太阳能智能路灯',
+                                    'address': '广东省, 深圳市, 南山区, 沿山路, 21-1号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.49757',
+                                    'lng': '113.920122',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '照度',
+                                            'value': 50,
+                                            'Unit': 'LUX' // 单位
+                                        },
+
+                                    ],
+                                },
+                            ],
+
+                        },
+                        {
+                            'id': '310002',
+                            'name': '网关',
+                            'address': '广东省, 深圳市, 南山区, 沿山路, 21-1号',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.49757',
+                            'lng': '113.920122',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 0, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    'id': 'WG003',
+                                    'name': '华为智能网关',
+                                    'address': '广东省, 深圳市, 南山区, 工业四路, 6',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496739',
+                                    'lng': '113.920522',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '流量',
+                                            'value': 10,
+                                            'Unit': 'kb/s' // 单位
+                                        },
+
+                                    ],
+                                },
+                            ],
+
+                        },
+                        {
+                            'id': '310003',
+                            'name': '环境箱',
+                            'address': '广东省, 深圳市, 南山区, 沿山路, 21-1号',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.49757',
+                            'lng': '113.920122',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 1, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    id: 'WD003',
+                                    name: '智安纳温度传感器',
+                                    'address': '广东省, 深圳市, 南山区, 沿山路, 21-1号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.49757',
+                                    'lng': '113.920122',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 1, // 异常
+                                    'exception_Information': '深圳市南山区蛇口工业4路智安纳温度传感器WD001温度50摄氏度数据异常', // 异常信息
+                                    'has_child': 0,
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '温度',
+                                            'value': 50,
+                                            'Unit': '摄氏度' // 单位
+                                        },
+
+                                    ],
+                                },
+                                {
+                                    id: 'SD003',
+                                    name: '智安纳湿度传感器',
+                                    'address': '广东省, 深圳市, 南山区, 沿山路, 21-1号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.49757',
+                                    'lng': '113.920122',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'has_child': 0,
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '湿度',
+                                            'value': 25,
+                                            'Unit': '度' // 单位
+                                        },
+
+                                    ],
+                                },
+                                {
+                                    id: 'QT003',
+                                    name: '智安纳气体传感器',
+                                    'address': '广东省, 深圳市, 南山区, 沿山路, 21-1号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.49757',
+                                    'lng': '113.920122',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'has_child': 0,
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '臭氧浓度5',
+                                            'value': 5,
+                                            'Unit': 'ml/立方米' // 单位
+                                        },
+
+                                    ],
+                                }
+                            ],
+
+                        },
+
+                    ]
+                },
             },
             {
-                id: '',
+
                 deviceId: '',
                 issueType: '',
                 priority: '',
                 regionId: '',
                 regionName: '',
                 positionId: '',
-                name: '江苏发今年首个台风橙色预警 苏州等6地有大暴雨',
-                message: '江苏发今年首个台风橙色预警 苏州等6地有大暴雨',
-                point: {
-                    'lat': '22.534119',
-                    'lng': '114.030213'},
-                'lat': '22.534119',
-                'lng': '114.030213',
+                id: 'WD004',
+                message: '数据异常',
+                name: '智安纳温度传感器',
+                'address': '广东省, 深圳市, 南山区, 沿山路, 17号',
+                'build_date': '2003\u5e74',
+                'lat': '22.496885',
+                'lng': '113.919952',
+                'parent': {
+                    'id': '300004',
+                    'name': '灯柱',
+                    'address': '广东省, 深圳市, 南山区, 沿山路, 17号',
+                    'build_date': '2003\u5e74',
+                    'lat': '22.496885',
+                    'lng': '113.919952',
+                    'parameters': [], // 设备参数
+                    'prop_num': 2,
+                    'is_active': 1, // 激活
+                    'is_online': 1, // 在线
+                    'is_disabled': 1, // 禁用
+                    'is_exception': 1, // 异常
+                    'exception_Information': [], // 异常信息
+                    'has_child': 1,
+                    'children': [
+                        {
+                            'id': '310001',
+                            'name': '灯',
+                            'address': '广东省, 深圳市, 南山区, 沿山路, 17号',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.496885',
+                            'lng': '113.919952',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 0, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    'id': 'LD004',
+                                    'name': '太阳能智能路灯',
+                                    'address': '广东省, 深圳市, 南山区, 沿山路, 17号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496885',
+                                    'lng': '113.919952',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '照度',
+                                            'value': 50,
+                                            'Unit': 'LUX' // 单位
+                                        },
+
+                                    ],
+                                },
+                            ],
+
+                        },
+                        {
+                            'id': '310002',
+                            'name': '网关',
+                            'address': '广东省, 深圳市, 南山区, 沿山路, 17号',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.496885',
+                            'lng': '113.919952',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 0, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    'id': 'WG004',
+                                    'name': '华为智能网关',
+                                    'address': '广东省, 深圳市, 南山区, 沿山路, 17号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496885',
+                                    'lng': '113.919952',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '流量',
+                                            'value': 10,
+                                            'Unit': 'kb/s' // 单位
+                                        },
+
+                                    ],
+                                },
+                            ],
+
+                        },
+                        {
+                            'id': '310003',
+                            'name': '环境箱',
+                            'address': '广东省, 深圳市, 南山区, 沿山路, 17号',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.496885',
+                            'lng': '113.919952',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 1, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    id: 'WD004',
+                                    name: '智安纳温度传感器',
+                                    'address': '广东省, 深圳市, 南山区, 沿山路, 17号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496885',
+                                    'lng': '113.919952',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 1, // 异常
+                                    'exception_Information': '深圳市南山区蛇口工业4路智安纳温度传感器WD001温度50摄氏度数据异常', // 异常信息
+                                    'has_child': 0,
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '温度',
+                                            'value': 50,
+                                            'Unit': '摄氏度' // 单位
+                                        },
+
+                                    ],
+                                },
+                                {
+                                    id: 'SD004',
+                                    name: '智安纳湿度传感器',
+                                    'address': '广东省, 深圳市, 南山区, 沿山路, 17号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496885',
+                                    'lng': '113.919952',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'has_child': 0,
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '湿度',
+                                            'value': 25,
+                                            'Unit': '度' // 单位
+                                        },
+
+                                    ],
+                                },
+                                {
+                                    id: 'QT004',
+                                    name: '智安纳气体传感器',
+                                    'address': '广东省, 深圳市, 南山区, 沿山路, 17号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496885',
+                                    'lng': '113.919952',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'has_child': 0,
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '臭氧浓度5',
+                                            'value': 5,
+                                            'Unit': 'ml/立方米' // 单位
+                                        },
+
+                                    ],
+                                }
+                            ],
+
+                        },
+
+                    ]
+                },
             },
             {
-                id: '',
+
                 deviceId: '',
                 issueType: '',
                 priority: '',
                 regionId: '',
                 regionName: '',
                 positionId: '',
-                name: '青海循化县“7·18”强降雨导致2人死亡 房屋倒塌',
-                message: '青海循化县“7·18”强降雨导致2人死亡 房屋倒塌',
-                point: {
-                    'lat': '22.534659',
-                    'lng': '114.039564'},
-                'lat': '22.534659',
-                'lng': '114.039564',
+                message: '数据异常',
+                id: 'WD006',
+                name: '智安纳温度传感器',
+                'address': '广东省, 深圳市, 南山区, 沿山路, 11号',
+                'build_date': '2003\u5e74',
+                'lat': '22.496393',
+                'lng': '113.919781',
+                'parent': {
+                    'id': '300006',
+                    'name': '灯柱',
+                    'address': '广东省, 深圳市, 南山区, 沿山路, 11号',
+                    'build_date': '2003\u5e74',
+                    'lat': '22.496393',
+                    'lng': '113.919781',
+                    'parameters': [], // 设备参数
+                    'prop_num': 2,
+                    'is_active': 1, // 激活
+                    'is_online': 1, // 在线
+                    'is_disabled': 0, // 禁用
+                    'is_exception': 1, // 异常
+                    'exception_Information': [], // 异常信息
+                    'has_child': 1,
+                    'children': [
+                        {
+                            'id': '310001',
+                            'name': '灯',
+                            'address': '广东省, 深圳市, 南山区, 沿山路, 11号',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.496393',
+                            'lng': '113.919781',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 0, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    'id': 'LD006',
+                                    'name': '太阳能智能路灯',
+                                    'address': '广东省, 深圳市, 南山区, 沿山路, 11号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496393',
+                                    'lng': '113.919781',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '照度',
+                                            'value': 50,
+                                            'Unit': 'LUX' // 单位
+                                        },
+
+                                    ],
+                                },
+                            ],
+
+                        },
+                        {
+                            'id': '310002',
+                            'name': '网关',
+                            'address': '广东省, 深圳市, 南山区, 沿山路, 11号',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.496393',
+                            'lng': '113.919781',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 0, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    'id': 'WG006',
+                                    'name': '华为智能网关',
+                                    'address': '广东省, 深圳市, 南山区, 沿山路, 11号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496393',
+                                    'lng': '113.919781',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '流量',
+                                            'value': 10,
+                                            'Unit': 'kb/s' // 单位
+                                        },
+
+                                    ],
+                                },
+                            ],
+
+                        },
+                        {
+                            'id': '310003',
+                            'name': '环境箱',
+                            'address': '广东省, 深圳市, 南山区, 沿山路, 11号',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.496393',
+                            'lng': '113.919781',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 1, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    id: 'WD006',
+                                    name: '智安纳温度传感器',
+                                    'address': '广东省, 深圳市, 南山区, 沿山路, 11号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496393',
+                                    'lng': '113.919781',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 1, // 异常
+                                    'exception_Information': '深圳市南山区蛇口工业4路智安纳温度传感器WD001温度50摄氏度数据异常', // 异常信息
+                                    'has_child': 0,
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '温度',
+                                            'value': 50,
+                                            'Unit': '摄氏度' // 单位
+                                        },
+
+                                    ],
+                                },
+                                {
+                                    id: 'SD001',
+                                    name: '智安纳湿度传感器',
+                                    'address': '广东省, 深圳市, 南山区, 沿山路, 11号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496393',
+                                    'lng': '113.919781',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'has_child': 0,
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '湿度',
+                                            'value': 25,
+                                            'Unit': '度' // 单位
+                                        },
+
+                                    ],
+                                },
+                                {
+                                    id: 'QT006',
+                                    name: '智安纳气体传感器',
+                                    'address': '广东省, 深圳市, 南山区, 沿山路, 11号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496393',
+                                    'lng': '113.919781',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'has_child': 0,
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '臭氧浓度5',
+                                            'value': 5,
+                                            'Unit': 'ml/立方米' // 单位
+                                        },
+
+                                    ],
+                                }
+                            ],
+
+                        },
+                        {
+                            'id': '310004',
+                            'name': '地震探测器',
+                            'address': '广东省, 深圳市, 南山区, 沿山路, 11号',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.496393',
+                            'lng': '113.919781',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 0, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    'id': 'DZ006',
+                                    'name': '智安纳地震传感器',
+                                    'address': '广东省, 深圳市, 南山区, 沿山路, 11号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496393',
+                                    'lng': '113.919781',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '震值',
+                                            'value': 0,
+                                            'Unit': '' // 单位
+                                        },
+
+                                    ],
+                                },
+                            ],
+
+                        },
+                    ]
+                },
             },
             {
-                id: '',
+
                 deviceId: '',
                 issueType: '',
                 priority: '',
                 regionId: '',
                 regionName: '',
                 positionId: '',
-                name: '甘肃强降雨致多地受灾 救援人员连续奋战满身泥泞',
-                message: '甘肃强降雨致多地受灾 救援人员连续奋战满身泥泞',
-                point: {
-                    'lat': '22.534887',
-                    'lng': '114.040121'},
-                'lat': '22.534887',
-                'lng': '114.040121',
+                message: '数据异常',
+                id: 'WD001',
+                name: '智安纳温度传感器',
+                'address': '广东省, 深圳市, 南山区, 工业四路, 6',
+                'build_date': '2003\u5e74',
+                'lat': '22.496739',
+                'lng': '113.920522',
+                'parent': {
+                    'id': '300001',
+                    'name': '灯柱',
+                    'address': '广东省, 深圳市, 南山区, 工业四路, 6',
+                    'build_date': '2003\u5e74',
+                    'lat': '22.496739',
+                    'lng': '113.920522',
+                    'parameters': [], // 设备参数
+                    'prop_num': 2,
+                    'is_active': 1, // 激活
+                    'is_online': 1, // 在线
+                    'is_disabled': 0, // 禁用
+                    'is_exception': 1, // 异常
+                    'exception_Information': [], // 异常信息
+                    'has_child': 1,
+                    'children': [
+                        {
+                            'id': '310001',
+                            'name': '灯',
+                            'address': '广东省, 深圳市, 南山区, 工业四路, 6',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.496739',
+                            'lng': '113.920522',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 0, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    'id': 'LD001',
+                                    'name': '太阳能智能路灯',
+                                    'address': '广东省, 深圳市, 南山区, 工业四路, 6',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496739',
+                                    'lng': '113.920522',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '照度',
+                                            'value': 50,
+                                            'Unit': 'LUX' // 单位
+                                        },
+
+                                    ],
+                                },
+                            ],
+
+                        },
+                        {
+                            'id': '310002',
+                            'name': '网关',
+                            'address': '广东省, 深圳市, 南山区, 工业四路, 6',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.496739',
+                            'lng': '113.920522',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 0, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    'id': 'WG001',
+                                    'name': '华为智能网关',
+                                    'address': '广东省, 深圳市, 南山区, 工业四路, 6',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496739',
+                                    'lng': '113.920522',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '流量',
+                                            'value': 10,
+                                            'Unit': 'kb/s' // 单位
+                                        },
+
+                                    ],
+                                },
+                            ],
+
+                        },
+                        {
+                            'id': '310003',
+                            'name': '环境箱',
+                            'address': '广东省, 深圳市, 南山区, 工业四路, 6',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.496739',
+                            'lng': '113.920522',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 1, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    id: 'WD001',
+                                    name: '智安纳温度传感器',
+                                    'address': '广东省, 深圳市, 南山区, 工业四路, 6',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496739',
+                                    'lng': '113.920522',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 1, // 异常
+                                    'exception_Information': '深圳市南山区蛇口工业4路智安纳温度传感器WD001温度50摄氏度数据异常', // 异常信息
+                                    'has_child': 0,
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '温度',
+                                            'value': 50,
+                                            'Unit': '摄氏度' // 单位
+                                        },
+
+                                    ],
+                                },
+                                {
+                                    id: 'SD001',
+                                    name: '智安纳湿度传感器',
+                                    'address': '广东省, 深圳市, 南山区, 工业四路, 6',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496739',
+                                    'lng': '113.920522',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'has_child': 0,
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '湿度',
+                                            'value': 25,
+                                            'Unit': '度' // 单位
+                                        },
+
+                                    ],
+                                },
+                                {
+                                    id: 'QT001',
+                                    name: '智安纳气体传感器',
+                                    'address': '广东省, 深圳市, 南山区, 工业四路, 6',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496739',
+                                    'lng': '113.920522',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'has_child': 0,
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '臭氧浓度5',
+                                            'value': 5,
+                                            'Unit': 'ml/立方米' // 单位
+                                        },
+
+                                    ],
+                                }
+                            ],
+
+                        },
+                        {
+                            'id': '310004',
+                            'name': '地震探测器',
+                            'address': '广东省, 深圳市, 南山区, 工业四路, 6',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.496739',
+                            'lng': '113.920522',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 0, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    'id': 'DZ001',
+                                    'name': '智安纳地震传感器',
+                                    'address': '广东省, 深圳市, 南山区, 工业四路, 6',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496739',
+                                    'lng': '113.920522',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '震值',
+                                            'value': 0,
+                                            'Unit': '' // 单位
+                                        },
+
+                                    ],
+                                },
+                            ],
+
+                        },
+                    ]
+                },
+            },
+            {
+
+                deviceId: '',
+                issueType: '',
+                priority: '',
+                regionId: '',
+                regionName: '',
+                positionId: '',
+                message: '数据异常',
+                'id': 'LD002',
+                'name': '太阳能智能路灯',
+                'address': '广东省, 深圳市, 南山区, 工业四路, 4号',
+                'build_date': '2003\u5e74',
+                'lat': '22.496113',
+                'lng': '113.920913',
+                'parent': {
+                    'id': '300002',
+                    'name': '灯柱',
+                    'address': '广东省, 深圳市, 南山区, 工业四路, 4号',
+                    'build_date': '2003\u5e74',
+                    'lat': '22.496113',
+                    'lng': '113.920913',
+                    'parameters': [], // 设备参数
+                    'prop_num': 2,
+                    'is_active': 1, // 激活
+                    'is_online': 1, // 在线
+                    'is_disabled': 0, // 禁用
+                    'is_exception': 1, // 异常
+                    'exception_Information': [], // 异常信息
+                    'has_child': 1,
+                    'children': [
+                        {
+                            'id': '310001',
+                            'name': '灯',
+                            'address': '广东省, 深圳市, 南山区, 工业四路, 4号',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.496113',
+                            'lng': '113.920913',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 1, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    'id': 'LD002',
+                                    'name': '太阳能智能路灯',
+                                    'address': '广东省, 深圳市, 南山区, 工业四路, 4号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496113',
+                                    'lng': '113.920913',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 1, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '照度',
+                                            'value': 10,
+                                            'Unit': 'LUX' // 单位
+                                        },
+
+                                    ],
+                                },
+                            ],
+
+                        },
+                        {
+                            'id': '310002',
+                            'name': '网关',
+                            'address': '广东省, 深圳市, 南山区, 工业四路, 4号',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.496113',
+                            'lng': '113.920913',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 1, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    'id': 'WG002',
+                                    'name': '华为智能网关',
+                                    'address': '广东省, 深圳市, 南山区, 工业四路, 4号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496113',
+                                    'lng': '113.920913',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 1, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '流量',
+                                            'value': 20000,
+                                            'Unit': 'kb/s' // 单位
+                                        },
+
+                                    ],
+                                },
+                            ],
+
+                        },
+                        {
+                            'id': '310003',
+                            'name': '环境箱',
+                            'address': '广东省, 深圳市, 南山区, 工业四路, 4号',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.496113',
+                            'lng': '113.920913',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 0, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    id: 'WD002',
+                                    name: '智安纳温度传感器',
+                                    'address': '广东省, 深圳市, 南山区, 工业四路, 4号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496113',
+                                    'lng': '113.920913',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 1, // 异常
+                                    'exception_Information': '深圳市南山区蛇口工业4路智安纳温度传感器WD001温度50摄氏度数据异常', // 异常信息
+                                    'has_child': 0,
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '温度',
+                                            'value': 33,
+                                            'Unit': '摄氏度' // 单位
+                                        },
+
+                                    ],
+                                },
+                                {
+                                    id: 'SD002',
+                                    name: '智安纳湿度传感器',
+                                    'address': '广东省, 深圳市, 南山区, 工业四路, 4号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496113',
+                                    'lng': '113.920913',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'has_child': 0,
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '湿度',
+                                            'value': 25,
+                                            'Unit': '度' // 单位
+                                        },
+
+                                    ],
+                                },
+                                {
+                                    id: 'QT002',
+                                    name: '智安纳气体传感器',
+                                    'address': '广东省, 深圳市, 南山区, 工业四路, 4号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496113',
+                                    'lng': '113.920913',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'has_child': 0,
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '臭氧浓度5',
+                                            'value': 5,
+                                            'Unit': 'ml/立方米' // 单位
+                                        },
+
+                                    ],
+                                }
+                            ],
+
+                        },
+
+                    ]
+                },
+            },
+            {
+
+                deviceId: '',
+                issueType: '',
+                priority: '',
+                regionId: '',
+                regionName: '',
+                positionId: '',
+                message: '数据异常',
+                'id': 'WG002',
+                'name': '华为智能网关',
+                'address': '广东省, 深圳市, 南山区, 工业四路, 4号',
+                'build_date': '2003\u5e74',
+                'lat': '22.496113',
+                'lng': '113.920913',
+                'parent': {
+                    'id': '300002',
+                    'name': '灯柱',
+                    'address': '广东省, 深圳市, 南山区, 工业四路, 4号',
+                    'build_date': '2003\u5e74',
+                    'lat': '22.496113',
+                    'lng': '113.920913',
+                    'parameters': [], // 设备参数
+                    'prop_num': 2,
+                    'is_active': 1, // 激活
+                    'is_online': 1, // 在线
+                    'is_disabled': 0, // 禁用
+                    'is_exception': 1, // 异常
+                    'exception_Information': [], // 异常信息
+                    'has_child': 1,
+                    'children': [
+                        {
+                            'id': '310001',
+                            'name': '灯',
+                            'address': '广东省, 深圳市, 南山区, 工业四路, 4号',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.496113',
+                            'lng': '113.920913',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 1, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    'id': 'LD002',
+                                    'name': '太阳能智能路灯',
+                                    'address': '广东省, 深圳市, 南山区, 工业四路, 4号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496113',
+                                    'lng': '113.920913',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 1, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '照度',
+                                            'value': 10,
+                                            'Unit': 'LUX' // 单位
+                                        },
+
+                                    ],
+                                },
+                            ],
+
+                        },
+                        {
+                            'id': '310002',
+                            'name': '网关',
+                            'address': '广东省, 深圳市, 南山区, 工业四路, 4号',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.496113',
+                            'lng': '113.920913',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 1, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    'id': 'WG002',
+                                    'name': '华为智能网关',
+                                    'address': '广东省, 深圳市, 南山区, 工业四路, 4号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496113',
+                                    'lng': '113.920913',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 1, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '流量',
+                                            'value': 20000,
+                                            'Unit': 'kb/s' // 单位
+                                        },
+
+                                    ],
+                                },
+                            ],
+
+                        },
+                        {
+                            'id': '310003',
+                            'name': '环境箱',
+                            'address': '广东省, 深圳市, 南山区, 工业四路, 4号',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.496113',
+                            'lng': '113.920913',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 0, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    id: 'WD002',
+                                    name: '智安纳温度传感器',
+                                    'address': '广东省, 深圳市, 南山区, 工业四路, 4号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496113',
+                                    'lng': '113.920913',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 1, // 异常
+                                    'exception_Information': '深圳市南山区蛇口工业4路智安纳温度传感器WD001温度50摄氏度数据异常', // 异常信息
+                                    'has_child': 0,
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '温度',
+                                            'value': 33,
+                                            'Unit': '摄氏度' // 单位
+                                        },
+
+                                    ],
+                                },
+                                {
+                                    id: 'SD002',
+                                    name: '智安纳湿度传感器',
+                                    'address': '广东省, 深圳市, 南山区, 工业四路, 4号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496113',
+                                    'lng': '113.920913',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'has_child': 0,
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '湿度',
+                                            'value': 25,
+                                            'Unit': '度' // 单位
+                                        },
+
+                                    ],
+                                },
+                                {
+                                    id: 'QT002',
+                                    name: '智安纳气体传感器',
+                                    'address': '广东省, 深圳市, 南山区, 工业四路, 4号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496113',
+                                    'lng': '113.920913',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'has_child': 0,
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '臭氧浓度5',
+                                            'value': 5,
+                                            'Unit': 'ml/立方米' // 单位
+                                        },
+
+                                    ],
+                                }
+                            ],
+
+                        },
+
+                    ]
+                },
+            },
+            {
+
+                deviceId: '',
+                issueType: '',
+                priority: '',
+                regionId: '',
+                regionName: '',
+                positionId: '',
+                message: '数据异常',
+                'id': 'DZ001',
+                'name': '智安纳地震传感器',
+                'address': '广东省, 深圳市, 南山区, 工业五路, 30号',
+                'build_date': '2003\u5e74',
+                'lat': '22.498012',
+                'lng': '113.922485',
+                'parent': {
+                    'id': '300014',
+                    'name': '灯柱',
+                    'address': '广东省, 深圳市, 南山区, 工业五路, 30号',
+                    'build_date': '2003\u5e74',
+                    'lat': '22.498012',
+                    'lng': '113.922485',
+                    'parameters': [], // 设备参数
+                    'prop_num': 2,
+                    'is_active': 1, // 激活
+                    'is_online': 1, // 在线
+                    'is_disabled': 1, // 禁用
+                    'is_exception': 1, // 异常
+                    'exception_Information': [], // 异常信息
+                    'has_child': 1,
+                    'children': [
+                        {
+                            'id': '310001',
+                            'name': '灯',
+                            'address': '广东省, 深圳市, 南山区, 工业五路, 30号',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.498012',
+                            'lng': '113.922485',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 0, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    'id': 'LD001',
+                                    'name': '太阳能智能路灯',
+                                    'address': '广东省, 深圳市, 南山区, 工业五路, 30号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.498012',
+                                    'lng': '113.922485',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '照度',
+                                            'value': 50,
+                                            'Unit': 'LUX' // 单位
+                                        },
+
+                                    ],
+                                },
+                            ],
+
+                        },
+                        {
+                            'id': '310002',
+                            'name': '网关',
+                            'address': '广东省, 深圳市, 南山区, 工业五路, 30号',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.498012',
+                            'lng': '113.922485',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 0, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    'id': 'WG001',
+                                    'name': '华为智能网关',
+                                    'address': '广东省, 深圳市, 南山区, 工业五路, 30号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.498012',
+                                    'lng': '113.922485',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '流量',
+                                            'value': 10,
+                                            'Unit': 'kb/s' // 单位
+                                        },
+
+                                    ],
+                                },
+                            ],
+
+                        },
+                        {
+                            'id': '310003',
+                            'name': '环境箱',
+                            'address': '广东省, 深圳市, 南山区, 工业五路, 30号',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.498012',
+                            'lng': '113.922485',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 0, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    id: 'WD001',
+                                    name: '智安纳温度传感器',
+                                    'address': '广东省, 深圳市, 南山区, 工业五路, 30号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.498012',
+                                    'lng': '113.922485',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 1, // 异常
+                                    'exception_Information': '深圳市南山区蛇口工业4路智安纳温度传感器WD001温度50摄氏度数据异常', // 异常信息
+                                    'has_child': 0,
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '温度',
+                                            'value': 33,
+                                            'Unit': '摄氏度' // 单位
+                                        },
+
+                                    ],
+                                },
+                                {
+                                    id: 'SD001',
+                                    name: '智安纳湿度传感器',
+                                    'address': '广东省, 深圳市, 南山区, 工业五路, 30号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.498012',
+                                    'lng': '113.922485',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'has_child': 0,
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '湿度',
+                                            'value': 25,
+                                            'Unit': '度' // 单位
+                                        },
+
+                                    ],
+                                },
+                                {
+                                    id: 'QT001',
+                                    name: '智安纳气体传感器',
+                                    'address': '广东省, 深圳市, 南山区, 工业五路, 30号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.498012',
+                                    'lng': '113.922485',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'has_child': 0,
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '臭氧浓度5',
+                                            'value': 5,
+                                            'Unit': 'ml/立方米' // 单位
+                                        },
+
+                                    ],
+                                }
+                            ],
+
+                        },
+                        {
+                            'id': '310004',
+                            'name': '地震探测器',
+                            'address': '广东省, 深圳市, 南山区, 工业四路, 6号',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.496388',
+                            'lng': '113.920419',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 1, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    'id': 'DZ001',
+                                    'name': '智安纳地震传感器',
+                                    'address': '广东省, 深圳市, 南山区, 工业五路, 30号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.498012',
+                                    'lng': '113.922485',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 1, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '震值',
+                                            'value': 123,
+                                            'Unit': '' // 单位
+                                        },
+
+                                    ],
+                                },
+                            ],
+
+                        },
+                    ]
+                },
+            },
+            {
+
+                deviceId: '',
+                issueType: '',
+                priority: '',
+                regionId: '',
+                regionName: '',
+                positionId: '',
+                message: '数据异常',
+                'id': 'DZ001',
+                'name': '智安纳地震传感器',
+                'address': '广东省, 深圳市, 南山区, 工业五路, 30号',
+                'build_date': '2003\u5e74',
+                'lat': '22.498559',
+                'lng': '113.922777',
+                'parent': {
+                    'id': '300016',
+                    'name': '灯柱',
+                    'address': '广东省, 深圳市, 南山区, 工业五路, 30号',
+                    'build_date': '2003\u5e74',
+                    'lat': '22.498559',
+                    'lng': '113.922777',
+                    'parameters': [], // 设备参数
+                    'prop_num': 2,
+                    'is_active': 1, // 激活
+                    'is_online': 1, // 在线
+                    'is_disabled': 1, // 禁用
+                    'is_exception': 1, // 异常
+                    'exception_Information': [], // 异常信息
+                    'has_child': 1,
+                    'children': [
+                        {
+                            'id': '310001',
+                            'name': '灯',
+                            'address': '广东省, 深圳市, 南山区, 工业五路, 30号',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.498288',
+                            'lng': '113.92262',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 0, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    'id': 'LD001',
+                                    'name': '太阳能智能路灯',
+                                    'address': '广东省, 深圳市, 南山区, 工业五路, 30号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.498288',
+                                    'lng': '113.92262',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '照度',
+                                            'value': 50,
+                                            'Unit': 'LUX' // 单位
+                                        },
+
+                                    ],
+                                },
+                            ],
+
+                        },
+                        {
+                            'id': '310002',
+                            'name': '网关',
+                            'address': '广东省, 深圳市, 南山区, 工业五路, 30号',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.498288',
+                            'lng': '113.92262',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 0, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    'id': 'WG001',
+                                    'name': '华为智能网关',
+                                    'address': '广东省, 深圳市, 南山区, 工业五路, 30号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.498288',
+                                    'lng': '113.92262',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '流量',
+                                            'value': 10,
+                                            'Unit': 'kb/s' // 单位
+                                        },
+
+                                    ],
+                                },
+                            ],
+
+                        },
+                        {
+                            'id': '310003',
+                            'name': '环境箱',
+                            'address': '广东省, 深圳市, 南山区, 工业五路, 30号',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.498288',
+                            'lng': '113.92262',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 0, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    id: 'WD001',
+                                    name: '智安纳温度传感器',
+                                    'address': '广东省, 深圳市, 南山区, 工业五路, 30号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.498288',
+                                    'lng': '113.92262',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 1, // 异常
+                                    'exception_Information': '深圳市南山区蛇口工业4路智安纳温度传感器WD001温度50摄氏度数据异常', // 异常信息
+                                    'has_child': 0,
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '温度',
+                                            'value': 32,
+                                            'Unit': '摄氏度' // 单位
+                                        },
+
+                                    ],
+                                },
+                                {
+                                    id: 'SD001',
+                                    name: '智安纳湿度传感器',
+                                    'address': '广东省, 深圳市, 南山区, 工业五路, 30号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.498288',
+                                    'lng': '113.92262',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'has_child': 0,
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '湿度',
+                                            'value': 25,
+                                            'Unit': '度' // 单位
+                                        },
+
+                                    ],
+                                },
+                                {
+                                    id: 'QT001',
+                                    name: '智安纳气体传感器',
+                                    'address': '广东省, 深圳市, 南山区, 工业五路, 30号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.498288',
+                                    'lng': '113.92262',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'has_child': 0,
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '臭氧浓度5',
+                                            'value': 5,
+                                            'Unit': 'ml/立方米' // 单位
+                                        },
+
+                                    ],
+                                }
+                            ],
+
+                        },
+                        {
+                            'id': '310004',
+                            'name': '地震探测器',
+                            'address': '广东省, 深圳市, 南山区, 工业五路, 30号',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.498288',
+                            'lng': '113.92262',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 1, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    'id': 'DZ001',
+                                    'name': '智安纳地震传感器',
+                                    'address': '广东省, 深圳市, 南山区, 工业五路, 30号',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.498288',
+                                    'lng': '113.92262',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 1, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '震值',
+                                            'value': 155,
+                                            'Unit': '' // 单位
+                                        },
+
+                                    ],
+                                },
+                            ],
+
+                        },
+                    ]
+                },
+            },
+            {
+
+                deviceId: '',
+                issueType: '',
+                priority: '',
+                regionId: '',
+                regionName: '',
+                positionId: '',
+                message: '数据异常',
+                'id': 'DZ001',
+                'name': '智安纳地震传感器',
+                'address': '广东省, 深圳市, 南山区, 工业五路, 8号',
+                'build_date': '2003\u5e74',
+                'lat': '22.49901',
+                'lng': '113.923019',
+                'parent': {
+                    'id': '300017',
+                    'name': '灯柱',
+                    'address': '广东省, 深圳市, 南山区, 工业五路, 8号',
+                    'build_date': '2003\u5e74',
+                    'lat': '22.49901',
+                    'lng': '113.923019',
+                    'parameters': [], // 设备参数
+                    'prop_num': 2,
+                    'is_active': 1, // 激活
+                    'is_online': 1, // 在线
+                    'is_disabled': 1, // 禁用
+                    'is_exception': 1, // 异常
+                    'exception_Information': [], // 异常信息
+                    'has_child': 1,
+                    'children': [
+                        {
+                            'id': '310001',
+                            'name': '灯',
+                            'address': '广东省, 深圳市, 南山区, 工业四路, 6',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.496739',
+                            'lng': '113.920522',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 0, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    'id': 'LD001',
+                                    'name': '太阳能智能路灯',
+                                    'address': '广东省, 深圳市, 南山区, 工业四路, 6',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496739',
+                                    'lng': '113.920522',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '照度',
+                                            'value': 50,
+                                            'Unit': 'LUX' // 单位
+                                        },
+
+                                    ],
+                                },
+                            ],
+
+                        },
+                        {
+                            'id': '310002',
+                            'name': '网关',
+                            'address': '广东省, 深圳市, 南山区, 工业四路, 6',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.496739',
+                            'lng': '113.920522',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 0, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    'id': 'WG001',
+                                    'name': '华为智能网关',
+                                    'address': '广东省, 深圳市, 南山区, 工业四路, 6',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496739',
+                                    'lng': '113.920522',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '流量',
+                                            'value': 10,
+                                            'Unit': 'kb/s' // 单位
+                                        },
+
+                                    ],
+                                },
+                            ],
+
+                        },
+                        {
+                            'id': '310003',
+                            'name': '环境箱',
+                            'address': '广东省, 深圳市, 南山区, 工业四路, 6',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.496739',
+                            'lng': '113.920522',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 0, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    id: 'WD001',
+                                    name: '智安纳温度传感器',
+                                    'address': '广东省, 深圳市, 南山区, 工业四路, 6',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496739',
+                                    'lng': '113.920522',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '深圳市南山区蛇口工业4路智安纳温度传感器WD001温度50摄氏度数据异常', // 异常信息
+                                    'has_child': 0,
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '温度',
+                                            'value': 30,
+                                            'Unit': '摄氏度' // 单位
+                                        },
+
+                                    ],
+                                },
+                                {
+                                    id: 'SD001',
+                                    name: '智安纳湿度传感器',
+                                    'address': '广东省, 深圳市, 南山区, 工业四路, 6',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496739',
+                                    'lng': '113.920522',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'has_child': 0,
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '湿度',
+                                            'value': 25,
+                                            'Unit': '度' // 单位
+                                        },
+
+                                    ],
+                                },
+                                {
+                                    id: 'QT001',
+                                    name: '智安纳气体传感器',
+                                    'address': '广东省, 深圳市, 南山区, 工业四路, 6',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496739',
+                                    'lng': '113.920522',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 0, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'has_child': 0,
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '臭氧浓度5',
+                                            'value': 5,
+                                            'Unit': 'ml/立方米' // 单位
+                                        },
+
+                                    ],
+                                }
+                            ],
+
+                        },
+                        {
+                            'id': '310004',
+                            'name': '地震探测器',
+                            'address': '广东省, 深圳市, 南山区, 工业四路, 6',
+                            'build_date': '2003\u5e74',
+                            'lat': '22.496739',
+                            'lng': '113.920522',
+                            'prop_num': 2,
+                            'is_active': 1, // 激活
+                            'is_online': 1, // 在线
+                            'is_disabled': 1, // 禁用
+                            'is_exception': 1, // 异常
+                            'exception_Information': '', // 异常信息
+                            'has_child': 1,
+                            'children': [
+                                {
+                                    'id': 'DZ001',
+                                    'name': '智安纳地震传感器',
+                                    'address': '广东省, 深圳市, 南山区, 工业四路, 6',
+                                    'build_date': '2003\u5e74',
+                                    'lat': '22.496739',
+                                    'lng': '113.920522',
+                                    'prop_num': 2,
+                                    'is_active': 1, // 激活
+                                    'is_online': 1, // 在线
+                                    'is_disabled': 1, // 禁用
+                                    'is_exception': 1, // 异常
+                                    'exception_Information': '', // 异常信息
+                                    'parameters': [// 设备参数
+                                        {
+                                            'name': '震值',
+                                            'value': 112,
+                                            'Unit': '' // 单位
+                                        },
+
+                                    ],
+                                },
+                            ],
+
+                        },
+                    ]
+                },
             }
         ]
     }

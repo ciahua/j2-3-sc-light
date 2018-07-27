@@ -1,83 +1,176 @@
 
-<!-- 城市列表 -->
-<div  class="d-inline-block sel-area-block" (mouseleave)="citylistMouseleave()">
 
-  <span class="cl-blue cur-pointer" (mouseover)="showCiyt()">
-    <span class="filter" *ngIf="currentCity">{{currentCity.name}}</span>
-    <span class="filter" *ngIf="!currentCity">选择城市</span>
-    <!-- <i class="fa fa-bell-o nav-icon " aria-hidden="true"></i> -->
-  </span>
-  <div id="city-panel" class="city-panel"  *ngIf="cityshow">
-    <dl *ngFor="let item of cityList">
-      <dt>{{item.name}}</dt>
-      <dd *ngIf="item.children && item.children.length > 0">
-        <a  title="智慧城市" *ngFor="let itemc of item.children" (click)="selecteCity(itemc)">{{itemc.name}}</a>
-      </dd>
-    </dl>
 
-    <!-- <div class="blank">
-      <a href="https://www.anjuke.com/sy-city.html" class="moreCity">更多城市&gt;</a>
+
+<div class="map_warp">
+  <!-- 选择区域 -->
+  <div class="Selection-Region">
+    <!-- 城市列表 -->
+    <div class="d-inline-block sel-area-block" (mouseleave)="citylistMouseleave()">
+  
+      <span class="cl-blue cur-pointer" (mouseover)="showCiyt()">
+        <span class="filter" *ngIf="currentCity">{{currentCity.name}}</span>
+        <span class="filter" *ngIf="!currentCity">选择城市</span>
+        <!-- <i class="fa fa-bell-o nav-icon " aria-hidden="true"></i> -->
+      </span>
+      <div id="city-panel" class="city-panel" *ngIf="cityshow">
+        <dl *ngFor="let item of cityList">
+          <dt>{{item.name}}</dt>
+          <dd *ngIf="item.children && item.children.length > 0">
+            <a title="智慧城市" *ngFor="let itemc of item.children" (click)="selecteCity(itemc)">{{itemc.name}}</a>
+          </dd>
+        </dl>
+  
+        <!-- <div class="blank">
+            <a href="https://www.anjuke.com/sy-city.html" class="moreCity">更多城市&gt;</a>
+          </div> -->
+      </div>
+  
+    </div>
+  
+    <!-- 区域列表 -->
+    <div class="d-inline-block sel-area-block" (mouseleave)="arealistMouseleave()">
+  
+      <span class="cl-blue cur-pointer" (mouseover)="showArea()">
+        <span class="filter">选择区域</span>
+      </span>
+  
+      <div class="arealist-wrap" *ngIf="areashow">
+        <ul class="arealist" data-type="area">
+          <li data-val="0" class="arealist-item" (mouseover)="arealistMouseNone()">
+            <em>不限</em>
+          </li>
+          <li class="arealist-item" *ngFor="let node of currentChildren" (mouseover)="arealistMouseover(node)" (click)="selecteblock(node)">
+            <em>{{node.name}}</em>
+          </li>
+  
+        </ul>
+        <ul class="blocklist" data-type="block" *ngIf="currentBlock">
+          <li data-val="0">不限</li>
+          <li *ngFor="let block of currentBlock" (click)="selecteblock(block)">{{block.name}}</li>
+  
+        </ul>
+  
+      </div>
+  
+    </div>
+  
+    <!-- 设备列表 -->
+    <div class="d-inline-block sel-area-block" (mouseleave)="devicelistMouseleave()">
+  
+      <span class="cl-blue cur-pointer" (mouseover)="showDevice()">
+        <span class="filter">选择设备</span>
+  
+      </span>
+      <div id="device-panel" class="device-panel" *ngIf="deviceshow">
+        <dl>
+          <dt>
+            <a>不限</a>
+          </dt>
+        </dl>
+        <dl *ngFor="let device of deviceList">
+          <dt>
+            <a title="智慧城市">{{device.name}}</a>
+          </dt>
+          <dd *ngIf="device.children && device.children.length > 0">
+            <a title="智慧城市" *ngFor="let itemc of device.children">{{itemc.name}}</a>
+          </dd>
+        </dl>
+      </div>
+  
+    </div>
+    <!-- 数据标签 -->
+    <!-- <div class="d-inline-block" style="margin-left: 21px;">
+      <div class="tag-bule d-inline-block"></div>
+      <div class=" d-inline-block" style="padding: 0 10px;">正常</div>
+      <div class="tag-grad d-inline-block"></div>
+      <div class="d-inline-block" style="padding: 0 10px;">掉线</div>
+      <div class="tag-red d-inline-block"></div>
+      <div class=" d-inline-block" style="padding: 0 10px;">数据异常</div>
     </div> -->
   </div>
 
-</div>
-
-<!-- 区域列表 -->
-<div  class="d-inline-block sel-area-block" (mouseleave)="arealistMouseleave()">
-
-  <span class="cl-blue cur-pointer" (mouseover)="showArea()" >
-    <span class="filter">选择区域</span>
-  </span>
-
-  <div class="arealist-wrap"   *ngIf="areashow">
-    <ul class="arealist" data-type="area">
-      <li data-val="0" class="arealist-item" (mouseover)="arealistMouseNone()">
-        <em>不限</em>
-      </li>
-      <li class="arealist-item" *ngFor="let node of currentChildren" (mouseover)="arealistMouseover(node)" >
-        <em>{{node.name}}</em>
-      </li>
-
-    </ul>
-    <ul class="blocklist" data-type="block" *ngIf="currentBlock" >
-      <li data-val="0">不限</li>
-      <li *ngFor="let node of currentBlock" >{{node.name}}</li>
-
-    </ul>
-
-  </div>
-
-</div>
-
-<!-- 设备列表 -->
-<div  class="d-inline-block sel-area-block" (mouseleave)="devicelistMouseleave()">
-
-  <span class="cl-blue cur-pointer" (mouseover)="showDevice()">
-    <span class="filter">选择设备</span>
-
-  </span>
-  <div id="device-panel" class="device-panel"  *ngIf="deviceshow">
-    <dl>
-      <dt>
-        <a>不限</a>
-      </dt>
-    </dl>
-    <dl *ngFor="let device of deviceList">
-      <dt>
-        <a title="智慧城市">{{device.name}}</a>
-      </dt>
-      <dd *ngIf="device.children && device.children.length > 0">
-        <a title="智慧城市" *ngFor="let itemc of device.children">{{itemc.name}}</a>
-      </dd>
-    </dl>
-  </div>
-
-</div>
-<!-- <div class="d-inline-block">
-  <select [(ngModel)]='cityList'>
-    <option value="">请选择</option> //此处用的是value，而不是[value]
-    <option *ngFor="let item of cityList" [value]='item'>{{item.name}}</option>
-  </select>
-  
-</div> -->
+  <!-- 地图 -->
   <div #map3 id="map_container3" class="map_container"></div>
+
+  <!-- 设备操作 -->
+  <div class="device-detail" *ngIf="deviceChild">
+    <div class="device-title" >
+      <span class="device-close float-right" (click)="closeDetail()">X</span>
+    </div>
+    <div *ngIf="deviceChild.has_child == 0">
+          <p>
+            <span>设备名称:</span>
+            <span>{{deviceChild.name}}</span>
+          </p>
+          <p>
+            <span>设备ID:</span>
+            <span>{{deviceChild.id}}</span>
+          </p>
+          <table class="table">
+            <tr>
+              <th>参数</th>
+              <th>值</th>
+              <th>单位</th>
+          
+            </tr>
+            <tr *ngFor="let item of deviceChild.parameters">
+              <td>{{item.name}}</td>
+              <td>{{item.value}}</td>
+              <td>{{item.Unit}}</td>
+            </tr>
+          </table>
+    </div>
+        <div *ngIf="deviceChild.has_child == 1">
+          <div *ngFor="let cChild of deviceChild.children;let i = index" [ngClass]="{'info-border':i !==deviceChild.children.length -1}">
+              <p>
+                <span>设备名称:</span>
+                <span>{{cChild.name}}</span>
+              </p>
+              <p>
+                <span>设备ID:</span>
+                <span>{{cChild.id}}</span>
+              </p>
+              <table class="table">
+                <tr>
+                  <th>参数</th>
+                  <th>值</th>
+                  <th>单位</th>
+              
+                </tr>
+                <tr *ngFor="let citem of cChild.parameters" [ngClass]="{'color-red':cChild.is_exception ==1 || cChild.is_online == 0}">
+                  <td>{{citem.name}}</td>
+                  <td>{{citem.value}}</td>
+                  <td>{{citem.Unit}}</td>
+                </tr>
+              </table>
+          </div>
+
+        </div>
+
+  </div>
+  <div class="info-footer row">
+      <!-- 气象播报 -->
+      <div class="mask-zt info-box col-10">
+        <div class="d-inline-block info-logo">
+          <span>
+            <i class="fa fa-exclamation-triangle info" aria-hidden="true"></i>
+          </span>
+        </div>
+        <div class="d-inline-block info-text">
+          <p *ngFor="let item of meteorology">
+            <span [ngClass]="{'color-red': item.priority == 1, 'color-yellow':item.priority == 2, 'color-orange':item.priority == 3}">{{item.text}}</span>
+      
+          </p>
+        </div>
+      
+      </div>
+      <!-- 打开视频监控页 -->
+      <div class="video-play col-2">
+        <img src="../../../assets/imgs/Camera.png" alt="图片">
+      </div>
+  </div>
+
+</div>
+
+

@@ -107,8 +107,8 @@
     }
     // 下拉框
     .dropdown-menu-message{
-        // top: 50px !important;
-        // width: 300px !important;
+        height: 300px;
+        overflow-y: auto;
     }
     .dropdown-item{
         height: 50px;
@@ -151,7 +151,7 @@
 
 
     .header-margin {
-        margin-top: 80px;
+        // margin-top: 80px;
         margin-left: 250px;
         padding-left:0px;
     }

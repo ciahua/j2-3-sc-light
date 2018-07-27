@@ -34,6 +34,12 @@ address, cite, code, em, th, i, strong {
     cursor: pointer;
 
 }
+
+// 头部导航
+.nav-margin {
+    margin-top: 80px;
+}
+
 // .i-circle:hover, .i-circle >a:hover {
 //     background: tomato;
 // }
@@ -47,4 +53,92 @@ address, cite, code, em, th, i, strong {
 
 .js-marquee{
     margin: 0 !important;
+}
+.device-mes {
+    width: 50px;
+}
+
+// 气泡
+.tag-bule{
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    border-radius: 50%;
+    border: 5px solid #e8f0f5;
+    position: relative;
+    background: #56c5ff;
+    cursor: pointer;
+}
+.tag-bule:before,.tag-bule:after{
+    content:"";
+    display:block;
+    border-width:5px;
+    position:absolute; 
+    bottom:-14px;
+    left: 4px;
+    border-style:solid dashed dashed;
+    border-color:#e8f0f5 transparent transparent;
+    font-size:0;
+    line-height:0;
+}
+.tag-bule:after{
+    bottom:-7px;
+    border-color:#56c5ff transparent transparent;
+}
+
+.tag-red{
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    border-radius: 50%;
+    border: 5px solid #e8f0f5;
+    position: relative;
+    background: #f44336;
+    cursor: pointer;
+}
+.tag-red:before,.tag-red:after{
+    content:"";
+    display:block;
+    border-width:5px;
+    position:absolute; 
+    bottom:-14px;
+    left: 4px;
+    border-style:solid dashed dashed;
+    border-color:#e8f0f5 transparent transparent;
+    font-size:0;
+    line-height:0;
+}
+.tag-red:after{
+    bottom:-7px;
+    border-color:#f44336 transparent transparent;
+}
+
+.tag-grad{
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    border-radius: 50%;
+    border: 5px solid #e8f0f5;
+    position: relative;
+    background: #b0bec5;
+    cursor: pointer;
+}
+.tag-grad:before,.tag-grad:after{
+    content:"";
+    display:block;
+    border-width:5px;
+    position:absolute; 
+    bottom:-14px;
+    left: 4px;
+    border-style:solid dashed dashed;
+    border-color:#e8f0f5 transparent transparent;
+    font-size:0;
+    line-height:0;
+}
+.tag-grad:after{
+    bottom:-7px;
+    border-color:#b0bec5 transparent transparent;
 }

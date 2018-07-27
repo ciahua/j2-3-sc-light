@@ -173,3 +173,105 @@
 .blocklist li:hover {
     color: #f60;
 }
+
+.map_warp {
+    position: relative;
+}
+// 设备详情
+.device-detail{
+    width: 300px;
+    background: #fff;
+    border: 1px solid #ccc;
+    z-index: 2000;
+    position: absolute;
+    right: 85px;
+    top: 80px;
+    padding: 0px 15px;
+}
+.device-close{
+    cursor: pointer;
+     color: #8e8f91;
+}
+.device-title{
+    display: block;
+    padding: 0;
+    margin: 0;
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #ccc;
+}
+// 底部消息框
+.color-red{
+    color: #f44336;
+}
+.color-yellow {
+    color: #fe9001
+}
+.color-orange {
+    color: #f0c001
+}
+//
+.info-footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+.info-box{
+        // width: 80%;
+}
+.info-logo{
+    position: absolute;
+    left: 70px;
+}
+.info-text {
+        margin-left: 130px;
+        font-size: 16px;
+}
+// 蒙板
+.mask-zt{
+    padding: 15px;
+    z-index: 2;
+    position: relative;
+    height: 150px;
+
+    // left: 0;
+    // bottom: 0;
+}
+.mask-zt:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 5px;
+    right: 5px;
+    background: rgba(0, 0, 0, 0.6);
+    height: 100%;
+    z-index: -1;
+}
+
+// 选择区域
+.Selection-Region{
+    position: absolute;
+    z-index: 3000;
+    top: 100px;
+}
+.info{
+    font-size: 3rem;
+    color: #f44336;
+}
+
+//
+.video-play{
+    position: absolute;
+    bottom: 0px;
+    right: 0;
+    img {
+        position: absolute;
+        right: 80px;
+        bottom: 10px;
+    }
+}
+
+.info-border{
+    border-bottom: 1px solid;
+    margin-bottom: 10px;
+}
