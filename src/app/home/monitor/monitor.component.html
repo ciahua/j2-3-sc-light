@@ -4,7 +4,7 @@
 
 <div class="map_warp">
   <!-- 选择区域 -->
-  <div class="Selection-Region">
+  <div class="Selection-Region" *ngIf="visible == true">
     <!-- 城市列表 -->
     <div class="d-inline-block sel-area-block" (mouseleave)="citylistMouseleave()">
   
@@ -79,16 +79,32 @@
       </div>
   
     </div>
-    <!-- 数据标签 -->
-    <!-- <div class="d-inline-block" style="margin-left: 21px;">
-      <div class="tag-bule d-inline-block"></div>
-      <div class=" d-inline-block" style="padding: 0 10px;">正常</div>
-      <div class="tag-grad d-inline-block"></div>
-      <div class="d-inline-block" style="padding: 0 10px;">掉线</div>
-      <div class="tag-red d-inline-block"></div>
-      <div class=" d-inline-block" style="padding: 0 10px;">数据异常</div>
-    </div> -->
+
   </div>
+
+  <!-- 右边按钮 -->
+  <div class="btn-icon" *ngIf="visible == true">
+    <div class="d-inline-block icon-item cur-pointer">
+      <img src="../../../assets/imgs/control.png" alt="图片">
+
+    </div>
+
+    <div class="d-inline-block icon-item cur-pointer">
+    
+      <img src="../../../assets/imgs/switch.png" alt="图片" (click)="enterFullScreen()">
+    </div>
+
+  </div>
+    <!-- 右边按钮 -->
+    <!-- <div class="btn-icon-close" *ngIf="visible == false">
+
+      <div class="d-inline-block icon-item cur-pointer">
+    
+        <img id="btnClose" src="../../../assets/imgs/switch.png" alt="图片" (click)="exitFullScreen()">
+      </div>
+    
+    </div> -->
+
 
   <!-- 地图 -->
   <div #map3 id="map_container3" class="map_container"></div>
@@ -151,7 +167,7 @@
   </div>
   <div class="info-footer row">
       <!-- 气象播报 -->
-      <div class="mask-zt info-box col-10">
+      <div class="mask-zt info-box " [ngClass]="{'col-10':visible == true,'col-12':visible == false}">
         <div class="d-inline-block info-logo">
           <span>
             <i class="fa fa-exclamation-triangle info" aria-hidden="true"></i>
@@ -166,8 +182,10 @@
       
       </div>
       <!-- 打开视频监控页 -->
-      <div class="video-play col-2">
-        <img src="../../../assets/imgs/Camera.png" alt="图片">
+      <div class="video-play col-2" *ngIf="visible == true">
+
+          <img src="../../../assets/imgs/Camera.png" alt="图片" (click)="jumpHandle()" class="cur-pointer">
+
       </div>
   </div>
 

@@ -12,6 +12,7 @@ import { HttpModule } from '@angular/http';
 import { CookieModule } from 'ngx-cookie';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeModule } from './home/home.module';
+import { ServiceModule } from './service/service.module';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -30,12 +31,7 @@ import { LoginRoutingModule } from './login/login-routing.module';
 import { AuthGuard } from './guard/auth-guard.service';
 import { AuthService } from './guard/auth.service';
 import { WindowRef } from './windowserver';
-import { DialogService } from './service/dialog.service';
-import { BeiduAPIService } from './service/servers/baiduApi';
-import { BeiduMAPService } from './service/servers/baiduMap';
-import { MonitorService } from './service/monitor.service';
-import { MessageService } from './service/message.service';
-import { MessService } from './service/mess.service';
+
 
 import { PageNotFoundComponent } from './not-found.component';
 
@@ -66,13 +62,13 @@ import { PageNotFoundComponent } from './not-found.component';
     BrowserAnimationsModule,
     HomeModule,
     GridsterModule,
-    MaterialModule
+    MaterialModule,
+    ServiceModule
 
   ],
   exports: [
   ],
-  providers: [AuthGuard, AuthService, WindowRef, BeiduAPIService, BeiduMAPService, MonitorService,
-    MessService, MessageService],
+  providers: [AuthGuard, AuthService, WindowRef, ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -152,8 +152,8 @@
 
     .header-margin {
         // margin-top: 80px;
-        margin-left: 250px;
-        padding-left:0px;
+        margin-left: 100px;
+
     }
 
     // 侧边栏
@@ -310,12 +310,12 @@
     }
 
 
-    .header-margin.sidebar-collapse {
-        margin-left: 100px;
-    }
+
 
     // collapse
     .sidebar-collapse{
+        padding-left: 0px;
+        padding-right: 0px;
 
         .login-nav-paren {
             img {

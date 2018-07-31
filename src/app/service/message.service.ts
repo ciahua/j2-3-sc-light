@@ -22,12 +22,11 @@ export class MessageService {
     }
 
     getMessage(): Observable<any> {
-        // console.log(sw, ne, zoom);
         return of(MESSAGELIST)
             .pipe(
                 delay(1000),
                 tap(val => {
-                    console.log(val);
+
                     return val;
                 })
             );

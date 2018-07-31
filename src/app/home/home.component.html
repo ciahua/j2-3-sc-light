@@ -1,6 +1,7 @@
 <div class="home">
   <div [ngClass]="{'sidebar-open':open === true,'sidebar-collapse':!open}" class="wrap">
-      <nav class="login-nav dark-primary">
+      <!-- 头部菜单 -->
+      <nav class="login-nav dark-primary" *ngIf="visible == true">
         <div class="login-nav-paren">
           <!-- logo -->
           <div class="nav-log d-inline-block">
@@ -75,8 +76,8 @@
       
       
       </nav>
-      
-      <aside class="sidebar-dark-primary main-sidebar">
+      <!-- 侧边菜单 -->
+      <aside class="sidebar-dark-primary main-sidebar" *ngIf="visible == true">
       
         <ul class="first-menu">
           <!-- 一级菜单 -->
@@ -114,7 +115,7 @@
       <section class="content">
         <div class="container-fluid">
           <div cllas="row">
-            <div class="col-12 col-md-12 header-margin " [ngClass]="{'sidebar-open':open === true,'sidebar-collapse':!open}">
+            <div class="col-12 col-md-12 " [ngClass]="{'sidebar-open':open === true,'sidebar-collapse':!open,'header-margin':visible == true}">
               <router-outlet ></router-outlet>
             </div>
           </div>

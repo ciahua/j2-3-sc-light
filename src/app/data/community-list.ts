@@ -2847,10 +2847,10 @@ export const COMMUNITYLIST = {
                             {
                                 id: 'WD001',
                                 name: '智安纳温度传感器',
-                'address': '广东省, 深圳市, 南山区, 工业五路, 30号',
-                'build_date': '2003\u5e74',
-                'lat': '22.498012',
-                'lng': '113.922485',
+                                'address': '广东省, 深圳市, 南山区, 工业五路, 30号',
+                                'build_date': '2003\u5e74',
+                                'lat': '22.498012',
+                                'lng': '113.922485',
                                 'prop_num': 2,
                                 'is_active': 1, // 激活
                                 'is_online': 1, // 在线
@@ -2870,10 +2870,10 @@ export const COMMUNITYLIST = {
                             {
                                 id: 'SD001',
                                 name: '智安纳湿度传感器',
-                'address': '广东省, 深圳市, 南山区, 工业五路, 30号',
-                'build_date': '2003\u5e74',
-                'lat': '22.498012',
-                'lng': '113.922485',
+                                'address': '广东省, 深圳市, 南山区, 工业五路, 30号',
+                                'build_date': '2003\u5e74',
+                                'lat': '22.498012',
+                                'lng': '113.922485',
                                 'prop_num': 2,
                                 'is_active': 1, // 激活
                                 'is_online': 1, // 在线
@@ -3158,7 +3158,7 @@ export const COMMUNITYLIST = {
                         'has_child': 1,
                         'children': [
                             {
-                                'id': 'DZ001',
+                                'id': 'DZ002',
                                 'name': '智安纳地震传感器',
                                 'address': '广东省, 深圳市, 南山区, 工业五路, 30号',
                                 'build_date': '2003\u5e74',
@@ -3383,7 +3383,7 @@ export const COMMUNITYLIST = {
                         'has_child': 1,
                         'children': [
                             {
-                                'id': 'DZ001',
+                                'id': 'DZ003',
                                 'name': '智安纳地震传感器',
                                 'address': '广东省, 深圳市, 南山区, 工业四路, 6',
                                 'build_date': '2003\u5e74',

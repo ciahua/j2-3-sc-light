@@ -11,6 +11,7 @@ import { AlertRoutes } from './alert/alert.routes';
 import { ControlRoutes } from './control/control.routes';
 import { ApplicationRoutes } from './application/application.routes';
 import { EnergyRoutes } from './energy/energy.routes';
+import { VideoRoutes } from './video/video.routes';
 export const HomeRoutes: Route[] = [
     {
         path: '',
@@ -29,7 +30,8 @@ export const HomeRoutes: Route[] = [
             ...AlertRoutes,
             ...ControlRoutes,
             ...ApplicationRoutes,
-            ...EnergyRoutes
+            ...EnergyRoutes,
+            ...VideoRoutes
         ]
     },
 ];

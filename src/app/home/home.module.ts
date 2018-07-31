@@ -17,6 +17,7 @@ import { ReportComponent } from './energy/report/report.component';
 import { AlertComponent } from './alert/alert.component';
 
 import { ControlComponent } from './control/control.component';
+import { VideoComponent } from './video/video.component';
 
 
 
@@ -26,7 +27,7 @@ import { ControlComponent } from './control/control.component';
 @NgModule({
     imports: [DeviceModule, UserModule],
     declarations: [  CoverComponent, CalamityComponent,
-         SurveyComponent, ReportComponent, AlertComponent, ControlComponent,
+         SurveyComponent, ReportComponent, AlertComponent, ControlComponent, VideoComponent,
 
     ],
 

@@ -12,10 +12,10 @@ export const MESSAGELIST = {
                 message: '状态异常',
                 'id': 'JG001',
                 'name': '智安纳防盗井盖',
-                'address': '广东省, 深圳市, 南山区, 工业四路, 6号',
+                'address': '广东省, 深圳市, 南山区, 沿山路, 15号',
                 'build_date': '2003\u5e74',
-                'lat': '22.496739',
-                'lng': '113.920522',
+                'lat': '22.496681',
+                'lng': '113.919238',
                 'parent': {
                     'id': '300018',
                     'name': '井盖',
@@ -1690,7 +1690,7 @@ export const MESSAGELIST = {
                 regionName: '',
                 positionId: '',
                 message: '数据异常',
-                'id': 'DZ001',
+                'id': 'DZ002',
                 'name': '智安纳地震传感器',
                 'address': '广东省, 深圳市, 南山区, 工业五路, 30号',
                 'build_date': '2003\u5e74',
@@ -1895,7 +1895,7 @@ export const MESSAGELIST = {
                             'has_child': 1,
                             'children': [
                                 {
-                                    'id': 'DZ001',
+                                    'id': 'DZ002',
                                     'name': '智安纳地震传感器',
                                     'address': '广东省, 深圳市, 南山区, 工业五路, 30号',
                                     'build_date': '2003\u5e74',
@@ -1931,7 +1931,7 @@ export const MESSAGELIST = {
                 regionName: '',
                 positionId: '',
                 message: '数据异常',
-                'id': 'DZ001',
+                'id': 'DZ003',
                 'name': '智安纳地震传感器',
                 'address': '广东省, 深圳市, 南山区, 工业五路, 8号',
                 'build_date': '2003\u5e74',
@@ -2136,7 +2136,7 @@ export const MESSAGELIST = {
                             'has_child': 1,
                             'children': [
                                 {
-                                    'id': 'DZ001',
+                                    'id': 'DZ003',
                                     'name': '智安纳地震传感器',
                                     'address': '广东省, 深圳市, 南山区, 工业四路, 6',
                                     'build_date': '2003\u5e74',
