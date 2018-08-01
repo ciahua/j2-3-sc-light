@@ -69,7 +69,8 @@ import { PageNotFoundComponent } from './not-found.component';
   exports: [
   ],
   providers: [AuthGuard, AuthService, WindowRef, ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+
 })
 export class AppModule {
  // Diagnostic only: inspect router configuration

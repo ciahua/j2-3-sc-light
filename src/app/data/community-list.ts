@@ -421,12 +421,11 @@ export const COMMUNITYLIST = {
                 'build_date': '2003\u5e74',
                 'lat': '22.49757',
                 'lng': '113.920122',
-                'parameters': [], // 设备参数
                 'prop_num': 2,
                 'is_active': 1, // 激活
                 'is_online': 1, // 在线
                 'is_disabled': 1, // 禁用
-                'is_exception': 1, // 正常
+                'is_exception': 1, // 异常
                 'exception_Information': [], // 异常信息
                 'has_child': 1,
                 'children': [
@@ -2947,7 +2946,7 @@ export const COMMUNITYLIST = {
                                 'parameters': [// 设备参数
                                     {
                                         'name': '震值',
-                                        'value':123,
+                                        'value': 123,
                                         'Unit': '' // 单位
                                     },
 
@@ -3757,3 +3756,6 @@ export const COMMUNITYLIST = {
     }
 
 };
+
+
+

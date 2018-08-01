@@ -3,13 +3,14 @@ export const MESSAGELIST = {
         list: [
             {
 
-                deviceId: '',
+
                 issueType: '',
                 priority: '',
                 regionId: '',
                 regionName: '',
                 positionId: '',
                 message: '状态异常',
+                parent_id: 'j1',
                 'id': 'JG001',
                 'name': '智安纳防盗井盖',
                 'address': '广东省, 深圳市, 南山区, 沿山路, 15号',

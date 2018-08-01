@@ -1,16 +1,44 @@
 <div class="video-wrap row">
   <!-- 左侧 -->
-  <div class="col-3 left-side">
-    <p>
-      video works!
-    </p>
+  <div class="col-2 left-side">
+    <!-- 搜索列表 -->
+      <div class=" video-list">
+        <ul id="treeDemo" class="ztree"></ul>
+      </div>
+
+        <!-- 地图 -->
+        <div #map3 id="map_container2" class="map_container"></div>
   </div>
   <!-- 右侧 -->
-  <div class="col-9">
-        <p>
-          video works!ggg
-        </p>
+  <div class="col-10 " style=" padding: 0; ">
+
+          <gridster [options]="options" class="raw">
+            <gridster-item [item]="item" *ngFor="let item of dashboard">
+              <div class="button-holder">
+                <div class="gridster-item-content" *ngIf="item.hasContent">
+                  <div class="stuff">
+                    <span>Some content to select and click without dragging the widget</span>
+                    <a href="https://www.google.com" target="_blank">Link to Google</a>
+                  </div>
+                </div>
+                <div class="item-buttons" *ngIf="item.hasContent">
+                  <button mat-icon-button mat-raised-button class="drag-handler">
+                    <mat-icon>open_with</mat-icon>
+                  </button>
+                  <button mat-icon-button mat-raised-button class="remove-button" (mousedown)="removeItem($event, item)" (touchstart)="removeItem($event, item)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+                <div>{{item.id}}</div>
+                <label *ngIf="!item.hasContent">{{item.label}}</label>
+                <button mat-mini-fab *ngIf="!item.hasContent" (mousedown)="removeItem($event, item)" (touchstart)="removeItem($event, item)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </gridster-item>
+          </gridster>
   </div>
+
 
 </div>
 

@@ -580,6 +580,7 @@ export const CITYLIST = {
                                     "id": "437",
                                     "prop_num": 6839,
                                     "name": "\u524d\u6d77",
+                                    "parse_name": "广东省深圳市南山区XXX街道",
                                     "parent_id": "431",
                                     "lat": "22.519443",
                                     "lng": "113.895674"

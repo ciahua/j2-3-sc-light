@@ -140,7 +140,7 @@ export class MonitorComponent implements OnInit {
     map.addControl(top_left_control);
 
     // map.enableScrollWheelZoom(true); // 启动滚轮放大缩小，默认禁用
-    map.enableContinuousZoom(true); // 连续缩放效果，默认禁用
+    // map.enableContinuousZoom(true); // 连续缩放效果，默认禁用
 
     this.dragendOff(map);
     this.zoomendOff(map);
@@ -846,7 +846,8 @@ export class MonitorComponent implements OnInit {
     // this.urlService.addURLParam('visible', 'false');
     this.visible = false;
     localStorage.setItem('visible', 'false');
-    console.log('全屏');
+    console.log('进入全屏');
+    console.log(this.visible);
     // 设置缩放控件偏移量
     const offset = new BMap.Size(20, 15);
     this.navigationControl.setOffset(offset);
@@ -862,7 +863,8 @@ export class MonitorComponent implements OnInit {
     // this.urlService.addURLParam('visible', 'false');
     this.visible = true;
     localStorage.setItem('visible', 'true');
-    console.log('全屏');
+    console.log('退出全屏');
+    console.log(this.visible);
     // 设置缩放控件偏移量
     const offset = new BMap.Size(20, 140);
     this.navigationControl.setOffset(offset);

@@ -1,27 +1,29 @@
-export const DEVICELIIST = [
+export const DEVICELIIST =
+[
     {
-        id: '',
+        id: 'l1',
         name: '灯',
-        type: '',
+        type: 'light',
     },
     {
-        id: '',
+        id: 'c1',
         name: '井盖',
-        type: '',
+        type: 'cover',
     },
     {
         id: '',
         name: '网关',
-        type: '',
+        type: 'gateway',
     },
     {
-        id: '',
-        name: '温度计',
-        type: '',
+        id: 'e1',
+        name: '环境箱',
+        type: 'environment',
     },
     {
-        id: '',
-        name: '摄像头',
-        type: '',
+        id: 'w1',
+        name: '气象箱',
+        type: 'weather',
+        parent_id: 's10001'
     },
 ];
