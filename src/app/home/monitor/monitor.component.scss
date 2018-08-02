@@ -1,5 +1,12 @@
 .map_container{
     width: 100%;
+
+}
+.no-fulls-map {
+    height: calc(100vh - 80px);
+    margin-top: 80px;
+}
+.fulls-map {
     height: 100vh;
 }
 
@@ -251,13 +258,13 @@
 .Selection-Region{
     position: absolute;
     z-index: 3000;
-    top: 100px;
+    top: 15px;
 }
 // 右边按钮
 .btn-icon{
     position: absolute;
     z-index: 3000;
-    top: 100px;
+    top: 15px;
     right:100px;
 
 }

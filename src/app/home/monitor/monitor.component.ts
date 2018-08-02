@@ -88,6 +88,7 @@ export class MonitorComponent implements OnInit {
     this.getDevice(); // 获取设备列表
     const that = this;
 
+    // 退出全屏
     window.onresize = function () {
       if (!that.checkFull()) {
         // 要执行的动作
@@ -129,7 +130,8 @@ export class MonitorComponent implements OnInit {
     // map.setCurrentCity('广州');
 
     // 添加控件缩放
-    const offset = this.visible === true ? new BMap.Size(20, 140) : new BMap.Size(20, 15);
+    // const offset = this.visible === true ? new BMap.Size(20, 140) : new BMap.Size(20, 15);
+    const offset =  new BMap.Size(20, 60);
     const navigationControl = this.navigationControl = new BMap.NavigationControl({
       anchor: BMAP_ANCHOR_TOP_LEFT,
       offset: offset,
@@ -866,7 +868,7 @@ export class MonitorComponent implements OnInit {
     console.log('退出全屏');
     console.log(this.visible);
     // 设置缩放控件偏移量
-    const offset = new BMap.Size(20, 140);
+    const offset = new BMap.Size(20, 60);
     this.navigationControl.setOffset(offset);
 
     this.communicateService.sendMessage(this.visible); // 发布一条消息

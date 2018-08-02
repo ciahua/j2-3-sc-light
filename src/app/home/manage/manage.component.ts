@@ -39,24 +39,70 @@ export class ManageComponent implements AfterViewInit, OnInit {
     console.log('itemInitialized', item, itemComponent);
   }
   ngOnInit() {
+
     this.options = {
       gridType: GridType.Fit,
-      displayGrid: DisplayGrid.Always,
-      pushItems: true,
+      compactType: CompactType.None,
+      margin: 10,
+      outerMargin: true,
+      outerMarginTop: null,
+      outerMarginRight: null,
+      outerMarginBottom: null,
+      outerMarginLeft: null,
+      mobileBreakpoint: 640,
+      minCols: 12,
+      maxCols: 12,
+      minRows: 1,
+      maxRows: 12,
+      maxItemCols: 3,
+      minItemCols: 1,
+      maxItemRows: 3,
+      minItemRows: 1,
+      maxItemArea: 2500,
+      minItemArea: 1,
+      defaultItemCols: 1,
+      defaultItemRows: 1,
+      fixedColWidth: 105,
+      fixedRowHeight: 105,
+      keepFixedHeightInMobile: false,
+      keepFixedWidthInMobile: false,
+      scrollSensitivity: 10,
+      scrollSpeed: 20,
+      enableEmptyCellClick: false,
+      enableEmptyCellContextMenu: false,
+      enableEmptyCellDrop: false,
+      enableEmptyCellDrag: false,
+      emptyCellDragMaxCols: 50,
+      emptyCellDragMaxRows: 50,
+      ignoreMarginInRow: false,
       draggable: {
-        enabled: true
+        enabled: true,
       },
       resizable: {
-        enabled: true
-      }
+        enabled: true,
+      },
+      swap: false,
+      pushItems: true,
+      disablePushOnDrag: false,
+      disablePushOnResize: false,
+      pushDirections: { north: true, east: true, south: true, west: true },
+      pushResizeItems: false,
+      displayGrid: DisplayGrid.Always,
+      disableWindowResize: false,
+      disableWarnings: false,
+      scrollToNewItems: false
     };
 
     this.dashboard = [
-      { cols: 4, rows: 1, y: 0, x: 0 },
-      { cols: 4, rows: 1, y: 0, x: 2 },
-      { cols: 3, rows: 1, y: 0, x: 4 },
-      { cols: 3, rows: 1, y: 1, x: 4 },
-
+      { cols: 3, rows: 3, y: 0, x: 0, id: 'a' },
+      { cols: 3, rows: 3, y: 0, x: 0, id: 'b', hasContent: true },
+      { cols: 3, rows: 3, y: 0, x: 0, id: 'c' },
+      { cols: 3, rows: 3, y: 0, x: 0, id: 'd' },
+      { cols: 3, rows: 3, y: 0, x: 0, id: 'e' },
+      { cols: 3, rows: 3, y: 0, x: 0, dragEnabled: true, resizeEnabled: true, label: 'Drag&Resize Enabled', id: 'f' },
+      { cols: 3, rows: 3, y: 0, x: 0, dragEnabled: true, resizeEnabled: false, label: 'Drag&Resize Disabled', id: 'g' },
+      { cols: 3, rows: 3, y: 0, x: 0, id: 'h' },
+      { cols: 3, rows: 3, y: 0, x: 0, id: 'j' }
 
     ];
   }

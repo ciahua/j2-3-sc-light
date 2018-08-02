@@ -107,7 +107,7 @@
 
 
   <!-- 地图 -->
-  <div #map3 id="map_container3" class="map_container"></div>
+  <div #map3 id="map_container3" class="map_container" [ngClass]="{'no-fulls-map':visible == true,'fulls-map': visible == false}"></div>
 
   <!-- 设备操作 -->
   <div class="device-detail" *ngIf="deviceChild">
