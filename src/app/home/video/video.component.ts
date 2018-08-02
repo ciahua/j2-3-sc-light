@@ -23,8 +23,13 @@ export class VideoComponent implements OnInit {
   // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
   zNodes = CITYTREE;
 
+  videoNum = 9;
+
   options: GridsterConfig;
   dashboard: Array<GridsterItem>;
+  dashboardO: Array<any>;
+  dashboardF: Array<any>;
+  dashboardN: Array<any>;
 
   static itemChange(item, itemComponent) {
     console.log('itemChanged', item, itemComponent);
@@ -45,11 +50,28 @@ export class VideoComponent implements OnInit {
     //   itemResizeCallback: VideoComponent.itemResize,
     // };
 
-    // this.dashboard = [
-    //   { cols: 2, rows: 1, y: 0, x: 0 },
-    //   { cols: 2, rows: 2, y: 0, x: 2 }
-    // ];
+    this.dashboardO = [
+      { cols: 2, rows: 1, y: 0, x: 0 },
 
+    ];
+    this.dashboardF = [
+      { cols: 6, rows: 6, y: 0, x: 0 },
+      { cols: 6, rows: 6, y: 0, x: 0 },
+      { cols: 6, rows: 6, y: 0, x: 0 },
+      { cols: 6, rows: 6, y: 0, x: 0 },
+    ];
+
+    this.dashboardN = [
+      { cols: 4, rows: 4, y: 0, x: 0 },
+      { cols: 4, rows: 4, y: 0, x: 0 },
+      { cols: 4, rows: 4, y: 0, x: 0 },
+      { cols: 4, rows: 4, y: 0, x: 0 },
+      { cols: 4, rows: 4, y: 0, x: 0 },
+      { cols: 4, rows: 4, y: 0, x: 0 },
+      { cols: 4, rows: 4, y: 0, x: 0 },
+      { cols: 4, rows: 4, y: 0, x: 0 },
+      { cols: 4, rows: 4, y: 0, x: 0 },
+    ];
 
   }
 
@@ -70,6 +92,10 @@ export class VideoComponent implements OnInit {
     const marker = new BMap.Marker(point);  // 创建标注
     map.addOverlay(marker);               // 将标注添加到地图中
 
+  }
+
+  seleteNum (num) {
+    this.videoNum = num;
   }
 
 

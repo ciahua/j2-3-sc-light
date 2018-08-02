@@ -13,19 +13,40 @@
   <div class="right-side" style=" padding: 0; ">
 
     <div class="video-nav">
-      <span class="cur-pointer">
+      <span class="cur-pointer" (click)="seleteNum(1)">
         <i class="fa fa-square" aria-hidden="true"></i>
       </span>
-      <span class="cur-pointer">
+      <span class="cur-pointer" (click)="seleteNum(4)">
         <i class="fa fa-th-large" aria-hidden="true"></i>
       </span>
-      <span class="cur-pointer">
+      <span class="cur-pointer" (click)="seleteNum(9)">
         <i class="fa fa-th" aria-hidden="true"></i>
       </span>
     </div>
   </div>
   <div class="video-content">
-    kk
+    <!-- 一宫格 -->
+      <div class="row align-items-center justify-content-center video-one" *ngIf="videoNum == 1">
+        <span class="add"><i class="fa fa-plus" aria-hidden="true"></i></span>
+      </div>
+      <!-- 四宫格 -->
+      <div class="row  video-four" *ngIf="videoNum == 4">
+        <div class="col-6 video-four-content " *ngFor="let item of dashboardF">
+          <span class="add ">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </span>
+        </div>
+
+      </div>
+      <!-- 九宫格 -->
+      <div class="row  video-four" *ngIf="videoNum == 9">
+        <div class="col-4 video-four-content " *ngFor="let item of dashboardN">
+          <span class="add ">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </span>
+        </div>
+      
+      </div>
   </div>
 
 
