@@ -15,6 +15,7 @@ import { MonitorService } from '../../service/monitor.service';
 import { MessService } from '../../service/mess.service';
 import { FullScreenService } from '../../service/full-screen.service';
 import { CommunicateService } from '../../service/communicate.service';
+import { VideoService } from '../../service/video.service';
 
 // baidu map
 declare let BMap;
@@ -63,7 +64,8 @@ export class MonitorComponent implements OnInit {
   constructor(
     private monitorService: MonitorService, private config: NgbDropdownConfig, private activatedRoute: ActivatedRoute,
     public messService: MessService, public router: Router, public urlService: UrlService,
-    public fullScreenService: FullScreenService, private communicateService: CommunicateService
+    public fullScreenService: FullScreenService, private communicateService: CommunicateService,
+    private videoService: VideoService
     ) {
     this.zoom = 12; // 默认
     // config.placement = 'bottom-left';
@@ -112,7 +114,7 @@ export class MonitorComponent implements OnInit {
 
   // 百度地图API功能
   addBeiduMap() {
-    const city = this.defaultZone;
+    const city = this.currentCity;
     const map = this.map = new BMap.Map(this.map_container.nativeElement, {
       enableMapClick: true,
       minZoom: 11,
@@ -249,15 +251,15 @@ export class MonitorComponent implements OnInit {
     // 创建地址解析器实例
     const myGeo = new BMap.Geocoder();
     const zoom = this.zoom = this.switchZone(city.level);
-    const name = city.name;
+    const fullName = city.fullName;
 
     let pt;
 
     // 将地址解析结果显示在地图上,并调整地图视野，获取数据-添加标注
-    myGeo.getPoint(name, function (point) {
+    myGeo.getPoint(fullName, function (point) {
       if (point) {
-        const p = new BMap.Point(113.920522, 22.496739); // 坐标可以通过百度地图坐标拾取器获取(万融大厦)
-        baiduMap.centerAndZoom(p, zoom);
+        // const p = new BMap.Point(113.920522, 22.496739); // 坐标可以通过百度地图坐标拾取器获取(万融大厦)
+        baiduMap.centerAndZoom(point, zoom);
         // baiduMap.centerAndZoom(point, zoom);
         pt = point;
         // myGeo.getLocation(pt, function (rs) {
@@ -270,7 +272,7 @@ export class MonitorComponent implements OnInit {
       } else {
         console.log('您选择地址没有解析到结果!');
       }
-    }, that.currentCity.name);
+    }, that.node.name);
   }
 
 
@@ -345,8 +347,6 @@ export class MonitorComponent implements OnInit {
   // 选择城市
   selecteCity(city) {
     this.currentCity = city;
-    const id = city.id;
-    const name = city.name;
     this.getPoint(this.map, city);  // 解析地址- 设置中心和地图显示级别
     this.currentChildren = city.children;
   }
@@ -398,13 +398,13 @@ export class MonitorComponent implements OnInit {
   getCity() {
     const that = this;
 
-    this.monitorService.getCity().subscribe({
+    this.videoService.getZoneDefault().subscribe({
       next: function (val) {
         that.cityList = val.regions;
-        that.defaultZone = val.zone;
-        that.currentCity = val.currentCity;
+        that.currentCity = val.zone;
         that.zoom = that.switchZone(val.zone.level);
-        that.currentChildren = that.getNode(val.regions, val.zone.id);
+        that.node = that.getNode(val.regions, val.zone.region_id);
+        that.currentChildren = that.node.children;
 
       },
       complete: function () {
@@ -775,7 +775,6 @@ export class MonitorComponent implements OnInit {
   getNode(json, nodeId) {
     const that = this;
 
-
     // 1.第一层 root 深度遍历整个JSON
     for (let i = 0; i < json.length; i++) {
       if (that.node) {
@@ -793,8 +792,7 @@ export class MonitorComponent implements OnInit {
       // 2.有节点就开始找，一直递归下去
       if (obj.id === nodeId) {
         // 找到了与nodeId匹配的节点，结束递归
-
-         that.node = obj;
+        that.node = obj;
 
         break;
       } else {
@@ -824,8 +822,9 @@ export class MonitorComponent implements OnInit {
     //   parentNode: that.parentNode,
     //   node: that.node
     // };
-    return that.node && that.node.children ;
+    return that.node ;
   }
+
   // 路由跳转-传递参数-这是在html中绑定的click跳转事件
   jumpHandle() {
     this.router.navigate([`home/video`]);

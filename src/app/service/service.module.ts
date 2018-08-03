@@ -9,6 +9,7 @@ import { MessageService } from './message.service';
 import { MessService } from './mess.service';
 import { UrlService } from './url.service';
 import { CommunicateService } from './communicate.service';
+import { VideoService } from './video.service';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { CommunicateService } from './communicate.service';
   ],
   declarations: [],
   providers: [FullScreenService, BeiduAPIService, BeiduMAPService, MonitorService,
-    MessService, MessageService, UrlService, CommunicateService]
+    MessService, MessageService, UrlService, CommunicateService, VideoService]
 })
 export class ServiceModule { }

@@ -1,5 +1,5 @@
 <div class="video-wrap ">
-  <!-- 左侧 -->
+  <!-- 左侧列表 -->
   <div class="left-side">
     <!-- 搜索列表 -->
     <div class=" video-list">
@@ -9,6 +9,18 @@
     <!-- 地图 -->
     <div #map3 id="map_container2" class="map_container"></div>
   </div>
+
+  <!-- 左侧控制页面 -->
+
+    <div class="left-side" *ngIf="controlShow">
+      <!-- 搜索列表 -->
+      <div>
+        <span>X</span>
+      </div>
+    
+
+    </div>
+
   <!-- 右侧 -->
   <div class="right-side" style=" padding: 0; ">
 
@@ -25,25 +37,42 @@
     </div>
   </div>
   <div class="video-content">
-    <!-- 一宫格 -->
-      <div class="row align-items-center justify-content-center video-one" *ngIf="videoNum == 1">
-        <span class="add"><i class="fa fa-plus" aria-hidden="true"></i></span>
+
+
+      <!-- 一宫格 -->
+      <div class="row  video-warp" *ngIf="videoNum == 1">
+        <div class="col-12 video-four-content  cur-pointer" *ngFor="let item of dashboardO;let i = index" [ngClass]="{'video-active' :isActive == i && videoNum ==1}" (click)="addVideo(i,videoNum)">
+          <div class="add " *ngIf="addImg[i] == 1">
+            <img src="../../../assets/imgs/plus.png" alt="智慧城市" class="center-img" >
+            <!-- <i class="fa fa-plus" aria-hidden="true"></i> -->
+          </div>
+          <div class="bg-img" *ngIf="addImg[i] == 0">
+            <!-- <img src="../../../assets/imgs/video.png" alt="智慧城市" class="center-video img-center"> -->
+          </div>
+        </div>
+      
       </div>
       <!-- 四宫格 -->
-      <div class="row  video-four" *ngIf="videoNum == 4">
-        <div class="col-6 video-four-content " *ngFor="let item of dashboardF">
-          <span class="add ">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-          </span>
+      <div class="row  video-warp" *ngIf="videoNum == 4">
+        <div class="col-6 video-four-content  cur-pointer" *ngFor="let item of dashboardF;let i = index" [ngClass]="{'video-active' :isActive == i && videoNum ==4}" (click)="addVideo(i,videoNum)">
+          <div class="add " *ngIf="addImg[i] == 1">
+            <img src="../../../assets/imgs/plus.png" alt="智慧城市" class="center-img" >
+          </div>
+          <div class=" bg-img" *ngIf="addImg[i] == 0">
+            <!-- <img src="../../../assets/imgs/video.png" alt="智慧城市" class="center-video img-center"> -->
+          </div>
         </div>
 
       </div>
       <!-- 九宫格 -->
-      <div class="row  video-four" *ngIf="videoNum == 9">
-        <div class="col-4 video-four-content " *ngFor="let item of dashboardN">
-          <span class="add ">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-          </span>
+      <div class="row  video-warp" *ngIf="videoNum == 9">
+        <div class="col-4 video-four-content  cur-pointer " *ngFor="let item of dashboardN;let i = index" [ngClass]="{'video-active' :isActive == i && videoNum ==9}" (click)="addVideo(i,videoNum)">
+          <div class="add " *ngIf="addImg[i] == 1">
+            <img src="../../../assets/imgs/plus.png" alt="智慧城市" class="center-img " >
+          </div>
+          <div class="bg-img" *ngIf="addImg[i] == 0">
+            <!-- <img src="../../../assets/imgs/video.png" alt="智慧城市" class="center-video img-center"> -->
+          </div>
         </div>
       
       </div>
