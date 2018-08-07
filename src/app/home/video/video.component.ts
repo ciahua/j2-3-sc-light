@@ -15,7 +15,7 @@ declare let BMapLib;
   styleUrls: ['./video.component.scss']
 })
 export class VideoComponent implements OnInit {
-  @ViewChild('map3') map_container: ElementRef;
+  @ViewChild('map2') map_container: ElementRef;
   model: any = {}; // 存储数据
 
   map: any; // 地图对象
@@ -58,8 +58,8 @@ export class VideoComponent implements OnInit {
     const that = this;
     this.zTreeOnClick = (event, treeId, treeNode) => {
       const index = this.isActive;
-      this.city = treeNode.fullName;
-      console.log(treeNode.tId + ', ' + treeNode.fullName);
+      this.city = treeNode.full_name;
+      console.log(treeNode.tId + ', ' + treeNode.full_name);
       this.getPoint(that.map, that.city);
 
       if (this.isActive !== null && this.isActive !== undefined) {

@@ -12,18 +12,12 @@
         position: absolute;
         top: 80px;
         width: 300px;
-        max-height: 400px;
+        max-height: 75%;
         overflow-y: auto;
     }
-}
-.right-side {
-    position: absolute;
-    top: 80px;
-    margin-left: 300px;
-    width: 100%;
-}
-.map_container{
-    height: 300px;
+
+    .map_container{
+    height: 25%;
     width: 100%;
     padding-right: 15px;
     padding-left: 15px;
@@ -31,6 +25,14 @@
     position: absolute;
     bottom: 0px;
 }
+}
+.right-side {
+    position: absolute;
+    top: 80px;
+    margin-left: 300px;
+    width: 100%;
+}
+
 .gridster {
     padding-top: 80px !important;
     // padding-left: 400px !important;
@@ -56,6 +58,7 @@
     position: absolute;
     margin-left: 300px;
     top: 120px;
+
 }
 
 
@@ -69,6 +72,7 @@
     .video-four-content {
         border: 2px solid #e5e5e5;
         box-shadow: 0px 0px 18px #e5e5e5;
+        padding: 0px;
 
     }
 
@@ -104,3 +108,20 @@
     background-repeat:no-repeat;
     background-size: cover;//这条一定要
 }
+
+// 树
+.ztree li span.button.diy01_ico_open, .ztree li span.button.diy01_ico_close{
+    background-image: url('../../../assets/imgs/video.png');
+}
+
+.ztree li span.button.diy02_ico_open{
+        background-image: url('../../../assets/imgs/video.png');
+}
+.ztree li span.button.diy02_ico_close{
+        background-image: url('../../../assets/imgs/video.png');
+}
+
+.ztree li span.button.diy03_ico_docu{
+        background-image: url('../../../assets/imgs/video.png');
+}
+ 

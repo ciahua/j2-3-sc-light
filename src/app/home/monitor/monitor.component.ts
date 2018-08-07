@@ -34,7 +34,7 @@ declare let BMAP_ANIMATION_BOUNCE;
 })
 export class MonitorComponent implements OnInit {
 
-  @ViewChild('map3') map_container: ElementRef;
+  @ViewChild('map1') map_container: ElementRef;
 
   map: any; // 地图对象
   markers: any[] = []; // 标记
@@ -258,15 +258,8 @@ export class MonitorComponent implements OnInit {
     // 将地址解析结果显示在地图上,并调整地图视野，获取数据-添加标注
     myGeo.getPoint(fullName, function (point) {
       if (point) {
-        // const p = new BMap.Point(113.920522, 22.496739); // 坐标可以通过百度地图坐标拾取器获取(万融大厦)
         baiduMap.centerAndZoom(point, zoom);
-        // baiduMap.centerAndZoom(point, zoom);
         pt = point;
-        // myGeo.getLocation(pt, function (rs) {
-        //   const addComp = rs.addressComponents;
-        //   console.log(addComp.province + ', ' + addComp.city +
-        //    ', ' + addComp.district + ', ' + addComp.street + ', ' + addComp.streetNumber);
-        // });
 
         that.addMarker(); // 获取数据-添加标注
       } else {
