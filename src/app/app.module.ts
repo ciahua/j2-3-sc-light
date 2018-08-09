@@ -22,6 +22,7 @@ import { UserComponent } from './home/user/user.component';
 import { MonitorComponent } from './home/monitor/monitor.component';
 import { ApplicationComponent } from './home/application/application.component';
 import { EnergyComponent } from './home/energy/energy.component';
+import { RuleComponent } from './home/rule/rule.component';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -48,7 +49,8 @@ import { PageNotFoundComponent } from './not-found.component';
     UserComponent,
     MonitorComponent,
     ApplicationComponent,
-    EnergyComponent
+    EnergyComponent,
+    RuleComponent
 
 
   ],

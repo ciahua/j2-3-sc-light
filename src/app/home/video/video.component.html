@@ -1,83 +1,130 @@
-<div class="video-wrap ">
-  <!-- 左侧列表 -->
-  <div class="left-side">
-    <!-- 搜索列表 -->
-    <div class=" video-list">
-      <ul id="treeDemo" class="ztree"></ul>
+<div class="row">
+<div class="col-6 video-left">
+  <div class="dash-warp">
+    <!-- 图一 -->
+    <div class="col-12 dash-context">
+
+      <div id="map_container1"  class="dash-visi"> </div>
     </div>
+    <!-- 图二 -->
+    <div class="col-12 dash-context">
 
-    <!-- 地图 -->
-    <div #map2 id="map_container2" class="map_container"></div>
-  </div>
-
-  <!-- 左侧控制页面 -->
-
-    <div class="left-side" *ngIf="controlShow">
-      <!-- 搜索列表 -->
-      <div>
-        <span>X</span>
-      </div>
+      <div id="map_container2" class="dash-visi"></div>
+    </div>
+<!-- 图三 -->
+    <div class="col-12 dash-context">
     
+      <div id="map_container3" class="dash-visi"></div>
+    </div>
+    <!-- 图四 -->
+    <div class="col-12 dash-context">
+    
+      <div id="map_container4" class="dash-visi"></div>
+    </div>
+  </div>
+
+
+
+</div>
+
+<div class="col-6 video-right">
+  <!-- 地图 -->
+  <div class="map_warp">
+    <!-- 选择区域 -->
+    <div class="Selection-Region" *ngIf="visible == true">
+      <!-- 城市列表 -->
+      <div class="d-inline-block sel-area-block" (mouseleave)="citylistMouseleave()">
+
+        <span class="cl-blue cur-pointer" (mouseover)="showCiyt()">
+          <span class="filter" *ngIf="node">{{node.name}}</span>
+          <span class="filter" *ngIf="!currentCity">选择城市</span>
+          <!-- <i class="fa fa-bell-o nav-icon " aria-hidden="true"></i> -->
+        </span>
+        <div id="city-panel" class="city-panel" *ngIf="cityshow">
+          <dl *ngFor="let item of cityList">
+            <dt>{{item.name}}</dt>
+            <dd *ngIf="item.children && item.children.length > 0">
+              <a title="智慧城市" *ngFor="let itemc of item.children" (click)="selecteCity(itemc)">{{itemc.name}}</a>
+            </dd>
+          </dl>
+
+          <!-- <div class="blank">
+                  <a href="https://www.anjuke.com/sy-city.html" class="moreCity">更多城市&gt;</a>
+                </div> -->
+        </div>
+
+      </div>
+
+      <!-- 区域列表 -->
+      <div class="d-inline-block sel-area-block" (mouseleave)="arealistMouseleave()">
+
+        <span class="cl-blue cur-pointer" (mouseover)="showArea()">
+          <span class="filter">选择区域</span>
+        </span>
+
+        <div class="arealist-wrap" *ngIf="areashow">
+          <ul class="arealist" data-type="area">
+            <li data-val="0" class="arealist-item" (mouseover)="arealistMouseNone()">
+              <em>不限</em>
+            </li>
+            <li class="arealist-item" *ngFor="let node of currentChildren" (mouseover)="arealistMouseover(node)" (click)="selecteblock(node)">
+              <em>{{node.name}}</em>
+            </li>
+
+          </ul>
+          <ul class="blocklist" data-type="block" *ngIf="currentBlock">
+            <li data-val="0">不限</li>
+            <li *ngFor="let block of currentBlock" (click)="selecteblock(block)">{{block.name}}</li>
+
+          </ul>
+
+        </div>
+
+      </div>
+
+      <!-- 设备列表 -->
+      <div class="d-inline-block sel-area-block" (mouseleave)="devicelistMouseleave()">
+
+        <span class="cl-blue cur-pointer" (mouseover)="showDevice()">
+          <span class="filter">设备类别</span>
+
+        </span>
+        <div id="device-panel" class="device-panel" *ngIf="deviceshow">
+          <dl>
+            <dt>
+              <a>不限</a>
+            </dt>
+          </dl>
+          <dl *ngFor="let device of deviceList">
+            <dt>
+              <a title="智慧城市">{{device.name}}</a>
+            </dt>
+            <dd *ngIf="device.children && device.children.length > 0">
+              <a title="智慧城市" *ngFor="let itemc of device.children">{{itemc.name}}</a>
+            </dd>
+          </dl>
+        </div>
+
+      </div>
 
     </div>
 
-  <!-- 右侧 -->
-  <div class="right-side" style=" padding: 0; ">
+    <!-- 右边按钮 -->
+    <div class="btn-icon" *ngIf="visible == true">
+      <div class="d-inline-block icon-item cur-pointer">
+        <img src="../../../../assets/imgs/control.png" alt="图片">
 
-    <div class="video-nav">
-      <span class="cur-pointer" (click)="seleteNum(1)">
-        <i class="fa fa-square" aria-hidden="true"></i>
-      </span>
-      <span class="cur-pointer" (click)="seleteNum(4)">
-        <i class="fa fa-th-large" aria-hidden="true"></i>
-      </span>
-      <span class="cur-pointer" (click)="seleteNum(9)">
-        <i class="fa fa-th" aria-hidden="true"></i>
-      </span>
+      </div>
+
+      <div class="d-inline-block icon-item cur-pointer">
+
+        <img src="../../../../assets/imgs/switch.png" alt="图片" (click)="enterFullScreen()">
+      </div>
+
     </div>
+    <!-- 地图 -->
+    <div #map2 id="map_container2" class="map_container no-fulls-map"></div>
   </div>
-  <div class="video-content">
-
-
-      <!-- 一宫格 -->
-      <div class="row  video-warp" *ngIf="videoNum == 1">
-        <div class="col-12 video-four-content  cur-pointer" *ngFor="let item of dashboardO;let i = index" [ngClass]="{'video-active' :isActive == i && videoNum ==1}" (click)="addVideo(i,videoNum)">
-          <div class="add " *ngIf="addImg[i] == 1">
-            <img src="../../../assets/imgs/plus.png" alt="智慧城市" class="center-img" >
-            <!-- <i class="fa fa-plus" aria-hidden="true"></i> -->
-          </div>
-          <div class="bg-img" *ngIf="addImg[i] == 0">
-            <!-- <img src="../../../assets/imgs/video.png" alt="智慧城市" class="center-video img-center"> -->
-          </div>
-        </div>
-      
-      </div>
-      <!-- 四宫格 -->
-      <div class="row  video-warp" *ngIf="videoNum == 4">
-        <div class="col-6 video-four-content  cur-pointer" *ngFor="let item of dashboardF;let i = index" [ngClass]="{'video-active' :isActive == i && videoNum ==4}" (click)="addVideo(i,videoNum)">
-          <div class="add " *ngIf="addImg[i] == 1">
-            <img src="../../../assets/imgs/plus.png" alt="智慧城市" class="center-img" >
-          </div>
-          <div class=" bg-img" *ngIf="addImg[i] == 0">
-            <!-- <img src="../../../assets/imgs/video.png" alt="智慧城市" class="center-video img-center"> -->
-          </div>
-        </div>
-
-      </div>
-      <!-- 九宫格 -->
-      <div class="row  video-warp" *ngIf="videoNum == 9">
-        <div class="col-4 video-four-content  cur-pointer " *ngFor="let item of dashboardN;let i = index" [ngClass]="{'video-active' :isActive == i && videoNum ==9}" (click)="addVideo(i,videoNum)">
-          <div class="add " *ngIf="addImg[i] == 1">
-            <img src="../../../assets/imgs/plus.png" alt="智慧城市" class="center-img " >
-          </div>
-          <div class="bg-img" *ngIf="addImg[i] == 0">
-            <!-- <img src="../../../assets/imgs/video.png" alt="智慧城市" class="center-video img-center"> -->
-          </div>
-        </div>
-      
-      </div>
-  </div>
-
-
+</div>
 </div>
 

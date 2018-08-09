@@ -1,8 +1,10 @@
 import { Route } from '@angular/router';
-import { AddDeviceComponent } from './add-device/add-device.component';
-import { DelDeviceComponent } from './del-device/del-device.component';
-import { NewDeviceComponent } from './new-device/new-device.component';
+
 import { DeviceComponent } from './device.component';
+import { PositionComponent } from './position/position.component';
+import { ClassComponent } from './class/class.component';
+import { ProductComponent } from './product/product.component';
+import { SurveyComponent } from './survey/survey.component';
 
 import { AuthGuard } from '../../guard/auth-guard.service';
 
@@ -16,10 +18,12 @@ export const DeviceRoutes: Route[] = [
                 path: '',
                 // canActivateChild: [AuthGuard],
                 children: [
-                    { path: '', redirectTo: 'add-device', pathMatch: 'full' },
-                    { path: 'add-device', component: AddDeviceComponent },
-                    { path: 'new-device', component: NewDeviceComponent },
-                    { path: 'del-device', component: DelDeviceComponent },
+                    { path: '', redirectTo: 'position', pathMatch: 'full' },
+                    { path: 'position', component: PositionComponent },
+                    { path: 'class', component: ClassComponent },
+                    { path: 'product', component: ProductComponent },
+                    { path: 'survey', component: SurveyComponent },
+
 
                 ]
             }

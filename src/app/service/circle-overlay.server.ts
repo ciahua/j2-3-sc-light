@@ -12,13 +12,14 @@ declare let BMap;
 // }
 
 
-export function CircleOverlarService(center, text, length, color, mouseoverColor) {
+export function CircleOverlarService(center, name, count, length, color, mouseoverColor) {
     // console.log(this);
     this._center = center;
     this._length = length;
     this._color = color;
     this._mouseoverColor = mouseoverColor;
-    this._text = text;
+    this._name = name;
+    this._count = count;
 }
 
 CircleOverlarService.prototype = new BMap.Overlay();
@@ -40,12 +41,9 @@ CircleOverlarService.prototype.initialize = function (map) {
     // 可以根据参数设置元素外观
     div.style.width = this._length + 'px';
     div.style.height = this._length + 'px';
-    div.style.lineHeight = this._length + 'px';
+    // div.style.lineHeight = this._length + 'px';
     div.style.background = this._color;
-    // div.style.color = 'white';
-    // div.style.whiteSpace = 'nowrap';
-    // div.style.MozUserSelect = 'none';
-    // div.style.fontSize = '12px';
+
     div.className = 'i-circle';
     // 将div添加到覆盖物容器中
     map.getPanes().markerPane.appendChild(div);
@@ -55,8 +53,14 @@ CircleOverlarService.prototype.initialize = function (map) {
     // hide方法，或者对覆盖物进行移除时，API都将操作此元素。
 
     const span = this._span = document.createElement('span');
+    const span2 = this._span2 = document.createElement('span');
+    const br = document.createElement('br');
     div.appendChild(span);
-    span.appendChild(document.createTextNode(this._text));
+    div.appendChild(br);
+    div.appendChild(span2);
+    span.appendChild(document.createTextNode(this._name));
+    span2.appendChild(document.createTextNode(this._count));
+
 
 
     const arrow = this._arrow = document.createElement('div');

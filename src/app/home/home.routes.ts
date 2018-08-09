@@ -1,14 +1,12 @@
 import { Route } from '@angular/router';
 import { HomeComponent } from './home.component';
 import { AuthGuard } from '../guard/auth-guard.service';
-// import { ConfigRoutes } from './config/config.routes';
-// import { ManageRoutes } from './manage/manage.routes';
 import { MonitorRoutes } from './monitor/monitor.routes';
 
 import { DeviceRoutes } from './device/device.routes';
 import { UserRoutes } from './user/user.routes';
-import { AlertRoutes } from './alert/alert.routes';
-import { ControlRoutes } from './control/control.routes';
+import { RuleRoutes } from './rule/rule.routes';
+
 import { ApplicationRoutes } from './application/application.routes';
 import { EnergyRoutes } from './energy/energy.routes';
 import { VideoRoutes } from './video/video.routes';
@@ -24,13 +22,12 @@ export const HomeRoutes: Route[] = [
         component: HomeComponent,
         canActivate: [AuthGuard],
         children: [
-            { path: '', redirectTo: 'monitor', pathMatch: 'full' },
+            { path: '', redirectTo: 'dashbord', pathMatch: 'full' },
             ...MonitorRoutes,
             ...DeviceRoutes,
             ...UserRoutes,
-            ...AlertRoutes,
-            ...ControlRoutes,
             ...ApplicationRoutes,
+            ...RuleRoutes,
             ...EnergyRoutes,
             ...VideoRoutes,
             ...ManageRoutes

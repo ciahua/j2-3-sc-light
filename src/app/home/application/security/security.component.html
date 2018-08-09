@@ -1,0 +1,79 @@
+<div class="video-wrap ">
+  <!-- 左侧列表 -->
+  <div class="left-side">
+    <!-- 搜索列表 -->
+    <div class=" video-list">
+      <ul id="treeDemo" class="ztree"></ul>
+    </div>
+
+    <!-- 地图 -->
+    <div #map2 id="map_container2" class="map_container"></div>
+  </div>
+
+  <!-- 左侧控制页面 -->
+
+  <div class="left-side" *ngIf="controlShow">
+    <!-- 搜索列表 -->
+    <div>
+      <span>X</span>
+    </div>
+
+
+  </div>
+
+  <!-- 右侧 -->
+  <div class="right-side" style=" padding: 0; ">
+
+    <div class="video-nav">
+      <span class="cur-pointer" (click)="seleteNum(1)">
+        <i class="fa fa-square" aria-hidden="true"></i>
+      </span>
+      <span class="cur-pointer" (click)="seleteNum(4)">
+        <i class="fa fa-th-large" aria-hidden="true"></i>
+      </span>
+      <span class="cur-pointer" (click)="seleteNum(9)">
+        <i class="fa fa-th" aria-hidden="true"></i>
+      </span>
+    </div>
+  </div>
+  <div class="video-content">
+
+
+    <!-- 一宫格 -->
+    <div class="row  video-warp" *ngIf="videoNum == 1">
+      <div class="col-12 video-four-content  cur-pointer" *ngFor="let item of dashboard;let i = index" [ngClass]="{'video-active' :isActive == i && videoNum ==1}"
+        (click)="addVideo(i,videoNum)">
+        <div class="add " *ngIf="addImg[i] == 1">
+          <img src="../../../assets/imgs/plus.png" alt="智慧城市" class="center-img">
+          <!-- <i class="fa fa-plus" aria-hidden="true"></i> -->
+        </div>
+        <div class="prism-player video-play" [id]="item.id" *ngIf="addImg[i] == 0"></div>
+      </div>
+
+    </div>
+    <!-- 四宫格 -->
+    <div class="row  video-warp" *ngIf="videoNum == 4">
+      <div class="col-6 video-four-content  cur-pointer" *ngFor="let item of dashboard;let i = index" [ngClass]="{'video-active' :isActive == i && videoNum ==4}"
+        (click)="addVideo(i,videoNum)">
+        <div class="add " *ngIf="addImg[i] == 1">
+          <img src="../../../assets/imgs/plus.png" alt="智慧城市" class="center-img">
+        </div>
+        <div class="prism-player video-play" [id]="item.id" *ngIf="addImg[i] == 0"></div>
+      </div>
+
+    </div>
+    <!-- 九宫格 -->
+    <div class="row  video-warp" *ngIf="videoNum == 9">
+      <div class="col-4 video-four-content  cur-pointer " *ngFor="let item of dashboard;let i = index" [ngClass]="{'video-active' :isActive == i && videoNum ==9}"
+        (click)="addVideo(i,videoNum)">
+        <div class="add " *ngIf="addImg[i] == 1">
+          <img src="../../../assets/imgs/plus.png" alt="智慧城市" class="center-img ">
+        </div>
+        <div class="prism-player video-play" [id]="item.id" *ngIf="addImg[i] == 0"></div>
+      </div>
+
+    </div>
+  </div>
+
+
+</div>

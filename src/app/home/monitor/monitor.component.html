@@ -165,7 +165,7 @@
         </div>
 
   </div>
-  <div class="info-footer row">
+  <div class="info-footer row" *ngIf="weather">
       <!-- 气象播报 -->
       <div class="mask-zt info-box " [ngClass]="{'col-10':visible == true,'col-12':visible == false}">
         <div class="d-inline-block info-logo">
@@ -190,5 +190,9 @@
   </div>
 
 </div>
+<!-- <div class="i-circle test-cs">
+  <span>terc</span>
+  <br/>
+  <span>90</span></div> -->
 
 

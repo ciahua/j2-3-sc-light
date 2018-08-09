@@ -4,7 +4,7 @@ import { VideoComponent } from './video.component';
 export const VideoRoutes: Route[] = [
 
     {
-        path: 'video',
+        path: 'dashbord',
         component: VideoComponent,
 
     }

@@ -1,127 +1,28 @@
-.left-side{
-    min-height: 100vh;
-    min-width: 300px;
-    max-width: 300px;
-    border-right: 1px solid #ccc;
-    padding-right: 0px;
-    padding-left: 0px;
+.video-left{
+    // height: calc(100vh - 80px);
     position: relative;
-    .video-list{
-        padding-right: 15px;
-        padding-left: 15px;
-        position: absolute;
-        top: 80px;
-        width: 300px;
-        max-height: 75%;
-        overflow-y: auto;
-    }
-
-    .map_container{
+    padding: 0;
+}
+.video-right{
+    padding: 0;
+}
+.dash-warp{
+    position: relative;
+    margin-top: 80px;
+    height: calc(100% - 80px);
+}
+.dash-context {
     height: 25%;
-    width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-    border: 1px solid #ccc;
-    position: absolute;
-    bottom: 0px;
-}
-}
-.right-side {
-    position: absolute;
-    top: 80px;
-    margin-left: 300px;
-    width: 100%;
-}
-
-.gridster {
-    padding-top: 80px !important;
-    // padding-left: 400px !important;
-}
-
-.video-nav {
-    width: 100%;
-    height: 42px;
-    line-height: 41px;
-    border-bottom: 1px solid #ccc;
-    // position: absolute;
-    // top: 80px;
-    span {
-        font-size: 32px;
-        padding: 0 15px;
-        color: #56c5ff;
-    }
-}
-.video-content{
-    // width: 100%;
-    width: calc(100% - 300px);
-    height: calc(100% - 124px);
-    position: absolute;
-    margin-left: 300px;
-    top: 120px;
-
-}
-
-
-.video-warp {
-    margin: 5px;
-    margin-right: 106px;
-    border: 2px solid #e5e5e5;
-    box-shadow: 0px 0px 18px #e5e5e5;
-    height: calc(100% - 10px);
-    background: #ccc;
-    .video-four-content {
-        border: 2px solid #e5e5e5;
-        box-shadow: 0px 0px 18px #e5e5e5;
-        padding: 0px;
-
-    }
-
-    .add {
-        display: inline-block;
-        font-size: 30px;
-
-    }
-    .center-img{
-        width: 120px;
-        height: 120px;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        margin-left: -60px;
-        margin-top: -60px;
-    }
-    .center-video{
-        width: 100%;
+    // padding-right: 0;
+    .dash-visi {
         height: 100%;
-        // margin-left: -60px;
-        // margin-top: -60px;
+        padding: 5px;
     }
 }
-
-.video-active{
-    border-color: #57c5ff !important;
+.dash-title{
+    margin-top: 15px;
+    margin-bottom: 0px;
+    background: #404a59;
+    color: #fff;
+    font-size: 18px;
 }
-.bg-img {
-    background-image: url('../../../assets/imgs/video.png');
-    width: 100%;
-    height: 100%;
-    background-repeat:no-repeat;
-    background-size: cover;//这条一定要
-}
-
-// 树
-.ztree li span.button.diy01_ico_open, .ztree li span.button.diy01_ico_close{
-    background-image: url('../../../assets/imgs/video.png');
-}
-
-.ztree li span.button.diy02_ico_open{
-        background-image: url('../../../assets/imgs/video.png');
-}
-.ztree li span.button.diy02_ico_close{
-        background-image: url('../../../assets/imgs/video.png');
-}
-
-.ztree li span.button.diy03_ico_docu{
-        background-image: url('../../../assets/imgs/video.png');
-}
- 

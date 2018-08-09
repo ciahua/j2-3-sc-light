@@ -1,18 +1,20 @@
 import { NgModule } from '@angular/core';
+import { PositionComponent } from './position/position.component';
+import { ClassComponent } from './class/class.component';
+import { ProductComponent } from './product/product.component';
+import { SurveyComponent } from './survey/survey.component';
 
-import { AddDeviceComponent } from './add-device/add-device.component';
-import { DelDeviceComponent } from './del-device/del-device.component';
-import { NewDeviceComponent } from './new-device/new-device.component';
+
 
 
 @NgModule({
     imports: [
     ],
     declarations: [
-        AddDeviceComponent,
-        DelDeviceComponent,
-        NewDeviceComponent,
-
-    ]
+    PositionComponent,
+    ClassComponent,
+    ProductComponent,
+    SurveyComponent,
+]
 })
 export class DeviceModule { }

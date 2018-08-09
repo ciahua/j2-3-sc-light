@@ -2,3 +2,58 @@
     height: 100vh;
     width: 100%;
 }
+.map-has-footer {
+    height: calc(100vh - 480px);
+}
+.cover-footer {
+    height: 400px;
+    width: calc(100vw - 100px);
+    margin-right: 0;
+    margin-left: 0;
+}
+.cover_td_1 {
+    background-color: red;
+}
+.cover_td_2 {
+    background-color: yellow;
+}
+.cover_td_3{
+    background-color: green;
+}
+
+.mes-list{
+    border: 1px solid #ccc;
+    background: #3c3c3c;
+    color: #fff;
+    .mes-list-title{
+        padding-left: 40px;
+        padding-top: 20px;
+    }
+
+    .mes-list-detail{
+        height: 80%;
+        overflow: auto;
+    }
+}
+.list-item{
+    padding-top: 12px;
+}
+.cover-tabel {
+    // height: 100px;
+    background: #3c3c3c;
+    padding: 0;
+}
+.block-padding{
+    padding: 0;
+}
+.table-body{
+    margin-bottom: 0;
+    background: #404a59;
+    padding: 0;
+}
+.mess-num {
+    td {
+    color: #fff;
+    }
+
+}
