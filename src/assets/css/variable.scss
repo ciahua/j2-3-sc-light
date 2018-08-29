@@ -1,0 +1,181 @@
+// 定义变量
+// 品牌色
+$color-bg: #F5F5F6; // 背景灰底
+$color-text: #000000; // 字体
+$color-theme-text: #9BD9DD; // 主题色
+$color-btn-text: #41AEE6; // 删除修改文本颜色
+$color-brand-color: #009CFF; // 按钮背景
+$color-hover-color: #008CE6;
+$color-delete-color: #EC284D;
+$color-down-color: #8A8D8E;
+$color-noneSelectColor1: #8DD5FF;
+$color-noneSelectColor2: #DDDDDD;
+$color-placeholderColor1: #E2EFF8;
+$color-white: #FFFFFF; // 白色
+$color-sidebar-bg: #506173; //侧边栏背景
+$color-sidebar-text: #9BD9DD; //侧边栏文字 增删改查选中
+$color-sidebar-active: #476480; // 侧边栏选中
+$color-mask: rgba(153, 153, 153, 0.5); //灰度蒙版
+$color-table-bg: #EEEEEE; //表格底色
+$color-menu-bg: #E9EDF1; // 阿里云菜单底
+
+
+// 文字颜色
+$color-placeholderColor2: #000000;// 默认
+$color-textColor1: #1B1B1B;
+$color-textColor2: #68696A;
+$color-textColor3: #BEC0C0;
+$color-textColor4: #FFFFFF;
+
+// 分隔线
+$color-lineColor1: #414141;
+$color-lineColor2: #A0A0A0;
+$color-lineColor3: #ACACAC;
+$color-lineColor4: #CCCCCC; // 默认
+$color-lineColor5: #DDDEDB;
+$color-lineColor6: #EAEAEA;
+$color-FFEC284D: #EC284D;
+
+/*
+  Font Styles: 
+*/
+
+// Banner文字 font style
+$font-Banner-text-font-size: 50px; //-text
+$font-Banner-text-line-height: 75px;
+$font-Banner-text-color: #FFFFFF;
+$font-Banner-text-font-style: 'normal';
+$font-Banner-text-font-weight: 400;
+$font-Banner-text-font-family: 微软雅黑;
+
+@mixin font-Banner-text () {
+  font-size: var($font-Banner-text-font-size);
+  font-height: var($font-Banner-text-line-height);
+  color: var($font-Banner-text-color);
+  font-style: var($font-Banner-text-font-size);
+  font-weight: var($font-Banner-text-font-weight);
+  font-family: var($font-Banner-text-font-family);
+};
+
+// 标题文字 font style
+$font-title-text-font-size: 30px;
+$font-title-text-line-height: 45px;
+$font-title-text-color: #000000;
+$font-title-text-font-style: 'normal';
+$font-title-text-font-weight: 400;
+$font-title-text-font-family: 微软雅黑;
+
+@mixin font-title-text () {
+  font-size: var($font-title-text-font-size);
+  font-height: var($font-title-text-line-height);
+  color: var($font-title-text-color);
+  font-style: var($font-title-text-font-size);
+  font-weight: var($font-title-text-font-weight);
+  font-family: var($font-title-text-font-family);
+};
+
+// 正文文字 font style
+$font-main-text-font-size: 14px;
+$font-main-text-line-height: 21px;
+$font-main-text-color: #000000;
+$font-main-text-font-style: 'normal';
+$font-main-text-font-weight: 400;
+$font-main-text-font-family: 微软雅黑;
+
+@mixin font-main-text () {
+  font-size: var($font-main-text-font-size);
+  font-height: var($font-main-text-line-height);
+  color: var($font-main-text-color);
+  font-style: var($font-main-text-font-size);
+  font-weight: var($font-main-text-font-weight);
+  font-family: var($font-main-text-font-family);
+};
+
+// 弱提示文字 font style
+$font-weak-tips-font-size: 12px;
+$font-weak-tips-line-height: 18px;
+$font-weak-tips-color: #ACACAC;
+$font-weak-tips-font-style: 'normal';
+$font-weak-tips-font-weight: 400;
+$font-weak-tips-font-family: 微软雅黑;
+
+@mixin font-weak-tips () {
+  font-size: var($font-weak-tips-font-size);
+  font-height: var($font-weak-tips-line-height);
+  color: var($font-weak-tips-color);
+  font-style: var($font-weak-tips-font-size);
+  font-weight: var($font-weak-tips-font-weight);
+  font-family: var($font-weak-tips-font-family);
+};
+
+// 2级标题 font style
+$font-2leval-title-font-size: 20px;
+$font-2leval-title-line-height: 36px;
+$font-2leval-title-color: #000000;
+$font-2leval-title-font-style: 'normal';
+$font-2leval-title-font-weight: 400;
+$font-2leval-title-font-family: 微软雅黑;
+
+@mixin font-2leval-title () {
+  font-size: var($font-2leval-title-font-size);
+  font-height: var($font-2leval-title-line-height);
+  color: var($font-2leval-title-color);
+  font-style: var($font-2leval-title-font-size);
+  font-weight: var($font-2leval-title-font-weight);
+  font-family: var($font-2leval-title-font-family);
+};
+
+// 弹窗标题 font style
+$font-cpm-title-font-size: 16px;
+$font-cpm-title-line-height: 36px;
+$font-cpm-title-color: #000000;
+$font-cpm-title-font-style: 'normal';
+$font-cpm-title-font-weight: 400;
+$font-cpm-title-font-family: 微软雅黑;
+
+@mixin font-cpm-title () {
+  font-size: var($font-cpm-title-font-size);
+  font-height: var($font-cpm-title-line-height);
+  color: var($font-cpm-title-color);
+  font-style: var($font-cpm-title-font-size);
+  font-weight: var($font-cpm-title-font-weight);
+  font-family: var($font-cpm-title-font-family);
+};
+
+/*
+  Measurements: 
+*/
+
+// radius
+$radius-radius1: 5px;
+$radius-radius2: 10px;
+$radius-radius3: 20px;
+$radius-radius4: 30px;
+
+// size
+$size-size1: 1000px;
+$size-size2: 300px;
+
+// space
+$space-minSpace: 10px;
+$space-space1: 20px;
+$space-space2: 30px;
+$space-space3: 40px;
+$space-maxSpace: 50px;
+
+// size
+$size-shadowSize1: 0px;
+$size-shadowSize2: 2px;
+$size-shadowSize3: 5px;
+$size-shadowSize4: 8px;
+$size-shadowSize5: 16px;
+
+/*
+  Shadows: 
+*/
+
+// 阴影
+$shadow-shadow1: 0px 8px 16px 0px #ACACAC;
+$shadow-shadow2: 0px 2px 5px 0px #ACACAC;
+
+

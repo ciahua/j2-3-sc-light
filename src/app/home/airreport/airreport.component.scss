@@ -1,0 +1,88 @@
+.air-data-report {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    // flex-wrap: wrap;
+    .air-left {
+        width: 150px;
+        height: calc(100vh);
+        background-color: rgb(233, 237, 241);
+    }
+    .title {
+        padding: 10px 0 10px 20px;
+        background-color: rgba(153, 153, 153, 0.5);
+        font-size: 20px;
+    }
+    .title-right {
+        padding: 0;
+        font-size: 20px;
+    }
+    .air-right {
+        width: calc(100vw - 200px);
+        height: 100%;
+    }
+}
+
+// 左侧
+.sidebar-inner {
+    background-color: rgb(233, 237, 241);
+}
+.first-menu {
+    padding-left: 0px;
+    .nav-link {
+        position: relative;
+
+        .menu-icon {
+            position: absolute;
+            right: 5px;
+        }
+    }
+    .nav-item:hover>.nav-link {
+        color: #b8eefa;
+        background-color: white;
+    }
+}
+.sec-menu {
+    padding-left: 0px;
+}
+// 右侧
+.info-top {
+    height: 150px;
+    // background-color: wheat;
+    // padding: 15px 15px 0;
+    margin: 15px;
+    position: relative;
+    .extral-margin {
+        margin-right: 40px;
+    }
+    .text-label {
+        border: none;
+        padding-left: 0px;
+    }
+    .backtoair {
+        position: absolute;
+        right: 35px;
+    }
+    .brief-info {
+        position: absolute;
+        bottom: 20px;
+    }
+    .form-control {
+        font-size: 14px;
+        height: 37px;
+    }
+}
+.extral-margin {
+    margin-right: 10px;
+}
+.info-form {
+    margin: 15px;
+
+    .form-air-point {
+
+        .btns {
+            text-align: right;
+            margin-bottom: 10px;
+        }
+    }
+}

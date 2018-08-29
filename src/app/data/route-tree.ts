@@ -2,11 +2,19 @@ export const ROUTETREE = [
     {
         id: 1,
         icon: 'fa fa-home nav-icon',
-        routeLink: 'dashbord',
-        routeTitel: '概览',
+        routeLink: 'homepage',
+        routeTitel: '首页',
         isCollapsed: false,
         hasRight: true,
     },
+    // {
+    //     id: 1,
+    //     icon: 'fa fa-home nav-icon',
+    //     routeLink: 'dashbord',
+    //     routeTitel: '概览',
+    //     isCollapsed: false,
+    //     hasRight: true,
+    // },
 
     {
         id: 4,
@@ -18,9 +26,27 @@ export const ROUTETREE = [
         children: [
             {
                 id: 21,
-                icon: 'fa fa-life-ring nav-icon-s',
-                routeLink: 'application/cover',
-                routeTitel: '窨井管理',
+                icon: 'fa fa-bolt nav-icon-s',
+                routeLink: 'application/calamity',
+                routeTitel: '灾害报警',
+            },
+            // {
+            //     id: 21,
+            //     icon: 'fa fa-snowflake-o nav-icon-s',
+            //     routeLink: 'application/environment',
+            //     routeTitel: '环境监测',
+            // },
+            {
+                id: 21,
+                icon: 'fa fa-tint nav-icon-s',
+                routeLink: 'application/water',
+                routeTitel: '水质监测',
+            },
+            {
+                id: 21,
+                icon: 'fa fa-snowflake-o nav-icon-s',
+                routeLink: 'application/air',
+                routeTitel: '空气质量',
             },
             {
                 id: 21,
@@ -30,27 +56,21 @@ export const ROUTETREE = [
             },
             {
                 id: 21,
+                icon: 'fa fa-life-ring nav-icon-s',
+                routeLink: 'application/cover',
+                routeTitel: '窨井管理',
+            },
+            // {
+            //     id: 21,
+            //     icon: 'fa fa-shield nav-icon-s',
+            //     routeLink: 'application/security',
+            //     routeTitel: '智慧安防',
+            // },
+            {
+                id: 21,
                 icon: 'fa fa-car nav-icon-s',
                 routeLink: 'application/traffic',
                 routeTitel: '智慧交通',
-            },
-            {
-                id: 21,
-                icon: 'fa fa-shield nav-icon-s',
-                routeLink: 'application/security',
-                routeTitel: '智慧安防',
-            },
-            {
-                id: 21,
-                icon: 'fa fa-snowflake-o nav-icon-s',
-                routeLink: 'application/environment',
-                routeTitel: '环境监测',
-            },
-            {
-                id: 21,
-                icon: 'fa fa-bolt nav-icon-s',
-                routeLink: 'application/calamity',
-                routeTitel: '灾害报警',
             },
 
 
@@ -75,16 +95,16 @@ export const ROUTETREE = [
         children: [
             {
                 id: 21,
-                icon: 'fa fa-map-marker nav-icon-s',
-                routeLink: 'device/position',
-                routeTitel: '位置',
-            },
-            {
-                id: 21,
                 icon: 'fa fa-window-restore nav-icon-s',
                 routeLink: 'device/class',
-                routeTitel: '类',
+                routeTitel: '设备',
             },
+            // {
+            //     id: 21,
+            //     icon: 'fa fa-map-o nav-icon-s',
+            //     routeLink: 'device/survey',
+            //     routeTitel: '设备',
+            // },
             {
                 id: 21,
                 icon: 'fa fa-product-hunt nav-icon-s',
@@ -93,11 +113,10 @@ export const ROUTETREE = [
             },
             {
                 id: 21,
-                icon: 'fa fa-map-o nav-icon-s',
-                routeLink: 'device/survey',
-                routeTitel: '设备',
+                icon: 'fa fa-map-marker nav-icon-s',
+                routeLink: 'device/position',
+                routeTitel: '位置',
             },
-
         ]
     },
     // {

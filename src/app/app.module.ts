@@ -3,16 +3,20 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
-import { GridsterModule } from 'angular-gridster2';
-import { MaterialModule } from './material.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { Router } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { CookieModule } from 'ngx-cookie';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { GridsterModule } from 'angular-gridster2';
+import { MaterialModule } from './material.module';
+
+
+
 import { HomeModule } from './home/home.module';
 import { ServiceModule } from './service/service.module';
+import { SharedModule } from './shared/shared.module';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -55,17 +59,18 @@ import { PageNotFoundComponent } from './not-found.component';
 
   ],
   imports: [
+    BrowserModule,
+    FormsModule,
     NgbModule.forRoot(),
     HttpModule,
     CookieModule.forRoot(),
-    BrowserModule,
-    FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HomeModule,
     GridsterModule,
     MaterialModule,
-    ServiceModule
+    ServiceModule,
+    SharedModule
 
   ],
   exports: [

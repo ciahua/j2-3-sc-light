@@ -1,23 +1,104 @@
-<p>
-  admin works!
-</p>
-<div class="table-responsive">
-  <table class="table table-bordered">
-    <tr>
-      <th>用户</th>
-      <th>角色</th>
-      <th>操作</th>
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">新建用户</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body add-user-modal">
+    <!-- 新建信息表单 -->
+    <form class="user-info">
+      <div class="form-inline">
+        <label class="control-label">账户名称：</label>
+        <input type="text" class="form-control" placeholder="">
+      </div>
+      <div class="form-inline">
+        <label class="control-label">密码：</label>
+        <input type="text" class="form-control" placeholder="">
+      </div>
+      <div class="form-inline">
+        <label class="control-label">确认密码：</label>
+        <input type="text" class="form-control" placeholder="">
+      </div>
+      <div class="form-inline">
+        <label class="control-label">联系方式：</label>
+        <input type="text" class="form-control" placeholder="">
+      </div>
+      <div class="form-inline">
+        <label class="control-label">所属角色：</label>
+        <select class="form-control">
+          <option value="">选择</option>
+          <option value="">管理员</option>
+        </select>
+      </div>
+    </form>
+            
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-info" (click)="c('Save click')">确定</button>
+    <button type="button" class="btn btn-outline-metal" (click)="d('Cross click')">取消</button>
+  </div>
+</ng-template>
 
-    </tr>
-    <tr>
-      <td class="active">...</td>
-      <td class="success">...</td>
-      <td class="warning">...</td>
-      <!-- <td class="danger">...</td>
-      <td class="info">...</td> -->
-    </tr>
-  </table>
-</div>
-<div>
-  <ul id="treeDemo" class="ztree"></ul>
+<div class="bodyofadmin">
+  <div class="card card-primary panel-default">
+    <div class="card-header">
+      <span>用户管理</span>
+      <div class="add-user">
+          <a class="btn-a theme-text" (click)="open(content)">新建用户</a>
+      </div>
+    </div>
+    <form class="card-block form-inline admin-manage">
+      <!-- 搜索输入框 -->
+      <div class="form-group inner-addon left-addon ">
+          <div class="form-group">
+            <input type="text" class="form-control border-none" name="search-content" id="" placeholder="{{'XXX'}}"/>
+            <i class="fa fa-search search-icon"></i>
+          </div>
+      </div>
+      <select class="form-control">
+          <option>角色</option>
+          <option>管理员</option>
+      </select>
+      <input type="date" class="form-control" value="Start date" />
+      <input type="date" class="form-control" value="End date" />
+      
+    </form>
+
+    <div class="card-block">
+        <!-- 用户信息表 -->
+        <table class="table table-hover">
+          <tr class="table-header">
+            <th class="th-top-border">账户名称</th>
+            <th class="th-top-border">联系方式</th>
+            <th class="th-top-border">时间</th>
+            <th class="th-top-border">角色</th>
+            <th class="th-top-border">操作</th>
+          </tr>
+          <tr>
+            <td class="success" style="border: none">...</td>
+            <td class="success" style="border: none">...</td>
+            <td class="warning" style="border: none">...</td>
+            <td class="success" style="border: none">...</td>
+            <td class="success " style="border: none">
+              <div>
+                <button class="btn-check">
+                  <i class="fa fa-wrench" aria-hidden="true" style="margin-right: 6px;"></i>
+                </button>
+                <button class="btn-check">
+                  <i class="fa fa-lock" aria-hidden="true" style="margin-right: 6px;"></i>
+                </button>
+                <button class="btn-check">
+                  <i class="fa fa-times-circle" aria-hidden="true" style="margin-right: 6px;"></i>
+                </button>
+              </div>
+
+            </td>
+            <!-- <td class="danger">...</td>
+            <td class="info">...</td> -->
+          </tr>
+        </table>
+    </div>
+
+  </div>
 </div>

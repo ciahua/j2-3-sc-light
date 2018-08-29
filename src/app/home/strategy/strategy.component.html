@@ -1,0 +1,316 @@
+<div class="nav-margin strategy">
+  <!-- 左侧 -->
+  <div class="strategy-left">
+    <div class="strategy-add">
+      <span class="strategy-title">策略表</span>
+      <button type="button" class="btn btn-bg" (click)="openAddStrategy(content4)">
+        新建
+      </button>
+    </div>
+    <div>
+
+
+
+
+
+    </div>
+    <div class="strategy-list">
+      <ul >
+        <li *ngFor="let item of strategyList" class="cur-pointer">{{item.name}}</li>
+      </ul>
+    </div>
+  </div>
+  <!-- 右侧 -->
+  <div class="strategy-right">
+    <div style="margin-top: 10px;">
+      <span class="strategy-title">策略一</span>
+
+    </div>
+    <!-- 菜单-->
+    <div style="margin-top: 10px;">
+      <ul class="nav nav-tabs">
+        <li *ngFor="let item of navs;let i = index" role="presentation " class=" cur-pointer" (click)="changeNav(i)" [ngClass]="{'active':item.id === nav_index}">
+          <a>{{item.name}}</a>
+        </li>
+      </ul>
+    </div>
+    <!-- 菜单一 -->
+    <div *ngIf="nav_index === 0" class="strategy-table">
+      <!-- 日期 -->
+      <div class="row">
+        <div class="col-6 col-md-4 ">
+          <div class=" panel-default">
+            <div class="date-title">
+              <span >策略日期</span>
+              <button class="btn btn-bg" (click)="openAddDate(content)">添加</button>
+
+            </div>
+            <ul class="data-list">
+              <li *ngFor="let item of dateList" class="cur-pointer">
+                <span>{{item.fromDate.month}}月{{item.fromDate.day}}日~{{item.toDate.month}}月{{item.toDate.day}}日</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 ">
+          <div class="table-workday panel-default">
+            <div class="date-title">
+              <span>工作日</span>
+              <button class="btn btn-bg" (click)="openAddWorkday(content2)">创建工作日控制</button>
+            </div>
+            <table class="table table-hover " >
+            
+              <thead>
+                <tr class="table-header">
+                  <th>时间</th>
+                  <th>亮度</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+            
+              <tr *ngFor="let item of workdayList">
+                <td>{{item.startTime}}~{{item.endTime}}</td>
+                <td>{{item.intensity}}</td>
+                <td>
+                  <a (click)="open(content)" class="cur-pointer btn-a theme-text">修改</a>
+                  <a (click)="opendelWorkday(content6)" class="cur-pointer btn-a theme-text">删除</a>
+                </td>
+              </tr>
+            </table>
+
+          </div>
+
+        </div>
+        <div class="col-6 col-md-4 ">
+          <div class="table-holiday panel-default">
+            <div class="date-title">
+              <span>节假日</span>
+              <button class="btn btn-bg" (click)="openAddHoliday(content2)">创建节假日控制</button>
+            </div>
+            <table class="table table-hover">
+            
+              <thead>
+                <tr class="table-header">
+                  <th>时间</th>
+                  <th>亮度</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+            
+              <tr *ngFor="let item of holidayList">
+                <td>{{item.startTime}}~{{item.endTime}}</td>
+                <td>{{item.intensity}}</td>
+                <td>
+                  <a (click)="open(content)" class="cur-pointer btn-a theme-text">修改</a>
+                  <a (click)="opendelWorkday(content7)" class="cur-pointer btn-a theme-text">删除</a>
+                </td>
+              </tr>
+            </table>
+
+          </div>
+
+        </div>
+
+
+
+
+
+
+      </div>
+    </div>
+    <!-- 菜单二 -->
+    <div *ngIf="nav_index === 1" class="strategy-table">
+      <div class="row">
+        <div class="col-3" style=" max-width: 250px; ">
+          <!-- 搜索列表 -->
+          <div class="city-list panel-default">
+            <ul id="treeDemo" class="ztree"></ul>
+          </div>
+        </div>
+        <div class="col-9">
+          <div class="panel-default">
+            <!-- 搜索 -->
+            <form class="form-inline xy-pad">
+              <div class="form-group">
+                <select name="search" class="form-control">
+                  <option value="all">全部设备</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <input id="sole-input" class="form-control searchbox-content-common" type="text" name="word" autocomplete="off" maxlength="256"
+                  placeholder="Search" value="">
+              </div>
+            
+              <button type="submit" class="btn btn-bg">搜索</button>
+            </form>
+            
+            <table class="table table-hover">
+            
+              <thead>
+                <tr class="table-header">
+                  <th>
+                    <input type="checkbox">
+                  </th>
+                  <th>设备名称</th>
+                  <th>设备编号</th>
+                  <th>所属产品</th>
+                  <th>应用策略</th>
+                  <th>亮度</th>
+                  <th>状态</th>
+                </tr>
+              </thead>
+              <tr *ngFor="let item of rangeList;let i = index">
+                <td class="">
+                  <input type="checkbox">
+                </td>
+                <td class="">{{item.name}}</td>
+                <td class="">{{item.id}}</td>
+                <td class="">{{item.pro}}</td>
+                <td class="">{{item.strategy}}</td>
+                <td class="">{{item.intensity}}</td>
+                <td class="">{{item.status}}</td>
+              </tr>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+
+
+</div>
+  <!-- 添加策略 -->
+  <ng-template #content4 let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <font class="modal-title">添加策略</font>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div>
+        策略名称：
+        <input type="text" [(ngModel)]="strategyName" name="strategyName">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-info" (click)="c('Save click')">确定</button>
+      <button type="button" class="btn btn-outline-metal" (click)="d('Cross click')">取消</button>
+    </div>
+  </ng-template>
+  <!-- 创建策略日期 -->
+  <ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <font class="modal-title">创建策略日期</font>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+
+        <p>请选择时间范围：</p>
+        
+        <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t">
+        </ngb-datepicker>
+        
+        <ng-template #t let-date="date" let-focused="focused">
+          <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)" [class.faded]="isHovered(date) || isInside(date)"
+            (mouseenter)="hoveredDate = date" (mouseleave)="hoveredDate = null">
+            {{ date.day }}
+          </span>
+        </ng-template>
+        
+        <hr>
+        
+        <pre>From: {{ fromDate | json }} </pre>
+        <pre>To: {{ toDate | json }} </pre>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-info" (click)="c('Save click')">确定</button>
+      <button type="button" class="btn btn-outline-metal" (click)="d('Cross click')">取消</button>
+    </div>
+  </ng-template>
+
+  <!-- 创建工作日志控制 -->
+  <ng-template #content2 let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <font class="modal-title">创建工作日志控制</font>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div>
+        <div>开始日期</div>
+        <div>结束日期</div>
+        <div>亮度
+          <select name="" id="">
+            <option value="">关</option>
+            <option value="">低亮</option>
+            <option value="">中亮</option>
+            <option value="">高亮</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-info" (click)="c('Save click')">确定</button>
+      <button type="button" class="btn btn-outline-metal" (click)="d('Cross click')">取消</button>
+    </div>
+  </ng-template>
+  <!-- 修改工作日控制 -->
+  <ng-template #content3 let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <font class="modal-title">修改工作日控制</font>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div>
+        <table>
+          <tr>
+            <td>开始日期:</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>结束日期：</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>亮度：</td>
+            <td>
+              <select name="" id="">
+                <option value="">关</option>
+                <option value="">低亮</option>
+                <option value="">中亮</option>
+                <option value="">高亮</option>
+              </select>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-info" (click)="c('Save click')">确定</button>
+      <button type="button" class="btn btn-outline-metal" (click)="d('Cross click')">取消</button>
+    </div>
+  </ng-template>
+
+
+
+<!-- 删除工作日控制 -->
+  <ng-template #content6 let-c="close" let-d="dismiss">
+    <app-sq-modal [input]="modelData" (output)="closedelWorkday($event)"></app-sq-modal>
+  </ng-template>
+
+<!-- 删除节假日控制 -->
+<ng-template #content7 let-c="close" let-d="dismiss">
+  <app-sq-modal [input]="modelData" (output)="closedelHoliday($event)"></app-sq-modal>
+</ng-template>

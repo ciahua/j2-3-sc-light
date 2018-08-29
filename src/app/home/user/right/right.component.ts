@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { GUIZTREENODE} from '../../../data/gui-z-tree';
+import { GUIZTREENODE } from '../../../data/gui-z-tree';
 
 declare var $: any;
 @Component({
@@ -9,9 +9,6 @@ declare var $: any;
   styleUrls: ['./right.component.scss']
 })
 export class RightComponent implements OnInit {
-
-
-
 
   zTreeObj: any;
 
@@ -30,14 +27,15 @@ export class RightComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.zTreeObj = $.fn.zTree.init($('#guitree'), this.setting, this.zNodes);
-    this.zTreeObj = $.fn.zTree.init($('#treeDemo'), this.setting, this.zNodes);
+
   }
 
   // 弹框操作
   open(content) {
     const that = this;
-    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
+    const modal = this.modalService.open(content, { size: 'lg' });
+    this.zTreeObj = $.fn.zTree.init($('#treeDemo'), this.setting, this.zNodes);
+    modal.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
       console.log(this.closeResult);
 
@@ -45,6 +43,9 @@ export class RightComponent implements OnInit {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       console.log(this.closeResult);
     });
+    const that1 = this;
+    this.zTreeObj = $.fn.zTree.init($('#guitree'), this.setting, this.zNodes);
+    this.zTreeObj = $.fn.zTree.init($('#guitree'), this.setting, this.zNodes);
   }
 
   private getDismissReason(reason: any): string {

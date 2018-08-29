@@ -6,10 +6,13 @@ Author: luo.shuqi@live.com
 @time: 2018 /8 / 9 9: 00
 
 */
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy} from '@angular/core';
+import { Router } from '@angular/router';
 import { Point } from '../../../data/point.type';
 import { LIGHTLIST } from '../../../data/light-list';
 import { MonitorService } from '../../../service/monitor.service';
+import { LightService } from '../../../service/light.service';
+
 // baidu map
 declare let BMap;
 declare let $: any;
@@ -21,7 +24,7 @@ declare let BMAP_ANCHOR_TOP_LEFT;
   templateUrl: './light.component.html',
   styleUrls: ['./light.component.scss']
 })
-export class LightComponent implements OnInit {
+export class LightComponent implements OnInit, OnDestroy  {
 
   @ViewChild('map5') map_container: ElementRef;
   model: any = {}; // 存储数据
@@ -53,12 +56,16 @@ export class LightComponent implements OnInit {
 
   light_list = LIGHTLIST.val.light_list; // 数据模拟
 
-  constructor(private monitorService: MonitorService, ) { }
+  timer: any; // 定时器
+
+
+
+  constructor(private monitorService: MonitorService, private lightService: LightService, public router: Router, ) { }
 
   ngOnInit() {
     this.addBeiduMap();
     this.getCity(); // 获取城市列表
-    this.getDevice(); // 获取设备列表
+    // this.getDevice(); // 获取设备列表
   }
 
   // 百度地图API功能
@@ -81,6 +88,8 @@ export class LightComponent implements OnInit {
 
 
     map.setMapStyle({ style: 'dark' });
+    // map.setMapStyle({ style: 'midnight' });
+    // map.setMapStyle({ style: 'grayscale' });
 
 
     // 添加控件缩放
@@ -92,41 +101,171 @@ export class LightComponent implements OnInit {
     });
     map.addControl(navigationControl);
 
+    this.getLights(); // 获取地图上的点
+    this.timer = setInterval(() => {
+      this.remove_overlay(this.map);
+      this.getLights(); // 获取地图上的点
+    }, 5000);
 
 
-    // const marker = new BMap.Marker(point);  // 创建标注
-    // map.addOverlay(marker);               // 将标注添加到地图中
 
-    // const myIcon = new BMap.Icon('../../../../assets/imgs/light-up.png', new BMap.Size(300, 157));
-    // myIcon.setAnchor(new BMap.Size(16, 38));
-    // const marker2 = new BMap.Marker(point, { icon: myIcon });  // 创建标注
-    // this.map.addOverlay(marker2);
 
-    this.addMarker();
+
+
+    this.mapClickOff(map); // 地图点击信息框隐藏
 
   }
 
-  addMarker() {
-    for (let index = 0; index < this.light_list.length; index++) {
-      const item = this.light_list[index];
-      const point = new BMap.Point(item.lng, item.lat);
+  // 清除覆盖物
+  remove_overlay(baiduMap) {
+    baiduMap.clearOverlays();
+  }
+
+  // 返回地图可视区域，以地理坐标表示
+  getBounds(baiduMap) {
+    const Bounds = baiduMap.getBounds(); // 返回地图可视区域，以地理坐标表示
+    this.NorthEast = Bounds.getNorthEast(); // 返回矩形区域的东北角
+    this.SouthWest = Bounds.getSouthWest(); // 返回矩形区域的西南角
+    this.zoom = baiduMap.getZoom(); // 地图级别
+
+  }
+
+  getLights() {
+    const that = this;
+    const type = this.type;
+    const Bounds = this.map.getBounds(); // 返回地图可视区域，以地理坐标表示
+    const NorthEast = Bounds.getNorthEast(); // 返回矩形区域的东北角
+    const SouthWest = Bounds.getSouthWest(); // 返回矩形区域的西南角
+    let value;
+    this.lightService.getLights(NorthEast, SouthWest).subscribe({
+      next: function (val) {
+        value = val;
+      },
+      complete: function () {
+        that.addMarker(value);
+      },
+      error: function (error) {
+        console.log(error);
+      }
+    });
+  }
+
+  // 监控-点击地图事件
+  mapClickOff(baiduMap) {
+    const that = this;
+    baiduMap.addEventListener('click', function (e) {
+      that.deviceChild = null;
+    });
+  }
+
+  // 地图上描点
+  addMarker(light_list) {
+    const markers: any[] = [];
+    const points: any[] = [];
+    for (let index = 0; index < light_list.length; index++) {
+      const item = light_list[index];
+      const point = new BMap.Point(item.point.lng, item.point.lat);
 
       let myIcon;
-      if (item.is_exception && item.is_exception === 1) { // 异常
-        myIcon = new BMap.Icon('../../../../assets/imgs/light-breakdown.png', new BMap.Size(300, 157));
-        // console.log('异常');
-      } else if (item.is_online === 0) { // 灯亮
-        myIcon = new BMap.Icon('../../../../assets/imgs/light-up.png', new BMap.Size(300, 157));
-        // console.log('掉线');
-      } else { // 正常
-        myIcon = new BMap.Icon('../../../../assets/imgs/light-normal.png', new BMap.Size(300, 157));
-        // console.log('正常');
+      if (item.offline === true || item.error === true)  { // 异常
+        myIcon = new BMap.Icon('../../../../assets/imgs/light-breakdown.png', new BMap.Size(36, 36));
 
+      } else if (item.level === 0) { // 正常,没亮
+        myIcon = new BMap.Icon('../../../../assets/imgs/light-normal.png', new BMap.Size(36, 36));
+
+      } else if (item.level < 30) { // 一级亮度
+       myIcon = new BMap.Icon('../../../../assets/imgs/light-up-1.png', new BMap.Size(36, 36));
+      } else if (item.level < 70) { // 二级亮度
+        myIcon = new BMap.Icon('../../../../assets/imgs/light-up-2.png', new BMap.Size(36, 36));
+      } else { // 三级亮度
+        myIcon = new BMap.Icon('../../../../assets/imgs/light-up-3.png', new BMap.Size(36, 36));
       }
-      myIcon.setAnchor(new BMap.Size(16, 38));
-      const marker2 = new BMap.Marker(point, { icon: myIcon });  // 创建标注
-      this.map.addOverlay(marker2);
+
+      // myIcon.setAnchor(new BMap.Size(16, 38));
+      const marker = new BMap.Marker(point, { icon: myIcon });  // 创建标注
+      this.map.addOverlay(marker);
+      markers.push(marker); // 聚合
+      points.push(point); // 聚合
     }
+
+    // 点击点标注事件 - 弹出信息框
+    for (let index = 0; index < markers.length; index++) {
+      const marker = markers[index];
+      this.openSideBar(marker, this.map, light_list[index], points[index]);
+
+
+    }
+  }
+
+  // 地图点注标-点击事件
+  openSideBar(marker, baiduMap, val, point) {
+    // console.log(val);
+    const that = this;
+    // <p style=’font - size: 12px; lineheight: 1.8em; ’> ${ val.name } </p>
+    const opts = {
+      width: 350,     // 信息窗口宽度
+      // height: 100,     // 信息窗口高度
+      // title: `${val.name} | ${val.id }`, // 信息窗口标题
+      // enableMessage: true, // 设置允许信息窗发送短息
+      enableAutoPan: true, // 自动平移
+    };
+    let txt = `
+    <p style='font-size: 12px; line-height: 1.8em; border-bottom: 1px solid #ccc;'>灯杆编号： ${val.positionNumber} </p>
+
+    `;
+    txt = txt +
+     `<p  class='cur-pointer'   id='${val.id}'>设备名称： ${val.description}</p>
+     `;
+
+    if (val.offline === true) {// 离线
+        // 离线或异常
+      txt = txt + `   <p >是否在线： 否</p>`;
+      } else {
+      txt = txt + `   <p >是否在线： 是</p>`;
+      }
+
+    if (val.error === true) {// 离线
+      // 离线或异常
+      txt = txt + `<p >是否故障： 是</p>`;
+    } else {
+      txt = txt + `<p >是否故障： 否</p>`;
+    }
+
+    txt = txt + `<p >亮度级别： ${val.level}%</p>`;
+    txt = txt + `<p >电流强度： ${val.current}A</p>`;
+    txt = txt + `<p >电压大小： ${val.volt}V</p>`;
+    txt = txt + `<button class='btn btn-bg' style='font-size: 14px; float: right; margin: 5px'>控制</button>`;
+
+
+    const infoWindow = new BMap.InfoWindow(txt, opts);
+
+    marker.addEventListener('click', function () {
+      that.device = val;
+      baiduMap.openInfoWindow(infoWindow, point); // 开启信息窗口
+
+      setTimeout(() => {
+        that.deviceAddEventListener();
+      }, 0);
+    });
+
+  }
+
+  // 点击子设备
+  deviceAddEventListener() {
+    const that = this;
+
+      const device = $(`#${this.device.id}`);
+      device.on('click', function () {
+        console.log('ddd');
+        that.deviceChild = that.device.id;
+      });
+
+  }
+
+  // 点击关闭操作详情
+  closeDetail() {
+    this.deviceChild = null;
+
   }
 
   // 解析地址- 设置中心和地图显示级别
@@ -168,24 +307,6 @@ export class LightComponent implements OnInit {
 
       },
       complete: function () {
-        that.addBeiduMap(); // 创建地图
-
-      },
-      error: function (error) {
-        console.log(error);
-      }
-    });
-  }
-  // 获取设备列表 -- ok
-  getDevice() {
-    const that = this;
-
-    this.monitorService.getDevice().subscribe({
-      next: function (val) {
-        that.deviceList = val;
-
-      },
-      complete: function () {
 
 
       },
@@ -194,6 +315,7 @@ export class LightComponent implements OnInit {
       }
     });
   }
+
 
   // 省市区街道-地图级别
   switchZone(level) {
@@ -285,6 +407,14 @@ export class LightComponent implements OnInit {
   }
 
 
+  // 路由跳转
+  jumpHandle() {
+
+    this.router.navigate([`home/strategy`]);
+
+  }
+
+
   // 进入全屏
   enterFullScreen() {
     console.log('进入全屏');
@@ -306,6 +436,7 @@ export class LightComponent implements OnInit {
   // 选择城市
   selecteCity(city) {
     this.currentCity = city;
+    this.node = city;
     this.getPoint(this.map, city);  // 解析地址- 设置中心和地图显示级别
     this.currentChildren = city.children;
   }
@@ -348,5 +479,9 @@ export class LightComponent implements OnInit {
   arealistMouseNone() {
     this.areashow = true;
     this.currentBlock = null;
+  }
+
+  ngOnDestroy() {
+    window.clearInterval(this.timer);
   }
 }

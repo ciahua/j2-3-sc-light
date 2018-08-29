@@ -1,0 +1,66 @@
+@import '../../../../assets/css/variable.scss';
+.bodyofadmin {
+    width: calc(100vw - 50px);
+    // padding: 15px;
+}
+.card-header {
+    border-bottom: 0px;
+    position: relative;
+
+    .add-user {
+        margin: 0px;
+        text-align: right;
+        position: absolute;
+        right: 15px;
+        bottom: 5px;
+    }
+}
+.card-block {
+    margin: 5px 0px;
+}
+.search-icon {
+    font-size: 20px;
+    margin: 5px;
+    margin-left: 0px;
+}
+.modal-body {
+    .form-control {
+        font-size: 14px;
+        height: calc(1.8rem + 2px);
+        margin-bottom: 5px;
+    }
+    .control-label {
+        width: 75px;
+        text-align: left;
+    }
+    .user-info {
+        margin: 0px auto;
+        width: 280px;
+    }
+}
+.add-user-modal {
+    text-align: center;
+    width: 100%;
+}
+
+.right{
+    float: right;
+}
+.btn-check{
+    border:0px;
+    background-color: transparent;
+    cursor: pointer;
+}
+.admin-manage {
+    .form-control {
+        font-size: 14px;
+        width: auto;
+        height: calc(1.8rem + 2px);
+        margin-right: 5px;
+        margin-top: 5px;
+    }
+}
+.th-top-border {
+    border: none;
+    border-top: 1px solid;
+}

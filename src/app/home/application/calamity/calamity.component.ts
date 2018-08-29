@@ -58,7 +58,7 @@ export class CalamityComponent implements OnInit {
   ngOnInit() {
     this.addBeiduMap();
     this.getCity(); // 获取城市列表
-    this.getDevice(); // 获取设备列表
+    // this.getDevice(); // 获取设备列表
   }
 
   // 百度地图API功能
@@ -80,7 +80,7 @@ export class CalamityComponent implements OnInit {
 
 
 
-    map.setMapStyle({ style: 'dark' });
+    map.setMapStyle({ style: 'normal' });   // dark
 
 
     // 添加控件缩放
@@ -177,23 +177,23 @@ export class CalamityComponent implements OnInit {
     });
   }
   // 获取设备列表 -- ok
-  getDevice() {
-    const that = this;
+  // getDevice() {
+  //   const that = this;
 
-    this.monitorService.getDevice().subscribe({
-      next: function (val) {
-        that.deviceList = val;
+  //   this.monitorService.getDevice().subscribe({
+  //     next: function (val) {
+  //       that.deviceList = val;
 
-      },
-      complete: function () {
+  //     },
+  //     complete: function () {
 
 
-      },
-      error: function (error) {
-        console.log(error);
-      }
-    });
-  }
+  //     },
+  //     error: function (error) {
+  //       console.log(error);
+  //     }
+  //   });
+  // }
 
   // 省市区街道-地图级别
   switchZone(level) {

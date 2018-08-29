@@ -1,53 +1,117 @@
-<p>
-  right works!
-</p>
-<!-- 新建角色 -->
 <ng-template #content let-c="close" let-d="dismiss">
-  <div class="modal-header">
-        <h4 class="modal-title">新建角色</h4>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-  <div class="modal-body">
-    <!-- <p>One fine body&hellip;</p> -->
-    <div class="row">
-      <div class="col-6">
-        <p>浏览权限</p>
-        <div>
-          <ul id="guitree" class="ztree"></ul>
-        </div>
-
-      </div>
-      <div class="col-6">数据权限</div>
+    <div class="modal-header">
+      <h4 class="modal-title">新建角色</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
-  </div>
-  <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">关闭</button>
+    <div class="modal-body">
+      <!-- <p>One fine body&hellip;</p> -->
+      <!--窗体内容 -->
+      <table class="tabl">
+        <tr>
+          <td>角色名称:</td>
+          <td>
+            <input type="text">
+          </td>
+        </tr>
+        <tr>
+          <td>角色描述:</td>
+          <td>
+            <textarea rows="3" cols="90" class="ta"></textarea>
+          </td>
+        </tr>
+      </table>
+      <div>
+        <div class="div-a">
+          <div>
+            功能权限：
+          </div>
+          <table class="bor tabl-a">
+            <tr >
+              <td valign="top">
+                <div>
+                  <ul id="guitree" class="ztree"></ul>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="div-a">
+          <div>
+            数据权限：
+          </div>
+          <table class="bor">
+            <tr>
+              <td valign="top">
+                <div>
+                  <ul id="treeDemo" class="ztree"></ul>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
-</ng-template>
-<div class="btn-group btn-parent">
 
-  <button class="btn btn-default" (click)="open(content)">新建角色</button>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-info" (click)="c('Save click')">确定</button>
+      <button type="button" class="btn btn-outline-metal" (click)="d('Cross click')">取消</button>
+    </div>
+  </ng-template>
+
+<!-- 主体 -->
+<div class="bodyofright">
+
+  <div class="card card-primary panel-default">
+    <div class="card-header">
+      <span>角色管理</span>
+      <div class="add-right">
+          <a class="btn-a theme-text" (click)="open(content)">新建用户</a>
+      </div>
+    </div>
+    <!-- 搜索表单 -->
+    <form class="card-block form-inline right-manage">
+      <!-- 搜索输入框 -->
+      <div class="form-group inner-addon left-addon ">
+          <div class="form-group">
+            <input type="text" class="form-control border-none" name="search-content" id="" placeholder="{{'XXX'}}"/>
+            <i class="fa fa-search search-icon"></i>
+          </div>
+      </div>
+      <input type="date" class="form-control" value="" />
+    </form>
+
+    <div class="card-block">
+        <!-- 用户信息表 -->
+        <table class="table table-hover">
+          <tr class="table-header">
+            <th class="th-top-border">角色</th>
+            <th class="th-top-border">描述</th>
+            <th class="th-top-border">时间</th>
+            <th class="th-top-border">操作</th>
+          </tr>
+          <tr>
+            <td class="success" style="border: none">...</td>
+            <td class="success" style="border: none">...</td>
+            <td class="warning" style="border: none">...</td>
+            <td class="warning " style="border: none">
+              <div>
+                <button class="btn-check">
+                  <i class="fa fa-eye" aria-hidden="true"></i>
+                </button>
+                <button class="btn-check">
+                  <i class="fa fa-wrench btn-i" aria-hidden="true"></i>
+                </button>
+                <button class="btn-check">
+                  <i class="fa fa-times-circle btn-i" aria-hidden="true"></i>
+                </button>
+              </div>
+              <!-- <td class="danger">...</td>
+              <td class="info">...</td> -->
+          </tr>
+        </table>
+    </div>
+
+  </div>
 </div>
-
-<div class="table-responsive">
-  <table class="table table-bordered">
-    <tr>
-      <th>角色</th>
-      <th>权限</th>
-      <th>操作</th>
-  
-    </tr>
-    <tr>
-      <td class="active">...</td>
-      <td class="success">...</td>
-      <td class="warning">...</td>
-      <!-- <td class="danger">...</td>
-        <td class="info">...</td> -->
-    </tr>
-  </table>
-  </div>
-  <div>
-    <ul id="treeDemo" class="ztree"></ul>
-  </div>

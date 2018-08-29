@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
     private config: NgbDropdownConfig, private communicateService: CommunicateService) {
     this.routeTree = ROUTETREE;
     // customize default values of dropdowns used by this component tree
-    config.placement = 'bottom-right';
+    config.placement = 'top-left';
     // config.autoClose = false;
 
     this.visible = urlService.getURLParam('visible') === '' ? true : false;

@@ -1,106 +1,63 @@
 <div class="home">
   <div [ngClass]="{'sidebar-open':open === true,'sidebar-collapse':!open}" class="wrap">
-      <!-- 头部菜单 -->
-      <nav class="login-nav dark-primary" *ngIf="visible == true">
-        <div class="login-nav-paren">
-          <!-- logo -->
-          <div class="nav-log d-inline-block">
-            <img class="logo" src="../../assets/imgs/logo.png" alt="logo">
-          </div>
 
-          <!-- 菜单开和按钮 -->
-          <div class="cur-pointer push-menu-parent" *ngIf="isCollapsed === true">
-            <a class="push-menu" data-widget="pushmenu" (click)="open=!open">
-              <i class="fa fa-bars"></i>
-            </a>
-          </div>
-
-          <!-- 滚动字幕 -->
-          <!-- <div class="d-inline-block marquee nav-message">
-            <ul>
-              <li *ngFor="let mess of messageList" >
-                   {{mess.address}}-{{mess.name}}-{{mess.id}}-{{mess.message}}
-              </li>
-
-            </ul>
-
-          </div> -->
-
-
-
-          <div class="nav-user cur-pointer">
-
-            <!-- Single button -->
-            <div class="d-inline-block">
-              <span class="message user-span" *ngIf="messageList">{{messageList.length}}</span>
-            </div>
-            <!-- 消息列表 -->
-            <div ngbDropdown class="d-inline-block">
-                <span class="cl-blue user-span" id="dropdownBasic1" ngbDropdownToggle>
-                  <i class="fa fa-bell nav-icon " aria-hidden="true"></i>
-                </span>
-                <ul ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu-message">
-                  <li class="dropdown-item" *ngFor="let mess of messageList" (click)="jumpHandle(mess)">
-                    <span class="dropdown-menu-list text-left">{{mess.address}}-{{mess.name}}-{{mess.id}}-{{mess.message}}</span>
-                  </li>
-
-                </ul>
-            </div>
-            <!-- 用户 -->
-            <div ngbDropdown class="d-inline-block">
-              <span class="cl-blue user-span" id="dropdownBasic2" ngbDropdownToggle>
-                <i class="fa fa-user-circle-o nav-icon cl-blue" aria-hidden="true"></i>
-              </span>
-              <ul ngbDropdownMenu aria-labelledby="dropdownBasic2" >
-                <li class="dropdown-item"><span class="dropdown-menu-list user-span">{{loginName}}</span></li>
-                <li class="dropdown-item"><span class="dropdown-menu-list user-span">用户管理</span></li>
-                <li class="dropdown-item">
-                  <a (click)="logout()" class="cur-pointer "><span class="dropdown-menu-list user-span">退出登录</span></a>
-                </li>
-
-              </ul>
-            </div>
-
-            
-          </div>
-
-        </div>
-      
-      
-      </nav>
       <!-- 侧边菜单 -->
-      <aside class="sidebar-dark-primary main-sidebar" *ngIf="visible == true">
-      
-        <ul class="first-menu">
-          <!-- 一级菜单 -->
-          <li *ngFor="let routes of routeTree " class="cur-pointer nav-item ">
-            <!-- 没有字菜单 -->
-            <a *ngIf="!routes.children" [routerLink]="[routes.routeLink]" routerLinkActive="active" class="nav-link">
-              <i class={{routes.icon}}></i>
-              <p class="p-left">{{routes.routeTitel}}</p>
-            </a>
-            <!-- 有子菜单 -->
-            <a *ngIf="routes.children" (click)="routes.isCollapsed = !routes.isCollapsed" class="nav-link">
-              <i class={{routes.icon}}></i>
-              <p class="p-left">{{routes.routeTitel}}</p>
-              <span class="angle" *ngIf="routes.isCollapsed"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
-              <span class="angle" *ngIf="!routes.isCollapsed"><i class="fa fa-angle-down" aria-hidden="true"></i></span>
-            </a>
-            <!-- 二级菜单 -->
-            <ul [ngbCollapse]="routes.isCollapsed" *ngIf="routes.children" class="sec-menu">
-              <li *ngFor="let children of routes.children" class="cur-pointer nav-item ">
-                <a [routerLink]="[children.routeLink]" routerLinkActive="active" class="nav-link">
-                  <i class={{children.icon}}></i>
-                  <p class="p-left">{{children.routeTitel}}</p>
-                </a>
-              </li>
-      
-            </ul>
-          </li>
-      
-      
-        </ul>
-      
+      <aside class="sidebar-dark-primary main-sidebar sidebar-bg" *ngIf="visible == true">
+        <!-- logo -->
+        <div class="nav-log d-inline-block display-inoneline">
+          <img class="logo" src="../../assets/imgs/logo.png" alt="logo">
+          <span class="logo-title">新阳蓝光</span>
+        </div>
+        <!-- ymZhao-aside下额外包一层，以隐藏滚动条 -->
+        <div class="sidebar-inner">
+          <ul class="first-menu">
+            <!-- 一级菜单 -->
+            <li *ngFor="let routes of routeTree " class="cur-pointer nav-item ">
+              <!-- 没有子菜单 -->
+              <a *ngIf="!routes.children" [routerLink]="[routes.routeLink]" routerLinkActive="active" class="nav-link">
+                <i class={{routes.icon}}></i>
+                <p class="p-left">{{routes.routeTitel}}</p>
+              </a>
+              <!-- 有子菜单 -->
+              <a *ngIf="routes.children" (click)="routes.isCollapsed = !routes.isCollapsed" class="nav-link">
+                <i class={{routes.icon}}></i>
+                <p class="p-left">{{routes.routeTitel}}</p>
+                <span class="angle" *ngIf="routes.isCollapsed"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                <span class="angle" *ngIf="!routes.isCollapsed"><i class="fa fa-angle-down" aria-hidden="true"></i></span>
+              </a>
+              <!-- 二级菜单 -->
+              <ul [ngbCollapse]="routes.isCollapsed" *ngIf="routes.children" class="sec-menu">
+                <li *ngFor="let children of routes.children" class="cur-pointer nav-item ">
+                  <a [routerLink]="[children.routeLink]" routerLinkActive="active" class="nav-link">
+                    <i class={{children.icon}}></i>
+                    <p class="p-left">{{children.routeTitel}}</p>
+                  </a>
+                </li>
+        
+              </ul>
+            </li>
+        
+          </ul>
+        </div>
+
+        <!-- 用户 -->
+        <div ngbDropdown class="dropup nav-user">
+          <div class="cl-blue display-inoneline" id="dropdownBasic2" ngbDropdownToggle>
+            <i class="fa fa-user-circle-o nav-icon cl-blue" aria-hidden="true"></i>
+            <span class="currentUsername">{{loginName}}</span>
+          </div>
+          <ul ngbDropdownMenu aria-labelledby="dropdownBasic2" class="user-menus">
+            <li class="dropdown-item">
+              <span class="dropdown-menu-list">用户管理</span>
+            </li>
+            <li class="dropdown-item">
+              <a (click)="logout()" class="cur-pointer ">
+                <span class="dropdown-menu-list">退出登录</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        
       </aside>
       
       <!-- Main content -->

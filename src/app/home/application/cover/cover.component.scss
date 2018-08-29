@@ -3,23 +3,23 @@
     width: 100%;
 }
 .map-has-footer {
-    height: calc(100vh - 480px);
+    height: calc(100vh);
 }
-.cover-footer {
-    height: 400px;
-    width: calc(100vw - 100px);
-    margin-right: 0;
-    margin-left: 0;
-}
-.cover_td_1 {
-    background-color: red;
-}
-.cover_td_2 {
-    background-color: yellow;
-}
-.cover_td_3{
-    background-color: green;
-}
+// .cover-footer {
+//     height: 400px;
+//     width: calc(100vw - 100px);
+//     margin-right: 0;
+//     margin-left: 0;
+// }
+// .cover_td_1 {
+//     background-color: red;
+// }
+// .cover_td_2 {
+//     background-color: yellow;
+// }
+// .cover_td_3{
+//     background-color: green;
+// }
 
 .mes-list{
     border: 1px solid #ccc;
@@ -56,4 +56,123 @@
     color: #fff;
     }
 
+}
+// 圆角+透明度
+.sel-area-block, .cover-issues-block {
+    border-radius: 5px;
+    // filter: alpha(opacity=90);
+    // -moz-opacity: 0.9;
+    // -khtml-opacity: 0.9;
+    // opacity: 0.9;
+}
+
+// 消息相关
+.cover-issues {
+    position: absolute;
+    z-index: 3000;
+    top: 15px;
+    right: 170px;
+
+    .cover-issues-block {
+        width: 85px;
+        cursor: pointer;
+        position: relative;
+        background-color: #fff;
+        border: 1px solid #e3e3e3;
+        line-height: 32px;
+        height: 32px;
+        font-size: 14px;
+        margin-left: 21px;
+        text-align: center;
+    }
+    .filter {
+        width: 76px;
+        // display: inline-block;
+        // text-align: center;
+    }
+    .messagelist-wrap {  // ul容器div样式
+        position: absolute;
+        // padding: 0;
+        padding: 7px 0;
+        margin: 0px;
+        top: 31px;
+        right: 0;
+        z-index: 99;
+        text-align: left;
+        .dropdown_panel_inner {
+            box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.08);
+            background-color: #fff;
+            padding: 20px;
+            font-size: 12px;
+            border-radius: 4px;
+        }
+        .menu_arrow_left:before {
+            display: block;
+            border-width: 7px;
+            position: absolute;
+            top: -7px;
+            right: 35px;
+            border-style: solid dashed dashed;
+            border-color: transparent transparent #fff transparent;
+            font-size: 0;
+            line-height: 0;
+            content: "";
+        }
+    }
+    .messagelist {  // ul样式
+        position: relative;
+        //left: -10px;
+        padding: 0;
+        margin: 0px;
+        margin-bottom: 0;
+        width: max-content;
+        font-size: 12px;
+        z-index: 99;
+        // border: 1px solid #e6e6e6;
+        // border-top-width: 0;
+        // background: #f6f6f6;
+        // box-shadow: 0 0 4px 0 rgba(0,0,0,0.10);
+        max-height: 300px;
+        overflow-y: auto;
+        cursor: pointer;
+    }
+    .messagelist-item {  // li样式
+        // text-indent: 15px;
+        font-size: 12px;
+        margin: 5px 0;
+        padding: 0 10px;
+    }
+    .messagelist .messagelist-item:hover {
+        background: #f6f6f6;
+        color:#f60;
+        .blocklist{
+        display: block;
+        }
+    }
+    .messagelist .messagelist-item:hover em {
+        color:#f60;
+    }
+}
+.m-badge {
+    font-size:0.8rem; 
+    line-height:20px;
+    min-height:20px;
+    min-width:20px;
+    vertical-align:middle;
+    text-align:center;
+    display:inline-block;
+    padding:0px 3px;
+    border-radius:.75rem;
+}
+.m-badge-danger {
+    background:#f4516c;
+    color:#fff;
+}
+.m-badge-inprocess {
+    background:#ffb822;
+    color:#111;
+}
+.m-badge-fixed {
+    background:#36a3f7;
+    color:#fff;
 }

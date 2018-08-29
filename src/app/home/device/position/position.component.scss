@@ -1,0 +1,122 @@
+@import '../../../../assets/css/variable.scss';
+@import '../../../../assets/css/xylg.scss';
+.bodyofposition {
+    width: calc(100vw - 50px);
+    // padding: 15px;
+}
+.card-header {
+    border-bottom: 0px;
+    position: relative;
+
+    .add-position {
+        margin: 0px;
+        text-align: right;
+        position: absolute;
+        right: 15px;
+        bottom: 5px;
+    }
+}
+.card-block {
+    margin: 5px 0px;
+}
+
+.search-options {
+    position: relative;
+    font-size: 14px;
+    .extral-marg {
+        margin-right: 5px;
+        margin-top: 5px;
+    }
+    .form-control {
+        font-size: 14px;
+        width: auto;
+        height: calc(1.8rem + 2px);
+        margin-right: 5px;
+        margin-top: 5px;
+    }
+    .search-icon {
+        font-size: 20px;
+        margin: 5px;
+    }
+    
+}
+
+// modal
+.modal-body {
+    .form-control {
+        font-size: 14px;
+        height: calc(1.8rem + 2px);
+        margin-bottom: 5px;
+    }
+    .control-label {
+        width: 50px;
+        text-align: left;
+    }
+    .c-label-long {
+        padding-left: 5px;
+        width: 225px;
+    }
+    .posi-input {
+        text-align: center;
+    }
+    .form-control {
+        width: 200px;
+    }
+    .btn1 {
+        font-size: 14px;
+        margin-left: 5px;
+    }
+    .sm-width {
+        width: 70px;
+        margin: 0 3px 5px;
+    }
+    .mapIron {
+        color: red;
+        margin-left: 5px;
+    }
+    .mapIron:active, .mapIron:hover {
+        color: rgb(146, 4, 4);
+    }
+    .area-selection-block {
+        margin-right: 5px;
+        margin-top: 5px;
+    }
+    .map-right {
+        width: 400px;
+        padding-left: 15px;
+    }
+}
+.row {
+    margin: 0px;
+}
+.area-selection {
+    z-index: 3000;
+    margin-bottom: 5px;
+    .area-selection-block {
+        cursor: pointer;
+        position: relative;
+        background-color: #fff;
+        border: 1px solid #e3e3e3;
+        line-height: 37px;
+        height: calc(1.8rem + 2px);
+        font-size: 14px;
+    }
+}
+
+.manage-class {
+    font-size: 20px;
+    padding-right: 1px;
+}
+.manage-class:focus, .manage-class:hover {
+    background-color: $color-brand-color;
+}
+.manage-class:active {
+    background-color: $color-hover-color;
+}
+
+.map_container{
+    height: 300px;
+    min-width: 200px;
+}
+
+

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { GUIZTREENODE} from '../../../data/gui-z-tree';
 declare var $: any;
 @Component({
   selector: 'app-admin',
@@ -42,16 +43,37 @@ export class AdminComponent implements OnInit {
     }
   ];
 
-  constructor() {
+  closeResult: string;
+
+  constructor(private modalService: NgbModal) {
 
 
 
-   }
+  }
 
   ngOnInit() {
     this.zTreeObj = $.fn.zTree.init($('#treeDemo'), this.setting, this.zNodes);
   }
 
+  open(content) {
+    const that = this;
+    this.modalService.open(content, { windowClass: 'md' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+      console.log(this.closeResult);
 
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      console.log(this.closeResult);
+    });
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
 
 }

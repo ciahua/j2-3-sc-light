@@ -2,7 +2,7 @@
     color: red;
 }
 .login-form{
-    width: 280px;
+    width: 240px;
 }
 .btn-login {
     display: inline-block;
@@ -37,7 +37,7 @@
     padding: 15px;
     top: 36px;
     right: 48px;
-    height: 90vh;
+    height: 93vh;
 }
 //左侧定位：产品、系统名称
 .login-left {
@@ -46,7 +46,7 @@
     background: rgba(226, 226, 219, 0.253);
     top: 36px;
     left: 30px;
-    height: 90vh;
+    height: 93vh;
     color: #fff;
     font-size: 36px;
     .product-name {
@@ -65,7 +65,7 @@
 .login-center {
  height: 100vh;
  margin: 0;
- background-image: url(../../assets/imgs/login-bg.png);
+ background-image: url(../../assets/imgs/login-bg.jpg);
  background-repeat: no-repeat;
  background-size: cover;
  position: relative;

@@ -45,14 +45,8 @@ export class MonitorService {
             .pipe(map((res: Response) => {
                 if (res.status === 200) {
                     const data = res.json();
-
-                    console.log(data.regions[0]);
                     data.regions[0].open = true;
                     data.regions[0].children[0].open = true;
-                    // data.regions[0].children.map((item, index) => {
-                    //     data.regions[0].children[index].open = true;
-                    // });
-
                     return data;
                 } else if (res.status === 202) {
                     return res.json().code.toString();
@@ -76,21 +70,43 @@ export class MonitorService {
                     return data;
                 } else if (res.status === 202) {
                     return res.json().code.toString();
-
                 }
             }));
 
     }
 
-    getCommunity(sw: Point, ne: Point, zoom: Number): Observable<any> {
-        // console.log(sw, ne, zoom);
-        return of(COMMUNITYLIST.val.community_list).pipe(
-            delay(1000),
-            tap(val => {
-                // console.log(val);
-                return val;
-            })
-        );
+
+
+    // 获取详细的位置数据
+    getDetails(sw: Point, ne: Point, zoom: Number, type: Number): Observable<any> {
+        return this.http.post('/api/position/inbounds/details', {
+            'bounds': {
+                'ne': ne,
+                'sw': sw
+            },
+            'device_type': type
+        })
+            .pipe(map((res: Response) => {
+                if (res.status === 200) {
+                    const data = res.json();
+                    return data;
+                } else if (res.status === 202) {
+                    return res.json().code.toString();
+                }
+            }));
+    }
+
+    // 获取指定位置所挂设备参数定义
+    getDeviceDetails(positionId: string, deviceType: Number): Observable<any> {
+        return this.http.get(`/api/position/device?positionId=${positionId}&deviceType=${deviceType}`)
+            .pipe(map((res: Response) => {
+                if (res.status === 200) {
+                    const data = res.json();
+                    return data;
+                } else if (res.status === 202) {
+                    return res.json().code.toString();
+                }
+            }));
     }
 
 

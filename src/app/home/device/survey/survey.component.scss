@@ -1,0 +1,136 @@
+@import '../../../../assets/css/variable.scss';
+.map_container{
+    height: 100%;
+}
+.bodyofsurvey {
+    width: calc(100vw - 50px);
+    padding: 15px;
+}
+.card-header {
+    border-bottom: 0px;
+    position: relative;
+}
+.card-block {
+    margin: 5px 15px;
+}
+.add-survey {
+    margin: 0px;
+    text-align: right;
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    .extral-padd {
+        padding-right: 12px;
+    }
+}
+.search-survey {
+    font-size: 14px;
+    // margin-top: 5px;
+    // margin-bottom: 5px;
+    .extral-marg {
+        margin-right: 5px;
+        margin-top: 5px;
+    }
+    .search-options {
+        //padding-left: 20px;
+        
+        .form-control {
+            font-size: 14px;
+            width: auto;
+            height: calc(1.8rem + 2px);
+            margin-right: 5px;
+            margin-top: 5px;
+        }
+        .search-icon {
+            font-size: 20px;
+            margin: 5px;
+        }
+    }
+    .add-survey {
+        margin: 0px;
+        text-align: right;
+    }
+    .area-selection {
+        margin-top: 5px;
+    }
+}
+.btn-survey {
+    font-size: 14px;
+    margin-right: 5px;
+    margin-top: 5px;
+    background-color: $color-brand-color;
+}
+.btn-survey-end {
+    margin-right: 0px;
+}
+.btn-survey:hover {
+    background-color: $color-hover-color;
+}
+
+.manage-class {
+    font-size: 20px;
+    padding-right: 1px;
+}
+.manage-class:focus, .manage-class:hover {
+    background-color: $color-brand-color;
+}
+.manage-class:active {
+    background-color: $color-hover-color;
+}
+
+// .modal-title {
+//     font-size: $font-cpm-title-font-size;
+//     line-height: $font-cpm-title-line-height;
+//     color: $font-cpm-title-color;
+//     font-style: $font-cpm-title-font-style;
+//     font-weight: $font-cpm-title-font-weight;
+//     font-family: $font-cpm-title-font-family;
+// }
+.modal-body {
+    .form-control {
+        //max-width: 100px;
+        font-size: 14px;
+        height: calc(1.8rem + 2px);
+        margin-bottom: 5px;
+    }
+    .form-cont-left {
+        padding-left: 0px;
+    }
+    .extral-margin {
+        margin-left: 5px;
+    }
+    .limited-width {
+        width: 133px;
+    }
+    .btn1 {
+        font-size: 14px;
+        margin-left: 5px;
+    }
+    .sm-width {
+        width: 70px;
+        margin: 0 3px 5px;
+    }
+    .padding-left-zero {
+        padding-left: 0px;
+    }
+    .area-selection {
+        margin: 0 0 5px 5px;
+    }
+}
+.area-selection {
+    // z-index: 3000;
+    z-index: 1040;
+    top: 15px;
+
+    .area-selection-block {
+        cursor: pointer;
+        position: relative;
+        background-color: #fff;
+        border: 1px solid #e3e3e3;
+        line-height: 37px;
+        height: calc(1.8rem + 2px);
+        // height: 32px;
+        font-size: 14px;
+        margin-right: 5px;
+    }
+}

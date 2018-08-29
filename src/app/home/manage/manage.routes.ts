@@ -6,7 +6,7 @@ import { ContainerRoutes } from './container/container.routes';
 export const ManageRoutes: Route[] = [
 
     {
-        path: 'survey',
+        path: 'manage',
         component: ManageComponent,
         // children: [
         //     { path: '', redirectTo: 'storage', pathMatch: 'full' },

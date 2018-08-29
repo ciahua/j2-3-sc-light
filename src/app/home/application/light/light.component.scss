@@ -2,3 +2,26 @@
     // height: 100vh;
     width: 100%;
 }
+// 设备详情
+.device-detail{
+    width: 300px;
+    background: #fff;
+    border: 1px solid #ccc;
+    z-index: 4000;
+    position: absolute;
+    right: 85px;
+    top: 0px;
+    padding: 0px 15px;
+}
+.device-close{
+    cursor: pointer;
+     color: #8e8f91;
+}
+.device-title{
+    display: block;
+    padding: 0;
+    margin: 0;
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #ccc;
+}

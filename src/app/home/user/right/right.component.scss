@@ -1,6 +1,115 @@
+@import '../../../../assets/css/variable.scss';
+.bodyofright {
+    width: calc(100vw - 50px);
+    // padding: 15px;
+}
+.card-header {
+    border-bottom: 0px;
+    position: relative;
+
+    .add-right {
+        margin: 0px;
+        text-align: right;
+        position: absolute;
+        right: 15px;
+        bottom: 5px;
+    }
+}
+.card-block {
+    margin: 5px 0px;
+}
+.search-icon {
+    font-size: 20px;
+    margin: 5px;
+    margin-left: 0px;
+}
+.right-manage {
+    .form-control {
+        font-size: 14px;
+        width: auto;
+        height: calc(1.8rem + 2px);
+        margin-right: 5px;
+        margin-top: 5px;
+    }
+}
+.th-top-border {
+    border: none;
+    border-top: 1px solid;
+}
+
 .btn-parent {
     padding: 15px;
 }
 .modal-dialog{
     top: 12%;
+}
+.ta{
+    resize:none;  
+}
+.bor{
+    border: 1px solid;
+    width: 300px;
+    height: 400px;
+    // margin-left: 60px;
+    margin-top: 20px;
+}
+.title-font{
+    float: left;
+    font-size: 16px;
+    color: #000000;
+    font-style: Normal;
+    font-weight: 400;
+    font-family: 微软雅黑;
+}
+.btn-check{
+    border:0px;
+    background-color:transparent;
+    cursor: pointer;
+}
+.tabl{
+    border-collapse:separate; 
+    border-spacing:0px 10px;
+}
+.div-a{
+    float: left;
+}
+.tabl-a{
+    margin-right: 100px;
+}
+.div-search{
+    margin: 0 auto; 
+    margin-top: 20px;
+}
+.div-i{
+    float: left;
+    border:1px solid darkslategray;
+    border-radius:30px;
+}
+.search-input{
+    border: none;
+    border-radius:30px;
+}
+.tabl-b{
+    td{
+        border: none;
+        text-align:center;
+        vertical-align:middle;
+    }
+}
+.modal-btn{
+    background-color:#fff;
+    border: 1px solid #000;
+}
+.btn-i{
+    margin-right: 6px;
+}
+.span-text{
+    float: left;
+    width: 20px;margin: 0 auto;
+    margin-top: 10px;
+}
+.panel-def{
+    padding: 15px 30px;
+    width: calc(100vw - 80px);
+    margin: 0 15px;
 }

@@ -120,7 +120,7 @@ export class VideoComponent implements OnInit {
         myIcon = new BMap.Icon('../../../../assets/imgs/light-breakdown.png', new BMap.Size(300, 157));
         // console.log('异常');
       } else if (item.is_online === 0) { // 灯亮
-        myIcon = new BMap.Icon('../../../../assets/imgs/light-up.png', new BMap.Size(300, 157));
+        myIcon = new BMap.Icon('../../../../assets/imgs/light-up-3.png', new BMap.Size(300, 157));
         // console.log('掉线');
       } else { // 正常
         myIcon = new BMap.Icon('../../../../assets/imgs/light-normal.png', new BMap.Size(300, 157));

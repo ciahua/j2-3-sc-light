@@ -1,0 +1,167 @@
+.strategy {
+    position: relative;
+}
+.strategy-left {
+    width: 250px;
+    height: 100vh;
+    border: #dee2e6 1px solid;
+    padding: 10px 0px;
+    background: #dee2e6;
+    .strategy-add{
+        position: relative;
+        button {
+            position: absolute;
+            right: 10px;
+        }
+    }
+
+
+
+    .strategy-list {
+
+        ul {
+            padding: 0px;
+            li {
+                height: 56px;
+                line-height: 56px;
+                border-bottom: 1px solid #ccc;
+                padding: 0 12px;
+            }
+            li:hover {
+                background-color: rgba(0,0,0,.075);
+            }
+        }
+    }
+}
+
+.strategy-title {
+    font-size: 1.57rem;
+    padding-left: 12px;
+
+}
+
+.strategy-right {
+    position: absolute;
+    top: 0px;
+    left: 250px;
+    width: calc(100vw - 300px);
+}
+
+
+.operate{
+    display: inline-block;
+    width: 50px;
+    /* height: 25px; */
+    text-align: center;
+}
+
+.strategy-table{
+    margin: 10px;
+
+    padding: 10px 5px;
+}
+.br {
+    border: 1px solid #ccc;
+    margin-bottom: 30px;
+}
+.dash-1{
+    height: 400px;
+}
+.table-3 {
+    height: 300px;
+}
+
+.map_container {
+    height: 300px;
+    width: 100%；
+}
+
+.city-list{
+    max-height: 79vh;
+    overflow-y: auto;
+}
+.strategy-top{
+    font-size: 30px;
+    line-height: 45px;
+    color: #000000;
+    font-style: Normal;
+    font-weight: 400;
+    font-family: 微软雅黑;
+}
+.select-del{
+    border: 0;
+    background: transparent;
+    appearance: none;
+    -moz-appearance:none;
+    -webkit-appearance:none;
+    margin-left: 10px;
+}
+
+
+
+
+.data-list {
+    padding: 0px;
+    li {
+        height: 56px;
+        line-height: 56px;
+        border-bottom: 1px solid #ccc;
+        padding: 0 12px; 
+    }
+    li:hover {
+        background-color: rgba(0,0,0,.075);
+    }
+
+}
+
+
+.date-title {
+    height: 50px;
+    line-height: 50px;
+    position: relative;
+    .btn {
+        position: absolute;
+        right: 0px;
+    }
+}
+// 搜索框
+ #sole-input {
+    width: 329px;
+    box-sizing: border-box;
+    // border: 0;
+    // padding: 9px 0;
+    // border-left: 10px solid transparent;
+    // border-right: 27px solid transparent;
+    line-height: 20px;
+    font-size: 16px;
+    height: 38px;
+    color: #333;
+    position: relative;
+    border-radius: 2px 0 0 2px;
+}
+.xy-pad {
+    padding-bottom: 15px;
+    .form-group {
+        padding-right:15px;
+        
+    }
+}
+
+// 日历
+.custom-day {
+text-align: center;
+padding: 0.185rem 0.25rem;
+display: inline-block;
+height: 2rem;
+width: 2rem;
+}
+.custom-day.focused {
+background-color: #e6e6e6;
+}
+.custom-day.range, .custom-day:hover {
+background-color: rgb(2, 117, 216);
+color: white;
+}
+.custom-day.faded {
+background-color: rgba(2, 117, 216, 0.5);
+}

@@ -1,0 +1,34 @@
+<div class="homepage row align-items-center justify-content-center">
+  <div class="dash">
+
+    <div class="row dash-row" >
+      <div [class]="item.col" *ngFor="let item of routes">
+        <div class="row dash-parent" *ngFor="let sub of item.row">
+              <a [class]="last.col" *ngFor="let last of sub.children" [routerLink]="[last.routeLink]" (click)="goToZheRoute(last.routeLink)">
+              
+                <div  [class] = "last.class">
+                  <div class="col-12 content" >
+                    <p>
+                      <span>
+                        <i [class]="last.icon"></i>
+                      </span>
+                    </p>
+                    <p>{{last.routeTitel}}</p>
+                  </div>
+                </div>
+              
+              </a>
+        </div>
+
+
+      </div>
+
+
+    </div>
+
+
+
+
+
+
+</div>

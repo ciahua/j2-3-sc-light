@@ -2,14 +2,8 @@
 $fa-font-path: "../node_modules/font-awesome/fonts";
 @import '~font-awesome/scss/font-awesome.scss';
 @import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
+@import './assets/css/variable.scss';
 // @import '~src/app/main.css';
-body {
-    color: #333;
-    // font-family: "Microsoft YaHei","宋体",Arial,"\5B8B\4F53",Helvetica,sans-serif;
-    font-family:"Microsoft Yahei",微软雅黑,"Helvetica Neue",Arial,sans-serif;
-    font-size: 14px;
-    // overflow: hidden;  //ymZhao-取消首页横纵滚动条
-}
 
 ol, ul {
     list-style: none;
@@ -48,8 +42,8 @@ address, cite, code, em, th, i, strong {
 }
 
 .no-fulls-map {
-    height: calc(100vh - 80px);
-    margin-top: 80px;
+    height: 100vh;
+    // margin-top: 80px;
 }
 // 隐藏百度地图logo
 .BMap_cpyCtrl, .anchorBL{
@@ -57,9 +51,9 @@ address, cite, code, em, th, i, strong {
 }
 
 // 头部导航
-.nav-margin {
-    margin-top: 80px;
-}
+// .nav-margin {
+//     margin-top: 80px;
+// }
 
 // .i-circle:hover, .i-circle >a:hover {
 //     background: tomato;
@@ -81,9 +75,9 @@ address, cite, code, em, th, i, strong {
 
 // 气泡
 .tag-bule{
-    width: 28px;
-    height: 28px;
-    line-height: 28px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
     text-align: center;
     border-radius: 50%;
     border: 5px solid #e8f0f5;
@@ -97,7 +91,7 @@ address, cite, code, em, th, i, strong {
     border-width:5px;
     position:absolute; 
     bottom:-14px;
-    left: 4px;
+    left: 0px;
     border-style:solid dashed dashed;
     border-color:#e8f0f5 transparent transparent;
     font-size:0;
@@ -109,9 +103,9 @@ address, cite, code, em, th, i, strong {
 }
 
 .tag-red{
-    width: 28px;
-    height: 28px;
-    line-height: 28px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
     text-align: center;
     border-radius: 50%;
     border: 5px solid #e8f0f5;
@@ -125,7 +119,7 @@ address, cite, code, em, th, i, strong {
     border-width:5px;
     position:absolute; 
     bottom:-14px;
-    left: 4px;
+    left: 0px;
     border-style:solid dashed dashed;
     border-color:#e8f0f5 transparent transparent;
     font-size:0;
@@ -137,9 +131,9 @@ address, cite, code, em, th, i, strong {
 }
 
 .tag-grad{
-    width: 28px;
-    height: 28px;
-    line-height: 28px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
     text-align: center;
     border-radius: 50%;
     border: 5px solid #e8f0f5;
@@ -153,7 +147,7 @@ address, cite, code, em, th, i, strong {
     border-width:5px;
     position:absolute; 
     bottom:-14px;
-    left: 4px;
+    left: 0px;
     border-style:solid dashed dashed;
     border-color:#e8f0f5 transparent transparent;
     font-size:0;
@@ -166,28 +160,17 @@ address, cite, code, em, th, i, strong {
 
 // 地图浮动按钮
 
-// 城市列表
-.city-panel, .device-panel {
-    position: absolute;
-    z-index: 3000;
-    border: 1px solid #d8d8d8;
-    background-color: #f9f9f9;
-    width: 250px;
-    padding: 7px 0 0 0;
-    left: 0;
-    // top: 22px;
-    top: 31px;
-    border-radius: 0 0 4px 4px;
-    font-size: 12px;
-}
+// 城市列表  设备列表
+
 .city-panel ,.device-panel{
+
+    font-size: 12px;
     dl {
         width: 222px;
-        padding: 7px 0 6px 0;
-        margin: 0 13px;
+        /* padding: 7px 0 6px 0; */
+        margin: 0;
         border: 0;
-        border-bottom: 1px solid #ccc;
-        line-height: 23px;
+        /* line-height: 23px; */
         overflow: hidden;
         zoom: 1;
     }
@@ -208,18 +191,18 @@ address, cite, code, em, th, i, strong {
 
         }
     }
-    dd a:hover, .moreCity:hover {
-    color: #f60;
-    text-decoration: underline;
-}
+    a:hover, .moreCity:hover {
+        color: #f60 !important;
+        text-decoration: underline;
+    }
 }
 .device-panel {
-    width: 150px;
+    width: 100px;
     dl {
-        width: 122px;
+        // width: 122px;
     }
     dt {
-        width: 120px;
+        // width: 120px;
         a {
             width: 100%;
             float: left;
@@ -227,13 +210,19 @@ address, cite, code, em, th, i, strong {
             white-space: nowrap;
 
         }
-        a:hover{
-            color: #f60;
-            text-decoration: underline;
-        }
+
+    }
+    dt:hover a{
+        color: #f60 !important;
+        text-decoration: underline;
     }
 
 }
+// .device-panel:hover {
+//     dl {
+//         background: #fff;
+//     }
+// }
 
 
 .device-panel dt a:link, .moreCity:link, .device-panel dt a:visited, .moreCity:visited, .device-panel dt a:active, .moreCity:active {
@@ -251,7 +240,7 @@ address, cite, code, em, th, i, strong {
     text-align: center;
 }
 
-// 
+// 区域列表
 .sel-area-block,  {
     width: 100px;
     cursor: pointer;
@@ -265,7 +254,7 @@ address, cite, code, em, th, i, strong {
     // float: left;
 }
 
-//
+//区域列表
 .arealist-wrap {
     position: absolute;
     padding: 0;
@@ -285,11 +274,8 @@ address, cite, code, em, th, i, strong {
     width: 90px;
     font-size: 12px;
     z-index: 99;
-    border: 1px solid #e6e6e6;
     border-top-width: 0;
-    background: #f6f6f6;
-    box-shadow: 0 0 4px 0 rgba(0,0,0,0.10);
-    max-height: 300px;
+    max-height: 260px;
     overflow-y: auto;
     cursor: pointer;
 }
@@ -307,26 +293,32 @@ address, cite, code, em, th, i, strong {
     color:#f60;
 }
 
-
-.blocklist {
-    // display: none;
+.blocklist-wrap {
     position: absolute;
-    padding-left:0;
-    left: 90px;
-    top: 0;
-    width: 120px;
+    padding: 20px;
+    left: 130px;
+    top: 7px;
+    min-width: 120px;
     background: #fff;
-    border: 1px solid #e6e6e6;
-    border-left-width: 0;
-    height: 300px;
+    box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.08);
+    border-radius: 4px;
+
     z-index: 100;
-    overflow-y: auto;
-    text-indent: 15px;
-    font-size: 12px;
+    .blocklist {
+        width: 90px;
+        height: 260px;
+        overflow-y: auto;
+        text-indent: 15px;
+        font-size: 12px;
+        padding: 0;
+        margin: 0;
+        li:hover {
+            color: #f60;
+        }
+    }
+
 }
-.blocklist li:hover {
-    color: #f60;
-}
+
 
 .map_warp {
     position: relative;
@@ -361,3 +353,35 @@ address, cite, code, em, th, i, strong {
     font-size: 3rem;
     color: #f44336;
 }
+
+// 弹框
+.modal-header {
+    .modal-title {
+        font-size: $font-cpm-title-font-size;
+        line-height: $font-cpm-title-line-height;
+        color: $font-cpm-title-color;
+        font-style: $font-cpm-title-font-style;
+        font-weight: $font-cpm-title-font-weight;
+        font-family: $font-cpm-title-font-family;
+    }
+}
+.modal-content {
+    top: 80px;
+}
+.modal{
+    z-index: 10000;
+}
+
+.ex-lg-modal  {
+    .modal-dialog {
+        width: 90%;
+        max-width: 1000px;
+    }
+}
+.md-modal {
+    .modal-dialog {
+        width: 400px;
+    }
+}
+
+
