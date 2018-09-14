@@ -2,7 +2,9 @@
 @import '../../../../assets/css/xylg.scss';
 .bodyofproduct {
     width: calc(100vw - 50px);
-    // padding: 15px;
+    height: 100vh;
+    padding: 30px;
+    position: relative;
 }
 .card-header {
     border-bottom: 0px;
@@ -105,10 +107,16 @@
 .manage-class {
     font-size: 20px;
     padding-right: 1px;
+    cursor: pointer;
 }
 .manage-class:focus, .manage-class:hover {
     background-color: $color-brand-color;
 }
 .manage-class:active {
     background-color: $color-hover-color;
+}
+
+.margin-bottom-15 {
+    margin-bottom: 15px;
+    padding: 5px;
 }

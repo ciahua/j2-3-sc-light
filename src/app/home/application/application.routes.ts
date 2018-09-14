@@ -8,6 +8,7 @@ import { SecurityComponent } from './security/security.component';
 import { TrafficComponent } from './traffic/traffic.component';
 import { WaterComponent } from './water/water.component';
 import { AirComponent } from './air/air.component';
+import { LedComponent } from './led/led.component';
 
 import { AuthGuard } from '../../guard/auth-guard.service';
 
@@ -30,6 +31,7 @@ export const ApplicationRoutes: Route[] = [
                     { path: 'traffic', component: TrafficComponent },
                     { path: 'water', component: WaterComponent },
                     { path: 'air', component: AirComponent },
+                    { path: 'led', component: LedComponent },
 
                 ]
             }

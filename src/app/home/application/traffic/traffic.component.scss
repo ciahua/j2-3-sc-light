@@ -6,3 +6,34 @@
     width: 100%;
 }
 
+// 设备详情
+.camera-detail{
+    width: 400px;
+    background: #fff;
+    border: 1px solid #ccc;
+    z-index: 4000;
+    position: absolute;
+    right: 55px;
+    bottom: 5px;
+    padding: 15px;
+}
+.modal-body {
+    padding: 10px 0 0 0;
+}
+.camera-title{
+    display: block;
+    padding: 0;
+    margin: 0;
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #ccc;
+
+    .camera-close{
+        cursor: pointer;
+        color: #8e8f91;
+    }
+}
+
+.video-play{
+    height: 500px;
+}

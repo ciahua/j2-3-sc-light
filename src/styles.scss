@@ -1,7 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 $fa-font-path: "../node_modules/font-awesome/fonts";
 @import '~font-awesome/scss/font-awesome.scss';
-@import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+// @import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
+// @import '~https://fonts.googleapis.com/icon?family=Material+Icons';
+
 @import './assets/css/variable.scss';
 // @import '~src/app/main.css';
 
@@ -236,7 +239,7 @@ address, cite, code, em, th, i, strong {
 .filter{
 
     display: inline-block;
-    width: 80px;
+    width: 95px;
     text-align: center;
 }
 
@@ -319,6 +322,27 @@ address, cite, code, em, th, i, strong {
 
 }
 
+.area-selection {
+    // z-index: 3000;
+    z-index: 1040;
+    top: 15px;
+
+    .area-selection-block {
+        cursor: pointer;
+        position: relative;
+        background-color: #fff;
+        border: 1px solid #e3e3e3;
+        line-height: 30px;
+        height: 30px;
+        font-size: 14px;
+        margin-right: 5px;
+    }
+    .arealist-wrap {
+        position: absolute;
+        top: 28px;
+    }
+}
+
 
 .map_warp {
     position: relative;
@@ -371,17 +395,135 @@ address, cite, code, em, th, i, strong {
 .modal{
     z-index: 10000;
 }
-
+// 超大模态框
 .ex-lg-modal  {
     .modal-dialog {
         width: 90%;
         max-width: 1000px;
     }
 }
+.max-modal {
+    .modal-dialog {
+        width: 1300px;
+        max-width: 1500px;
+    }
+}
+// 小模态框
 .md-modal {
     .modal-dialog {
         width: 400px;
     }
 }
+.basic-container {
+  padding: 30px;
+}
 
+.version-info {
+  font-size: 8pt;
+  float: right;
+}
+
+// 红色字体
+
+.mat-error {
+    font-size: 12px;
+}
+
+.mat-step-icon, .mat-step-icon-not-touched{
+    margin-right: 8px;
+    flex: none;
+}
+
+ .mat-step-icon {
+    background-color: #673ab7;
+    color: #fff;
+}
+
+.mat-step-icon, .mat-step-icon-not-touched {
+    border-radius: 50%;
+    height: 24px;
+    width: 24px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.mat-step-icon-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.mat-step-icon-not-touched {
+    background-color: rgba(0,0,0,.38);
+    color: #fff;
+}
+
+.mat-step-icon-not-touched {
+    background-color: rgba(0,0,0,.38);
+    color: #fff;
+}
+.mat-stepper-horizontal-line {
+    border-top-width: 1px;
+    border-top-style: solid;
+    flex: auto;
+    height: 0;
+    margin: 0 -16px;
+    min-width: 32px;
+}
+
+.mat-stepper-horizontal-line {
+    border-top-color: rgba(0,0,0,.12);
+}
+.lsq-line {
+    position: relative;
+    top: -24px;
+    left: 136px;
+    width: 140px;
+}
+
+// 搜索框
+.xy-pad {
+    padding-bottom: 15px;
+    .form-group {
+        padding-right:15px;
+        
+    }
+}
+
+// 搜索框
+ #sole-input {
+    width: 329px;
+    box-sizing: border-box;
+
+    line-height: 20px;
+    font-size: 16px;
+    height: 38px;
+    color: #333;
+    position: relative;
+    border-radius: 2px 0 0 2px;
+}
+
+.search-form{
+    position: relative;
+    .form-btn{
+        position: absolute;
+        right: 0;
+    }
+
+    .form-btn-1{
+        position: absolute;
+        right: 96px;
+    }
+}
+// 提示信息
+
+.lsq-alert{
+    position: absolute;
+    padding: 0 30px;
+    /* padding-right: 30px; */
+    width: 100%;
+    right: 0;
+    z-index: 1000;
+}
 

@@ -19,7 +19,10 @@
       <div class=" ar-error">
         <div *ngIf="f.submitted && !username.valid" class="help-block">{{'请输入用户名!'}}</div>
         <div *ngIf="f.submitted && !password.valid && username.valid" class="help-block ">{{'请输入密码!'}}</div>
-        <div *ngIf="error" class="">{{error}}</div>
+        <!-- <div *ngIf="error" class="">{{error}}</div> -->
+        <mat-error *ngIf="error">
+          <strong>{{error}}</strong>
+        </mat-error>
       </div>
 
       <div class="form-group" style="margin-bottom: 25px" [ngClass]="{ 'has-error': f.submitted && !username.valid }">

@@ -8,7 +8,6 @@ import { CookieService } from 'ngx-cookie';
 import { Router } from '@angular/router';
 import { WindowRef } from '../windowserver';
 
-import { COMMUNITYLIST } from '../data/community-list';
 
 
 import { Point } from '../data/point.type';

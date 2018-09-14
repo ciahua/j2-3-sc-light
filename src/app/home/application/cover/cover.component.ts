@@ -38,7 +38,7 @@ export class CoverComponent implements OnInit, OnDestroy {
   model: any = {}; // 存储数据
 
   map: any; // 地图对象
-  markers: any[] = []; // 标记
+  coverList = [];  // 当前井盖列表
 
   cityList: any; // 城市列表
   deviceList: any; // 城市列表
@@ -68,7 +68,6 @@ export class CoverComponent implements OnInit, OnDestroy {
   showonprogresslist = false; // 默认不显示“处理中”的异常消息
   showfinishedlist = false; // 默认不显示“已处理”的异常消息
   timer: any; // 定时器
-
   constructor(private coverService: CoverService, private monitorService: MonitorService,
     private messageService: MessageService, public messService: MessService, private config: NgbDropdownConfig) {
       // config.placement = 'top-left';
@@ -78,14 +77,10 @@ export class CoverComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.addBeiduMap();
     this.getCity(); // 获取城市列表
-    // this.getDevice(); // 获取设备列表 - ymZhao-按要求，井盖页面不显示设备列表
-    this.getMessage();  // 获取消息列表
-    // this.chartMapCover1(); // ymZhao 井盖丢失率图
+    this.getMessage();  // 获取井盖异常消息列表
   }
 
-
-
-  // ymZhao 获取消息列表
+  // ymZhao 获取井盖异常消息列表
   getMessage() {
     const that = this;
     this.messageService.getMessage().subscribe({
@@ -99,7 +94,6 @@ export class CoverComponent implements OnInit, OnDestroy {
     this.messageService.getMessage1().subscribe({
       next: function (val) {
         that.messageList1 = val.list;
-        console.log(val.list);
       },
       error: function (error) {
         console.log(error);
@@ -141,17 +135,7 @@ export class CoverComponent implements OnInit, OnDestroy {
     });
     map.addControl(navigationControl);
 
-    // const marker = new BMap.Marker(point);  // 创建标注
-    // map.addOverlay(marker);               // 将标注添加到地图中
-
-    // const myIcon = new BMap.Icon('../../../../assets/imgs/light-up.png', new BMap.Size(300, 157));
-    // myIcon.setAnchor(new BMap.Size(16, 38));
-    // const marker2 = new BMap.Marker(point, { icon: myIcon });  // 创建标注
-    // this.map.addOverlay(marker2);
-
     this.addMarker();
-
-
   }
     // 返回地图可视区域，以地理坐标表示
     getBounds(baiduMap) {
@@ -164,42 +148,11 @@ export class CoverComponent implements OnInit, OnDestroy {
   addMarker() {
     this.getCovers();  // 获取井盖
     this.timer = setInterval(() => {
-      this.map.clearOverlays();
+      // this.map.clearOverlays();
       this.getCovers();
     }, 5000);
 
 
-  }
-  // 添加点标注
-  addPoint(val) {
-    this.markers = [];
-    const points: any[] = [];
-    const that = this;
-    val.map((item, i) => {
-      const point = new BMap.Point(item.point.lng, item.point.lat);
-      // const name = item.name;
-      // 添加自定义覆盖物
-      let myIcon;
-
-      if (item.alarm && item.alarm === true) { // 异常
-        myIcon = new BMap.Icon('../../../../assets/imgs/cover-lose.png', new BMap.Size(300, 157));
-      } else if (item.offline === false) { // 掉线
-        myIcon = new BMap.Icon('../../../../assets/imgs/cover-offline.png', new BMap.Size(300, 157));
-      } else { // 正常
-        myIcon = new BMap.Icon('../../../../assets/imgs/cover-normal.png', new BMap.Size(300, 157));
-      }
-      myIcon.setAnchor(new BMap.Size(16, 38));
-      const marker2 = new BMap.Marker(point, { icon: myIcon });  // 创建标注
-      this.map.addOverlay(marker2);
-      this.markers.push(marker2); // 聚合
-      points.push(point); // 聚合
-    });
-
-    // 点击点标注事件
-    for (let index = 0; index < that.markers.length; index++) {
-      const marker = that.markers[index];
-      that.openSideBar(marker, that.map, val[index], points[index]);
-    }
   }
 
   // 获取地图内井盖
@@ -210,13 +163,24 @@ export class CoverComponent implements OnInit, OnDestroy {
     const NorthEast = Bounds.getNorthEast(); // 返回矩形区域的东北角
     const SouthWest = Bounds.getSouthWest(); // 返回矩形区域的西南角
 
+    let compar;
     let value;
     this.coverService.getCovers(NorthEast, SouthWest).subscribe({
       next: function (val) {
-        value = val;
+        // value = val;
+        compar = that.comparison(that.coverList, val);
+        value = that.judgeChange(compar.a_arr, compar.b_arr);
+
+        that.changeMarker(value); // 替换
+        that.deleMarker(compar.a_surplus); // 删除
+        // that.deleMarker(value); // 删除
+        that.addPoint(compar.b_surplus); // 添加
+        // that.addPoint(value); // 添加
+
+        that.coverList = val; // 变为新值
       },
       complete: function () {
-        that.addPoint(value);
+        // that.addPoint(value);
       },
       error: function (error) {
         console.log(error);
@@ -224,7 +188,117 @@ export class CoverComponent implements OnInit, OnDestroy {
     });
   }
 
-  // 标注消息列表中点击的点
+  // 交并补
+  comparison(a, b) {
+    const a_arr: any[] = [];
+    const b_arr: any[] = [];
+    const a_surplus: any[] = [];
+    const b_surplus: any[] = [];
+    let i = 0;
+    for (let j = 0; j < b.length; j++) {
+      while (i < a.length && a[i].id < b[j].id) {
+        a_surplus.push(a[i]);
+        i++;
+      }
+      if (i >= a.length || a[i].id > b[j].id) {
+        b_surplus.push(b[j]);
+      } else {
+        a_arr.push(a[i]);
+        i++;
+        b_arr.push(b[j]);
+      }
+    }
+    return {
+      a_arr: a_arr,
+      b_arr: b_arr,
+      a_surplus: a_surplus,
+      b_surplus: b_surplus,
+    };
+  }
+  // 判断变化值
+  judgeChange(a, b) {
+    const changePoint: any[] = [];
+    const length = a.length < b.length ? a.length : b.length;
+    for (let index = 0; index < length; index++) {
+      const a_element = a[index];
+      const b_element = b[index];
+      if (a_element.error !== b_element.error ||
+        a_element.offline !== b_element.offline ||
+        a_element.alarm !== b_element.alarm ||
+        a_element.lowBattery !== b_element.lowBattery
+       ) {
+        changePoint.push(b_element);
+      }
+
+    }
+    return changePoint;
+
+  }
+
+  // 替换
+  changeMarker(cover_list) {
+    // console.log(cover_list);
+    // console.log(this.coverList);
+    this.deleMarker(cover_list); // 删除
+    this.addPoint(cover_list); // 添加
+  }
+  // 删除
+  deleMarker(cover_list) {
+    const makers = this.map.getOverlays();
+    for (let ind = 0; ind < cover_list.length; ind++) {
+      const ele = cover_list[ind];
+      const point = cover_list[ind].point;
+      for (let index = 0; index < makers.length; index++) {
+        const element = makers[index];
+        const lat = element.point && element.point.lat;
+        const lng = element.point && element.point.lng;
+        if (point.lat === lat && point.lng === lng) {
+          this.map.removeOverlay(makers[index]);
+        }
+
+      }
+    }
+  }
+
+  // 添加点标注
+  addPoint(val) {
+    const markers: any[] = [];
+    const points: any[] = [];
+    const that = this;
+
+    val.map((item, i) => {
+      const point = new BMap.Point(item.point.lng, item.point.lat);
+      // const name = item.name;
+      // 添加自定义覆盖物
+      let myIcon;
+
+      if (item.alarm && item.alarm === true) { // 异常
+        myIcon = new BMap.Icon('../../../../assets/imgs/cover-lose.png', new BMap.Size(36, 36));
+      } else if (item.offline === true) { // 掉线
+        myIcon = new BMap.Icon('../../../../assets/imgs/cover-offline.png', new BMap.Size(36, 36));
+
+      } else if (item.lowBattery === true) {
+        myIcon = new BMap.Icon('../../../../assets/imgs/cover-lowpower.png', new BMap.Size(36, 36));
+      } else { // 正常
+        myIcon = new BMap.Icon('../../../../assets/imgs/cover-normal.png', new BMap.Size(36, 36));
+      }
+      myIcon.setAnchor(new BMap.Size(16, 38));
+      const marker2 = new BMap.Marker(point, { icon: myIcon });  // 创建标注
+      this.map.addOverlay(marker2);
+
+      markers.push(marker2); // 聚合
+      points.push(point); // 聚合
+    });
+
+    // 点击点标注事件
+    for (let index = 0; index < markers.length; index++) {
+      const marker = markers[index];
+      that.openSideBar(marker, that.map, val[index], points[index]);
+    }
+  }
+
+
+  // 标注消息列表中点击的井盖事件
   findPoint(mess) {
     const pt = new BMap.Point(mess.lng, mess.lat);
     const messtype = mess.handleType;
@@ -247,6 +321,7 @@ export class CoverComponent implements OnInit, OnDestroy {
       marker.V.click();
     }, 50);
   }
+
   // 地图点注标-点击事件
   openSideBar(marker, baiduMap, mess, point) {
     const that = this;
@@ -264,24 +339,27 @@ export class CoverComponent implements OnInit, OnDestroy {
     if (mess.lowBattery === false) {
       txt = txt + `<p  class='cur-pointer'> 是否低电量：否</p>`;
     } else {
-      txt = txt + `<p  class='cur-pointer'> 是否低电量：是</p>`;
+      txt = txt + `<p  class='cur-pointer'> 是否低电量：<span style='color: red'>是</span></p>`;
     }
     if (mess.alarm === false) {
       txt = txt + `<p  class='cur-pointer'> 是否报警：否</p>`;
     } else {
-      txt = txt + `<p  class='cur-pointer'> 是否报警：是</p>`;
+      txt = txt + `<p  class='cur-pointer'> 是否报警：<span style='color: red'>是</span></p>`;
     }
     if (mess.error === false) {
       txt = txt + `<p  class='cur-pointer'> 是否故障：否</p>`;
     } else {
-      txt = txt + `<p  class='cur-pointer'> 是否故障：是</p>`;
+      txt = txt + `<p  class='cur-pointer'> 是否故障：<span style='color: red'>是</span></p>`;
     }
     if (mess.offline === false) {
       txt = txt + `<p  class='cur-pointer'> 是否离线：否</p>`;
     } else {
-      txt = txt + `<p  class='cur-pointer'> 是否离线：是</p>`;
+      txt = txt + `<p  class='cur-pointer'> 是否离线：<span style='color: red'>是</span></p>`;
     }
-    txt = txt + `<button class='btn btn-bg' style='font-size: 14px; float: right; margin: 5px'>处理</button>`;
+    if (mess.lowBattery || mess.alarm || mess.error || mess.offline) {
+      txt = txt + `<button class='btn btn-outline-info cur-point' style='font-size: 14px; float: right; margin: 5px'>处理</button>`;
+    }
+
 
     const infoWindow = new BMap.InfoWindow(txt, opts);
 
@@ -294,6 +372,7 @@ export class CoverComponent implements OnInit, OnDestroy {
     });
 
   }
+
   // 解析地址- 设置中心和地图显示级别
   getPoint(baiduMap, city) {
     const that = this;
@@ -341,112 +420,6 @@ export class CoverComponent implements OnInit, OnDestroy {
       }
     });
   }
-  // 获取设备列表 -- ok - ymZhao-按要求，井盖页面不显示设备列表
-  // getDevice() {
-  //   const that = this;
-  //   this.monitorService.getDevice().subscribe({
-  //     next: function (val) {
-  //       that.deviceList = val;
-  //     },
-  //     complete: function () {
-  //     },
-  //     error: function (error) {
-  //       console.log(error);
-  //     }
-  //   });
-  // }
-
-  // ymZhao-井盖丢失率echart
-  chartMapCover1() {
-    // app.title = '堆叠柱状图';
-
-    const option = {
-      backgroundColor: '#3c3c3c',
-      title: {
-        text: '深圳市各区井盖异常统计',
-        subtext: '纯属虚构',
-        textStyle: {
-          color: '#fff'
-        }
-      },
-      tooltip: {
-        trigger: 'axis'
-      },
-      legend: {
-        data: ['损坏', '丢失'],
-        textStyle: {
-          color: '#fff'
-        }
-      },
-      toolbox: {
-        show: true,
-        feature: {
-          dataView: { show: true, readOnly: false },
-          magicType: { show: true, type: ['line', 'bar'] },
-          restore: { show: true },
-          saveAsImage: { show: true }
-        }
-      },
-      calculable: true,
-      xAxis: [
-        {
-          type: 'category',
-          data: ['罗湖', '宝安', '福田', '龙岗', '南山', '盐田', '光明', '龙华', '坪山', '大鹏'],
-          axisLine: {
-            lineStyle: {
-              color: '#fff',
-              width: 1, // 这里是为了突出显示加上的
-            }
-          }
-
-      }
-      ],
-      yAxis: [
-        {
-          type: 'value'
-        }
-      ],
-      series: [
-        {
-          name: '损坏',
-          type: 'bar',
-          data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0],
-          markPoint: {
-            data: [
-              { type: 'max', name: '最大值' },
-              { type: 'min', name: '最小值' }
-            ]
-          },
-          markLine: {
-            data: [
-              { type: 'average', name: '平均值' }
-            ]
-          }
-        },
-        {
-          name: '丢失',
-          type: 'bar',
-          data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8],
-          markPoint: {
-            data: [
-              { name: '年最高', value: 182.2, xAxis: 7, yAxis: 183 },
-              { name: '年最低', value: 2.3, xAxis: 11, yAxis: 3 }
-            ]
-          },
-          markLine: {
-            data: [
-              { type: 'average', name: '平均值' }
-            ]
-          }
-        }
-      ]
-    };
-
-    const bmapChart = echarts.init(document.getElementById('map_cover1'));
-    bmapChart.setOption(option);
-
-  }
-
 
   // 省市区街道-地图级别
   switchZone(level) {
@@ -554,6 +527,15 @@ export class CoverComponent implements OnInit, OnDestroy {
 
   }
 
+  // 获取对应处理状态的消息
+  readHandleType(mess, messtype) {
+    const handletype = mess.handleType;
+    if (messtype === handletype) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   // 选择区域
   // 选择城市
@@ -627,15 +609,6 @@ export class CoverComponent implements OnInit, OnDestroy {
   // 离开 已处理
   messageListMouseleave_3() {
     this.showfinishedlist = false;
-  }
-  // 获取对应处理状态的消息
-  readHandleType(mess, messtype) {
-    const handletype = mess.handleType;
-    if (messtype === handletype) {
-      return true;
-    } else {
-      return false;
-    }
   }
 
   ngOnDestroy() {

@@ -7,28 +7,9 @@
       <!-- 导航栏 -->
       <div class="sidebar-inner">
           <ul class="first-menu">
-            <!-- 一级菜单 -->
-            <li *ngFor="let area of arealist " class="cur-pointer nav-item">
-              <!-- 没有子菜单 -->
-              <!-- <a *ngIf="!area.children" [routerLink]="[area.routeLink]" routerLinkActive="active" class="nav-link">
-                <i class={{area.icon}}></i>
-                <p class="p-left">{{area.routeTitel}}</p>
-              </a> -->
-              <!-- 有子菜单 -->
-              <a *ngIf="area" (click)="area.isCollapsed = !area.isCollapsed" class="nav-link">
-                <span class="p-left">{{area.name}}</span>
-                <span class="angle" *ngIf="area.isCollapsed"><i class="fa fa-angle-right menu-icon" aria-hidden="true"></i></span>
-                <span class="angle" *ngIf="!area.isCollapsed"><i class="fa fa-angle-down menu-icon" aria-hidden="true"></i></span>
-              </a>
-              <!-- 二级菜单 ul: -->
-              <ul [ngbCollapse]="area.isCollapsed" *ngIf="area.children" class="sec-menu">
-                <li *ngFor="let airpoint of airreport" class="cur-pointer nav-item" (click)="selectPoint(airpoint)">
-                  <a class="nav-link">
-                    <span class="p-left">{{airpoint.name}}{{airpoint.id}}</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
+              <li *ngFor="let device of devicelist; let i = index" class="cur-pointer nav-item" (click)="selectPoint(i, device)" [ngClass]="{'active': i == deviceIndx}">
+                <span>{{device.description}}</span>
+              </li>
           </ul>
       </div>
   </div>
@@ -37,45 +18,143 @@
   <div class="air-right">
     <!-- 监测点信息 -->
     <div  class="point-info">
-        <!-- 上半部，头部，简短信息 -->
-        <div class="panel-default info-top">
-            <span class="title-right" *ngIf="currentpoint">{{currentpoint.name}}{{currentpoint.id}}</span>
-            <i class="fa fa-arrow-circle-o-left fa-2x backtoair" (click)="jumpHandle()"></i>
-            <div class="form-inline brief-info">
-                <label class="form-control text-label">时间范围：</label>
-                <input type="date" class="form-control extral-margin" value=""/>
-                <label class="form-control text-label">设备名称：</label>
-                <span class="form-control text-label extral-margin">XBD213</span>
-                <label class="form-control text-label">设备状态：</label>
-                <a class="form-control text-label"><span>在线</span></a>
-            </div>
-        </div>
 
-        <!-- 表单，详细数据展示 -->
+
+        <!-- 右侧，下半部-->
         <div class="panel-default info-form">
-          <form class="form-air-point">
-            <div class="btns">
-              <button class="btn btn-bg extral-margin">导出报表</button>
-              <button class="btn btn-bg">生成图表</button>
-            </div>
-            <table class="table table-hover">
-              <thead class="table-header">
-                <tr>
-                  <th><input type="checkbox" value=""></th>
-                  <th>采集时间</th>
-                  <th>PM2.5</th>
-                  <th>PM10</th>
-                  <th>TVOC</th>
-                  <th>温度</th>
-                  <th>湿度</th>
-                </tr>
-              </thead>
-              <tbody>
 
-              </tbody>
-            </table>
-          </form>
+            <!-- 右侧，上半部，头部，简短信息 -->
+            <div class="car-header" *ngIf="currentdevice">
+              <span class="car-title">{{currentdevice.description}}</span>
+              <button type="button" class="close" aria-label="Close">
+                <!-- <span aria-hidden="true">&times;</span> -->
+                <span>
+                  <i class="fa fa-arrow-circle-o-left cur-pointer color-btn-text" (click)="jumpHandle('home/application/air')"></i>
+                </span>
+              </button>
+              
+
+            </div>
+            <div class="extral-margin" >
+              <label class=" text-label">设备名称：</label>
+              <span class=" text-label" *ngIf="currentdevice">{{currentdevice.name}}</span>
+            </div>
+            <div class="extral-margin">
+              <label class=" text-label">设备状态：</label>
+              <span class=" text-label" *ngIf="currentdevice">{{getdevicestatus(currentdevice.offline)}}</span>
+            </div>
+            <hr>
+
+
+            <div class="extral-margin">
+              <label class=" text-label">开始时间：</label>
+
+                <div class="d-inline-block">
+                  <div class="input-group">
+                    <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="startDate" ngbDatepicker #ad="ngbDatepicker">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary " (click)="ad.toggle()" type="button">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                      </button>
+                    </div>
+
+                  </div>
+
+                </div>
+                <div class="d-inline-block">
+                  <label style="margin-left: 21px;">
+                    <ngb-timepicker [(ngModel)]="startTime" ></ngb-timepicker>
+                  </label>
+                </div>
+
+
+            </div>
+            <div class="extral-margin">
+              <label class=" text-label">结束时间：</label>
+            
+              <div class="d-inline-block">
+                <div class="input-group">
+                  <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="endDate" ngbDatepicker #bd="ngbDatepicker">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary " (click)="bd.toggle()" type="button">
+                      <i class="fa fa-calendar" aria-hidden="true"></i>
+                    </button>
+                  </div>
+            
+                </div>
+            
+              </div>
+              <div class="d-inline-block">
+                <label style="margin-left: 21px;">
+                  <ngb-timepicker [(ngModel)]="endTime"></ngb-timepicker>
+                </label>
+              </div>
+            
+            
+            </div>
+            <div class="btns">
+              <button class="btn btn-bg extral-margin" (click)="dataSearch()">搜索</button>
+              <button class="btn btn-bg extral-margin" (click)="exportTable()" [disabled]='historydatalistItems.length ==0'>导出报表</button>
+              <button class="btn btn-bg" (click)="openGenerateTables()" [disabled]='historydatalistItems.length ==0'>生成图表</button>
+            </div>
+            <!--当前设备详细数据展示-->
+            <div id="exportableTable">
+              <table class="table table-hover">
+                <thead class="table-header">
+                  <tr>
+                    <!-- <th><input type="checkbox" value=""></th> -->
+                    <th>采集时间</th>
+                    <th>PM2.5</th>
+                    <th>PM10</th>
+                    <th>TVOC</th>
+                    <th>温度</th>
+                    <th>湿度</th>
+                  </tr>
+                </thead>
+                <tbody >
+              
+                  <tr *ngFor="let historydate of historydatalistItems">
+                    <td>{{historydate.timestamp}}</td>
+                    <td>{{historydate.pm25}}</td>
+                    <td>{{historydate.pm10}}</td>
+                    <td>{{historydate.tvoc}}</td>
+                    <td>{{historydate.temperature}}</td>
+                    <td>{{historydate.humidity}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+
+          <div *ngIf=" historydatalistItems.length ==0">无数据！</div>
+          <!-- 分页 开始-->
+          <div *ngIf=" historydatalistItems.length > 0">
+            <ngb-pagination [collectionSize]=total [(page)]="page" [maxSize]="5" [rotate]="true"
+              [ellipses]="false" [boundaryLinks]="true" (pageChange) = "pageChange()"></ngb-pagination>
+          </div>
+
+            <!-- 分页 结束 -->
+
         </div>
+
+
     </div>
   </div>
+
 </div>
+
+
+<!-- modal: 生成图表 -->
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <span class="modal-title">可视化报表</span>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-metal" (click)="c('Close click')">关闭</button>
+    </div>
+  </ng-template>

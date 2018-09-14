@@ -4,8 +4,8 @@
     display: flex;
     // flex-wrap: wrap;
     .air-left {
-        width: 150px;
-        height: calc(100vh);
+        width: 300px;
+        min-height: calc(100vh);
         background-color: rgb(233, 237, 241);
     }
     .title {
@@ -18,8 +18,9 @@
         font-size: 20px;
     }
     .air-right {
-        width: calc(100vw - 200px);
+        width: calc(100vw - 350px);
         height: 100%;
+        position: relative;
     }
 }
 
@@ -29,22 +30,13 @@
 }
 .first-menu {
     padding-left: 0px;
-    .nav-link {
-        position: relative;
 
-        .menu-icon {
-            position: absolute;
-            right: 5px;
-        }
-    }
     .nav-item:hover>.nav-link {
         color: #b8eefa;
         background-color: white;
     }
 }
-.sec-menu {
-    padding-left: 0px;
-}
+
 // 右侧
 .info-top {
     height: 150px;
@@ -53,7 +45,7 @@
     margin: 15px;
     position: relative;
     .extral-margin {
-        margin-right: 40px;
+        margin-right: 80px;
     }
     .text-label {
         border: none;
@@ -78,11 +70,30 @@
 .info-form {
     margin: 15px;
 
-    .form-air-point {
 
-        .btns {
-            text-align: right;
-            margin-bottom: 10px;
-        }
+}
+.btns {
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.modal-header, .modal-footer {
+    padding: 5px 15px;
+}
+
+.dash{
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.first-menu {
+    li {
+    height: 56px;
+    line-height: 56px;
+    border-bottom: 1px solid #ccc;
     }
+    li:hover {
+    background-color: rgba(0, 0, 0, 0.075);
+}
 }

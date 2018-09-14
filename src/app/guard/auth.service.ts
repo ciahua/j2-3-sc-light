@@ -26,7 +26,9 @@ export class AuthService {
     HEROES = {
         token: Date(),
         userId: 'lsq1098',
-        status: 200
+        status: 200,
+        username: 'admin',
+        password: '123456'
     };
 
     public token: string;
@@ -49,11 +51,11 @@ export class AuthService {
         return of(this.HEROES).pipe(
             delay(1000),
             tap(val => {
-                console.log(val);
+                // console.log(val);
                 if (val.status === 200) {
                     const token = val.token;
                     const userId = val.userId;
-                    if (token) {
+                    if (token && username === val.username && password === val.password) {
                         this.token = token;
                         this.userId = userId;
                         // 设置全局变量

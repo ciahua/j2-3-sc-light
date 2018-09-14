@@ -70,6 +70,7 @@
 .manage-class {
     font-size: 20px;
     padding-right: 1px;
+    cursor: pointer;
 }
 .manage-class:focus, .manage-class:hover {
     background-color: $color-brand-color;

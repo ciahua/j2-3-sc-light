@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { GUIZTREENODE} from '../../../data/gui-z-tree';
 declare var $: any;
 @Component({
   selector: 'app-admin',

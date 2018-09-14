@@ -5,10 +5,13 @@
     width: 250px;
     height: 100vh;
     border: #dee2e6 1px solid;
-    padding: 10px 0px;
+    // padding: 10px 0px;
     background: #dee2e6;
     .strategy-add{
-        position: relative;
+            position: relative;
+            padding: 10px 0 10px 20px;
+            background-color: rgba(153, 153, 153, 0.5);
+            font-size: 20px;
         button {
             position: absolute;
             right: 10px;
@@ -18,6 +21,8 @@
 
 
     .strategy-list {
+        height: calc(100% - 57px);
+        overflow-y: auto;
 
         ul {
             padding: 0px;
@@ -26,11 +31,18 @@
                 line-height: 56px;
                 border-bottom: 1px solid #ccc;
                 padding: 0 12px;
+                position: relative;
+
+                .modify-strategy {
+                    position: absolute;
+                    right: 5px;
+                }
             }
             li:hover {
                 background-color: rgba(0,0,0,.075);
             }
         }
+        
     }
 }
 
@@ -77,7 +89,8 @@
 }
 
 .city-list{
-    max-height: 79vh;
+    // max-height: 79vh;
+    height: 750px;
     overflow-y: auto;
 }
 .strategy-top{
@@ -106,7 +119,13 @@
         height: 56px;
         line-height: 56px;
         border-bottom: 1px solid #ccc;
-        padding: 0 12px; 
+        padding: 0 12px;
+        position: relative;
+
+            .modify-strategy {
+                position: absolute;
+                right: 5px;
+            }
     }
     li:hover {
         background-color: rgba(0,0,0,.075);
@@ -124,27 +143,21 @@
         right: 0px;
     }
 }
-// 搜索框
- #sole-input {
-    width: 329px;
-    box-sizing: border-box;
-    // border: 0;
-    // padding: 9px 0;
-    // border-left: 10px solid transparent;
-    // border-right: 27px solid transparent;
-    line-height: 20px;
-    font-size: 16px;
-    height: 38px;
-    color: #333;
-    position: relative;
-    border-radius: 2px 0 0 2px;
+
+
+
+.border-xif {
+    border-top: 1px solid #e9ecef;
+    padding: 15px 0;
 }
-.xy-pad {
-    padding-bottom: 15px;
-    .form-group {
-        padding-right:15px;
-        
-    }
+
+.border-xi{
+
+    padding: 15px 0;
+
+}
+.padding-0{
+    padding: 0;
 }
 
 // 日历
@@ -164,4 +177,18 @@ color: white;
 }
 .custom-day.faded {
 background-color: rgba(2, 117, 216, 0.5);
+}
+.required_red {
+    color: red;
+}
+
+.label-top{
+    position: relative;
+    top: -6px;
+}
+
+
+.page-list-table{
+    max-height: 750px;
+    overflow-y: auto;
 }

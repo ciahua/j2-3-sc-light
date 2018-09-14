@@ -1,0 +1,409 @@
+<!-- 创建策略规则  -->
+<ng-template #contentAddRule let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <font class="modal-title">创建策略时间</font>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <mat-horizontal-stepper [linear]="isLinear" #stepper>
+            <mat-step [stepControl]="firstFormGroup">
+                <!-- <form [formGroup]="firstFormGroup"> -->
+                <ng-template matStepLabel>选择日期范围</ng-template>
+
+
+                <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t">
+                </ngb-datepicker>
+
+                <ng-template #t let-date="date" let-focused="focused">
+                    <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)" [class.faded]="isHovered(date) || isInside(date)"
+                        (mouseenter)="hoveredDate = date" (mouseleave)="hoveredDate = null">
+                        {{ date.day }}
+                    </span>
+                </ng-template>
+                <div class="row" style=" padding: 12px 0; ">
+                    <div class="col-6 text-left">
+                        <span>开始时间：</span>
+                        <span *ngIf="fromDate">{{fromDate.month}}月{{fromDate.day}}日</span>
+                    </div>
+                    <div class="col-6 text-right">
+                        <span>结束时间：</span>
+                        <span *ngIf="toDate">{{toDate.month}}月{{toDate.day}}日</span>
+                    </div>
+
+                </div>
+
+                <div>
+                    <button mat-button matStepperNext>Next</button>
+                </div>
+                <!-- </form> -->
+
+
+            </mat-step>
+            <mat-step [stepControl]="secondFormGroup">
+                <!-- <form [formGroup]="secondFormGroup"> -->
+                <div>
+                    <ng-template matStepLabel>填写工作日时间</ng-template>
+
+                    <!-- 开灯时间： -->
+                    <div class="row border-xif">
+                        <div class="col-6">
+                            <div class="row align-items-center justify-content-center">
+                                <div class="col-4">
+                                    <span class="required_red">*</span>
+                                    <label for="workday_start_time">开灯时间：</label>
+
+                                </div>
+                                <div class="col-6">
+                                    <ngb-timepicker [(ngModel)]="workday_start_time" id="workday_start_time"></ngb-timepicker>
+                                    <mat-error *ngIf="workday_start_time == null">
+                                        开灯时间
+                                        <strong>为必填项</strong>
+                                    </mat-error>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+                            <div class="row align-items-center justify-content-center" style=" height: 100%; ">
+                                <div class="col-4">
+                                    <span class="required_red">*</span>
+                                    <label for="changeBrightness">起始亮度：</label>
+                                </div>
+                                <div class="col-6">
+
+                                    <!-- <input type="number" class="form-control form-control-sm" [(ngModel)]="workday_start_brightness"  max="100" required/> -->
+                                    <form class="example-form">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput [formControl]="numberFormControl" type="number" max="100" [(ngModel)]="workday_start_brightness" [errorStateMatcher]="matcher"
+                                                required>
+                                            <mat-error *ngIf="numberFormControl.hasError('required')">
+                                                起始亮度
+                                                <strong>为必填项</strong>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- 中间时间 -->
+                    <div>
+                        <div class="row border-xif">
+                            <div class="col-6">
+                                <div class="row align-items-center justify-content-center">
+                                    <div class="col-4">
+                                        <label for="workday_start_time1">时间：</label>
+
+                                    </div>
+                                    <div class="col-6">
+                                        <ngb-timepicker [(ngModel)]="workday_start_time1" id="workday_start_time1"></ngb-timepicker>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-6">
+                                <div class="row align-items-center justify-content-center" style=" height: 100%; ">
+                                    <div class="col-4">
+                                        <label for="changeBrightness">亮度：</label>
+                                    </div>
+                                    <div class="col-6">
+
+                                        <input type="number" class="form-control form-control-sm" [(ngModel)]="workday_start_brightness1" max="100" />
+                                        <!-- <form class="example-form">
+                                                                          <mat-form-field class="example-full-width">
+                                                                            <input matInput placeholder="Favorite food" value="Sushi" [(ngModel)]="workday_start_brightness1">
+                                                                          </mat-form-field>
+                                                                        </form> -->
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row border-xi">
+                            <div class="col-6">
+                                <div class="row align-items-center justify-content-center">
+                                    <div class="col-4">
+                                        <label for="brightnessTime2">时间：</label>
+
+                                    </div>
+                                    <div class="col-6">
+                                        <ngb-timepicker [(ngModel)]="workday_start_time2" id="workday_start_time2"></ngb-timepicker>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-6">
+                                <div class="row align-items-center justify-content-center" style=" height: 100%; ">
+                                    <div class="col-4">
+                                        <label for="changeBrightness">亮度：</label>
+                                    </div>
+                                    <div class="col-6">
+
+                                        <input type="number" class="form-control form-control-sm" [(ngModel)]="workday_start_brightness2" max="100" />
+                                        <!-- <form class="example-form">
+                                                                          <mat-form-field class="example-full-width">
+                                                                            <input matInput type="number" max="100" [(ngModel)]="workday_start_brightness2">
+                                                                          </mat-form-field>
+                                                                        </form> -->
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row border-xi">
+                            <div class="col-6">
+                                <div class="row align-items-center justify-content-center">
+                                    <div class="col-4">
+                                        <label for="brightnessTime3">时间：</label>
+
+                                    </div>
+                                    <div class="col-6">
+                                        <ngb-timepicker [(ngModel)]="workday_start_time3" id="workday_start_time3"></ngb-timepicker>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-6">
+                                <div class="row align-items-center justify-content-center" style=" height: 100%; ">
+                                    <div class="col-4">
+                                        <label for="changeBrightness">亮度：</label>
+                                    </div>
+                                    <div class="col-6">
+
+                                        <input type="number" class="form-control form-control-sm" [(ngModel)]="workday_start_brightness3" max="100" />
+                                        <!-- <form class="example-form">
+                                                                          <mat-form-field class="example-full-width">
+                                                                            <input matInput type="number" max="100" [(ngModel)]="workday_start_brightness3">
+                                                                          </mat-form-field>
+                                                                        </form> -->
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 关灯时间： -->
+                    <div class="row border-xif">
+                        <div class="col-6">
+                            <div class="row align-items-center justify-content-center">
+                                <div class="col-4">
+                                    <span class="required_red">*</span>
+                                    <label for="workday_end_time">关灯时间：</label>
+
+                                </div>
+                                <div class="col-6">
+                                    <ngb-timepicker [(ngModel)]="workday_end_time" id="workday_end_time"></ngb-timepicker>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-button matStepperNext>Next</button>
+                    </div>
+                </div>
+
+                <!-- </form> -->
+
+            </mat-step>
+
+            <mat-step>
+
+                <ng-template matStepLabel>填写节假日时间</ng-template>
+                <!-- 开灯时间： -->
+                <div class="row border-xif">
+                    <div class="col-6">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-4">
+                                <span class="required_red">*</span>
+                                <label for="holiday_start_time">开灯时间：</label>
+
+                            </div>
+                            <div class="col-6">
+                                <ngb-timepicker [(ngModel)]="holiday_start_time" id="holiday_start_time"></ngb-timepicker>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-6">
+                        <div class="row align-items-center justify-content-center" style=" height: 100%; ">
+                            <div class="col-4">
+                                <span class="required_red">*</span>
+                                <label for="changeBrightness">起始亮度：</label>
+                            </div>
+                            <div class="col-6">
+
+                                <!-- <input type="number" class="form-control form-control-sm" [(ngModel)]="holiday_start_brightness"  max="100" required/> -->
+                                <form class="example-form">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput [formControl]="number2FormControl" type="number" max="100" [(ngModel)]="holiday_start_brightness" max="100"
+                                            [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="number2FormControl.hasError('required')">
+                                            起始亮度
+                                            <strong>为必填项</strong>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+                <!-- 中间时间 -->
+                <div>
+                    <div class="row border-xif">
+                        <div class="col-6">
+                            <div class="row align-items-center justify-content-center">
+                                <div class="col-4">
+                                    <label for="holiday_start_time1">时间：</label>
+
+                                </div>
+                                <div class="col-6">
+                                    <ngb-timepicker [(ngModel)]="holiday_start_time1" id="holiday_start_time1"></ngb-timepicker>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+                            <div class="row align-items-center justify-content-center" style=" height: 100%; ">
+                                <div class="col-4">
+                                    <label for="changeBrightness">亮度：</label>
+                                </div>
+                                <div class="col-6">
+
+                                    <input type="number" class="form-control form-control-sm" [(ngModel)]="holiday_start_brightness1" max="100" />
+                                    <!-- <form class="example-form">
+                        <mat-form-field class="example-full-width">
+                          <input matInput type="number" max="100" [(ngModel)]="holiday_start_brightness1">
+                        </mat-form-field>
+                      </form> -->
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row border-xi">
+                        <div class="col-6">
+                            <div class="row align-items-center justify-content-center">
+                                <div class="col-4">
+                                    <label for="holiday_start_time2">时间：</label>
+
+                                </div>
+                                <div class="col-6">
+                                    <ngb-timepicker [(ngModel)]="holiday_start_time2" id="holiday_start_time2"></ngb-timepicker>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+                            <div class="row align-items-center justify-content-center" style=" height: 100%; ">
+                                <div class="col-4">
+                                    <label for="changeBrightness">亮度：</label>
+                                </div>
+                                <div class="col-6">
+
+                                    <input type="number" class="form-control form-control-sm" [(ngModel)]="holiday_start_brightness2" max="100" />
+                                    <!-- <form class="example-form">
+                        <mat-form-field class="example-full-width">
+                          <input matInput type="number" max="100" [(ngModel)]="holiday_start_brightness2">
+                        </mat-form-field>
+                      </form> -->
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row border-xi">
+                        <div class="col-6">
+                            <div class="row align-items-center justify-content-center">
+                                <div class="col-4">
+                                    <label for="holiday_start_time3">时间：</label>
+
+                                </div>
+                                <div class="col-6">
+                                    <ngb-timepicker [(ngModel)]="holiday_start_time3" id="holiday_start_time3"></ngb-timepicker>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+                            <div class="row align-items-center justify-content-center" style=" height: 100%; ">
+                                <div class="col-4">
+                                    <label for="changeBrightness">亮度：</label>
+                                </div>
+                                <div class="col-6">
+
+                                    <input type="number" class="form-control form-control-sm" [(ngModel)]="holiday_start_brightness3" max="100" />
+                                    <!-- <form class="example-form">
+                        <mat-form-field class="example-full-width">
+                          <input matInput type="number" max="100" [(ngModel)]="holiday_start_brightness3">
+                        </mat-form-field>
+                      </form> -->
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 关灯时间： -->
+                <div class="row border-xif">
+                    <div class="col-6">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-4">
+                                <span class="required_red">*</span>
+                                <label for="holiday_end_time">关灯时间：</label>
+
+                            </div>
+                            <div class="col-6">
+                                <ngb-timepicker [(ngModel)]="holiday_end_time" id="holiday_end_time"></ngb-timepicker>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <!-- <button mat-button matStepperNext>Next</button> -->
+                </div>
+
+            </mat-step>
+            <!-- <mat-step>
+              <ng-template matStepLabel>完成</ng-template>
+              OK！
+              <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button (click)="stepper.reset()">Reset</button>
+              </div>
+            </mat-step> -->
+        </mat-horizontal-stepper>
+
+
+
+    </div>
+    <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-outline-info" (click)="preStep()" *ngIf="step!==3">上一步</button>
+          <button type="button" class="btn btn-outline-info" (click)="nextStep()" *ngIf="step!==3">下一步</button> -->
+        <!-- <button mat-button matStepperPrevious *ngIf="step!==3">上一步</button>
+          <button mat-button matStepperNext *ngIf="step!==3">下一步</button> -->
+        <!-- <button mat-button (click)="stepper.reset()">Reset</button> -->
+        <button type="button" class="btn btn-outline-info" (click)="c('Save click')">完成</button>
+        <button type="button" class="btn btn-outline-metal" (click)="d('Cross click')">取消</button>
+    </div>

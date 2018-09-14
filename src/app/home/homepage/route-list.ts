@@ -118,7 +118,7 @@ export const ROUTELIST = [
                         col: 'col-12',
                         class: 'row  align-items-center justify-content-center dash-item',
                         icon: 'fa fa-window-restore nav-icon-s',
-                        routeLink: 'home/device/class',
+                        routeLink: 'home/device/devices',
                         routeTitel: '设备',
                     },
 

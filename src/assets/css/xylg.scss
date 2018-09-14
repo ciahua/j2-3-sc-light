@@ -33,6 +33,15 @@ body {
     padding: 5px;
     color: $color-btn-text !important;
 }
+.color-btn-text {
+    color: $color-btn-text;
+}
+
+// 侧边栏
+.nav-item a:hover, .nav-item a:active {
+    color: #d7f8ff;   //ymZhao
+    background-color: $color-sidebar-active !important; 
+}
 
 // 嵌套菜单
 .nav {
@@ -74,6 +83,16 @@ body {
     -webkit-box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.08);
     box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.08);
     background-color: #ffffff;
+}
+
+// 面板头部
+.car-header{
+    // padding: 0 15px;
+    height: 50px;
+    // line-height: 50px;
+}
+.car-title{
+    font-size: 28px;
 }
 
 

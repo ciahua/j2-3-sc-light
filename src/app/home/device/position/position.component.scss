@@ -2,7 +2,9 @@
 @import '../../../../assets/css/xylg.scss';
 .bodyofposition {
     width: calc(100vw - 50px);
-    // padding: 15px;
+    height: 100vh;
+    padding: 30px;
+    position: relative;
 }
 .card-header {
     border-bottom: 0px;
@@ -77,10 +79,7 @@
     .mapIron:active, .mapIron:hover {
         color: rgb(146, 4, 4);
     }
-    .area-selection-block {
-        margin-right: 5px;
-        margin-top: 5px;
-    }
+
     .map-right {
         width: 400px;
         padding-left: 15px;
@@ -89,23 +88,12 @@
 .row {
     margin: 0px;
 }
-.area-selection {
-    z-index: 3000;
-    margin-bottom: 5px;
-    .area-selection-block {
-        cursor: pointer;
-        position: relative;
-        background-color: #fff;
-        border: 1px solid #e3e3e3;
-        line-height: 37px;
-        height: calc(1.8rem + 2px);
-        font-size: 14px;
-    }
-}
+
 
 .manage-class {
     font-size: 20px;
     padding-right: 1px;
+    cursor: pointer;
 }
 .manage-class:focus, .manage-class:hover {
     background-color: $color-brand-color;
@@ -118,5 +106,9 @@
     height: 300px;
     min-width: 200px;
 }
+.padding-15{
+    padding-bottom: 15px;
+}
+
 
 

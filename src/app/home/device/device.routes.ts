@@ -2,9 +2,9 @@ import { Route } from '@angular/router';
 
 import { DeviceComponent } from './device.component';
 import { PositionComponent } from './position/position.component';
-import { ClassComponent } from './class/class.component';
+import { DevicesComponent } from './devices/devices.component';
 import { ProductComponent } from './product/product.component';
-import { SurveyComponent } from './survey/survey.component';
+
 
 import { AuthGuard } from '../../guard/auth-guard.service';
 
@@ -20,9 +20,8 @@ export const DeviceRoutes: Route[] = [
                 children: [
                     { path: '', redirectTo: 'position', pathMatch: 'full' },
                     { path: 'position', component: PositionComponent },
-                    { path: 'class', component: ClassComponent },
+                    { path: 'devices', component: DevicesComponent },
                     { path: 'product', component: ProductComponent },
-                    { path: 'survey', component: SurveyComponent },
 
 
                 ]

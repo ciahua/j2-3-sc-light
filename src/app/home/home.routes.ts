@@ -5,17 +5,16 @@ import { MonitorRoutes } from './monitor/monitor.routes';
 
 import { DeviceRoutes } from './device/device.routes';
 import { UserRoutes } from './user/user.routes';
-import { RuleRoutes } from './rule/rule.routes';
 
 import { ApplicationRoutes } from './application/application.routes';
-import { EnergyRoutes } from './energy/energy.routes';
 import { DashbordRoutes } from './dashbord/dashbord.routes';
 import { HomepageRoutes } from './homepage/homepage.routes';
 import { StrategyRoutes } from './strategy/strategy.routes';
 import { AirreportRoutes } from './airreport/airreport.routes';
-import { VideoRoutes } from './video/video.routes';
+
+import { EchartMapRoutes } from './echart-map/echart-map.routes';
 import { MapRoutes } from './map/map.routes';
-import { ManageRoutes } from './manage/manage.routes';
+import { EchartRoutes } from './echart/echart.routes';
 export const HomeRoutes: Route[] = [
     {
         path: '',
@@ -32,15 +31,13 @@ export const HomeRoutes: Route[] = [
             ...DeviceRoutes,
             ...UserRoutes,
             ...ApplicationRoutes,
-            ...RuleRoutes,
-            ...EnergyRoutes,
             ...DashbordRoutes,
             ...HomepageRoutes,
             ...StrategyRoutes,
             ...AirreportRoutes,
-            ...VideoRoutes,
             ...MapRoutes,
-            ...ManageRoutes
+            ...EchartRoutes,
+            ...EchartMapRoutes
         ]
     },
 ];

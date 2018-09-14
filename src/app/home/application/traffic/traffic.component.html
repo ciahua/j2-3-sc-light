@@ -64,5 +64,26 @@
 
     <!-- 地图 -->
     <div #map4 id="map_container4 " class="map_container no-fulls-map"></div>
+
+    <!-- 设备操作 -->
+    <div class="camera-detail" *ngIf="currentCamera">
+        <div class="camera-title">
+            <span class="" *ngIf="currentCamera">{{currentCamera.description}}</span>
+            <span class="camera-close float-right" (click)="closeDetail()"><i class="fa fa-times" aria-hidden="true"></i></span>
+
+        </div>
+        <div class="modal-body ">
+            <!-- <div class="video-block">
+                 
+            </div> -->
+            <div class="prism-player video-play" id="video_play" ></div>
+        </div>
+
+        <!-- <div  class="modal-footer">
+            <button type="button" class="btn btn-outline-info">确定</button>
+            <button type="button" class="btn btn-outline-metal">取消</button>
+        </div> -->
+
+    </div>
 </div>
 

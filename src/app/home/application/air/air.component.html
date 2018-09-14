@@ -59,20 +59,19 @@
           </div>
       
       </div>
-        <select class="form-control d-inline-block sel-area-block select-item">
-            <option>PM2.5</option>
-            <option>PM10</option>
-            <option>VTOC</option>
-            <option>温度</option>
-            <option>湿度</option>
-        </select>
-      
+      <select name="profile" [(ngModel)]="indexofHtml" (change)="onIndexChange()"
+        class="form-control d-inline-block sel-area-block select-item"
+        [ngClass]="{'first': indexofHtml.name=='PM2.5', 'second': true, 'third': false}">
+            <option *ngFor="let index of allIndexs" [ngValue]="index" >
+                {{ index.name }}
+            </option>
+       </select>
   </div>
 
   <div class="data-monitor">
       <button class="btn btn-bg" (click)="jumpHandle()">监测大数据</button>
   </div>
-  <div class="legend">
+  <!-- <div class="legend">
       <ul>
         <li class="color-level-1">优</li>
         <li class="color-level-2">良</li>
@@ -80,7 +79,7 @@
         <li class="color-level-4">污染</li>
         <li class="color-level-5">严重污染</li>
       </ul>
-  </div>
+  </div> -->
 
   <!-- 地图 -->
   <div #map6 id="map_container6 " class="map_container no-fulls-map"></div>

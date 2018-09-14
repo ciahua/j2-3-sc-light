@@ -6,10 +6,11 @@ Author: luo.shuqi@live.com
 @time: 2018 /8 / 9 9: 00
 
 */
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { Point } from '../../../data/point.type';
-import { LIGHTLIST } from '../../../data/light-list';
+import { CALAMITYLIST } from '../../../data/calamity-list';
 import { MonitorService } from '../../../service/monitor.service';
+import { VideoService } from '../../../service/video.service';
 // baidu map
 declare let BMap;
 declare let $: any;
@@ -21,12 +22,13 @@ declare let BMAP_ANCHOR_TOP_LEFT;
   templateUrl: './calamity.component.html',
   styleUrls: ['./calamity.component.scss']
 })
-export class CalamityComponent implements OnInit {
+export class CalamityComponent implements OnInit, OnDestroy {
 
   @ViewChild('map5') map_container: ElementRef;
   model: any = {}; // 存储数据
 
   map: any; // 地图对象
+  timer: any; // 定时器
 
   cityList: any; // 城市列表
   deviceList: any; // 城市列表
@@ -51,15 +53,20 @@ export class CalamityComponent implements OnInit {
   parentNode = null; // 用于递归查询JSON树 父子节点
   node = null; // 用于递归查询JSON树 父子节点
 
-  light_list = LIGHTLIST.val.light_list; // 数据模拟
+  light_list = []; // 数据模拟
+  light_list_change: any; // 数据模拟
 
-  constructor(private monitorService: MonitorService, ) { }
+  constructor(private monitorService: MonitorService, private videoService: VideoService ) {
+
+   }
 
   ngOnInit() {
     this.addBeiduMap();
     this.getCity(); // 获取城市列表
-    // this.getDevice(); // 获取设备列表
+
   }
+
+
 
   // 百度地图API功能
   addBeiduMap() {
@@ -73,8 +80,8 @@ export class CalamityComponent implements OnInit {
 
     // 这里我们使用BMap命名空间下的Point类来创建一个坐标点。Point类描述了一个地理坐标点，其中116.404表示经度，39.915表示纬度。（为天安门坐标）
 
-    const point = new BMap.Point(113.922329, 22.49656); // 坐标可以通过百度地图坐标拾取器获取 --万融大厦
-    map.centerAndZoom(point, 19); // 设置中心和地图显示级别
+    const point = new BMap.Point(113.924755, 22.49934); // 坐标可以通过百度地图坐标拾取器获取 --万融大厦
+    map.centerAndZoom(point, 16); // 设置中心和地图显示级别
 
     map.enableScrollWheelZoom(true); // 开启鼠标滚轮缩放
 
@@ -94,38 +101,120 @@ export class CalamityComponent implements OnInit {
 
 
 
-    // const marker = new BMap.Marker(point);  // 创建标注
-    // map.addOverlay(marker);               // 将标注添加到地图中
+    this.getLights(); // 获取地图上的点
+    this.timer = setInterval(() => {
+      this.getLights(); // 获取地图上的点
+    }, 10000);
 
-    // const myIcon = new BMap.Icon('../../../../assets/imgs/light-up.png', new BMap.Size(300, 157));
-    // myIcon.setAnchor(new BMap.Size(16, 38));
-    // const marker2 = new BMap.Marker(point, { icon: myIcon });  // 创建标注
-    // this.map.addOverlay(marker2);
 
-    this.addMarker();
 
   }
 
-  addMarker() {
-    for (let index = 0; index < this.light_list.length; index++) {
-      const item = this.light_list[index];
-      const point = new BMap.Point(item.lng, item.lat);
 
-      let myIcon;
-      if (item.is_exception && item.is_exception === 1) { // 异常
-        myIcon = new BMap.Icon('../../../../assets/imgs/Earthquake.gif', new BMap.Size(300, 157));
-        // console.log('异常');
-      } else if (item.is_online === 0) { // 灯亮
-        myIcon = new BMap.Icon('../../../../assets/imgs/water.gif', new BMap.Size(300, 157));
-        // console.log('掉线');
-      } else { // 正常
-        myIcon = new BMap.Icon('../../../../assets/imgs/water.gif', new BMap.Size(300, 157));
-        // console.log('正常');
+  getLights() {
+    const that = this;
+
+    this.videoService.getCalamity().subscribe({
+      next: function (val) {
+        that.light_list = val;
+        const compar = that.judgeChange(that.light_list);
+        console.log(compar);
+        that.deleMarker(compar.a0); // 删除
+        that.changeMarker(compar.b1); // 替换
+
+      },
+      complete: function () {
+      },
+      error: function (error) {
+        console.log(error);
+      }
+    });
+
+
+
+  }
+  // 判断变化值
+  judgeChange(array) {
+    const a0 = [];
+    const b1 = [];
+    for (let index = 0; index < array.length; index++) {
+      const element = array[index];
+      if (element.error === 1) {
+        b1.push(element);
+      } else {
+        a0.push(element);
+      }
+    }
+    return {
+      a0: a0,
+      b1: b1
+    };
+  }
+
+
+
+
+  // 替换
+  changeMarker(light_list) {
+    this.deleMarker(light_list); // 删除
+    this.addMarker(light_list); // 添加
+  }
+  // 删除
+  deleMarker(light_list) {
+    const makers = this.map.getOverlays();
+    for (let ind = 0; ind < light_list.length; ind++) {
+      const ele = light_list[ind];
+      const point = light_list[ind].point;
+      for (let index = 0; index < makers.length; index++) {
+        const element = makers[index];
+        const lat = element.point && element.point.lat;
+        const lng = element.point && element.point.lng;
+        if (point[1] === lat && point[0] === lng) {
+          this.map.removeOverlay(makers[index]);
+        }
 
       }
-      myIcon.setAnchor(new BMap.Size(16, 38));
-      const marker2 = new BMap.Marker(point, { icon: myIcon });  // 创建标注
-      this.map.addOverlay(marker2);
+    }
+  }
+
+  addMarker(light_list) {
+    const makers = this.map.getOverlays();
+    for (let index = 0; index < light_list.length; index++) {
+      const item = light_list[index];
+      const point = new BMap.Point(item.point[0], item.point[1]);
+
+      let myIcon;
+      if (item.type === 1 && item.error === 1) { // 异常
+        myIcon = new BMap.Icon('../../../../assets/imgs/Earthquake.gif', new BMap.Size(300, 157));
+        myIcon.setAnchor(new BMap.Size(16, 38));
+        const marker2 = new BMap.Marker(point, { icon: myIcon });  // 创建标注
+        this.map.addOverlay(marker2);
+      } else if (item.type === 2 && item.error === 1) { // 灯亮
+        myIcon = new BMap.Icon('../../../../assets/imgs/water.gif', new BMap.Size(300, 157));
+        myIcon.setAnchor(new BMap.Size(16, 38));
+        const marker2 = new BMap.Marker(point, { icon: myIcon });  // 创建标注
+        this.map.addOverlay(marker2);
+
+      } else if (item.type === 3 && item.error === 1) { // 正常
+        myIcon = new BMap.Icon('../../../../assets/imgs/gif001.gif', new BMap.Size(300, 157));
+        myIcon.setAnchor(new BMap.Size(16, 38));
+        const marker2 = new BMap.Marker(point, { icon: myIcon });  // 创建标注
+        this.map.addOverlay(marker2);
+
+      } else if (item.type === 4 && item.error === 1) { // 正常
+        myIcon = new BMap.Icon('../../../../assets/imgs/gif002.gif', new BMap.Size(300, 157));
+        myIcon.setAnchor(new BMap.Size(16, 38));
+        const marker2 = new BMap.Marker(point, { icon: myIcon });  // 创建标注
+        this.map.addOverlay(marker2);
+
+      } else if (item.type === 5 && item.error === 1) { // 正常
+        myIcon = new BMap.Icon('../../../../assets/imgs/gif003.gif', new BMap.Size(300, 157));
+        myIcon.setAnchor(new BMap.Size(16, 38));
+        const marker2 = new BMap.Marker(point, { icon: myIcon });  // 创建标注
+        this.map.addOverlay(marker2);
+
+      }
+
     }
   }
 
@@ -168,7 +257,6 @@ export class CalamityComponent implements OnInit {
 
       },
       complete: function () {
-        that.addBeiduMap(); // 创建地图
 
       },
       error: function (error) {
@@ -348,5 +436,9 @@ export class CalamityComponent implements OnInit {
   arealistMouseNone() {
     this.areashow = true;
     this.currentBlock = null;
+  }
+
+  ngOnDestroy() {
+    window.clearInterval(this.timer);
   }
 }

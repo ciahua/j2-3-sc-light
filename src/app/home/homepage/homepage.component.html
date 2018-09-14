@@ -4,7 +4,7 @@
     <div class="row dash-row" >
       <div [class]="item.col" *ngFor="let item of routes">
         <div class="row dash-parent" *ngFor="let sub of item.row">
-              <a [class]="last.col" *ngFor="let last of sub.children" [routerLink]="[last.routeLink]" (click)="goToZheRoute(last.routeLink)">
+              <div [class]="last.col"  *ngFor="let last of sub.children"  (click)="goToZheRoute(last.routeLink)">
               
                 <div  [class] = "last.class">
                   <div class="col-12 content" >
@@ -17,7 +17,7 @@
                   </div>
                 </div>
               
-              </a>
+              </div>
         </div>
 
 
