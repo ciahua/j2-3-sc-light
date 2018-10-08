@@ -149,7 +149,7 @@ export class StrategyService {
                 if (res.status === 200) {
                     const data = res.json();
 
-                    console.log(data.regions[0]);
+                    // console.log(data.regions[0]);
                     data.regions[0].open = true;
                     // data.regions[0].children[0].open = true;
                     // data.regions[0].children.map((item, index) => {
@@ -205,6 +205,18 @@ export class StrategyService {
             .pipe(map((res: Response) => {
                 if (res.status === 200) {
                     const data = { status: 200 };
+                    return data;
+                } else if (res.status === 202) {
+                    return res.json().code.toString();
+                }
+            }));
+    }
+    // 获取策略覆盖区域
+    getZtreeRegion(ruleId: number): Observable<any> {
+        return this.http.get(`/api/streetlight/rule/${ruleId}/region`)
+            .pipe(map((res: Response) => {
+                if (res.status === 200) {
+                    const data = res.json();
                     return data;
                 } else if (res.status === 202) {
                     return res.json().code.toString();

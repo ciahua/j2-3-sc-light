@@ -8,10 +8,7 @@ import { CircleOverlarAirService } from '../../../service/circle-overlay-air.ser
 
 // baidu map
 declare let BMap;
-declare let $: any;
-declare let BMapLib;
-declare let BMAP_ANCHOR_BOTTOM_RIGHT;
-declare let BMAP_ANCHOR_TOP_RIGHT;
+
 declare let BMAP_ANCHOR_TOP_LEFT;
 
 @Component({
@@ -22,31 +19,35 @@ declare let BMAP_ANCHOR_TOP_LEFT;
 export class AirComponent implements OnInit, OnDestroy {
 
   @ViewChild('map6') map_container: ElementRef;
+    /*
+  model:object
+  airdevicelist: array // 空气检测设备列表
+  */
   model: any = {}; // 存储数据
+  /*
+  map_model: object // 城市列表相关
+  @currentCity: any // 当前城市
+  @currentArea: any // 当前区域
+  @cityList: array // 城市列表
+  @currentChildren: array // 区域列表一级
+  @currentBlock: array // 当前城市街道 = []; // 区域列表2级
+*/
+
+  map_model: any = {}; // 存储数据
 
   map: any; // 地图对象
 
-  cityList: any; // 城市列表
-  deviceList: any; // 城市列表
-  defaultZone: any; // 默认城市
-  currentCity: any; // 当前城市
-  currentChildren: any; // 当前城市节点
-  currentBlock: any; // 当前城市街道
   currentAirIndex: any; // 当前空气指标选项
 
   visible = true; // 控制可视区域
   areashow = false; // 默认区域列表不显示
   cityshow = false; // 默认区域列表不显示
-  zoom: any; // 地图级数
 
   parentNode = null; // 用于递归查询JSON树 父子节点
   node = null; // 用于递归查询JSON树 父子节点
 
-  SouthWest: Point; // 地图视图西南角
-  NorthEast: Point; // 地图视图东北角
-  airdevicelist = []; // 空气检测设备列表
-  indexofHtml: any;
-  allIndexs = [
+  indexofHtml: any; // 默认环境
+  allIndexs = [ // 环境分类列表
     {
       id: '',
       name: 'PM2.5'
@@ -69,13 +70,17 @@ export class AirComponent implements OnInit, OnDestroy {
     },
   ];
   timer: any; // 定时器
-  // pm25list = AIRDATALIST.list;
+
 
   constructor(private monitorService: MonitorService, private airmonitorService: AirmonitorService,
     public router: Router) {
-      this.indexofHtml = this.allIndexs[0];
-      this.currentAirIndex = 'PM2.5';
-    }
+    this.indexofHtml = this.allIndexs[0];
+    this.currentAirIndex = 'PM2.5';
+    this.model.airdevicelist = []; // 城市列表
+    this.map_model.cityList = []; // 城市列表
+    this.map_model.currentChildren = []; // 区域列表一级
+    this.map_model.currentBlock = []; // // 当前城市街道 = []; // 区域列表2级
+  }
   ngOnInit() {
     this.addBeiduMap();
     this.getCity(); // 获取城市列表
@@ -121,7 +126,7 @@ export class AirComponent implements OnInit, OnDestroy {
   dragendOff(baiduMap) {
     const that = this;
     baiduMap.addEventListener('dragend', function () {
-      that.airdevicelist = [];
+      that.model.airdevicelist = [];
       baiduMap.clearOverlays();
       that.getAirdevices(); // 获取数据-添加标注
     });
@@ -133,7 +138,7 @@ export class AirComponent implements OnInit, OnDestroy {
       // if (that.isqueryPoint === true) {
       //   that.isqueryPoint = false;
       // } else {
-        that.airdevicelist = [];
+      that.model.airdevicelist = [];
         baiduMap.clearOverlays();
         that.getAirdevices(); // 添加标注
         // console.log('地图缩放至：' + baiduMap.getZoom() + '级');
@@ -156,7 +161,7 @@ export class AirComponent implements OnInit, OnDestroy {
       next: function (val) {
         // value = val;
         const curIndex = that.currentAirIndex;
-        compar = that.comparison(that.airdevicelist, val);
+        compar = that.comparison(that.model.airdevicelist, val);
         // console.log(compar);
         value = that.judgeChange(compar.a_arr, compar.b_arr, curIndex);
 
@@ -166,7 +171,7 @@ export class AirComponent implements OnInit, OnDestroy {
         that.addCertainMarker(compar.b_surplus, curIndex); // 添加
         // that.addPoint(value); // 添加
 
-        that.airdevicelist = val; // 变为新值
+        that.model.airdevicelist = val; // 变为新值
       },
       complete: function () {
         // that.addCertainMarker(value, that.currentAirIndex);
@@ -237,8 +242,6 @@ export class AirComponent implements OnInit, OnDestroy {
 
   // 替换
   changeMarker(airdevice_list) {
-    // console.log(airdevice_list);
-    // console.log(this.airdeviceList);
     this.deleMarker(airdevice_list); // 删除
     this.addCertainMarker(airdevice_list, this.currentAirIndex); // 添加
   }
@@ -299,14 +302,6 @@ export class AirComponent implements OnInit, OnDestroy {
     }
   }
 
-  // 返回地图可视区域，以地理坐标表示
-  getBounds(baiduMap) {
-    const Bounds = baiduMap.getBounds(); // 返回地图可视区域，以地理坐标表示
-    this.NorthEast = Bounds.getNorthEast(); // 返回矩形区域的东北角
-    this.SouthWest = Bounds.getSouthWest(); // 返回矩形区域的西南角
-    this.zoom = baiduMap.getZoom(); // 地图级别
-
-  }
 
   // 地图点注标-点击事件
   openSideBar(marker, baiduMap, airDevice, point) {
@@ -320,17 +315,17 @@ export class AirComponent implements OnInit, OnDestroy {
       enableAutoPan: true, // 自动平移
       // border-radius: 5px,
     };  // ${airDevice.id} ${airDevice.description}
-    let txt = `<p style='font-size: 12px; line-height: 1.8em; border-bottom: 1px solid #ccc;'>设备编号 | ${airDevice.name} </p>`;
-    txt = txt + `<p class='cur-pointer'> 设备名称：${airDevice.description}</p>`;
+    let txt = `<p style='font-size: 12px; line-height: 1.8em; border-bottom: 1px solid #ccc; padding-bottom: 10px;'>`;
+    txt = txt + `设备编号 | ${airDevice.name} </p><p> 设备名称：${airDevice.description}</p>`;
     if (airDevice.offline === false) {
-      txt = txt + `<p  class='cur-pointer'> 是否离线：否</p>`;
+      txt = txt + `<p> 是否离线：否</p>`;
     } else {
-      txt = txt + `<p  class='cur-pointer'> 是否离线：<span style='color: red'>是</span></p>`;
+      txt = txt + `<p> 是否离线：<span style='color: red'>是</span></p>`;
     }
     if (airDevice.error === false) {
-      txt = txt + `<p  class='cur-pointer'> 是否异常：否</p>`;
+      txt = txt + `<p> 是否异常：否</p>`;
     } else {
-      txt = txt + `<p  class='cur-pointer'> 是否异常：<span style='color: red'>是</span></p>`;
+      txt = txt + `<p> 是否异常：<span style='color: red'>是</span></p>`;
     }
     const infoWindow = new BMap.InfoWindow(txt, opts);
     marker.V.addEventListener('click', function () {
@@ -344,11 +339,11 @@ export class AirComponent implements OnInit, OnDestroy {
 
     this.monitorService.getZoneDefault().subscribe({
       next: function (val) {
-        that.cityList = val.regions;
-        that.currentCity = val.zone;
-        that.zoom = that.switchZone(val.zone.level);
+        that.map_model.cityList = val.regions;
+        // that.zoom = that.switchZone(val.zone.level);
         that.node = that.getNode(val.regions, val.zone.region_id);
-        that.currentChildren = that.node.children;
+        that.map_model.currentCity = that.node;
+        that.map_model.currentChildren = that.node.children;
       },
       complete: function () {
         // that.addBeiduMap(); // 创建地图
@@ -369,7 +364,7 @@ export class AirComponent implements OnInit, OnDestroy {
   onIndexChange() {
     this.currentAirIndex = this.indexofHtml.name;
     this.map.clearOverlays();
-    this.addCertainMarker(this.airdevicelist, this.currentAirIndex); // 添加
+    this.addCertainMarker(this.model.airdevicelist, this.currentAirIndex); // 添加
     // this.getAirdevices();
   }
 
@@ -446,37 +441,24 @@ export class AirComponent implements OnInit, OnDestroy {
   }
   // 解析地址- 设置中心和地图显示级别
   getPoint(baiduMap, city) {
-    const that = this;
-    // 创建地址解析器实例
-    const myGeo = new BMap.Geocoder();
-    const zoom = this.zoom = this.switchZone(city.level);
-    const fullName = city.full_name;
+    const zoom = this.switchZone(city.level);
     console.log(city);
-
-    let pt;
-
-    // 将地址解析结果显示在地图上,并调整地图视野，获取数据-添加标注
-    myGeo.getPoint(fullName, function (point) {
-      if (point) {
-        baiduMap.centerAndZoom(point, zoom);
-        pt = point;
-
-      } else {
-        console.log('您选择地址没有解析到结果!');
-      }
-    }, '');
+    const pt = city.center;
+    const point = new BMap.Point(pt.lng, pt.lat);
+    baiduMap.centerAndZoom(point, zoom);
   }
   // 选择区域
   // 选择城市
   selecteCity(city) {
-    this.currentCity = city;
+    this.map_model.currentCity = city;
     this.node = city;
     this.getPoint(this.map, city);  // 解析地址- 设置中心和地图显示级别
-    this.currentChildren = city.children;
+    this.map_model.currentChildren = city.children;
   }
 
   selecteblock(block) {
     this.getPoint(this.map, block);  // 解析地址- 设置中心和地图显示级别
+    this.map_model.currentArea = block;
   }
 
   // 显示区域
@@ -494,18 +476,18 @@ export class AirComponent implements OnInit, OnDestroy {
   // 选择区域
   arealistMouseover(area) {
 
-    this.currentBlock = area.children;
+    this.map_model.currentBlock = area.children;
   }
 
   // 离开区域
   arealistMouseleave() {
     this.areashow = false;
-    this.currentBlock = null;
+    this.map_model.currentBlock = [];
   }
 
   arealistMouseNone() {
     this.areashow = true;
-    this.currentBlock = null;
+    this.map_model.currentBlock = [];
   }
 
   ngOnDestroy() {

@@ -7,14 +7,10 @@ Author: luo.shuqi@live.com
 
 */
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
-import { Point } from '../../../data/point.type';
-import { CALAMITYLIST } from '../../../data/calamity-list';
 import { MonitorService } from '../../../service/monitor.service';
 import { VideoService } from '../../../service/video.service';
 // baidu map
 declare let BMap;
-declare let $: any;
-declare let BMapLib;
 declare let BMAP_ANCHOR_TOP_LEFT;
 
 @Component({
@@ -25,39 +21,41 @@ declare let BMAP_ANCHOR_TOP_LEFT;
 export class CalamityComponent implements OnInit, OnDestroy {
 
   @ViewChild('map5') map_container: ElementRef;
+  /*
+  model:object
+  light_list: array // 灾害数据
+  */
   model: any = {}; // 存储数据
+
+  /*
+  map_model: object // 城市列表相关
+  @currentCity: any // 当前城市
+  @currentArea: any // 当前区域
+  @cityList: array // 城市列表
+  @currentChildren: array // 区域列表一级
+  @currentBlock: array // 当前城市街道 = []; // 区域列表2级
+  */
+
+  map_model: any = {}; // 存储数据
 
   map: any; // 地图对象
   timer: any; // 定时器
 
-  cityList: any; // 城市列表
-  deviceList: any; // 城市列表
-  defaultZone: any; // 默认城市
-  currentCity: any; // 当前城市
-  currentChildren: any; // 当前城市节点
-  currentBlock: any; // // 当前城市街道
-  device: any; // // 当前设备点
-
-  deviceChild: any; // // 当前设备点上-被点击的子设备
   areashow = false; // 默认区域列表不显示
   cityshow = false; // 默认区域列表不显示
   deviceshow = false; // 默认设备列表不显示
 
   visible = true; // 控制可视区域
 
-  zoom: any; // 地图级数
-  SouthWest: Point; // 地图视图西南角
-  NorthEast: Point; // 地图视图东北角
-  type = 0; // 设备类型
-
   parentNode = null; // 用于递归查询JSON树 父子节点
   node = null; // 用于递归查询JSON树 父子节点
 
-  light_list = []; // 数据模拟
-  light_list_change: any; // 数据模拟
 
   constructor(private monitorService: MonitorService, private videoService: VideoService ) {
-
+    this.model.light_list = []; // 城市列表
+    this.map_model.cityList = []; // 城市列表
+    this.map_model.currentChildren = []; // 区域列表一级
+    this.map_model.currentBlock = []; // // 当前城市街道 = []; // 区域列表2级
    }
 
   ngOnInit() {
@@ -116,8 +114,8 @@ export class CalamityComponent implements OnInit, OnDestroy {
 
     this.videoService.getCalamity().subscribe({
       next: function (val) {
-        that.light_list = val;
-        const compar = that.judgeChange(that.light_list);
+        that.model.light_list = val;
+        const compar = that.judgeChange(that.model.light_list);
         console.log(compar);
         that.deleMarker(compar.a0); // 删除
         that.changeMarker(compar.b1); // 替换
@@ -178,37 +176,36 @@ export class CalamityComponent implements OnInit, OnDestroy {
   }
 
   addMarker(light_list) {
-    const makers = this.map.getOverlays();
     for (let index = 0; index < light_list.length; index++) {
       const item = light_list[index];
       const point = new BMap.Point(item.point[0], item.point[1]);
 
       let myIcon;
-      if (item.type === 1 && item.error === 1) { // 异常
-        myIcon = new BMap.Icon('../../../../assets/imgs/Earthquake.gif', new BMap.Size(300, 157));
+      if (item.type === 1 && item.error === 1) { // 楼宇坍塌1building
+        myIcon = new BMap.Icon('../../../../assets/imgs/building.png', new BMap.Size(300, 157));
         myIcon.setAnchor(new BMap.Size(16, 38));
         const marker2 = new BMap.Marker(point, { icon: myIcon });  // 创建标注
         this.map.addOverlay(marker2);
-      } else if (item.type === 2 && item.error === 1) { // 灯亮
-        myIcon = new BMap.Icon('../../../../assets/imgs/water.gif', new BMap.Size(300, 157));
-        myIcon.setAnchor(new BMap.Size(16, 38));
-        const marker2 = new BMap.Marker(point, { icon: myIcon });  // 创建标注
-        this.map.addOverlay(marker2);
-
-      } else if (item.type === 3 && item.error === 1) { // 正常
-        myIcon = new BMap.Icon('../../../../assets/imgs/gif001.gif', new BMap.Size(300, 157));
+      } else if (item.type === 2 && item.error === 1) { // 山体滑坡2landslide
+        myIcon = new BMap.Icon('../../../../assets/imgs/landslide.png', new BMap.Size(300, 157));
         myIcon.setAnchor(new BMap.Size(16, 38));
         const marker2 = new BMap.Marker(point, { icon: myIcon });  // 创建标注
         this.map.addOverlay(marker2);
 
-      } else if (item.type === 4 && item.error === 1) { // 正常
-        myIcon = new BMap.Icon('../../../../assets/imgs/gif002.gif', new BMap.Size(300, 157));
+      } else if (item.type === 3 && item.error === 1) { // 异味臭气1odor
+        myIcon = new BMap.Icon('../../../../assets/imgs/odor.png', new BMap.Size(300, 157));
         myIcon.setAnchor(new BMap.Size(16, 38));
         const marker2 = new BMap.Marker(point, { icon: myIcon });  // 创建标注
         this.map.addOverlay(marker2);
 
-      } else if (item.type === 5 && item.error === 1) { // 正常
-        myIcon = new BMap.Icon('../../../../assets/imgs/gif003.gif', new BMap.Size(300, 157));
+      } else if (item.type === 4 && item.error === 1) { // 燃气泄漏1gas
+        myIcon = new BMap.Icon('../../../../assets/imgs/gas.png', new BMap.Size(300, 157));
+        myIcon.setAnchor(new BMap.Size(16, 38));
+        const marker2 = new BMap.Marker(point, { icon: myIcon });  // 创建标注
+        this.map.addOverlay(marker2);
+
+      } else if (item.type === 5 && item.error === 1) { // 道路积水1hydrops
+        myIcon = new BMap.Icon('../../../../assets/imgs/hydrops.png', new BMap.Size(300, 157));
         myIcon.setAnchor(new BMap.Size(16, 38));
         const marker2 = new BMap.Marker(point, { icon: myIcon });  // 创建标注
         this.map.addOverlay(marker2);
@@ -220,25 +217,11 @@ export class CalamityComponent implements OnInit, OnDestroy {
 
   // 解析地址- 设置中心和地图显示级别
   getPoint(baiduMap, city) {
-    const that = this;
-    // 创建地址解析器实例
-    const myGeo = new BMap.Geocoder();
-    const zoom = this.zoom = this.switchZone(city.level);
-    const fullName = city.full_name;
+    const zoom = this.switchZone(city.level);
     console.log(city);
-
-    let pt;
-
-    // 将地址解析结果显示在地图上,并调整地图视野，获取数据-添加标注
-    myGeo.getPoint(fullName, function (point) {
-      if (point) {
-        baiduMap.centerAndZoom(point, zoom);
-        pt = point;
-
-      } else {
-        console.log('您选择地址没有解析到结果!');
-      }
-    }, '');
+    const pt = city.center;
+    const point = new BMap.Point(pt.lng, pt.lat);
+    baiduMap.centerAndZoom(point, zoom);
   }
 
   // 获取数据
@@ -249,11 +232,11 @@ export class CalamityComponent implements OnInit, OnDestroy {
 
     this.monitorService.getZoneDefault().subscribe({
       next: function (val) {
-        that.cityList = val.regions;
-        that.currentCity = val.zone;
-        that.zoom = that.switchZone(val.zone.level);
+        that.map_model.cityList = val.regions;
+        // that.zoom = that.switchZone(val.zone.level);
         that.node = that.getNode(val.regions, val.zone.region_id);
-        that.currentChildren = that.node.children;
+        that.map_model.currentCity = that.node;
+        that.map_model.currentChildren = that.node.children;
 
       },
       complete: function () {
@@ -264,24 +247,7 @@ export class CalamityComponent implements OnInit, OnDestroy {
       }
     });
   }
-  // 获取设备列表 -- ok
-  // getDevice() {
-  //   const that = this;
 
-  //   this.monitorService.getDevice().subscribe({
-  //     next: function (val) {
-  //       that.deviceList = val;
-
-  //     },
-  //     complete: function () {
-
-
-  //     },
-  //     error: function (error) {
-  //       console.log(error);
-  //     }
-  //   });
-  // }
 
   // 省市区街道-地图级别
   switchZone(level) {
@@ -364,11 +330,6 @@ export class CalamityComponent implements OnInit, OnDestroy {
       that.parentNode = null;
     }
 
-    // 6.返回结果obj
-    // return {
-    //   parentNode: that.parentNode,
-    //   node: that.node
-    // };
     return that.node;
   }
 
@@ -393,13 +354,14 @@ export class CalamityComponent implements OnInit, OnDestroy {
   // 选择区域
   // 选择城市
   selecteCity(city) {
-    this.currentCity = city;
+    this.map_model.currentCity = city;
     this.getPoint(this.map, city);  // 解析地址- 设置中心和地图显示级别
-    this.currentChildren = city.children;
+    this.map_model.currentChildren = city.children;
   }
 
   selecteblock(block) {
     this.getPoint(this.map, block);  // 解析地址- 设置中心和地图显示级别
+    this.map_model.currentArea = block;
   }
 
   // 显示区域
@@ -418,12 +380,12 @@ export class CalamityComponent implements OnInit, OnDestroy {
   // 选择区域
   arealistMouseover(area) {
 
-    this.currentBlock = area.children;
+    this.map_model.currentBlock = area.children;
   }
   // 离开区域
   arealistMouseleave() {
     this.areashow = false;
-    this.currentBlock = null;
+    this.map_model.currentBlock = [];
   }
   // 离开城市
   citylistMouseleave() {
@@ -435,7 +397,7 @@ export class CalamityComponent implements OnInit, OnDestroy {
   }
   arealistMouseNone() {
     this.areashow = true;
-    this.currentBlock = null;
+    this.map_model.currentBlock = [];
   }
 
   ngOnDestroy() {

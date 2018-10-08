@@ -6,7 +6,7 @@
         <div class="d-inline-block sel-area-block" (mouseleave)="citylistMouseleave()">
         
             <span class="cl-blue cur-pointer" (mouseover)="showCiyt()">
-                <span class="filter" *ngIf="node">{{node.name}}</span>
+                <span class="filter" *ngIf="currentCity">{{currentCity.name}}</span>
                 <span class="filter" *ngIf="!currentCity">选择城市</span>
                 <!-- <i class="fa fa-bell-o nav-icon " aria-hidden="true"></i> -->
             </span>
@@ -29,7 +29,8 @@
         <div class="d-inline-block sel-area-block" (mouseleave)="arealistMouseleave()">
         
             <span class="cl-blue cur-pointer" (mouseover)="showArea()">
-                <span class="filter">选择区域</span>
+                <span class="filter" *ngIf="!currentArea">选择区域</span>
+                <span class="filter" *ngIf="currentArea">{{currentArea.name}}</span>
             </span>
         
             <div class="arealist-wrap dropdown_panel" *ngIf="areashow">
@@ -73,10 +74,10 @@
         
         </div>
     
-        <div class="d-inline-block icon-item cur-pointer">
+        <!-- <div class="d-inline-block icon-item cur-pointer">
     
             <img  src="../../../../assets/imgs/switch.png" alt="图片" (click)="enterFullScreen()">
-        </div>
+        </div> -->
 
 
     
@@ -129,7 +130,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let light of lightListRes; let i = index">
-                            <td><input type="checkbox" (change)="addLightstoCtrl(light, i)"
+                            <td><input type="checkbox" (change)="addLightstoCtrl()"
                                  [checked]="lightList_check[i].check" [(ngModel)]="lightList_check[i].check"></td>
                             <td>{{light.name}}</td>
                             <td>{{light.positionNumber}}</td>

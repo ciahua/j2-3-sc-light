@@ -21,22 +21,23 @@
     // }
 }
 .card-block {
-    margin: 5px 0px;
+    margin: 5px 0px 0px;
+    min-height: 38px;
 }
 .card-primary {
     margin-bottom: 15px;
 }
 .search-product {
     font-size: 14px;
+    min-height: 38px;
 
     .search-options {
         //padding-left: 20px;
         .form-control {
             font-size: 14px;
             width: auto;
-            height: calc(1.8rem + 2px);
+            height: 38px;
             margin-right: 5px;
-            margin-top: 5px;
         }
         
         .search-icon {
@@ -44,13 +45,6 @@
             margin: 5px;
         }
     }
-    .extral-marg {
-        margin-top: 5px;
-        // margin-right: 5px;
-    }
-    // .add-product {
-    //     margin: 0px;
-    // }
 }
 .btn-search {
     font-size: 14px;

@@ -27,6 +27,9 @@
 </ng-template>
 <!-- modal2:新建位置 -->
 <ng-template #contentsetPosition let-c="close" let-d="dismiss">
+  <p *ngFor="let alert of alertsModal" class="lsq-alert">
+    <ngb-alert [type]="alert.type" (close)="closeAlertModal(alert)">{{ alert.message }}</ngb-alert>
+  </p>
     <div class="modal-header">
       <h4 class="modal-title">新建位置</h4>
       <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
@@ -113,17 +116,22 @@
           <div class="form-inline padding-15">
             <span class="text-danger">*</span>
             <label class="control-label">经度:</label>
-            <input type="text" class="form-control border-none" autocomplete [(ngModel)]="model.point.lat" required/>
+            <input type="text" class="form-control border-none" autocomplete [(ngModel)]="model.point.lng" required/>
           </div>
           <div class="form-inline padding-15">
             <span class="text-danger">*</span>
             <label class="control-label">纬度:</label>
-            <input type="text" class="form-control border-none" autocomplete [(ngModel)]="model.point.lng" required/>
+            <input type="text" class="form-control border-none" autocomplete [(ngModel)]="model.point.lat" required/>
             <!-- <i class="fa fa-map-marker fa-2x mapIron" (click)="addMapWithPoint()"></i> -->
           </div>
           <div class="form-inline padding-15">
+            <!-- <button class="btn btn-bg btn-point" (click)="typeofPoint()"
+              [disabled]="!model.point.lat || model.point.lat == '' || !model.point.lng || model.point.lng == ''">检验坐标</button> -->
+            <span *ngFor="let mes of errorMess" class="errMes">{{mes}}</span>
+          </div>
+          <div class="form-inline padding-15">
               <span class="text-danger">*</span>
-              <label class="control-label">所属类:</label>
+              <label class="control-label">所属类型:</label>
               <select name="profile" [(ngModel)]="model.device" (change)="deviceChange()" class="form-control d-inline-block"
                 [ngClass]="">
                 <option *ngFor="let index of deviceList" [ngValue]="index">
@@ -140,14 +148,18 @@
     </div>
 
     <div class="modal-footer">
-      <button type="button" class="btn btn-outline-info" (click)="c('Close click')" 
-      [disabled]="!model.name || model.name == '' || !model.number || model.number == '' || !model.point.lat || model.point.lat == '' || !model.point.lng || model.point.lng == '' || !model.device">确认</button>
+      <button type="button" class="btn btn-outline-info" (click)="setPosition()" 
+      [disabled]="!model.name || model.name == '' || !model.number || model.number == '' || !model.point.lat || model.point.lat == '' 
+        || !model.point.lng || model.point.lng == '' || !model.device || model.number.length > 30 || model.name.length > 30">确认</button>
       <button type="button" class="btn btn-outline-metal"  (click)="d('Cross click')">取消</button>
     </div>
 </ng-template>
 
 <!-- modal2:修改位置 -->
 <ng-template #contentUpdataPosition let-c="close" let-d="dismiss">
+  <p *ngFor="let alert of alertsModal" class="lsq-alert">
+    <ngb-alert [type]="alert.type" (close)="closeAlertModal(alert)">{{ alert.message }}</ngb-alert>
+  </p>
   <div class="modal-header">
     <h4 class="modal-title">修改位置</h4>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
@@ -234,13 +246,18 @@
       <div class="form-inline padding-15">
         <span class="text-danger">*</span>
         <label class="control-label">经度:</label>
-        <input type="text" class="form-control border-none" autocomplete [(ngModel)]="model.point.lat" required/>
+        <input type="text" class="form-control border-none" autocomplete [(ngModel)]="model.point.lng" required/>
       </div>
       <div class="form-inline padding-15">
         <span class="text-danger">*</span>
         <label class="control-label">纬度:</label>
-        <input type="text" class="form-control border-none" autocomplete [(ngModel)]="model.point.lng" required/>
+        <input type="text" class="form-control border-none" autocomplete [(ngModel)]="model.point.lat" required/>
         <!-- <i class="fa fa-map-marker fa-2x mapIron" (click)="addMapWithPoint()"></i> -->
+      </div>
+      <div class="form-inline padding-15">
+        <!-- <button class="btn btn-bg btn-point" (click)="typeofPoint()"
+          [disabled]="!model.point.lat || model.point.lat == '' || !model.point.lng || model.point.lng == ''">检验坐标</button> -->
+        <span *ngFor="let mes of errorMess" class="errMes">{{mes}}</span>
       </div>
       <div class="form-inline padding-15">
         <span class="text-danger">*</span>
@@ -260,7 +277,9 @@
   </div>
 
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-info" (click)="c('Close click')" [disabled]="!model.name || model.name == '' || !model.number || model.number == '' || !model.point.lat || model.point.lat == '' || !model.point.lng || model.point.lng == '' || !model.device">确认</button>
+    <button type="button" class="btn btn-outline-info" (click)="updataPosition()" [disabled]="!model.name || model.name == '' || 
+      !model.number || model.number == '' || !model.point.lat || model.point.lat == '' || !model.point.lng || model.point.lng == '' 
+      || !model.device || model.number.length > 30 || model.name.length > 30">确认</button>
     <button type="button" class="btn btn-outline-metal"  (click)="d('Cross click')">取消</button>
   </div>
 </ng-template>
@@ -295,18 +314,18 @@
       <div class="card-block">
         <form class="form-inline xy-pad search-form">
           <span>所属类型：</span>
-          <select name="profile" [(ngModel)]="currentType" (change)="deviceTypeChange()" class="form-control" style="margin-right: 15px;">
+          <select name="profile" [(ngModel)]="currentType" (change)="deviceTypeChange()" class="form-control" style="margin-right: 5px;">
             <option *ngFor="let index of deviceTypes" [ngValue]="index">
               {{ index.name }}
             </option>
           </select>
         
-          <div class="form-group">
-            <input id="sole-input" class="form-control searchbox-content-common" type="text" name="word" autocomplete="off" maxlength="256"
-              placeholder="Search" value="">
+          <div class="form-group" style="padding-right: 5px;">
+            <input id="sole-input4" [(ngModel)]="queryStr" class="form-control searchbox-content-common" type="text" name="word" 
+              autocomplete="off" maxlength="256" placeholder="检索编号、名称">
           </div>
         
-          <button type="submit" class="btn btn-bg">搜索</button>
+          <button type="submit" class="btn btn-bg" (click)="execQuery()">搜索</button>
           <!-- <button type="submit" class="btn btn-bg form-btn-1" (click)="openNewPosition(contentsetPosition)">批量导入位置</button>
           <button type="submit" class="btn btn-bg form-btn" (click)="openNewPosition(contentsetPosition)">新建位置</button> -->
         </form>
@@ -314,12 +333,9 @@
           <thead class="table-header">
             <tr>
               <th>序号</th>
-              <th>名称</th>
-              <th>编号</th>
-              <th>所属类</th>
-              <th>安装位置</th>
-              <th>区域</th>
-              <th>坐标</th>
+              <th>用户</th>
+              <th>密码</th>
+
               <th style="text-align: center">操作</th>
             </tr>
           </thead>
@@ -328,14 +344,11 @@
             <tr *ngFor="let item of positionListItems; let i = index">
               <td>{{i + 1}}</td>
               <td>{{item.name}}</td>
-              <td>{{item.number}}</td>
-              <td>{{changeName(item.type)}}</td>
-              <td>{{item.installZoneName}}</td>
-              <td>{{item.regionName}}</td>
-              <td>{{item.point.lng}}/{{item.point.lat}}</td>
+              <td>{{item.password}}</td>
+
               <td style="text-align: center">
                 <div class="modify-strategy d-inline">
-                  <a class="cur-pointer btn-a theme-text d-inline" (click)="openUpdataPosi(contentsetPosition, item, i)">修改</a>
+                  <a class="cur-pointer btn-a theme-text d-inline" (click)="openUpdataPosi(contentUpdataPosition, item, i)">修改</a>
                   <a class="cur-pointer btn-a theme-text d-inline" (click)="openDelPosi(contentDelPosition, item, i)">删除</a>
                 </div>
               </td>
@@ -343,7 +356,7 @@
           </tbody>
         </table>
         <div *ngIf="positionListItems.length === 0 || !positionListItems">无数据！</div>
-        <div *ngIf="positionListItems.length > 1">
+        <div *ngIf="positionListItems.length > 0">
           <ngb-pagination [collectionSize]=total [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"
             (pageChange)="pageChange()"></ngb-pagination>
         </div>

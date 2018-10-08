@@ -2,12 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../guard/auth.service';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie';
-import { NgbCollapse} from '@ng-bootstrap/ng-bootstrap';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ROUTETREE } from '../data/route-tree';
-import { MessageService } from '../service/message.service';
 import { MessService } from '../service/mess.service';
-import { UrlService } from '../service/url.service';
+// import { UrlService } from '../service/url.service';s
 import { CommunicateService } from '../service/communicate.service';
 declare let $: any;
 
@@ -28,26 +26,20 @@ export class HomeComponent implements OnInit {
 
 
   constructor(public authService: AuthService, public router: Router, private _cookieService: CookieService,
-    private messageService: MessageService, public messService: MessService, public urlService: UrlService,
+    public messService: MessService,
     private config: NgbDropdownConfig, private communicateService: CommunicateService) {
     this.routeTree = ROUTETREE;
     // customize default values of dropdowns used by this component tree
     config.placement = 'top-left';
-    // config.autoClose = false;
-
-    this.visible = urlService.getURLParam('visible') === '' ? true : false;
 
 
+    // this.visible = urlService.getURLParam('visible') === '' ? true : false;
+
+ // 全屏
     this.communicateService.getMessage().subscribe((message: any) => {
       // console.log(message); // send a message
 
-      if (message.mess === false) {
-        // this.messageList = null;
-        this.visible = message.mess;
-      } else {
-        this.visible = message.mess;
-        this.getMessage();
-      }
+      this.visible = message.mess;
 
     });
   }
@@ -55,7 +47,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.currentUser = this._cookieService.getObject('currentUser');
     this.loginName = this.currentUser.loginName;
-    this.getMessage();
+
 
   }
 
@@ -82,27 +74,6 @@ export class HomeComponent implements OnInit {
     console.log(this.open);
   }
 
-  // 获取消息列表
-  getMessage() {
-    const that = this;
-
-    this.messageService.getMessage().subscribe({
-      next: function (val) {
-
-        that.messageList = val.list;
-
-      },
-      complete: function () {
-        setTimeout(() => {
-          that.marquee();
-        }, 10);
-
-      },
-      error: function (error) {
-        console.log(error);
-      }
-    });
-  }
 
   // 字幕动画
   marquee() {

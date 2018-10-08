@@ -1,5 +1,8 @@
 <!-- modal:新建产品 -->
 <ng-template #contentAdd let-c="close" let-d="dismiss">
+  <p *ngFor="let alert of alertsModal" class="lsq-alert">
+    <ngb-alert [type]="alert.type" (close)="closeAlertModal(alert)">{{ alert.message }}</ngb-alert>
+  </p>
   <div class="modal-header">
     <h4 class="modal-title">新建产品</h4>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
@@ -60,14 +63,18 @@
     </div>
 </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-info" (click)="c('Close click')" 
-    [disabled]="!model.name || model.name == '' || !model.description || model.description == ''">确认</button>
+    <button type="button" class="btn btn-outline-info" (click)="setModel()" 
+    [disabled]="!model.name || model.name == '' || !model.description || model.description == '' || model.name.length > 30 || 
+      model.description.length > 40">确认</button>
     <button type="button" class="btn btn-outline-metal" (click)="d('Cross click')">取消</button>
   </div>
 </ng-template>
 
 <!-- modal:修改产品 -->
 <ng-template #contentUpdate let-c="close" let-d="dismiss">
+  <p *ngFor="let alert of alertsModal" class="lsq-alert">
+    <ngb-alert [type]="alert.type" (close)="closeAlertModal(alert)">{{ alert.message }}</ngb-alert>
+  </p>
   <div class="modal-header">
     <h4 class="modal-title">新建产品</h4>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
@@ -128,7 +135,8 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-info" (click)="c('Close click')" [disabled]="!model.name || model.name == '' || !model.description || model.description == ''">确认</button>
+    <button type="button" class="btn btn-outline-info" (click)="updateModel()" [disabled]="!model.name || model.name == '' || 
+      !model.description || model.description == '' || model.name.length > 30 || model.description.length > 40">确认</button>
     <button type="button" class="btn btn-outline-metal"  (click)="d('Cross click')">取消</button>
   </div>
 </ng-template>
@@ -226,7 +234,7 @@
           <!-- 表单，搜索产品 -->
           <form class="form-inline search-options">
             <span>所属类型：</span>
-            <select name="profile" [(ngModel)]="currentType" (change)="deviceTypeChange()" class="form-control" style="margin-right: 15px;">
+            <select name="profile" [(ngModel)]="currentType" (change)="deviceTypeChange()" class="form-control">
               <option *ngFor="let index of deviceTypes" [ngValue]="index">
                 {{ index.name }}
               </option>
@@ -238,11 +246,11 @@
                 <div class="form-group">
                   <!-- <i class="fa fa-search search-icon"></i> -->
                   <!-- <input type="text" class="form-control border-none" name="search-content" id="" placeholder="{{'XXX'}}"/> -->
-                  <input id="sole-input" class="form-control searchbox-content-common" type="text" name="word" autocomplete="off" maxlength="256"
-                    placeholder="Search" value="">
+                  <input id="sole-input3" [(ngModel)]="queryStr" class="form-control searchbox-content-common" type="text" 
+                    name="word" autocomplete="off" maxlength="256" placeholder="检索名称、描述">
                 </div>
             </div>
-            <button class="btn btn-bg extral-marg">搜索</button>
+            <button class="btn btn-bg" (click)="execQuery()">搜索</button>
           </form>
       </div>
 
@@ -254,7 +262,7 @@
               <th>序号</th>
               <th>产品名称</th>
               <th>产品描述</th>
-              <th>所属类</th>
+              <th>所属类型</th>
               <th style="text-align: center">操作</th>
             </tr>
           </thead>
@@ -277,7 +285,7 @@
         </table>
 
         <div *ngIf="productListItems.length === 0 || !productListItems">无数据！</div>
-        <div *ngIf="productListItems.length > 1">
+        <div *ngIf="productListItems.length > 0">
           <ngb-pagination [collectionSize]=total [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"
             (pageChange)="pageChange()"></ngb-pagination>
         </div>

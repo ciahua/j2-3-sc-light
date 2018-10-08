@@ -1,0 +1,379 @@
+<div class="panel-default">
+  <div class="row">
+      <div class="col-md-4">
+        <div>
+          <p>web模拟生成任务：</p>
+      
+        </div>
+        <hr>
+        <!-- 开关屏 -->
+        <div>
+          <p>开关屏</p>
+          <p>LED_ID: <input type="text" [(ngModel)]="task1.id"></p>
+          <div>
+            <p><span>控制开关：</span>
+              <label style="margin-left: 21px;">
+                <mat-slide-toggle (change)="changeContr1()"></mat-slide-toggle>
+              </label>
+            </p>
+          </div>
+          <button class="btn btn-bg" (click)="createTask1()" [disabled]="!task1.id">生成开关屏任务</button>
+      
+        </div>
+        <hr>
+        <!-- 设置亮度 -->
+        <div>
+          <p>设置亮度</p>
+          <p>LED_ID: <input type="text" [(ngModel)]="task2.id"></p>
+      
+          <div>
+            <p><span>自动模式开关：</span>
+              <label style="margin-left: 21px;">
+                <mat-slide-toggle (change)="changeContr2()"></mat-slide-toggle>
+              </label>
+            </p>
+          </div>
+          <!-- 亮度值：<input type="text" [(ngModel)]="task.value"> -->
+          <p>
+            <label>
+              <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="10" min="0" max="66" [(ngModel)]="task2.value"
+                (change)="changeSlider(task2.value)"></mat-slider>
+            </label>
+          </p>
+      
+          <button class="btn btn-bg" (click)="createTask2()" [disabled]="!task2.id">生成亮度调节</button>
+      
+        </div>
+        <hr>
+
+      
+      </div>
+      <div class="col-md-8">
+        <p>服务端任务列表</p>
+        <table class="table table-hover">
+          <thead class="table-header">
+            <tr>
+              <th>序号</th>
+              <th>LED_ID</th>
+              <th>任务_ID</th>
+              <th>任务类型</th>
+              <th>状态</th>
+      
+              <th style="text-align: center">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+      
+            <tr *ngFor="let item of tasks; let i = index">
+              <td>{{i + 1}}</td>
+              <td>{{item.id}}</td>
+              <td>{{item._id}}</td>
+              <td><span>{{item.datagram.request}}</span></td>
+              <td>{{item.status}}</td>
+      
+              <td style="text-align: center">
+                <div class="modify-strategy d-inline">
+                  <a class="cur-pointer btn-a theme-text d-inline">修改</a>
+                  <a class="cur-pointer btn-a theme-text d-inline">删除</a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="tasks.length === 0 || !tasks">无数据！</div>
+        <div *ngIf="tasks.length > 0">
+          <ngb-pagination [collectionSize]=total_1 [(page)]="page_1" [maxSize]="5" [rotate]="true" [ellipses]="false"
+            [boundaryLinks]="true" (pageChange)="pageChange_1()"></ngb-pagination>
+        </div>
+      </div>
+
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-4">
+      <!-- 开关屏 -->
+      <div>
+        <p>更新节目单</p>
+        <!-- <p>LED_ID: <input type="text" [(ngModel)]="task3.id"></p> -->
+        <button class="btn btn-bg" (click)="gProgram1()" >生成通用节目单任务</button>
+
+      
+      </div>
+    </div>
+    <div class="col-md-8">
+      <p>节目单列表</p>
+      <table class="table table-hover">
+        <thead class="table-header">
+          <tr>
+    
+            <th>节目_ID</th>
+            <th>名称</th>
+            <th>宽度</th>
+            <th>高度</th>
+            <th>布局数</th>
+    
+    
+            <th style="text-align: center">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+    
+          <tr *ngFor="let item of programs; let i = index">
+            <td>{{item._id}}</td>
+            <td><span>{{item.name}}</span></td>
+            <td>{{item.width}}</td>
+            <td>{{item.height}}</td>
+            <td>{{item.regions.length}}
+              <a (click)="viewRegions(item.regions)" class="cur-pointer" style="color: blue;">查看</a>
+    
+            </td>
+    
+            <td style="text-align: center">
+              <div class="modify-strategy d-inline">
+                <a class="cur-pointer btn-a theme-text d-inline" (click)="createTask3(item._id)">生成更新节目任务</a>
+                <a class="cur-pointer btn-a theme-text d-inline" (click)="getProgram(item)">下载文件</a>
+                <a class="cur-pointer btn-a theme-text d-inline" (click)="gFiles(item)">生成节目文件</a>
+    
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="programs.length === 0 || !programs">无数据！</div>
+      <div *ngIf="programs.length > 0">
+        <ngb-pagination [collectionSize]=total_4 [(page)]="page_4" [maxSize]="5" [rotate]="true" [ellipses]="false"
+          [boundaryLinks]="true" (pageChange)="pageChange_4()"></ngb-pagination>
+      </div>
+      <hr>
+      <table class="table table-hover">
+        <thead class="table-header">
+          <tr>
+    
+            <th>节目_ID</th>
+            <th>名称</th>
+            <th>x</th>
+            <th>y</th>
+            <th>宽度</th>
+            <th>高度</th>
+            <th>类型</th>
+            <th>内容</th>
+    
+    
+            <th style="text-align: center">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+    
+          <tr *ngFor="let item of regions_list; let i = index">
+            <td>{{item.id}}</td>
+            <td><span>{{item.name}}</span></td>
+            <td>{{item.x}}</td>
+            <td>{{item.y}}</td>
+            <td>{{item.width}}</td>
+            <td>{{item.height}}</td>
+            <td>{{item.item[0].type}}
+            <td>{{item.item[0].contents[0].content}}
+              <!-- <a (click)="viewRegions(item.regions)" class="cur-pointer" style="color: aqua;">查看</a> -->
+    
+            </td>
+    
+            <td style="text-align: center">
+              <div class="modify-strategy d-inline">
+                <a class="cur-pointer btn-a theme-text d-inline" (click)="gProgram(item)">生成节目文件</a>
+    
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+ 
+
+  <hr>
+  <div class="row">
+    <div class="col-md-4">
+      <div>
+        <p>节目播放内容空气质量：</p>
+  
+      </div>
+      <hr>
+      <!-- 文本 -->
+      <div>
+        <!-- <p>
+          <span>节目播放内容类型：</span>
+          <select name="profile" [(ngModel)]="currentType" (change)="playTypeChange()" style="margin-right: 5px;">
+            <option *ngFor="let item of playTypes" [ngValue]="item">
+              {{ item.type }}
+            </option>
+          </select>
+        </p> -->
+  
+        <p>节目播放内容类型：text</p>
+        <p>名称: <input type="text" [(ngModel)]="airs.name"></p>
+        <!-- <p>内容/文件路径名称: <input type="text" [(ngModel)]="plays.contents"></p> -->
+        <p>播放时长: <input type="text" [(ngModel)]="airs.length"></p>
+        <!-- <button class="btn btn-bg" (click)="createMedia()" [disabled]="!plays.name || !plays.contents || !plays.length">post</button> -->
+      </div>
+      <hr>
+    </div>
+    <div class="col-md-8">
+      <p>空气质量列表</p>
+      <table class="table table-hover">
+        <thead class="table-header">
+          <tr>
+
+            <th>设备_ID</th>
+            <th>名称</th>
+            <th>pm10</th>
+            <th>pm25</th>
+            <th>tvoc</th>
+            <th>temperature</th>
+            <th>humidity</th>
+  
+            <th style="text-align: center">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+  
+          <tr *ngFor="let item of model.airdevicelist; let i = index">
+            <td>{{item.id}}</td>
+            <td><span>{{item.description}}</span></td>
+            <td>{{item.pm10}}</td>
+            <td>{{item.pm25}}</td>
+            <td>{{item.tvoc}}</td>
+            <td>{{item.temperature}}</td>
+            <td>{{item.humidity}}</td>
+  
+            <td style="text-align: center">
+              <div class="modify-strategy d-inline">
+                <a class="cur-pointer btn-a theme-text d-inline" (click)="gProgram(item)">存储</a>
+
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="model.airdevicelist.length === 0 || !model.airdevicelist">无数据！</div>
+    </div>
+  
+  </div>
+  <hr>
+
+  <div class="row">
+      <div class="col-md-4">
+        <div>
+          <p>终端模拟请求数据：</p>
+        
+        </div>
+        <hr>
+
+        <!-- 常规请求 -->
+        <div>
+          <p>常规请求</p>
+          <button class="btn btn-bg" (click)="searchTask(1)">post</button>
+        </div>
+        <hr>
+        <!-- 终端任务执行中请求： -->
+        <div>
+          <p>终端任务执行中请求：</p>
+          <button class="btn btn-bg" (click)="searchTask(2)" >post</button>
+        </div>
+        <hr>
+        <!-- 终端任务执行中 -->
+        <div>
+          <p>终端任务执行成功请求：</p>
+          <button class="btn btn-bg" (click)="searchTask(3)" >post</button>
+        </div>
+        <hr>
+      </div>
+      <div class="col-md-8">
+        <p>终端任务列表</p>
+        <!-- 常规请求->搜索任务 -->
+        <div>
+          <p>LED_ID: <input type="text" [(ngModel)]="searchTaskBody.id" placeholder="检索LED_ID">
+          <button class="btn btn-bg" (click)="searchAllTask()" [disabled]="!searchTaskBody.id">search</button>
+        </p>
+          
+        </div>
+
+
+        <table class="table table-hover">
+          <thead class="table-header">
+            <tr>
+              <th>序号</th>
+              <th>选择</th>
+              <th>IED_ID</th>
+              <th>任务_ID</th>
+              <th>任务类型</th>
+              <th>状态</th>
+    
+            </tr>
+          </thead>
+          <tbody>
+      
+            <tr *ngFor="let item of search_tasks; let i = index">
+              <td>{{i + 1}}</td>
+              <td><input type="checkbox" (change)="addTaskCtrl()" [(ngModel)]="search_tasks_check[i].check"></td>
+              <td>{{item.id}}</td>
+              <td>{{item._id}}</td>
+              <td><span>{{item.datagram.request}}</span></td>
+              <td>{{item.status}}</td>
+      
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="search_tasks.length === 0 || !search_tasks">无数据！</div>
+        <div *ngIf="search_tasks.length > 0">
+          <ngb-pagination [collectionSize]=total_2 [(page)]="page_2" [maxSize]="5" [rotate]="true" [ellipses]="false"
+            [boundaryLinks]="true" (pageChange)="pageChange_2()"></ngb-pagination>
+        </div>
+      </div>
+  </div>
+
+
+
+
+
+
+</div>
+
+  <!-- 用户 -->
+  <!-- <div>
+      <input type="text" [(ngModel)]="user.name">
+      <button  class="btn btn-bg" (click)="createUser()">添加</button>
+    </div>
+    <div>
+            <table class="table table-hover">
+              <thead class="table-header">
+                <tr>
+                  <th>序号</th>
+                  <th>用户</th>
+                  <th>密码</th>
+            
+                  <th style="text-align: center">操作</th>
+                </tr>
+              </thead>
+              <tbody>
+            
+                <tr *ngFor="let item of users; let i = index">
+                  <td>{{i + 1}}</td>
+                  <td>{{item.name}}</td>
+                  <td>{{item.password}}</td>
+            
+                  <td style="text-align: center">
+                    <div class="modify-strategy d-inline">
+                      <a class="cur-pointer btn-a theme-text d-inline" >修改</a>
+                      <a class="cur-pointer btn-a theme-text d-inline" >删除</a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div *ngIf="users.length === 0 || !users">无数据！</div>
+            <div *ngIf="users.length > 0">
+              <ngb-pagination [collectionSize]=total [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false"
+                [boundaryLinks]="true" (pageChange)="pageChange()"></ngb-pagination>
+            </div>
+    </div> -->
+

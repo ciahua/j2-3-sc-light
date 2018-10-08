@@ -20,6 +20,10 @@
 }
 .card-block {
     margin: 5px 0px;
+
+    .search-form {
+        padding-bottom: 5px;
+    }
 }
 
 .search-options {
@@ -108,6 +112,13 @@
 }
 .padding-15{
     padding-bottom: 15px;
+}
+.btn-point {
+    padding: 3px 6px;
+}
+.errMes {
+    color: #41AEE6;
+    margin-left: 5px
 }
 
 

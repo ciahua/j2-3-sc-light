@@ -14,6 +14,7 @@ import { AirreportRoutes } from './airreport/airreport.routes';
 
 import { EchartMapRoutes } from './echart-map/echart-map.routes';
 import { MapRoutes } from './map/map.routes';
+import { LedRoutes } from './led-test/led.routes';
 import { EchartRoutes } from './echart/echart.routes';
 export const HomeRoutes: Route[] = [
     {
@@ -37,7 +38,8 @@ export const HomeRoutes: Route[] = [
             ...AirreportRoutes,
             ...MapRoutes,
             ...EchartRoutes,
-            ...EchartMapRoutes
+            ...EchartMapRoutes,
+            ...LedRoutes
         ]
     },
 ];

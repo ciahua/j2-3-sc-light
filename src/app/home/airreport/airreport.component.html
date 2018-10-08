@@ -7,7 +7,8 @@
       <!-- 导航栏 -->
       <div class="sidebar-inner">
           <ul class="first-menu">
-              <li *ngFor="let device of devicelist; let i = index" class="cur-pointer nav-item" (click)="selectPoint(i, device)" [ngClass]="{'active': i == deviceIndx}">
+              <li *ngFor="let device of devicelist; let i = index" class="cur-pointer nav-item" (click)="selectPoint(i, device)" 
+                [ngClass]="{'active': i == deviceIndx}">
                 <span>{{device.description}}</span>
               </li>
           </ul>
@@ -29,7 +30,7 @@
               <button type="button" class="close" aria-label="Close">
                 <!-- <span aria-hidden="true">&times;</span> -->
                 <span>
-                  <i class="fa fa-arrow-circle-o-left cur-pointer color-btn-text" (click)="jumpHandle('home/application/air')"></i>
+                  <i class="fa fa-arrow-circle-o-left fa-lg cur-pointer color-btn-text" (click)="jumpHandle('home/application/air')"></i>
                 </span>
               </button>
               
@@ -45,55 +46,62 @@
             </div>
             <hr>
 
+            <div class="d-inline">
+            
+                <div class="d-inline-block extral-margin">
+                  <label class=" text-label">开始时间：</label>
 
-            <div class="extral-margin">
-              <label class=" text-label">开始时间：</label>
+                    <div class="d-inline-block">
+                      <div class="input-group">
+                        <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="startDate" ngbDatepicker
+                           #ad="ngbDatepicker">
+                        <div class="input-group-append">
+                          <button class="btn btn-primary " (click)="ad.toggle()" type="button">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                          </button>
+                        </div>
 
-                <div class="d-inline-block">
-                  <div class="input-group">
-                    <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="startDate" ngbDatepicker #ad="ngbDatepicker">
-                    <div class="input-group-append">
-                      <button class="btn btn-primary " (click)="ad.toggle()" type="button">
-                        <i class="fa fa-calendar" aria-hidden="true"></i>
-                      </button>
+                      </div>
+
                     </div>
+                    <!-- <div class="d-inline-block">
+                      <label style="margin-left: 21px;">
+                        <ngb-timepicker [(ngModel)]="startTime" ></ngb-timepicker>
+                      </label>
+                    </div> -->
+                </div>
 
+                <div class="d-inline-block extral-margin">
+                  <label class=" text-label">结束时间：</label>
+                
+                  <div class="d-inline-block">
+                    <div class="input-group">
+                      <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="endDate" ngbDatepicker #bd="ngbDatepicker">
+                      <div class="input-group-append">
+                        <button class="btn btn-primary " (click)="bd.toggle()" type="button">
+                          <i class="fa fa-calendar" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                
+                    </div>
+                
                   </div>
-
+                  <!-- <div class="d-inline-block">
+                    <label style="margin-left: 21px;">
+                      <ngb-timepicker [(ngModel)]="endTime"></ngb-timepicker>
+                    </label>
+                  </div> -->
+                
+                
                 </div>
-                <div class="d-inline-block">
-                  <label style="margin-left: 21px;">
-                    <ngb-timepicker [(ngModel)]="startTime" ></ngb-timepicker>
-                  </label>
+
+                <div class="d-inline-block extral-margin">
+                    <button class="btn btn-bg extral-margin search-btn" (click)="dataSearch()">搜索</button>
                 </div>
-
-
             </div>
-            <div class="extral-margin">
-              <label class=" text-label">结束时间：</label>
-            
-              <div class="d-inline-block">
-                <div class="input-group">
-                  <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="endDate" ngbDatepicker #bd="ngbDatepicker">
-                  <div class="input-group-append">
-                    <button class="btn btn-primary " (click)="bd.toggle()" type="button">
-                      <i class="fa fa-calendar" aria-hidden="true"></i>
-                    </button>
-                  </div>
-            
-                </div>
-            
-              </div>
-              <div class="d-inline-block">
-                <label style="margin-left: 21px;">
-                  <ngb-timepicker [(ngModel)]="endTime"></ngb-timepicker>
-                </label>
-              </div>
-            
-            
-            </div>
+
             <div class="btns">
-              <button class="btn btn-bg extral-margin" (click)="dataSearch()">搜索</button>
+              <!-- <button class="btn btn-bg extral-margin" (click)="dataSearch()">搜索</button> -->
               <button class="btn btn-bg extral-margin" (click)="exportTable()" [disabled]='historydatalistItems.length ==0'>导出报表</button>
               <button class="btn btn-bg" (click)="openGenerateTables()" [disabled]='historydatalistItems.length ==0'>生成图表</button>
             </div>

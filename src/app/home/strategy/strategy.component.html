@@ -22,12 +22,15 @@
   </div>
   <!-- 右侧 -->
   <div class="strategy-right">
-    <div style="margin-top: 10px;">
+    <div class="title-right">
       <span *ngIf="currentStrategy" class="strategy-title">{{currentStrategy.name}}</span>
+      <span class="jump-iron">
+        <i class="fa fa-arrow-circle-o-left fa-2x cur-pointer color-btn-text" (click)="jumpHandle('home/application/light')"></i>
+      </span>
 
     </div>
     <!-- 菜单-->
-    <div style="margin-top: 10px;">
+    <div class="nav-strategy">
       <ul class="nav nav-tabs">
         <li *ngFor="let item of navs;let i = index" role="presentation " class=" cur-pointer"
           (click)="changeNav(i)" [ngClass]="{'active':item.id === nav_index}">
@@ -55,6 +58,7 @@
                 </div>
               </li>
             </ul>
+            <div *ngIf="ruleList.length === 0 || !ruleList" style="margin-bottom: 5px;">无数据！</div>
 
           </div>
         </div>
@@ -71,9 +75,10 @@
                         <label for="brightnessTime">开灯时间：</label>
                     
                       </div>
-                      <div class="col-6">
+                      <div class="col-6 span-marg-bot">
                         <!-- <span>17:00</span> -->
-                        <span *ngIf="currentRule && currentRule.workdayRules && currentRule.workdayRules[0]">{{currentRule.workdayRules[0].start.hour}}时 {{currentRule.workdayRules[0].start.minute}}分
+                        <span *ngIf="currentRule && currentRule.workdayRules && currentRule.workdayRules[0]">
+                          {{currentRule.workdayRules[0].start.hour}}时 {{currentRule.workdayRules[0].start.minute}}分
                         </span>
                       </div>
                     </div>
@@ -81,9 +86,10 @@
                       <div class="col-4 padding-0">
                         <label for="changeBrightness">起始亮度：</label>
                       </div>
-                      <div class="col-6">
+                      <div class="col-6 span-marg-bot">
                         <!-- <span>30</span> -->
-                        <span *ngIf="currentRule && currentRule.workdayRules && currentRule.workdayRules[0]">{{currentRule.workdayRules[0].lightLevel}}%</span>
+                        <span *ngIf="currentRule && currentRule.workdayRules && currentRule.workdayRules[0]">
+                          {{currentRule.workdayRules[0].lightLevel}}%</span>
                       </div>
                     </div>
                     
@@ -102,19 +108,22 @@
                         <td>{{item.lightLevel}}%</td>
                       </tr>
                     </table>
+                    <div *ngIf="workdayList.length === 0 || !workdayList" style="margin-bottom: 5px;">无数据！</div>
                       <!-- 关灯时间： -->
                     <div class="row align-items-center justify-content-center">
                       <div class="col-4 padding-0">
                         <label for="brightnessTime">关灯时间：</label>
                     
                       </div>
-                      <div class="col-6">
+                      <div class="col-6 span-marg-bot">
                         <!-- <span>7:00</span> -->
-                        <span *ngIf="currentRule && currentRule.workdayRules && currentRule.workdayRules[currentRule.workdayRules.length - 1]">{{currentRule.workdayRules[currentRule.workdayRules.length - 1].start.hour}}时 {{currentRule.workdayRules[currentRule.workdayRules.length
-                          - 1].start.minute}}分</span>
+                        <span *ngIf="currentRule && currentRule.workdayRules && currentRule.workdayRules[currentRule.workdayRules.length - 1]">
+                          {{currentRule.workdayRules[currentRule.workdayRules.length - 1].start.hour}}
+                          时 {{currentRule.workdayRules[currentRule.workdayRules.length - 1].start.minute}}分</span>
                       </div>
                     </div>
             </div>
+            <div *ngIf="ruleList.length === 0 || !ruleList" style="margin-bottom: 5px;">无数据！</div>
 
 
         
@@ -134,9 +143,10 @@
                     <label for="brightnessTime">开灯时间：</label>
                 
                   </div>
-                  <div class="col-6">
+                  <div class="col-6 span-marg-bot">
                     <!-- <span>17:00</span> -->
-                    <span *ngIf="currentRule && currentRule.holidayRules && currentRule.holidayRules[0]">{{currentRule.holidayRules[0].start.hour}}时 {{currentRule.holidayRules[0].start.minute}}分
+                    <span *ngIf="currentRule && currentRule.holidayRules && currentRule.holidayRules[0]">
+                      {{currentRule.holidayRules[0].start.hour}}时 {{currentRule.holidayRules[0].start.minute}}分
                     </span>
                   </div>
                 </div>
@@ -144,9 +154,10 @@
                   <div class="col-4 padding-0">
                     <label for="changeBrightness">起始亮度：</label>
                   </div>
-                  <div class="col-6">
+                  <div class="col-6 span-marg-bot">
                     <!-- <span>30</span> -->
-                    <span *ngIf="currentRule && currentRule.holidayRules && currentRule.holidayRules[0]">{{currentRule.holidayRules[0].lightLevel}}%</span>
+                    <span *ngIf="currentRule && currentRule.holidayRules && currentRule.holidayRules[0]">
+                      {{currentRule.holidayRules[0].lightLevel}}%</span>
                   </div>
                 </div>          
                 
@@ -164,19 +175,22 @@
                     <td>{{item.lightLevel}}%</td>
                   </tr>
                 </table>
+                <div *ngIf="holidayList.length === 0 || !holidayList" style="margin-bottom: 5px;">无数据！</div>
                 <!-- 关灯时间： -->
                 <div class="row align-items-center justify-content-center">
                   <div class="col-4 padding-0">
                     <label for="brightnessTime">关灯时间：</label>
                 
                   </div>
-                  <div class="col-6">
+                  <div class="col-6 span-marg-bot">
                     <!-- <span>7:00</span> -->
-                    <span *ngIf="currentRule && currentRule.holidayRules && currentRule.holidayRules[currentRule.holidayRules.length - 1]">{{currentRule.holidayRules[currentRule.holidayRules.length - 1].start.hour}}时 {{currentRule.holidayRules[currentRule.holidayRules.length
-                      - 1].start.minute}}分</span>
+                    <span *ngIf="currentRule && currentRule.holidayRules && currentRule.holidayRules[currentRule.holidayRules.length - 1]">
+                      {{currentRule.holidayRules[currentRule.holidayRules.length - 1].start.hour}}
+                      时 {{currentRule.holidayRules[currentRule.holidayRules.length - 1].start.minute}}分</span>
                   </div>
                 </div>
             </div>
+            <div *ngIf="ruleList.length === 0 || !ruleList" style="margin-bottom: 5px;">无数据！</div>
         
 
         
@@ -247,7 +261,7 @@
               </tr>
             </table>
             <div *ngIf="rangeListItems.length === 0 || !rangeListItems">无数据！</div>
-            <div *ngIf="rangeListItems.length > 1">
+            <div *ngIf="rangeListItems.length > 0">
                   <ngb-pagination [collectionSize]=total [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"
                     (pageChange)="pageChange()"></ngb-pagination>
             </div>
@@ -360,7 +374,7 @@
 
 
                         <div class="row border-xif">
-                            <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t">
+                            <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" class="date-style">
                             </ngb-datepicker>
                         </div>
 
@@ -420,6 +434,7 @@
                                         <mat-error *ngIf="workday_start_time == null">
                                           <strong>开灯时间为必填项</strong>
                                         </mat-error>
+                                        
                                       </div>
                                     </div>
                                 
@@ -436,12 +451,16 @@
                                         <!-- <input type="number" class="form-control form-control-sm" [(ngModel)]="workday_start_brightness"  max="100" required/> -->
                                         <form class="example-form">
                                           <mat-form-field class="example-full-width">
-                                            <input matInput [formControl]="numberFormControl" type="number" max="100" [(ngModel)]="workday_start_brightness" [errorStateMatcher]="matcher"
-                                              required>
-                                            <mat-error *ngIf="numberFormControl.hasError('required')">
-                                              <strong>起始亮度为必填项</strong>
+                                            <input matInput [formControl]="numberFormControl" type="number" max="100"
+                                              [(ngModel)]="workday_start_brightness"  required>
+                                              <!-- <p *ngIf="workday_start_brightness > 100 ">亮度数值为0 ~ 100</p> -->
+                                            <mat-error>
+                                              <strong *ngIf="numberFormControl.hasError('required')">起始亮度为必填项</strong>
                                             </mat-error>
                                           </mat-form-field>
+                                          <mat-error *ngIf="workday_start_brightness > 100 || workday_start_brightness < 0">
+                                            <strong >亮度数值为0 ~ 100</strong>
+                                          </mat-error>
                                         </form>
                                       </div>
                                     </div>
@@ -472,6 +491,9 @@
                                         <div class="col-6">
                                 
                                           <input type="number" class="form-control form-control-sm" [(ngModel)]="workday_start_brightness1" max="100" />
+                                          <mat-error *ngIf="workday_start_brightness1 > 100 || workday_start_brightness1 < 0">
+                                            <strong >亮度数值为0 ~ 100</strong>
+                                          </mat-error>
                                           <!-- <form class="example-form">
                                                                         <mat-form-field class="example-full-width">
                                                                           <input matInput placeholder="Favorite food" value="Sushi" [(ngModel)]="workday_start_brightness1">
@@ -505,6 +527,9 @@
                                         <div class="col-6">
                                 
                                           <input type="number" class="form-control form-control-sm" [(ngModel)]="workday_start_brightness2" max="100" />
+                                          <mat-error *ngIf="workday_start_brightness2 > 100 || workday_start_brightness2 < 0">
+                                            <strong >亮度数值为0 ~ 100</strong>
+                                          </mat-error>
                                           <!-- <form class="example-form">
                                                                         <mat-form-field class="example-full-width">
                                                                           <input matInput type="number" max="100" [(ngModel)]="workday_start_brightness2">
@@ -537,6 +562,9 @@
                                         <div class="col-6">
                                 
                                           <input type="number" class="form-control form-control-sm" [(ngModel)]="workday_start_brightness3" max="100" />
+                                          <mat-error *ngIf="workday_start_brightness3 > 100 || workday_start_brightness3 < 0">
+                                            <strong >亮度数值为0 ~ 100</strong>
+                                          </mat-error>
                                           <!-- <form class="example-form">
                                                                         <mat-form-field class="example-full-width">
                                                                           <input matInput type="number" max="100" [(ngModel)]="workday_start_brightness3">
@@ -618,6 +646,9 @@
                                       <strong>起始亮度为必填项</strong>
                                     </mat-error>
                                   </mat-form-field>
+                                  <mat-error *ngIf="holiday_start_brightness > 100 || holiday_start_brightness < 0">
+                                    <strong >亮度数值为0 ~ 100</strong>
+                                  </mat-error>
                                 </form>
                               </div>
                             </div>
@@ -651,6 +682,9 @@
                                 <div class="col-6">
                         
                                   <input type="number" class="form-control form-control-sm" [(ngModel)]="holiday_start_brightness1" max="100" />
+                                  <mat-error *ngIf="holiday_start_brightness1 > 100 || holiday_start_brightness1 < 0">
+                                    <strong >亮度数值为0 ~ 100</strong>
+                                  </mat-error>
                                   <!-- <form class="example-form">
                                                 <mat-form-field class="example-full-width">
                                                   <input matInput type="number" max="100" [(ngModel)]="holiday_start_brightness1">
@@ -683,6 +717,9 @@
                                 <div class="col-6">
                         
                                   <input type="number" class="form-control form-control-sm" [(ngModel)]="holiday_start_brightness2" max="100" />
+                                  <mat-error *ngIf="holiday_start_brightness2 > 100 || holiday_start_brightness2 < 0">
+                                    <strong >亮度数值为0 ~ 100</strong>
+                                  </mat-error>
                                   <!-- <form class="example-form">
                                                 <mat-form-field class="example-full-width">
                                                   <input matInput type="number" max="100" [(ngModel)]="holiday_start_brightness2">
@@ -715,6 +752,9 @@
                                 <div class="col-6">
                         
                                   <input type="number" class="form-control form-control-sm" [(ngModel)]="holiday_start_brightness3" max="100" />
+                                  <mat-error *ngIf="holiday_start_brightness3 > 100 || holiday_start_brightness3 < 0">
+                                    <strong >亮度数值为0 ~ 100</strong>
+                                  </mat-error>
                                   <!-- <form class="example-form">
                                                 <mat-form-field class="example-full-width">
                                                   <input matInput type="number" max="100" [(ngModel)]="holiday_start_brightness3">
@@ -770,10 +810,23 @@
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-outline-info" (click)="preStep()" *ngIf="step!==1">上一步</button>
+
         <button type="button" class="btn btn-outline-info" (click)="nextStep()" *ngIf="step!==3" 
-        [disabled]="step ==2 && workday_start_time == null || step ==2 && workday_end_time == null || step ==2 && !workday_start_brightness || step ==2 && workday_start_brightness == null ">下一步</button>
+        [disabled]="step ==2 && workday_start_time == null || step ==2 && workday_end_time == null || step ==2
+         && !workday_start_brightness || step ==2 && workday_start_brightness == null || step ==2
+         && workday_start_brightness > 100 || step ==2 && workday_start_brightness < 0 || step ==2
+         && workday_start_brightness1 > 100 || step ==2 && workday_start_brightness1 < 0 || step ==2
+         && workday_start_brightness2 > 100 || step ==2 && workday_start_brightness2 < 0 || step ==2
+         && workday_start_brightness3 > 100 || step ==2 && workday_start_brightness3 < 0">下一步</button>
+
       <button type="button" class="btn btn-outline-info" (click)="c('Save click')" *ngIf="step ==3" 
-      [disabled]="step ==3 && holiday_start_time == null || step ==3 && holiday_end_time == null || step ==3 && !holiday_start_brightness || step ==3 && holiday_start_brightness == null ">完成</button>
+      [disabled]="step ==3 && holiday_start_time == null || step ==3 && holiday_end_time == null || step ==3
+       && !holiday_start_brightness || step ==3 && holiday_start_brightness == null || step ==3
+       && holiday_start_brightness > 100 || step ==3 && holiday_start_brightness < 0 || step ==3
+       && holiday_start_brightness1 > 100 || step ==3 && holiday_start_brightness1 < 0 || step ==3
+       && holiday_start_brightness2 > 100 || step ==3 && holiday_start_brightness2 < 0 || step ==3
+       && holiday_start_brightness3 > 100 || step ==3 && holiday_start_brightness3 < 0 ">完成</button>
+
       <button type="button" class="btn btn-outline-metal" (click)="d('Cross click')">取消</button>
     </div>
   </ng-template>
@@ -825,7 +878,7 @@
   
   
         <div class="row border-xif">
-          <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t">
+          <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" class="date-style">
           </ngb-datepicker>
         </div>
   
@@ -907,6 +960,9 @@
                       <strong>起始亮度为必填项</strong>
                     </mat-error>
                   </mat-form-field>
+                  <mat-error *ngIf="workday_start_brightness > 100 || workday_start_brightness < 0">
+                    <strong >亮度数值为0 ~ 100</strong>
+                  </mat-error>
                 </form>
               </div>
             </div>
@@ -937,6 +993,9 @@
                 <div class="col-6">
   
                   <input type="number" class="form-control form-control-sm" [(ngModel)]="workday_start_brightness1" max="100" />
+                  <mat-error *ngIf="workday_start_brightness1 > 100 || workday_start_brightness1 < 0">
+                    <strong >亮度数值为0 ~ 100</strong>
+                  </mat-error>
                   <!-- <form class="example-form">
                                                                           <mat-form-field class="example-full-width">
                                                                             <input matInput placeholder="Favorite food" value="Sushi" [(ngModel)]="workday_start_brightness1">
@@ -970,6 +1029,9 @@
                 <div class="col-6">
   
                   <input type="number" class="form-control form-control-sm" [(ngModel)]="workday_start_brightness2" max="100" />
+                  <mat-error *ngIf="workday_start_brightness2 > 100 || workday_start_brightness2 < 0">
+                    <strong >亮度数值为0 ~ 100</strong>
+                  </mat-error>
                   <!-- <form class="example-form">
                                                                           <mat-form-field class="example-full-width">
                                                                             <input matInput type="number" max="100" [(ngModel)]="workday_start_brightness2">
@@ -1002,6 +1064,9 @@
                 <div class="col-6">
   
                   <input type="number" class="form-control form-control-sm" [(ngModel)]="workday_start_brightness3" max="100" />
+                  <mat-error *ngIf="workday_start_brightness3 > 100 || workday_start_brightness3 < 0">
+                    <strong >亮度数值为0 ~ 100</strong>
+                  </mat-error>
                   <!-- <form class="example-form">
                                                                           <mat-form-field class="example-full-width">
                                                                             <input matInput type="number" max="100" [(ngModel)]="workday_start_brightness3">
@@ -1083,6 +1148,9 @@
                       <strong>起始亮度为必填项</strong>
                     </mat-error>
                   </mat-form-field>
+                  <mat-error *ngIf="holiday_start_brightness > 100 || holiday_start_brightness < 0">
+                    <strong >亮度数值为0 ~ 100</strong>
+                  </mat-error>
                 </form>
               </div>
             </div>
@@ -1116,6 +1184,9 @@
                 <div class="col-6">
   
                   <input type="number" class="form-control form-control-sm" [(ngModel)]="holiday_start_brightness1" max="100" />
+                  <mat-error *ngIf="holiday_start_brightness1 > 100 || holiday_start_brightness1 < 0">
+                    <strong >亮度数值为0 ~ 100</strong>
+                  </mat-error>
                   <!-- <form class="example-form">
                                                   <mat-form-field class="example-full-width">
                                                     <input matInput type="number" max="100" [(ngModel)]="holiday_start_brightness1">
@@ -1148,6 +1219,9 @@
                 <div class="col-6">
   
                   <input type="number" class="form-control form-control-sm" [(ngModel)]="holiday_start_brightness2" max="100" />
+                  <mat-error *ngIf="holiday_start_brightness2 > 100 || holiday_start_brightness2 < 0">
+                    <strong >亮度数值为0 ~ 100</strong>
+                  </mat-error>
                   <!-- <form class="example-form">
                                                   <mat-form-field class="example-full-width">
                                                     <input matInput type="number" max="100" [(ngModel)]="holiday_start_brightness2">
@@ -1180,6 +1254,9 @@
                 <div class="col-6">
   
                   <input type="number" class="form-control form-control-sm" [(ngModel)]="holiday_start_brightness3" max="100" />
+                  <mat-error *ngIf="holiday_start_brightness3 > 100 || holiday_start_brightness3 < 0">
+                    <strong >亮度数值为0 ~ 100</strong>
+                  </mat-error>
                   <!-- <form class="example-form">
                                                   <mat-form-field class="example-full-width">
                                                     <input matInput type="number" max="100" [(ngModel)]="holiday_start_brightness3">
@@ -1235,8 +1312,23 @@
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-outline-info" (click)="preStep()" *ngIf="step!==1">上一步</button>
-      <button type="button" class="btn btn-outline-info" (click)="nextStep()" *ngIf="step!==3" [disabled]="step ==2 && workday_start_time == null || step ==2 && workday_end_time == null || step ==2 && !workday_start_brightness || step ==2 && workday_start_brightness == null ">下一步</button>
-      <button type="button" class="btn btn-outline-info" (click)="c('Save click')" *ngIf="step ==3" [disabled]="step ==3 && holiday_start_time == null || step ==3 && holiday_end_time == null || step ==3 && !holiday_start_brightness || step ==3 && holiday_start_brightness == null ">完成</button>
+      
+      <button type="button" class="btn btn-outline-info" (click)="nextStep()" *ngIf="step!==3" 
+        [disabled]="step ==2 && workday_start_time == null || step ==2 && workday_end_time == null || 
+        step ==2 && !workday_start_brightness || step ==2 && workday_start_brightness == null ||
+        step ==2 && workday_start_brightness > 100 || step ==2 && workday_start_brightness < 0 ||
+        step ==2 && workday_start_brightness1 > 100 || step ==2 && workday_start_brightness1 < 0 ||
+        step ==2 && workday_start_brightness2 > 100 || step ==2 && workday_start_brightness2 < 0 ||
+        step ==2 && workday_start_brightness3 > 100 || step ==2 && workday_start_brightness3 < 0">下一步</button>
+      
+      <button type="button" class="btn btn-outline-info" (click)="c('Save click')" *ngIf="step ==3" 
+        [disabled]="step ==3 && holiday_start_time == null || step ==3 && holiday_end_time == null || 
+        step ==3 && !holiday_start_brightness || step ==3 && holiday_start_brightness == null ||
+        step ==3 && holiday_start_brightness > 100 || step ==3 && holiday_start_brightness < 0 ||
+        step ==3 && holiday_start_brightness1 > 100 || step ==3 && holiday_start_brightness1 < 0 ||
+        step ==3 && holiday_start_brightness2 > 100 || step ==3 && holiday_start_brightness2 < 0 ||
+        step ==3 && holiday_start_brightness3 > 100 || step ==3 && holiday_start_brightness3 < 0">完成</button>
+      
       <button type="button" class="btn btn-outline-metal" (click)="d('Cross click')">取消</button>
     </div>
   </ng-template>

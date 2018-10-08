@@ -45,7 +45,8 @@ export const ROUTETREE = [
             },
             {
                 id: 21,
-                icon: 'fa fa-snowflake-o nav-icon-s',
+                // icon: 'fa fa-snowflake-o nav-icon-s',
+                icon: 'fa fa-cloud nav-icon-s',
                 routeLink: 'application/air',
                 routeTitel: '空气质量',
             },
@@ -61,12 +62,12 @@ export const ROUTETREE = [
                 routeLink: 'application/cover',
                 routeTitel: '窨井管理',
             },
-            {
-                id: 21,
-                icon: 'fa fa-shield nav-icon-s',
-                routeLink: 'application/security',
-                routeTitel: '智慧安防',
-            },
+            // {
+            //     id: 21,
+            //     icon: 'fa fa-shield nav-icon-s',
+            //     routeLink: 'application/security',
+            //     routeTitel: '智慧安防',
+            // },
             {
                 id: 21,
                 icon: 'fa fa-car nav-icon-s',

@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 
 
 import { WindowRef } from '../windowserver';
-
+import { map } from 'rxjs/operators';
 
 
 @Injectable()
@@ -32,7 +32,7 @@ export class AuthService {
     };
 
     public token: string;
-    public userId: string;
+
     constructor(private http: Http,
         private winRef: WindowRef, private _cookieService: CookieService,  public router: Router) {
         // set token if saved in local storage
@@ -43,7 +43,6 @@ export class AuthService {
 
         }
         this.token = currentUser && currentUser.token;
-        this.userId = currentUser && currentUser.userId;
     }
 
 
@@ -57,9 +56,8 @@ export class AuthService {
                     const userId = val.userId;
                     if (token && username === val.username && password === val.password) {
                         this.token = token;
-                        this.userId = userId;
                         // 设置全局变量
-                        this.winRef.nativeWindow.userId = this.userId;
+                        // this.winRef.nativeWindow.userId = this.userId;
                         this._cookieService.putObject('currentUser', { loginName: username, token: token, userId: userId });
                         this.isLoggedIn = true;
                         return true;
@@ -96,6 +94,34 @@ export class AuthService {
         //     });
     }
 
+    login1(userName: String, password: String): Observable<any> {
+        return this.http.post('/security/login', { 'userName': userName, 'password': password })
+            .pipe(map((res: Response) => {
+                console.log(res);
+                if (res.status === 200) {
+                    // localStorage.setItem('access_token', res['_body']);
+                    console.log(res['_body']);
+                    const token = res['_body'];
+                    if (token) {
+                        console.log('reff');
+                        this.token = token;
+                        // 设置全局变量
+                        // this.winRef.nativeWindow.userId = this.userId;
+                        this._cookieService.putObject('currentUser', JSON.stringify({ loginName: userName, token: token }));
+                        this.isLoggedIn = true;
+                        return true;
+                    } else {
+                        this.isLoggedIn = false;
+                        return false;
+                    }
+                } else if (res.status === 400) {
+                    console.log('400');
+                    return res.json().toString();
+                } else {
+                    console.log('500');
+                }
+            }));
+    }
     logout(): void {
         this.isLoggedIn = false;
         this.token = null;

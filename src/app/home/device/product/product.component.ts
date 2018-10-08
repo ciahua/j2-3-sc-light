@@ -24,18 +24,26 @@ export class ProductComponent implements OnInit {
     title: '删除',
     body: 'hh',
   };
+  queryStr: any;
+
   @Input()
   public alerts: Array<IAlert> = [];
+  public alertsModal: Array<IAlert> = [];
 
   private backup: Array<IAlert>;
 
   constructor(private modalService: NgbModal,  private productService: ProductService) {
     this.page = 1;
+    this.queryStr = '';
   }
 
   public closeAlert(alert: IAlert) {
     const index: number = this.alerts.indexOf(alert);
     this.alerts.splice(index, 1);
+  }
+  public closeAlertModal(alert: IAlert) {
+    const index: number = this.alertsModal.indexOf(alert);
+    this.alertsModal.splice(index, 1);
   }
 
   public reset() {
@@ -47,10 +55,15 @@ export class ProductComponent implements OnInit {
     this.getModel(0, this.page, this.pagesize);
   }
 
+  // 产品关键词检索 点击事件
+  execQuery() {
+    this.page = 1;
+    this.getModel(this.currentType.id, 1, this.pagesize);
+  }
     // 获取设备型号
   getModel(type: number, page: number, pagesize: number) {
     const that = this;
-    this.productService.getModel(type, page, pagesize).subscribe({
+    this.productService.getModel(this.queryStr, type, page, pagesize).subscribe({
       next: function (val) {
         that.productList = val;
         that.total = val.total;
@@ -111,11 +124,12 @@ export class ProductComponent implements OnInit {
     this.model.device = this.deviceList[0]; // 类型
 
     const modal = this.modalService.open(content, { size: 'lg' });
+    this.mr = modal;
 
     modal.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
-      console.log(this.closeResult);
-      that.setModel();
+      // console.log(this.closeResult);
+      // that.setModel();
     }, (reason) => {
       // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       // console.log(this.closeResult);
@@ -136,17 +150,19 @@ export class ProductComponent implements OnInit {
           type: 'success',
           message: '新建成功！',
         });
+        that.mr.close();
       },
       complete: function () {
         that.getModel(that.currentType.id, that.page, that.pagesize);
       },
       error: function (error) {
-        console.log(error);
-        that.alerts.push({
+        const message = error.json().errors[0].defaultMessage;
+        that.alertsModal.push({
           id: 1,
           type: 'danger',
-          message: '新建失败！',
+          message: `新建失败: ${message}！`,
         });
+        console.log(error.json());
       }
     });
   }
@@ -168,11 +184,12 @@ export class ProductComponent implements OnInit {
     }
 
     const modal = this.modalService.open(content, { size: 'lg' });
+    this.mr = modal;
 
     modal.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
-      console.log(this.closeResult);
-      that.updateModel();
+      // console.log(this.closeResult);
+      // that.updateModel();
     }, (reason) => {
       // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       // console.log(this.closeResult);
@@ -195,17 +212,20 @@ export class ProductComponent implements OnInit {
           type: 'success',
           message: '修改成功！',
         });
+        that.mr.close();
       },
       complete: function () {
         that.getModel(that.currentType.id, that.page, that.pagesize);
       },
       error: function (error) {
-        console.log(error);
-        that.alerts.push({
+        const message = error.json().errors[0].defaultMessage;
+        that.alertsModal.push({
           id: 1,
           type: 'danger',
-          message: '修改失败！',
+          message: `修改失败: ${message}！`,
         });
+        console.log(error.json());
+        console.log(error);
       }
     });
   }
@@ -232,6 +252,11 @@ export class ProductComponent implements OnInit {
   delModal() {
     const that = this;
     const id = this.model.itemDelId;
+    let flag = false;
+    const pages = (this.total + this.pagesize - 1) / this.pagesize;
+    if (this.page >= pages && this.productListItems.length === 1) {
+      flag = true;
+    }
     this.productService.delModel(id).subscribe({
       next: function (val) {
         that.alerts.push({
@@ -242,15 +267,21 @@ export class ProductComponent implements OnInit {
         that.backup = that.alerts.map((alert: IAlert) => Object.assign({}, alert));
       },
       complete: function () {
-        that.getModel(that.currentType.id, that.page, that.pagesize);
+        if (flag) {
+          that.page  = that.page - 1;
+          that.getModel(that.currentType.id, that.page, that.pagesize);
+        } else {
+          that.getModel(that.currentType.id, that.page, that.pagesize);
+        }
       },
       error: function (error) {
-        console.log(error);
+        const message = error.json().errors[0].defaultMessage;
         that.alerts.push({
           id: 1,
           type: 'danger',
-          message: '删除失败！',
+          message: `修改失败: ${message}`,
         });
+        console.log(error);
       }
     });
   }

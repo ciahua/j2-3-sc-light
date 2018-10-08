@@ -13,8 +13,7 @@ import { LIGHTLIST } from '../../../data/light-list';
 import { MonitorService } from '../../../service/monitor.service';
 import { LightService } from '../../../service/light.service';
 import { NgbTimepickerConfig } from '@ng-bootstrap/ng-bootstrap';
-import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
-import { initChangeDetectorIfExisting } from '@angular/core/src/render3/instructions';
+
 // baidu map
 declare let BMap;
 declare let $: any;
@@ -38,6 +37,7 @@ export class LightComponent implements OnInit, OnDestroy  {
   deviceList: any; // 城市列表
   defaultZone: any; // 默认城市
   currentCity: any; // 当前城市
+  currentArea: any; // 当前区域
   currentChildren: any; // 当前城市节点
   currentBlock: any; // // 当前城市街道
   device: any; // // 当前设备点
@@ -216,11 +216,8 @@ export class LightComponent implements OnInit, OnDestroy  {
         // that.addMarker(value); // 添加
 
         that.lightList = val; // 变为新值
-        that.lightListRes = [].concat(this.lightList);
         that.lightListRes = that.comparison1(that.lightList, that.lightListRes);
-        console.log(that.lightListRes);
 
-        // that.selectedLightList = [];
         that.lightList.map((item, i) => {
           that.lightList_check.push({check: false});
         });
@@ -232,6 +229,22 @@ export class LightComponent implements OnInit, OnDestroy  {
         console.log(error);
       }
     });
+  }
+
+  // 交并补
+  comparison1(a, b) {
+    const a_arr: any[] = [];
+    let i = 0;
+    for (let j = 0; j < b.length; j++) {
+      while (i < a.length && a[i].id < b[j].id) {
+        i++;
+      }
+      if (a[i].id === b[j].id) {
+        a_arr.push(a[i]);
+        i++;
+      }
+    }
+    return a_arr;
   }
 
   // 交并补
@@ -382,11 +395,11 @@ export class LightComponent implements OnInit, OnDestroy  {
       enableAutoPan: true, // 自动平移
     };
     let txt = `
-    <p style='font-size: 12px; line-height: 1.8em; border-bottom: 1px solid #ccc;'>${val.description} </p>
+    <p style='font-size: 12px; line-height: 1.8em; border-bottom: 1px solid #ccc; padding-bottom: 10px;'>${val.description} </p>
 
     `;
     txt = txt +
-      `<p  class='cur-pointer' >灯杆编号： ${val.positionNumber}</p>
+      `<p>灯杆编号： ${val.positionNumber}</p>
      `;
 
     if (val.offline === true) {// 离线
@@ -453,7 +466,7 @@ export class LightComponent implements OnInit, OnDestroy  {
   }
 
   // 多选框 - 单选：选择需要统一分配策略的路灯
-  addLightstoCtrl(light, ind) {
+  addLightstoCtrl() {
     this.selectedLightList = [];
     this.lightList_check.map((item, i) => {
       if (item.check === true) {
@@ -493,11 +506,7 @@ export class LightComponent implements OnInit, OnDestroy  {
 
   // 解析地址- 设置中心和地图显示级别
   getPoint(baiduMap, city) {
-    const that = this;
-    // 创建地址解析器实例
-    const myGeo = new BMap.Geocoder();
     const zoom = this.zoom = this.switchZone(city.level);
-    const fullName = city.full_name;
     console.log(city);
     const pt = city.center;
     const point = new BMap.Point(pt.lng, pt.lat);
@@ -520,7 +529,7 @@ export class LightComponent implements OnInit, OnDestroy  {
     this.LightsContrMess1 = false;
     this.showDevicesControl = true;
     this.lightListRes = [].concat(this.lightList);
-    console.log(this.lightListRes);
+    // console.log(this.lightListRes);
   }
 
   // 关闭多灯控制
@@ -556,9 +565,9 @@ export class LightComponent implements OnInit, OnDestroy  {
     this.monitorService.getZoneDefault().subscribe({
       next: function (val) {
         that.cityList = val.regions;
-        that.currentCity = val.zone;
         that.zoom = that.switchZone(val.zone.level);
         that.node = that.getNode(val.regions, val.zone.region_id);
+        that.currentCity = that.node ;
         that.currentChildren = that.node.children;
 
       },
@@ -699,6 +708,7 @@ export class LightComponent implements OnInit, OnDestroy  {
 
   selecteblock(block) {
     this.getPoint(this.map, block);  // 解析地址- 设置中心和地图显示级别
+    this.currentArea = block;
   }
 
   // 显示区域
@@ -886,22 +896,6 @@ export class LightComponent implements OnInit, OnDestroy  {
       alert('请选择策略!');
     }
 
-  }
-
-  // 交并补
-  comparison1(a, b) {
-    const a_arr: any[] = [];
-    let i = 0;
-    for (let j = 0; j < b.length; j++) {
-      while (i < a.length && a[i].id < b[j].id) {
-        i++;
-      }
-      if (a[i].id === b[j].id) {
-        a_arr.push(a[i]);
-        i++;
-      }
-    }
-    return a_arr;
   }
 
   // 获取策略表

@@ -3,6 +3,8 @@ import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-boo
 import { MonitorService } from '../../../service/monitor.service';
 import { DeviceService } from '../../../service/device.service';
 import { Point } from '../../../data/point.type';
+import { GradOverlar } from '../../../service/grad.overlay';
+import { take } from 'rxjs/operators';
 
 declare let BMap;
 declare let $: any;
@@ -22,6 +24,7 @@ export class DevicesComponent implements OnInit {
   deviceList: any; // 城市列表
   defaultZone: any; // 默认城市
   currentCity: any; // 当前城市
+  currentArea: any; // 当前区域
   currentChildren: any; // 当前城市节点
   currentBlock: any; // // 当前城市街道
   areashow = false; // 默认区域列表不显示
@@ -29,18 +32,6 @@ export class DevicesComponent implements OnInit {
   deviceshow = false; // 默认设备列表不显示
 
   visible = true; // 控制可视区域
-
-  cityList1: any; // 城市列表
-  deviceList1: any; // 城市列表
-  defaultZone1: any; // 默认城市
-  currentCity1: any; // 当前城市
-  currentChildren1: any; // 当前城市节点
-  currentBlock1: any; // // 当前城市街道
-  areashow1 = false; // 默认区域列表不显示
-  cityshow1 = false; // 默认区域列表不显示
-  deviceshow1 = false; // 默认设备列表不显示
-  node1 = null; // 用于递归查询JSON树 父子节点
-  visible1 = true; // 控制可视区域
 
   zoom: any; // 地图级数
   SouthWest: Point; // 地图视图西南角
@@ -54,7 +45,9 @@ export class DevicesComponent implements OnInit {
   total: number;
   deviceModels = [];  // 设备型号列表
   deviceModels1 = [];
-  currentType: any; // 当前设备型号
+  currentModel: any; // 当前设备型号
+  queryStr: any; // 检索字符串
+  queryStrPosi: any; // 按区域显示的位置点，检索字符串
 
   device: any = {}; // 存储数据
   public mr: NgbModalRef; // 当前弹框
@@ -62,9 +55,19 @@ export class DevicesComponent implements OnInit {
     title: '删除',
     body: 'hh',
   };
+  posiListByRegion = []; // 按区域返回的位置点列表
+  pagePosi: any;
+  pageSizePosi = 10;
+  total1: number;
+  showPosiTable = false; // 默认不显示表格内容，只显示表头
+  bindedPosition: any; // 修改的设备
+
+  addOrUpdate: any; // 新建/修改标识
+  curModelIndex: any; // 当前设备型号标识
 
   @Input()
   public alerts: Array<IAlert> = [];
+  public alertsModal: Array<IAlert> = [];
 
   private backup: Array<IAlert>;
 
@@ -72,14 +75,27 @@ export class DevicesComponent implements OnInit {
     private deviceService: DeviceService) {
 
     this.page = 1;
+    this.pagePosi = 1;
+    this.curModelIndex = 0; // 全选
+    this.queryStr = '';
+    this.queryStrPosi = '';
     this.device.point = {lng: '', lat: ''};
+  }
+
+  public closeAlert(alert: IAlert) {
+    const index: number = this.alerts.indexOf(alert);
+    this.alerts.splice(index, 1);
+  }
+  public closeAlertModal(alert: IAlert) {
+    const index: number = this.alertsModal.indexOf(alert);
+    this.alertsModal.splice(index, 1);
   }
 
   ngOnInit() {
     this.getCity();
     // this.getDevice();
     this.getAllDeviceModel();
-    this.getCityDropdownList();
+    // this.getCityDropdownListgetCityDropdownList();
     this.getDevicesList(this.page, this.pageSize);
   }
 
@@ -91,7 +107,8 @@ export class DevicesComponent implements OnInit {
         that.deviceModels1 = val.items;
         that.deviceModels = val.items.map((item) => Object.assign({}, item));
         that.deviceModels.unshift({ id: 0, name: '不限' }); // 所有项
-        that.currentType = that.deviceModels[0];
+        that.currentModel = that.deviceModels[0]; // 默认显示“不限”
+        that.curModelIndex = that.currentModel.id; // 标识
         that.device.model = that.deviceModels1[0];
       },
       complete: function () { },
@@ -100,26 +117,11 @@ export class DevicesComponent implements OnInit {
       }
     });
   }
-  // 获取设备类型列表
-  // getDevice() {
-  //   const that = this;
-  //   this.monitorService.getDevice().subscribe({
-  //     next: function (val) {
-  //       that.deviceModels = val;
-  //       that.deviceModels.unshift({ id: 0, name: '不限' }); // 所有项
-  //       that.currentType = val[0];
-  //     },
-  //     complete: function () { },
-  //     error: function (error) {
-  //       console.log(error);
-  //     }
-  //   });
-  // }
 
   // 获取设备分页
   getDevicesList(page, pageSize) {
     const that = this;
-    this.deviceService.getAllDevice(page, pageSize).subscribe({
+    this.deviceService.getAllDeviceByModel(this.queryStr, this.curModelIndex, page, pageSize).subscribe({
       next: function (val) {
         that.deviceslist = val.items;
         that.total = val.total;
@@ -134,12 +136,20 @@ export class DevicesComponent implements OnInit {
 
   // 设备类型选择
   deviceTypeChange() {
+    this.curModelIndex = this.currentModel.id;
+    this.getDevicesList(this.page, this.pageSize);
     // 显示特定型号的设备列表分页
-    // console.log(this.currentType);
+  }
+  // 检索按键点击事件
+  execQuery() {
+    this.getDevicesList(this.page, this.pageSize);
   }
   // 分页
   pageChange() {
     this.getDevicesList(this.page, this.pageSize);
+  }
+  pageChangePosi() {
+    this.getPosiByRegionId(this.currentArea.id, this.pagePosi, this.pageSizePosi);
   }
 
   // 批量导入
@@ -156,49 +166,101 @@ export class DevicesComponent implements OnInit {
   }
   // 新建设备
   openNewSurvey(content) {
+    this.addOrUpdate = '新建设备';
     this.device.name = '';
     this.device.model = this.deviceModels1[0];
     this.device.descr = '';
+    this.device.bindedPosi = this.bindedPosition;
+    this.bindedPosition = null;
 
     const modal = this.modalService.open(content, { windowClass: 'ex-lg-modal' });
+    this.mr = modal;
     this.addBaiduMap();
 
     modal.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
 
-      console.log(this.closeResult);
-      this.addDevice();
+      // this.addDevice();
+      this.showPosiTable = false;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      console.log(this.closeResult);
+      this.showPosiTable = false;
+    });
+  }
+  addorUpdate(addOrUpdate) {
+    if (addOrUpdate === '新建设备') {
+      this.addDevice();
+    } else {
+      this.device.modelId = this.device.model.id; // 关闭模态框时同步modelId以便更新。device.model为双向绑定的设备类型
+      this.updataDevice();
+    }
+  }
+  // 新增设备
+  addDevice() {
+    const that = this;
+    const name = this.device.name;
+    const modelId = this.device.model.id;
+    const descr = this.device.descr;
+    const bindedPosi = this.bindedPosition;
+    const lng = bindedPosi.point.lng;
+    const lat = bindedPosi.point.lat;
+    const posiId = bindedPosi.id;
+
+    this.deviceService.addNewDevice(name, modelId, descr, posiId, lng, lat).subscribe({
+      next: function (val) {
+        that.alerts.push({
+          id: 1,
+          type: 'success',
+          message: '新建成功！',
+        });
+        that.backup = that.alerts.map((alert: IAlert) => Object.assign({}, alert));
+        that.mr.close();
+      },
+      complete: function () {
+        that.getDevicesList(that.page, that.pageSize);
+      },
+      error: function (error) {
+        const message = error.json().errors[0].defaultMessage;
+        that.alertsModal.push({
+          id: 1,
+          type: 'danger',
+          message: `新建失败: ${message}！`,
+        });
+        console.log(error.json());
+      }
     });
   }
   // 修改设备
   openUpdataDevice(content, item, i) {
+    this.queryStrPosi = '';
+    this.addOrUpdate = '更新设备';
     const that = this;
-    this.device.updataId = item.id;
+    this.getPosiById(item.positionId); // device.positionId -> position. (设备->位置点)
+
+    this.device.updateId = item.id;
     this.device.name = item.name;
     this.device.point = item.point;
     const id = item.modelId;
 
+    this.device.descr = item.description;
+    // 传入当前设备的类型
     for (let index = 0; index < this.deviceModels1.length; index++) {
       const element = that.deviceModels1[index];
-      console.log(index);
       if (id === element.id) {
-        that.device.model = that.deviceModels1[index];
+        that.device.model = that.deviceModels1[index]; // 设备型号为传入的item的型号
         break;
       }
     }
-    this.device.descr = item.description;
 
     const modal = this.modalService.open(content, { windowClass: 'ex-lg-modal' });
+    this.mr = modal;
     this.addBaiduMap();
 
     modal.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
-
-      console.log(this.closeResult);
-      that.updataDevice();
+      // console.log(this.closeResult);
+      // this.device.modelId = this.device.model.id; // 关闭模态框时同步modelId以便更新。device.model为双向绑定的设备类型
+      // that.updataDevice();
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       console.log(this.closeResult);
@@ -206,16 +268,38 @@ export class DevicesComponent implements OnInit {
   }
   // 修改设备信息
   updataDevice() {
+    const that = this;
+    const id = this.device.updateId;
     const name = this.device.name;
     const modelId = this.device.modelId;
     const descr = this.device.descr;
-    const lng = 133.33;
-    const lat = 33.33;
 
-    this.deviceService.updateDevice(name, modelId, descr, lng, lat).subscribe({
-      next: function (val) {},
-      complete: function () {},
+    const bindedPosi = this.bindedPosition;
+    const lng = bindedPosi.point.lng;
+    const lat = bindedPosi.point.lat;
+    const posiId = bindedPosi.id;
+
+    this.deviceService.updateDevice(id, name, modelId, descr, posiId, lng, lat).subscribe({
+      next: function (val) {
+        that.alerts.push({
+          id: 1,
+          type: 'success',
+          message: '修改成功！',
+        });
+        that.backup = that.alerts.map((alert: IAlert) => Object.assign({}, alert));
+        that.mr.close();
+      },
+      complete: function () {
+        that.getDevicesList(that.page, that.pageSize);
+      },
       error: function (error) {
+        const message = error.json().errors[0].defaultMessage;
+        that.alertsModal.push({
+          id: 1,
+          type: 'danger',
+          message: `修改失败: ${message}！`,
+        });
+        console.log(error.json());
         console.log(error);
       }
     });
@@ -239,6 +323,11 @@ export class DevicesComponent implements OnInit {
   delDevice() {
     const that = this;
     const id = this.device.itemDelId;
+    let flag = false;
+    const pages = (this.total + this.pageSize - 1) / this.pageSize;
+    if (this.page >= pages && this.deviceslist.length === 1) {
+      flag = true;
+    }
     this.deviceService.delDevice(id).subscribe({
       next: function (val) {
         that.alerts.push({
@@ -249,7 +338,12 @@ export class DevicesComponent implements OnInit {
         that.backup = that.alerts.map((alert: IAlert) => Object.assign({}, alert));
       },
       complete: function () {
-        that.getDevicesList(that.page, that.pageSize);
+        if (flag) {
+          that.page  = that.page - 1;
+          that.getDevicesList(that.page, that.pageSize);
+        } else {
+          that.getDevicesList(that.page, that.pageSize);
+        }
       },
       error: function (error) {
         console.log(error);
@@ -257,23 +351,16 @@ export class DevicesComponent implements OnInit {
     });
   }
 
-  // 新增设备
-  addDevice() {
-    const name = this.device.name;
-    const modelId = this.device.model.id;
-    const descr = this.device.descr;
-    const lng = 122.22;
-    const lat = 22.22;
-
-    this.deviceService.addNewDevice(name, modelId, descr, lng, lat).subscribe({
-      next: function (val) {
-      },
-      complete: function () {},
-      error: function (error) {
-        console.log(error);
-      }
-    });
+  // position表点击事件
+  bindPosition(position) {
+    this.map.clearOverlays();
+    this.bindedPosition = position;
+    const point = new BMap.Point(position.point.lng, position.point.lat);
+    this.map.centerAndZoom(point, 18);
+    const mySquare = new GradOverlar(point, 50, 'tag-bule');
+    this.map.addOverlay(mySquare);
   }
+
 
   addBaiduMap() {
     const map = this.map = new BMap.Map('survey_map', {
@@ -308,15 +395,59 @@ export class DevicesComponent implements OnInit {
     return modelName;
   }
 
+  // 根据positionId返回指定位置点
+  getPosiById(id) {
+    const that = this;
+    let curPosition;
+    this.deviceService.getPosiById(id).subscribe({
+      next: function (val) {
+        curPosition = val;
+        that.bindedPosition = val;
+        console.log(val);
+      },
+      complete: function () {
+        that.updatePosiRegion();
+        that.bindPosition(curPosition);
+        that.getPosiByRegionId(curPosition.regionId, 1, that.pageSizePosi);
+      },
+      error: function (error) {
+        console.log(error);
+      }
+    });
+  }
+
+  // 传入'修改设备位置点所在区域'到模态框
+  updatePosiRegion() {
+
+    const that = this;
+    let region_id; // 当前城市id
+    const crrentProvince = this.cityList[0]; // 当前省会
+    for (let index = 0; index < crrentProvince.children.length; index++) {
+      const element = crrentProvince.children[index];
+      if (that.bindedPosition.installZoneId === element.installZoneId) {
+        region_id = element.id;
+      }
+    }
+
+    that.node = null; // 用于递归查询JSON树 父子节点
+    that.currentCity = that.getNode(that.cityList, region_id); // 当前城市
+    that.currentChildren = that.node.children; // 当前城市下的区域列表
+
+    const area_id = that.bindedPosition.regionId; // 当前区域id
+    that.node = null; // 用于递归查询JSON树 父子节点
+    that.currentArea = that.getNode(that.cityList, area_id); // 当前区域i
+  }
+
   getCity() {
     const that = this;
 
     this.monitorService.getZoneDefault().subscribe({
       next: function (val) {
         that.cityList = val.regions;
-        that.currentCity = val.zone;
+        // that.currentCity = val.zone;
         that.zoom = that.switchZone(val.zone.level);
         that.node = that.getNode(val.regions, val.zone.region_id);
+        that.currentCity = that.node;
         that.currentChildren = that.node.children;
 
       },
@@ -410,24 +541,45 @@ export class DevicesComponent implements OnInit {
   // 选择区域
   // 选择城市
   selecteCity(city) {
+    this.device.installZoneId = city.installZoneId; // 安装区域
+    this.device.point = { lng: '', lat: '' };
     this.currentCity = city;
+    this.currentChildren = city.children;
+    this.currentArea = null;
+
     this.node = city;
     this.getPoint(this.map, city);  // 解析地址- 设置中心和地图显示级别
-    this.currentChildren = city.children;
   }
 
-  // 选择城市
-  selecteCity1(city) {
-    this.currentCity1 = city;
-    this.node1 = city;
-    this.currentChildren1 = city.children;
-  }
-
-
+  // 街道点击事件
   selecteblock(block) {
+    this.queryStrPosi = '';
     this.getPoint(this.map, block);  // 解析地址- 设置中心和地图显示级别
+    this.currentArea = block;
+    this.device.point = { lng: '', lat: '' };
+    this.pagePosi = 1;
+    this.getPosiByRegionId(this.currentArea.id, this.pagePosi, this.pageSizePosi);
   }
-
+  // 新建/修改设备中检索点击事件
+  execQueryPosi() {
+    this.pagePosi = 1;
+    this.getPosiByRegionId(this.currentArea.id, this.pagePosi, this.pageSizePosi);
+  }
+  // 通过安装区域和检索字符串获取位置点
+  getPosiByRegionId(regionId, page, pageSize) {
+    const that = this;
+    this.showPosiTable = true;
+    this.deviceService.getAllPosiByRegionId(this.queryStrPosi, regionId, page, pageSize).subscribe({
+      next: function (val) {
+        that.posiListByRegion = val.items;
+        that.total1 = val.total;
+      },
+      complete: function () {},
+      error: function (error) {
+        console.log(error);
+      }
+    });
+  }
   // 显示区域
   showArea() {
     this.areashow = true;
@@ -453,51 +605,6 @@ export class DevicesComponent implements OnInit {
   arealistMouseNone() {
     this.areashow = true;
     this.currentBlock = null;
-  }
-  getCityDropdownList() {
-    const that = this;
-    this.monitorService.getZoneDefault().subscribe({
-      next: function (val) {
-        that.cityList1 = val.regions;
-        that.currentCity1 = val.zone;
-        // console.log(that.cityList1);
-        // that.zoom = that.switchZone(val.zone.level);
-        that.node1 = that.getNode(val.regions, val.zone.region_id);
-        that.currentChildren1 = that.node1.children;
-      },
-      complete: function () {
-        // that.addBaiduMap(); // 创建地图
-      },
-      error: function (error) {
-        console.log(error);
-      }
-    });
-  }
-  // 显示区域
-  showArea1() {
-    this.areashow1 = true;
-  }
-  // 显示城市
-  showCiyt1() {
-    this.cityshow1 = true;
-  }
-  // 选择区域
-  arealistMouseover1(area) {
-
-    this.currentBlock1 = area.children;
-  }
-  // 离开区域
-  arealistMouseleave1() {
-    this.areashow1 = false;
-    this.currentBlock1 = null;
-  }
-  // 离开城市
-  citylistMouseleave1() {
-    this.cityshow1 = false;
-  }
-  arealistMouseNone1() {
-    this.areashow1 = true;
-    this.currentBlock1 = null;
   }
 }
 

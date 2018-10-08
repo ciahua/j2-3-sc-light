@@ -47,8 +47,8 @@ export class PositionService {
 
     // 获取位置分页
 
-    getPosition(type: number, page: number, pagesize: number): Observable<any> {
-        return this.http.get(`/api/position?type=${type}&page=${page}&pageSize=${pagesize}`)
+    getPosition(queryStr: String, type: number, page: number, pagesize: number): Observable<any> {
+        return this.http.get(`/api/position?queryStr=${queryStr}&type=${type}&page=${page}&pageSize=${pagesize}`)
             .pipe(map((res: Response) => {
                 if (res.status === 200) {
 

@@ -13,7 +13,7 @@ import { NgbTimepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-
+import { Router } from '@angular/router';
 
 import { StrategyService } from '../../service/strategy.service';
 
@@ -100,6 +100,8 @@ export class StrategyComponent implements OnInit {
   rangeList: any; // 策略范围
   rangeListItems = []; // 规则集合
 
+  regionList = []; // 策略所覆盖的区域ID集合
+
   // 弹框
   closeResult: string;
   strategy_index = 0; // 策略索引
@@ -143,6 +145,7 @@ export class StrategyComponent implements OnInit {
 
   step = 1; // 步骤
 
+  nodeParentList = [];
 
   // hoveredDate: NgbDate;
 
@@ -168,7 +171,7 @@ export class StrategyComponent implements OnInit {
   public zTreeOnClick: (event, treeId, treeNode) => void;
   public zTreeOnCheck: (event, treeId, treeNode) => void;
   constructor(private modalService: NgbModal, private strategyService: StrategyService,
-     public element: ElementRef,
+     public element: ElementRef, public router: Router,
     calendar: NgbCalendar,
     private _formBuilder: FormBuilder,
     config: NgbTimepickerConfig) {
@@ -195,6 +198,7 @@ export class StrategyComponent implements OnInit {
 
       const treeObj = $.fn.zTree.getZTreeObj('treeDemo');
       const nodes = treeObj.getCheckedNodes(true);
+      console.log(nodes);
 
       if (nodes.length > 0) {
         nodes.map((item, i) => {
@@ -275,6 +279,10 @@ export class StrategyComponent implements OnInit {
 
   // 在左侧中点击一策略
   selectStrategy(item, index) {
+    // 策略范围视图下切换策略，会回到策略时间视图
+    if (this.nav_index === 1) {
+      this.nav_index = 0;
+    }
     this.strategy_index = index;
     this.strategy_item = item;
     const that = this;
@@ -310,8 +318,8 @@ export class StrategyComponent implements OnInit {
 
   // 添加策略弹框操作
   openAddStrategy(content, index) {
-    // 初始参数
 
+    // 初始参数
     const that = this;
     const modal = this.modalService.open(content, { size: 'sm' });
     this.mr = modal;
@@ -901,13 +909,81 @@ export class StrategyComponent implements OnInit {
   changeNav(index) {
     this.nav_index = index;
     if (index === 1) {
-      setTimeout(() => {
-        this.getZoneTree();
-      }, 1);
+      this.getZtreeRegion();
+      // setTimeout(() => {
+      //   this.getZoneTree();
+      //   this.setZtreeNode();
+      // }, 1);
 
     }
   }
 
+  setZtreeNode() {
+    const that = this;
+    const treeObj = $.fn.zTree.getZTreeObj('treeDemo');
+    this.regionList.map(item => {
+      const node = treeObj.getNodeByParam('id', item.regionId, null);
+      if (node) {
+        treeObj.checkNode(node, true, true);
+        // console.log(11111111);
+        // console.log(node);
+        // console.log(node.parentTId);
+        // console.log(node.isParent);
+        this.findParent(node);
+        this.findParent(node.getParentNode());
+
+        // that.findFinalParent(node);
+        // for (let i = that.nodeParentList.length - 1; i > 0; i--) {
+        //   that.nodeParentList[i].open = true;
+        //   console.log(333333);
+        //   console.log(that.nodeParentList[i]);
+        // }
+      }
+    });
+
+  }
+
+  // findFinalParent(node) {
+  //   const that = this;
+  //   console.log(44444444444);
+  //   let p = node.getParentNode();
+  //   while (p && !p.open) {
+  //     that.nodeParentList.push(p);
+  //     p = p.getParentNode();
+  //   }
+  // }
+
+  findParent(node) {
+    const p = node.getParentNode();
+    if (p && !p.open) {
+      console.log(444);
+      p.open = true;
+
+      // console.log(p.open);
+      // const treeObj = $.fn.zTree.getZTreeObj('treeDemo');
+      // const node1 = treeObj.getNodeByTId(p.tId);
+      // console.log(node1);
+      // node1.open = true;
+      // this.findParent(p);
+    }
+  }
+  // 获取策略所覆盖的区域集合
+  getZtreeRegion() {
+    const that = this;
+    this.strategyService.getZtreeRegion(this.currentStrategy.id).subscribe({
+      next: function (val) {
+        that.regionList = val;
+        console.log(val);
+      },
+      complete: function () {
+        that.getZoneTree();
+        that.setZtreeNode();
+      },
+      error: function(error) {
+        console.log(error);
+      }
+    });
+  }
   // 策略范围-策略下发
   //
   //
@@ -1001,6 +1077,10 @@ export class StrategyComponent implements OnInit {
     const id = this.currentTreeNodeId;
     this.getRegionLights(id);
 
+  }
+  // 路由跳转
+  jumpHandle(url) {
+    this.router.navigate([url]);
   }
 
 }

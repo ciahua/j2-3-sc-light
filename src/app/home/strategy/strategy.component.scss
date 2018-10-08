@@ -9,7 +9,7 @@
     background: #dee2e6;
     .strategy-add{
             position: relative;
-            padding: 10px 0 10px 20px;
+            padding: 10px 0;
             background-color: rgba(153, 153, 153, 0.5);
             font-size: 20px;
         button {
@@ -30,7 +30,7 @@
                 height: 56px;
                 line-height: 56px;
                 border-bottom: 1px solid #ccc;
-                padding: 0 12px;
+                padding: 0 15px;
                 position: relative;
 
                 .modify-strategy {
@@ -48,7 +48,7 @@
 
 .strategy-title {
     font-size: 1.57rem;
-    padding-left: 12px;
+    padding-left: 15px;
 
 }
 
@@ -57,6 +57,18 @@
     top: 0px;
     left: 250px;
     width: calc(100vw - 300px);
+
+    .title-right {
+        margin-top: 10px;
+    }
+    .jump-iron {
+        position: absolute;
+        right: 20px;
+    }
+    .nav-strategy {
+        padding-left: 15px;
+        margin-top: 10px;
+    }
 }
 
 
@@ -71,6 +83,10 @@
     margin: 10px;
 
     padding: 10px 5px;
+
+    .span-marg-bot {
+        margin-bottom: .5rem
+    }
 }
 .br {
     border: 1px solid #ccc;
@@ -191,4 +207,7 @@ background-color: rgba(2, 117, 216, 0.5);
 .page-list-table{
     max-height: 750px;
     overflow-y: auto;
+}
+.date-style {
+    margin: 0 auto;
 }

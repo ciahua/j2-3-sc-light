@@ -27,29 +27,41 @@ export class LoginComponent {
   }
 
   login() {
+    const that = this;
     this.loading = true;
+    // this.authService.login1(this.model.username, this.model.password).subscribe(() => {});
 
+    this.authService.login1(this.model.username, this.model.password)
+    .subscribe({
+      next: function(val) {
+        if (that.authService.isLoggedIn) {
+          // Get the redirect URL from our auth service
+          // If no redirect has been set, use the default
+          const redirect = that.authService.redirectUrl ? that.authService.redirectUrl : '/home';
 
-    this.authService.login(this.model.username, this.model.password).subscribe(() => {
+          // Set our navigation extras object
+          // that passes on our global query params and fragment
+          const navigationExtras: NavigationExtras = {
+            queryParamsHandling: 'preserve',
+            preserveFragment: true
+          };
 
-      if (this.authService.isLoggedIn) {
-        // Get the redirect URL from our auth service
-        // If no redirect has been set, use the default
-        const redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/home';
+          // Redirect the user
+          // this.router.navigate([redirect], navigationExtras);
+          that.router.navigate([redirect]);
+        } else {
+          that.error = '登录失败!';
+          that.loading = false;
+        }
+      },
+      complete: function() {
 
-        // Set our navigation extras object
-        // that passes on our global query params and fragment
-        const navigationExtras: NavigationExtras = {
-          queryParamsHandling: 'preserve',
-          preserveFragment: true
-        };
-
-        // Redirect the user
-        // this.router.navigate([redirect], navigationExtras);
-        this.router.navigate([redirect]);
-      } else {
-        this.error = '登录失败!';
-        this.loading = false;
+      },
+      error: function(error) {
+        console.log('error.json().toString()');
+        console.log(error.json());
+        that.error = error.json().errors[0].defaultMessage;
+        that.loading = false;
       }
     });
   }

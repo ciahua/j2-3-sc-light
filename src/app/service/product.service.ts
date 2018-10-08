@@ -46,8 +46,8 @@ export class ProductService {
     }
 
     // 获取设备型号
-    getModel(type: number, page: number, pagesize: number): Observable<any> {
-        return this.http.get(`/api/device/model?type=${type}&page=${page}&pageSize=${pagesize}`)
+    getModel(queryStr: String, type: number, page: number, pagesize: number): Observable<any> {
+        return this.http.get(`/api/device/model?queryStr=${queryStr}&type=${type}&page=${page}&pageSize=${pagesize}`)
             .pipe(map((res: Response) => {
                 if (res.status === 200) {
                     const data = res.json();

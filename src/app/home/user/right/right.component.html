@@ -59,15 +59,46 @@
       <button type="button" class="btn btn-outline-metal" (click)="d('Cross click')">取消</button>
     </div>
   </ng-template>
+<!-- 新增、修改角色 -->
+<ng-template #content1 let-c="close" let-d="dismiss">
+  <p *ngFor="let alert of alertsModal" class="lsq-alert">
+    <ngb-alert [type]="alert.type" (close)="closeAlertModal(alert)">{{ alert.message }}</ngb-alert>
+  </p>
+  <div class="modal-header">
+    <h4 class="modal-title">{{AddorUpdate}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="user-info">
+        <div class="form-inline">
+          <label class="control-label"><span style="color: red;">*</span>角色名称：</label>
+          <input type="text" [(ngModel)]="role.name" name="rolename" class="form-control" placeholder="">
+        </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-info" (click)="addorUpdt()" [disabled]="!role.name || role.name == '' 
+      || role.name.length > 30">确定</button>
+    <button type="button" class="btn btn-outline-metal" (click)="d('Cross click')">取消</button>
+  </div>
+</ng-template>
 
+<!-- 删除位置 -->
+<ng-template #contentDelRole let-c="close" let-d="dismiss">
+  <app-sq-modal  [input]="modelData" (output)="closeUser($event)"></app-sq-modal>
+</ng-template>
 <!-- 主体 -->
 <div class="bodyofright">
-
+  <p *ngFor="let alert of alerts" class="lsq-alert">
+    <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
+  </p>
   <div class="card card-primary panel-default">
     <div class="card-header">
       <span>角色管理</span>
       <div class="add-right">
-          <a class="btn-a theme-text" (click)="open(content)">新建用户</a>
+          <a class="cur-pointer btn-a theme-text" (click)="openAddRole(content1)">新建角色</a>
       </div>
     </div>
     <!-- 搜索表单 -->
@@ -75,42 +106,44 @@
       <!-- 搜索输入框 -->
       <div class="form-group inner-addon left-addon ">
           <div class="form-group">
-            <input type="text" class="form-control border-none" name="search-content" id="" placeholder="{{'XXX'}}"/>
-            <i class="fa fa-search search-icon"></i>
+            <!-- <input type="text" class="form-control border-none" name="search-content" id="" placeholder="{{'XXX'}}"/> -->
+            <input type="text" class="form-control border-none" name="search-content" id="roleQuery" [(ngModel)]="queryStr" 
+              autocomplete="off" maxlength="256" placeholder="检索角色名"/>
+            <i class="fa fa-search search-icon" (click)="execQuery()"></i>
           </div>
       </div>
-      <input type="date" class="form-control" value="" />
+      <!-- <input type="date" class="form-control" value="" /> -->
     </form>
 
     <div class="card-block">
         <!-- 用户信息表 -->
         <table class="table table-hover">
-          <tr class="table-header">
-            <th class="th-top-border">角色</th>
-            <th class="th-top-border">描述</th>
-            <th class="th-top-border">时间</th>
-            <th class="th-top-border">操作</th>
-          </tr>
-          <tr>
-            <td class="success" style="border: none">...</td>
-            <td class="success" style="border: none">...</td>
-            <td class="warning" style="border: none">...</td>
-            <td class="warning " style="border: none">
-              <div>
-                <button class="btn-check">
-                  <i class="fa fa-eye" aria-hidden="true"></i>
-                </button>
-                <button class="btn-check">
-                  <i class="fa fa-wrench btn-i" aria-hidden="true"></i>
-                </button>
-                <button class="btn-check">
-                  <i class="fa fa-times-circle btn-i" aria-hidden="true"></i>
-                </button>
-              </div>
-              <!-- <td class="danger">...</td>
-              <td class="info">...</td> -->
-          </tr>
+          <thead class="table-header">
+            <tr>
+              <th>序号</th>
+              <!-- <th>ID</th> -->
+              <th>角色名</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let role of roleList; let i = index" class="lineheight">
+              <td>{{i + 1}}</td>
+              <!-- <td class="success" >{{role.id}}</td> -->
+              <td>{{role.name}}</td>
+              <td>
+                <div class="modify-strategy d-inline">
+                  <a class="cur-pointer btn-a theme-text d-inline" (click)="openUpdateRole(content1, role)">修改</a>
+                  <a class="cur-pointer btn-a theme-text d-inline" (click)="openDelRole(contentDelRole, role)">删除</a>
+                </div>
+            </tr>
+          </tbody>
         </table>
+        <div *ngIf="roleList.length === 0 || !roleList">无数据！</div>
+        <div *ngIf="roleList.length > 0">
+          <ngb-pagination [collectionSize]=total [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"
+            (pageChange)="pageChange()"></ngb-pagination>
+        </div>
     </div>
 
   </div>

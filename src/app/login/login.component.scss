@@ -1,3 +1,21 @@
+@media (max-width: 575.98px) { 
+    .product-name , .product-title, .login-left{
+        display: none;
+    }
+    .login-right {
+        background: rgba(255, 255, 255, 0.7) !important;
+        top: 160px !important;
+        height: 50vh !important;
+        .form-control:focus {
+            background: rgba(255, 255, 255, 0) !important;
+            box-shadow: 0 0 0 0.2rem #c2b4c7;
+        }
+        .login-input {
+             background: rgba(255, 255, 255, 0) !important;
+        }
+    }
+
+ }
 .help-block{
     color: red;
 }
@@ -31,8 +49,7 @@
 //右侧定位：登录
 .login-right {
     position: absolute;
-    background: #fff;
-
+    background: rgb(255, 255, 255);
     width: 300px;
     padding: 15px;
     top: 36px;
@@ -43,7 +60,7 @@
 .login-left {
     position: absolute;
     width: calc(100vw - 300px);
-    background: rgba(226, 226, 219, 0.253);
+    background: rgba(0, 0, 0, 0.5);
     top: 36px;
     left: 30px;
     height: 93vh;
@@ -65,7 +82,7 @@
 .login-center {
  height: 100vh;
  margin: 0;
- background-image: url(../../assets/imgs/login-bg.jpg);
+ background-image: url(../../assets/imgs/login-bg.png);
  background-repeat: no-repeat;
  background-size: cover;
  position: relative;

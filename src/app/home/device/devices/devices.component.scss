@@ -7,6 +7,7 @@
     width: calc(100vw - 50px);
     height: 100vh;
     padding: 30px;
+    position: relative;
     // padding: 15px;
 }
 .card-header {
@@ -110,9 +111,27 @@
     .padding-left-zero {
         padding-left: 0px;
     }
-    .area-selection {
-        margin: 0 0 5px 5px;
+    // .area-selection {
+    //     margin: 0 0 5px 5px;
+    // }
+    .label-mid {
+        width: 65px;
+        text-align: right;
+        margin-right: 5px;
     }
+    .query-div {
+        position: relative;
+        margin-top: 5px;
+        .query-btn {
+            position: relative;
+            top: -2px;
+            right: 22px;
+        }
+        .query-btn:hover, .query-btn:active {
+            color: red;
+        }
+    }
+
 }
 
 .div-left {
@@ -121,4 +140,10 @@
 
 .lineheight {
     line-height: 1.0;
+}
+
+.small-size {
+    td, th {
+        padding: 0.25rem;
+    }
 }

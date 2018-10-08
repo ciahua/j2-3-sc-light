@@ -29,8 +29,10 @@ export class DeviceService {
                     // });
 
                     return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
+                } else if (res.status === 400) {
+                    console.log(res.json());
+                    return res.json();
+                    // return res.json().errors.toString();
 
                 }
             }));
@@ -41,6 +43,21 @@ export class DeviceService {
         // return Observable.of(ARTICLESTYPE);
 
         return this.http.get(`/api/device?page=${page}&pageSize=${pageSize}`)
+            .pipe(map((res: Response) => {
+                if (res.status === 200) {
+                    const data = res.json();
+                    return data;
+                } else if (res.status === 202) {
+                    return res.json().code.toString();
+                }
+            }));
+    }
+
+    // 获取指定型号设备-分页
+    getAllDeviceByModel(queryStr: String, model: number, page: number, pageSize: number): Observable<any> {
+        // return Observable.of(ARTICLESTYPE);
+
+        return this.http.get(`/api/device?queryStr=${queryStr}&model=${model}&page=${page}&pageSize=${pageSize}`)
             .pipe(map((res: Response) => {
                 if (res.status === 200) {
                     const data = res.json();
@@ -65,11 +82,12 @@ export class DeviceService {
     }
 
     // 新增设备
-    addNewDevice(name: String, modelId: Number, descr: String, lng: Number, lat: Number): Observable<any> {
+    addNewDevice(name: String, modelId: Number, descr: String, positionId: Number, lng: Number, lat: Number): Observable<any> {
         return this.http.post('/api/device', {
             'name': name,
             'modelId': modelId,
             'description': descr,
+            'positionId': positionId,
             'point': {
                 'lat': lat,
                 'lng': lng
@@ -78,9 +96,16 @@ export class DeviceService {
             .pipe(map((res: Response) => {
                 if (res.status === 200) {
                     const data = res.json();
+                    // console.log(res.status);
+                    // console.log(11);
+                    // console.log(res.json());
                     return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
+                } else if (res.status === 400) {
+                    // console.log(12);
+                    // console.log(res.json());
+                    return res.json();
+                    // return res.json().errors.toString();
+
                 }
             }));
     }
@@ -101,11 +126,13 @@ export class DeviceService {
     }
 
     // 修改设备
-    updateDevice(name: String, modelId: Number, descr: String, lng: Number, lat: Number): Observable<any> {
-        return this.http.put(`/api/position`, {
+    updateDevice(id: Number, name: String, modelId: Number, descr: String, positionId: Number, lng: Number, lat: Number): Observable<any> {
+        return this.http.put(`/api/device`, {
+            'id': id,
             'name': name,
             'modelId': modelId,
             'description': descr,
+            'positionId': positionId,
             'point': {
                 'lat': lat,
                 'lng': lng
@@ -121,4 +148,29 @@ export class DeviceService {
             }));
     }
 
+    // 获取指定区域内的所有位置点-分页
+    getAllPosiByRegionId(queryStr: String, regionId: number, page: number, pageSize: number): Observable<any> {
+        return this.http.get(`/api/position/region/${regionId}?queryStr=${queryStr}&page=${page}&pageSize=${pageSize}`)
+            .pipe(map((res: Response) => {
+                if (res.status === 200) {
+                    const data = res.json();
+                    return data;
+                } else if (res.status === 202) {
+                    return res.json().code.toString();
+                }
+            }));
+    }
+
+    // 获取指定位置点
+    getPosiById(id: number): Observable<any> {
+        return this.http.get(`/api/position/${id}`)
+            .pipe(map((res: Response) => {
+                if (res.status === 200) {
+                    const data = res.json();
+                    return data;
+                } else if (res.status === 202) {
+                    return res.json().code.toString();
+                }
+            }));
+    }
 }

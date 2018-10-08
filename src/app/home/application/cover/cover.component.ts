@@ -8,22 +8,13 @@ Author: luo.shuqi@live.com
 */
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy} from '@angular/core';
 import { Point } from '../../../data/point.type';
-import { LIGHTLIST } from '../../../data/light-list';
 import { MonitorService } from '../../../service/monitor.service';
-import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
-
-// ymZhao
-import { MessageService } from '../../../service/message.service';
 import { MessService } from '../../../service/mess.service';
-import { CommunicateService } from '../../../service/communicate.service';
-import { GradOverlar } from '../../../service/grad.overlay';
 import { CoverService } from '../../../service/cover.service';
 // baidu map
 declare let BMap;
-declare let $: any;
-declare let BMapLib;
 declare let BMAP_ANCHOR_TOP_LEFT;
-declare let echarts; // ymZhao
+
 
 @Component({
   selector: 'app-cover',
@@ -31,77 +22,101 @@ declare let echarts; // ymZhao
   styleUrls: ['./cover.component.scss']
 })
 export class CoverComponent implements OnInit, OnDestroy {
-  messageList: any;
-  messageList1: any;
-  messageList2: any; // 井盖三按状态生成的列表
   @ViewChild('map3') map_container: ElementRef;
+  /*
+  model:object
+  @issueId: number// 消息
+  @infoW: any// 信息框
+  @deviceType: number// 井盖类型id
+  @messageList: array //  待处理消息
+  @messageList1: array // 处理中消息
+  @messageList2: array // 已处理消息
+
+  */
   model: any = {}; // 存储数据
 
+  /*
+  map_model: object // 城市列表相关
+  @currentCity: any // 当前城市
+  @currentArea: any // 当前区域
+  @cityList: array // 城市列表
+  @currentChildren: array // 区域列表一级
+  @currentBlock: array // 当前城市街道 = []; // 区域列表2级
+
+
+  */
+
+  map_model: any = {}; // 存储数据
+
   map: any; // 地图对象
-  coverList = [];  // 当前井盖列表
 
-  cityList: any; // 城市列表
-  deviceList: any; // 城市列表
-  defaultZone: any; // 默认城市
-  currentCity: any; // 当前城市
-  currentChildren: any; // 当前城市节点
-  currentBlock: any; // // 当前城市街道
-  device: any; // // 当前设备点
-
-  deviceChild: any; // // 当前设备点上-被点击的子设备
   areashow = false; // 默认区域列表不显示
   cityshow = false; // 默认区域列表不显示
-  deviceshow = false; // 默认设备列表不显示
+  // deviceshow = false; // 默认设备列表不显示
 
   visible = true; // 控制可视区域
-
-  zoom: any; // 地图级数
-  SouthWest: Point; // 地图视图西南角
-  NorthEast: Point; // 地图视图东北角
-  type = 0; // 设备类型
 
   parentNode = null; // 用于递归查询JSON树 父子节点
   node = null; // 用于递归查询JSON树 父子节点
 
-  light_list = LIGHTLIST.val.light_list; // 数据模拟
   showunstartedlist = false; // 默认不显示“未处理”的异常消息
   showonprogresslist = false; // 默认不显示“处理中”的异常消息
   showfinishedlist = false; // 默认不显示“已处理”的异常消息
   timer: any; // 定时器
-  constructor(private coverService: CoverService, private monitorService: MonitorService,
-    private messageService: MessageService, public messService: MessService, private config: NgbDropdownConfig) {
-      // config.placement = 'top-left';
-      // config.placement = 'bottom-left';
-     }
+
+  constructor(private coverService: CoverService, private monitorService: MonitorService, public messService: MessService) {
+    this.model.deviceType = 5; // 井盖
+    this.model.messageList = []; // 待处理
+    this.model.messageList1 = []; // 处理中
+    this.model.messageList2 = []; // 已处理
+    this.model.coverList = [];  // 当前井盖列表
+    this.map_model.cityList = []; // 城市列表
+    this.map_model.currentChildren = []; // 区域列表一级
+    this.map_model.currentBlock = []; // // 当前城市街道 = []; // 区域列表2级
+  }
 
   ngOnInit() {
     this.addBeiduMap();
     this.getCity(); // 获取城市列表
-    this.getMessage();  // 获取井盖异常消息列表
+
   }
 
-  // ymZhao 获取井盖异常消息列表
+  // 获取指定设备的事件
+  getDeviceIssues(deviceId: number) {
+    let res ;
+    this.coverService.getDeviceIssues(deviceId, 0).subscribe({
+      next: function (val) {
+        return res = val;
+      },
+      error: function (error) {
+        console.log(error);
+      }
+    });
+  }
+
+  // 获取井盖异常消息列表
   getMessage() {
     const that = this;
-    this.messageService.getMessage().subscribe({
+    const deviceType = this.model.deviceType;
+    this.coverService.getIssues(deviceType, 0).subscribe({
       next: function (val) {
-        that.messageList = val.list;
+        that.model.messageList = val;
       },
       error: function (error) {
         console.log(error);
       }
     });
-    this.messageService.getMessage1().subscribe({
+    this.coverService.getIssues(deviceType, 1).subscribe({
       next: function (val) {
-        that.messageList1 = val.list;
+        that.model.messageList1 = val;
       },
       error: function (error) {
         console.log(error);
       }
     });
-    this.messageService.getMessage2().subscribe({
+    this.coverService.getIssues(deviceType, 2).subscribe({
       next: function (val) {
-        that.messageList2 = val.list;
+        that.model.messageList2 = val;
       },
       error: function (error) {
         console.log(error);
@@ -138,19 +153,21 @@ export class CoverComponent implements OnInit, OnDestroy {
     this.addMarker();
   }
     // 返回地图可视区域，以地理坐标表示
-    getBounds(baiduMap) {
-      const Bounds = baiduMap.getBounds(); // 返回地图可视区域，以地理坐标表示
-      this.NorthEast = Bounds.getNorthEast(); // 返回矩形区域的东北角
-      this.SouthWest = Bounds.getSouthWest(); // 返回矩形区域的西南角
-      this.zoom = baiduMap.getZoom(); // 地图级别
-    }
+    // getBounds(baiduMap) {
+    //   const Bounds = baiduMap.getBounds(); // 返回地图可视区域，以地理坐标表示
+    //   this.NorthEast = Bounds.getNorthEast(); // 返回矩形区域的东北角
+    //   this.SouthWest = Bounds.getSouthWest(); // 返回矩形区域的西南角
+    //   this.zoom = baiduMap.getZoom(); // 地图级别
+    // }
 
   addMarker() {
     this.getCovers();  // 获取井盖
+    this.getMessage();  // 获取井盖异常消息列表
     this.timer = setInterval(() => {
       // this.map.clearOverlays();
       this.getCovers();
-    }, 5000);
+      this.getMessage();  // 获取井盖异常消息列表
+    }, 10000);
 
 
   }
@@ -168,7 +185,7 @@ export class CoverComponent implements OnInit, OnDestroy {
     this.coverService.getCovers(NorthEast, SouthWest).subscribe({
       next: function (val) {
         // value = val;
-        compar = that.comparison(that.coverList, val);
+        compar = that.comparison(that.model.coverList, val);
         value = that.judgeChange(compar.a_arr, compar.b_arr);
 
         that.changeMarker(value); // 替换
@@ -177,7 +194,7 @@ export class CoverComponent implements OnInit, OnDestroy {
         that.addPoint(compar.b_surplus); // 添加
         // that.addPoint(value); // 添加
 
-        that.coverList = val; // 变为新值
+        that.model.coverList = val; // 变为新值
       },
       complete: function () {
         // that.addPoint(value);
@@ -237,8 +254,6 @@ export class CoverComponent implements OnInit, OnDestroy {
 
   // 替换
   changeMarker(cover_list) {
-    // console.log(cover_list);
-    // console.log(this.coverList);
     this.deleMarker(cover_list); // 删除
     this.addPoint(cover_list); // 添加
   }
@@ -246,7 +261,6 @@ export class CoverComponent implements OnInit, OnDestroy {
   deleMarker(cover_list) {
     const makers = this.map.getOverlays();
     for (let ind = 0; ind < cover_list.length; ind++) {
-      const ele = cover_list[ind];
       const point = cover_list[ind].point;
       for (let index = 0; index < makers.length; index++) {
         const element = makers[index];
@@ -272,12 +286,12 @@ export class CoverComponent implements OnInit, OnDestroy {
       // 添加自定义覆盖物
       let myIcon;
 
-      if (item.alarm && item.alarm === true) { // 异常
+      if (item.alarm && item.alarm === true) { // 丢失
         myIcon = new BMap.Icon('../../../../assets/imgs/cover-lose.png', new BMap.Size(36, 36));
       } else if (item.offline === true) { // 掉线
         myIcon = new BMap.Icon('../../../../assets/imgs/cover-offline.png', new BMap.Size(36, 36));
 
-      } else if (item.lowBattery === true) {
+      } else if (item.lowBattery === true) { // 低电量
         myIcon = new BMap.Icon('../../../../assets/imgs/cover-lowpower.png', new BMap.Size(36, 36));
       } else { // 正常
         myIcon = new BMap.Icon('../../../../assets/imgs/cover-normal.png', new BMap.Size(36, 36));
@@ -293,37 +307,61 @@ export class CoverComponent implements OnInit, OnDestroy {
     // 点击点标注事件
     for (let index = 0; index < markers.length; index++) {
       const marker = markers[index];
-      that.openSideBar(marker, that.map, val[index], points[index]);
+      this.coverService.getDeviceIssues(val[index].id, 0).subscribe({
+        next: function (res1) {
+          that.coverService.getDeviceIssues(val[index].id, 1).subscribe({
+            next: function (res2) {
+              that.openSideBar(marker, that.map, val[index], points[index], res1, res2);
+            },
+            error: function (error) {
+              console.log(error);
+            }
+          });
+          // that.openSideBar(marker, that.map, val[index], points[index], res);
+        },
+        error: function (error) {
+          console.log(error);
+        }
+      });
+
     }
   }
 
 
   // 标注消息列表中点击的井盖事件
-  findPoint(mess) {
-    const pt = new BMap.Point(mess.lng, mess.lat);
-    const messtype = mess.handleType;
-    let myIcon;
-    if (messtype === 0) {
-      myIcon = new BMap.Icon('../../../../assets/imgs/cover-lose.png', new BMap.Size(16, 16));
-    } else if (messtype === 1) {
-      myIcon = new BMap.Icon('../../../../assets/imgs/cover-offline.png', new BMap.Size(16, 16));
-    } else if (messtype === 2) {
-      myIcon = new BMap.Icon('../../../../assets/imgs/cover-normal.png', new BMap.Size(16, 16));
-    } else {
-      console.log('Error messtype!');
+  findPoint(item) {
+    let marker;
+    const makers = this.map.getOverlays();
+    const point = new BMap.Point(item.point.lng, item.point.lat);
+    this.model.issueId = item.id;
+    for (let index = 0; index < makers.length; index++) {
+      const element = makers[index];
+      const lat = element.point && element.point.lat;
+      const lng = element.point && element.point.lng;
+      if (point.lat === lat && point.lng === lng) {
+        marker = element;
+        console.log(marker);
+        if (marker) {
+          marker.V.click();
+        }
+      }
     }
 
-    const marker = new BMap.Marker(pt, { icon: myIcon });  // 创建标注
-    this.map.addOverlay(marker);
-    this.map.centerAndZoom(pt, 18);
-    this.openSideBar(marker, this.map, mess, pt);
-    setTimeout(() => {
-      marker.V.click();
-    }, 50);
+    this.map.centerAndZoom(point, 18);
+
   }
 
   // 地图点注标-点击事件
-  openSideBar(marker, baiduMap, mess, point) {
+  openSideBar(marker, baiduMap, mess, point, res1, res2) {
+    // const res = this.getDeviceIssues(mess.id);
+    /*
+    res1: 待处理
+    res2: 处理中
+    */
+    console.log('待处理');
+    console.log(res1);
+    console.log('处理');
+    console.log(res2);
     const that = this;
     const opts = {
       width: 350,     // 信息窗口宽度
@@ -333,67 +371,122 @@ export class CoverComponent implements OnInit, OnDestroy {
       enableAutoPan: true, // 自动平移
       // border-radius: 5px,
     };
-    let txt = `<p style='font-size: 12px; line-height: 1.8em; border-bottom: 1px solid #ccc;'>设备编号 | ${mess.positionNumber} </p>`;
+    let txt = `<p style='font-size: 12px; line-height: 1.8em; border-bottom: 1px solid #ccc; padding-bottom: 10px;'>`;
 
-    txt = txt + `<p  class='cur-pointer'> 设备名称：${mess.description}</p>`;
+    txt = txt + `设备编号 | ${mess.name} | ${mess.id}</p><p> 设备名称：${mess.description}</p>`;
     if (mess.lowBattery === false) {
-      txt = txt + `<p  class='cur-pointer'> 是否低电量：否</p>`;
+      txt = txt + `<p> 是否低电量：否</p>`;
     } else {
-      txt = txt + `<p  class='cur-pointer'> 是否低电量：<span style='color: red'>是</span></p>`;
+      txt = txt + `<p> 是否低电量：<span style='color: #f4516c'>是</span></p>`;
     }
     if (mess.alarm === false) {
-      txt = txt + `<p  class='cur-pointer'> 是否报警：否</p>`;
+      txt = txt + `<p> 是否报警：否</p>`;
     } else {
-      txt = txt + `<p  class='cur-pointer'> 是否报警：<span style='color: red'>是</span></p>`;
+      txt = txt + `<p> 是否报警：<span style='color: #f4516c'>是</span></p>`;
     }
-    if (mess.error === false) {
-      txt = txt + `<p  class='cur-pointer'> 是否故障：否</p>`;
-    } else {
-      txt = txt + `<p  class='cur-pointer'> 是否故障：<span style='color: red'>是</span></p>`;
-    }
+    // if (mess.error === false) {
+    //   txt = txt + `<p> 是否故障：否</p>`;
+    // } else {
+    //   txt = txt + `<p> 是否故障：<span style='color: red'>是</span></p>`;
+    // }
     if (mess.offline === false) {
-      txt = txt + `<p  class='cur-pointer'> 是否离线：否</p>`;
+      txt = txt + `<p> 是否离线：否</p>`;
     } else {
-      txt = txt + `<p  class='cur-pointer'> 是否离线：<span style='color: red'>是</span></p>`;
+      txt = txt + `<p> 是否离线：<span style='color: #f4516c'>是</span></p>`;
     }
-    if (mess.lowBattery || mess.alarm || mess.error || mess.offline) {
-      txt = txt + `<button class='btn btn-outline-info cur-point' style='font-size: 14px; float: right; margin: 5px'>处理</button>`;
+    // if (mess.lowBattery || mess.alarm || mess.error || mess.offline) {
+
+    if (res1 && res1.length > 0) {
+      txt = txt + `<hr><p style='color: #f4516c;'>待处理事件：</p>`;
+      for (let index = 0; index < res1.length; index++) {
+        const element = res1[index];
+        txt = txt + `<p style='color: #f4516c;'>${element.typeName}</p>`;
+      }
+      const m = `massage-lsq${mess.id}`;
+      const p = `massage-post${mess.id}`;
+      txt = txt + `<label>处理信息：</label><textarea id=${m}  rows="3"  style='width:100%;'></textarea>`;
+      txt = txt + `<p><button id=${p} class='btn btn-outline-info cur-point' style='font-size: 14px; float: right; margin: 5px'>
+      处理</button></p>`;
+
+
     }
+    if (res2 && res2.length > 0) {
+      txt = txt + `<hr><p style='color: #ffb822;'>处理中事件：</p>`;
+      for (let index = 0; index < res2.length; index++) {
+        const element = res2[index];
+        txt = txt + `<p style='color: #ffb822;'>${element.typeName}</p>`;
+      }
+    }
+
+
 
 
     const infoWindow = new BMap.InfoWindow(txt, opts);
 
     marker.addEventListener('click', function () {
-      that.device = mess;
-      baiduMap.openInfoWindow(infoWindow, point); // 开启信息窗口
-      // setTimeout(() => {
-      //   that.deviceAddEventListener();
-      // }, 0);
+      that.model.infoW = baiduMap.openInfoWindow(infoWindow, point); // 开启信息窗口
+      setTimeout(() => {
+        that.deviceAddEventListener(mess);
+      }, 0);
     });
 
   }
 
+  // 点击处理按钮事件
+  deviceAddEventListener(mess) {
+    const that = this;
+    const m = `massage-lsq${mess.id}`;
+    const p = `massage-post${mess.id}`;
+    const message_l = document.getElementById(m);
+    const message_p = document.getElementById(p);
+    if (message_p) {
+      message_p.addEventListener('click', function () {
+        console.log(message_l['value']);
+        const issueId = that.model.issueId;
+        that.setDeviceIssues(issueId, 0, 1, message_l['value']);
+      });
+    }
+  }
+
+  // 设置指定设备事件状态
+  setDeviceIssues(issueId, orgState, state, comment) {
+    const that = this;
+    this.coverService.setDeviceIssues(issueId, orgState, state, comment).subscribe({
+      next: function () {
+        that.model.infoW.clickclose();
+      },
+      complete: function () {
+
+      },
+      error: function (error) {
+        console.log(error);
+      }
+    });
+  }
+
+  // 修改状态
+  setIssues(issueId: number, state: number, comment: string) {
+    const that = this;
+    this.coverService.setIssues(issueId, state, comment).subscribe({
+      next: function () {
+        that.model.infoW.clickclose();
+      },
+      complete: function () {
+
+      },
+      error: function (error) {
+        console.log(error);
+      }
+    });
+  }
+
   // 解析地址- 设置中心和地图显示级别
   getPoint(baiduMap, city) {
-    const that = this;
-    // 创建地址解析器实例
-    const myGeo = new BMap.Geocoder();
-    const zoom = this.zoom = this.switchZone(city.level);
-    const fullName = city.full_name;
+    const zoom  = this.switchZone(city.level);
     console.log(city);
-
-    let pt;
-
-    // 将地址解析结果显示在地图上,并调整地图视野，获取数据-添加标注
-    myGeo.getPoint(fullName, function (point) {
-      if (point) {
-        baiduMap.centerAndZoom(point, zoom);
-        pt = point;
-
-      } else {
-        console.log('您选择地址没有解析到结果!');
-      }
-    }, '');
+    const pt = city.center;
+    const point = new BMap.Point(pt.lng, pt.lat);
+    baiduMap.centerAndZoom(point, zoom);
   }
 
   // 获取数据
@@ -404,15 +497,14 @@ export class CoverComponent implements OnInit, OnDestroy {
 
     this.monitorService.getZoneDefault().subscribe({
       next: function (val) {
-        that.cityList = val.regions;
-        that.currentCity = val.zone;
-        that.zoom = that.switchZone(val.zone.level);
+        that.map_model.cityList = val.regions;
+        // that.zoom = that.switchZone(val.zone.level);
         that.node = that.getNode(val.regions, val.zone.region_id);
-        that.currentChildren = that.node.children;
+        that.map_model.currentCity = that.node;
+        that.map_model.currentChildren = that.node.children;
 
       },
       complete: function () {
-        // that.addBeiduMap(); // 创建地图
 
       },
       error: function (error) {
@@ -540,13 +632,14 @@ export class CoverComponent implements OnInit, OnDestroy {
   // 选择区域
   // 选择城市
   selecteCity(city) {
-    this.currentCity = city;
+    this.map_model.currentCity = city;
     this.getPoint(this.map, city);  // 解析地址- 设置中心和地图显示级别
-    this.currentChildren = city.children;
+    this.map_model.currentChildren = city.children;
   }
 
   selecteblock(block) {
     this.getPoint(this.map, block);  // 解析地址- 设置中心和地图显示级别
+    this.map_model.currentArea = block;
   }
 
   // 显示区域
@@ -558,31 +651,31 @@ export class CoverComponent implements OnInit, OnDestroy {
     this.cityshow = true;
   }
   // 显示设备
-  showDevice() {
-    this.deviceshow = true;
-  }
+  // showDevice() {
+  //   this.deviceshow = true;
+  // }
 
   // 选择区域
   arealistMouseover(area) {
 
-    this.currentBlock = area.children;
+    this.map_model.currentBlock = area.children;
   }
   // 离开区域
   arealistMouseleave() {
     this.areashow = false;
-    this.currentBlock = null;
+    this.map_model.currentBlock = [];
   }
   // 离开城市
   citylistMouseleave() {
     this.cityshow = false;
   }
   // 离开设备
-  devicelistMouseleave() {
-    this.deviceshow = false;
-  }
+  // devicelistMouseleave() {
+  //   this.deviceshow = false;
+  // }
   arealistMouseNone() {
     this.areashow = true;
-    this.currentBlock = null;
+    this.map_model.currentBlock = [];
   }
 
   // 消息相关

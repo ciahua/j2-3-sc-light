@@ -6,11 +6,9 @@ import { CameraService } from '../../../service/camera.service';
 // baidu map
 declare let Aliplayer;
 declare let BMap;
-declare let $: any;
 declare let BMapLib;
-declare let BMAP_ANCHOR_BOTTOM_RIGHT;
 declare let BMAP_ANCHOR_TOP_RIGHT;
-declare let BMAP_ANCHOR_TOP_LEFT;
+
 
 
 @Component({
@@ -21,33 +19,44 @@ declare let BMAP_ANCHOR_TOP_LEFT;
 export class TrafficComponent implements OnInit {
 
   @ViewChild('map4') map_container: ElementRef;
+  /*
+ model:object
+ light_list: array // 灾害数据
+ */
   model: any = {}; // 存储数据
 
-  map: any; // 地图对象
-  NorthEast: any;
-  SouthWest: any;
+  /*
+  map_model: object // 城市列表相关
+  @currentCity: any // 当前城市
+  @currentArea: any // 当前区域
+  @cityList: array // 城市列表
+  @currentChildren: array // 区域列表一级
+  @currentBlock: array // 当前城市街道 = []; // 区域列表2级
+  */
 
-  cityList: any; // 城市列表
-  deviceList: any; // 城市列表
-  defaultZone: any; // 默认城市
-  currentCity: any; // 当前城市
-  currentChildren: any; // 当前城市节点
-  currentBlock: any; // // 当前城市街道
+  map_model: any = {}; // 存储数据
+
+  map: any; // 地图对象
 
   currentCamera: any;  // 当前摄像头
 
+  currentCameraShowMe = false;
 
   visible = true; // 控制可视区域
   areashow = false; // 默认区域列表不显示
   cityshow = false; // 默认区域列表不显示
-  zoom: any; // 地图级数
 
   parentNode = null; // 用于递归查询JSON树 父子节点
   node = null; // 用于递归查询JSON树 父子节点
 
 
   constructor(private monitorService: MonitorService, public router: Router,
-    private cameraService: CameraService) { }
+    private cameraService: CameraService) {
+    this.model.light_list = []; // 城市列表
+    this.map_model.cityList = []; // 城市列表
+    this.map_model.currentChildren = []; // 区域列表一级
+    this.map_model.currentBlock = []; // // 当前城市街道 = []; // 区域列表2级
+    }
 
   ngOnInit() {
     this.addBeiduMap();
@@ -120,7 +129,7 @@ export class TrafficComponent implements OnInit {
   mapClickOff(baiduMap) {
     const that = this;
     baiduMap.addEventListener('click', function (e) {
-      that.currentCamera = null;
+      // that.currentCameraShow = false;
     });
   }
   // 添加标注
@@ -152,7 +161,6 @@ export class TrafficComponent implements OnInit {
   addPoint(val) {
     const markers: any[] = [];
     const points: any[] = [];
-    const that = this;
     val.map((item, i) => {
       const point = new BMap.Point(item.point.lng, item.point.lat);
       // const name = item.name;
@@ -176,43 +184,36 @@ export class TrafficComponent implements OnInit {
     // 点击点标注事件
     for (let index = 0; index < markers.length; index++) {
       const marker = markers[index];
-      that.openSideBar(marker, that.map, val[index], points[index]);
+      this.openSideBar(marker, val[index]);
     }
   }
 
   // 地图点注标-点击事件
-  openSideBar(marker, baiduMap, camera, point) {
+  openSideBar(marker, camera) {
+    console.log(camera);
     const that = this;
-    const opts = {
-      width: 350,     // 信息窗口宽度
-      // height: 100,     // 信息窗口高度
-      // title: `${val.name} | ${val.id }`, // 信息窗口标题
-      // enableMessage: true, // 设置允许信息窗发送短息
-      enableAutoPan: true, // 自动平移
-      // border-radius: 5px,
-    };
-    let txt = `<p style='font-size: 12px; line-height: 1.8em; border-bottom: 1px solid #ccc;'>设备编号 | ${camera.positionNumber} </p>`;
 
-    txt = txt + `<p  class='cur-pointer'> 设备名称：${camera.description}</p>`;
+    let txt = `<p style='font-size: 12px; line-height: 1.8em; border-bottom: 1px solid #ccc; padding-bottom: 10px;'>`;
+
+    txt = txt + `设备编号 | ${camera.positionNumber} </p><p> 设备名称：${camera.description}</p>`;
     if (camera.offline === false) {
-      txt = txt + `<p  class='cur-pointer'> 是否离线：否</p>`;
+      txt = txt + `<p> 是否离线：否</p>`;
     } else {
-      txt = txt + `<p  class='cur-pointer'> 是否离线：<span style='color: red'>是</span></p>`;
+      txt = txt + `<p> 是否离线：<span style='color: red'>是</span></p>`;
     }
     if (camera.error === false) {
-      txt = txt + `<p  class='cur-pointer'> 是否异常：否</p>`;
+      txt = txt + `<p> 是否异常：否</p>`;
     } else {
-      txt = txt + `<p  class='cur-pointer'> 是否异常：<span style='color: red'>是</span></p>`;
+      txt = txt + `<p> 是否异常：<span style='color: red'>是</span></p>`;
     }
     txt = txt + `<button class='btn btn-bg' style='font-size: 14px; float: right; margin: 5px' id='${camera.id}'>详情</button>`;
 
-    const infoWindow = new BMap.InfoWindow(txt, opts);
+    // const infoWindow = new BMap.InfoWindow(txt, opts);
 
     marker.addEventListener('click', function () {
       that.currentCamera = camera;
+      that.currentCameraShowMe = true;
 
-      // that.cameraAddEventListener();
-      // baiduMap.openInfoWindow(infoWindow, point); // 开启信息窗口
       setTimeout(() => {
         that.cameraAddEventListener();
       }, 2);
@@ -222,9 +223,9 @@ export class TrafficComponent implements OnInit {
   // 点击子设备
   cameraAddEventListener() {
     const that = this;
-    let player;
+    // let player;
     setTimeout(() => {
-      player = new Aliplayer({
+      const player = new Aliplayer({
         'id': 'video_play',
         'source': that.currentCamera.videoUrl,
         'width': '100%',
@@ -270,27 +271,27 @@ export class TrafficComponent implements OnInit {
   }
   // 关闭按钮
   closeDetail() {
-    this.currentCamera = null;
+    this.currentCameraShowMe = false;
   }
 
   // 返回地图可视区域，以地理坐标表示
-  getBounds(baiduMap) {
-    const Bounds = baiduMap.getBounds(); // 返回地图可视区域，以地理坐标表示
-    this.NorthEast = Bounds.getNorthEast(); // 返回矩形区域的东北角
-    this.SouthWest = Bounds.getSouthWest(); // 返回矩形区域的西南角
-    this.zoom = baiduMap.getZoom(); // 地图级别
-  }
+  // getBounds(baiduMap) {
+  //   const Bounds = baiduMap.getBounds(); // 返回地图可视区域，以地理坐标表示
+  //   this.NorthEast = Bounds.getNorthEast(); // 返回矩形区域的东北角
+  //   this.SouthWest = Bounds.getSouthWest(); // 返回矩形区域的西南角
+  //   this.zoom = baiduMap.getZoom(); // 地图级别
+  // }
   // 获取城市列表 --ok
   getCity() {
     const that = this;
 
     this.monitorService.getZoneDefault().subscribe({
       next: function (val) {
-        that.cityList = val.regions;
-        that.currentCity = val.zone;
-        that.zoom = that.switchZone(val.zone.level);
+        that.map_model.cityList = val.regions;
+        // that.zoom = that.switchZone(val.zone.level);
         that.node = that.getNode(val.regions, val.zone.region_id);
-        that.currentChildren = that.node.children;
+        that.map_model.currentCity = that.node;
+        that.map_model.currentChildren = that.node.children;
 
       },
       complete: function () {
@@ -381,40 +382,24 @@ export class TrafficComponent implements OnInit {
 
   // 解析地址- 设置中心和地图显示级别
   getPoint(baiduMap, city) {
-    const that = this;
-    // 创建地址解析器实例
-    const myGeo = new BMap.Geocoder();
-    const zoom = this.zoom = this.switchZone(city.level);
-    const fullName = city.full_name;
+    const zoom = this.switchZone(city.level);
     console.log(city);
     const pt = city.center;
     const point = new BMap.Point(pt.lng, pt.lat);
     baiduMap.centerAndZoom(point, zoom);
-
-    // let pt;
-
-    // // 将地址解析结果显示在地图上,并调整地图视野，获取数据-添加标注
-    // myGeo.getPoint(fullName, function (point) {
-    //   if (point) {
-    //     baiduMap.centerAndZoom(point, zoom);
-    //     pt = point;
-
-    //   } else {
-    //     console.log('您选择地址没有解析到结果!');
-    //   }
-    // }, '');
   }
   // 选择区域
   // 选择城市
   selecteCity(city) {
-    this.currentCity = city;
+    this.map_model.currentCity = city;
     this.node = city;
     this.getPoint(this.map, city);  // 解析地址- 设置中心和地图显示级别
-    this.currentChildren = city.children;
+    this.map_model.currentChildren = city.children;
   }
 
   selecteblock(block) {
     this.getPoint(this.map, block);  // 解析地址- 设置中心和地图显示级别
+    this.map_model.currentArea = block;
   }
 
   // 显示区域
@@ -432,18 +417,18 @@ export class TrafficComponent implements OnInit {
   // 选择区域
   arealistMouseover(area) {
 
-    this.currentBlock = area.children;
+    this.map_model.currentBlock = area.children;
   }
 
   // 离开区域
   arealistMouseleave() {
     this.areashow = false;
-    this.currentBlock = null;
+    this.map_model.currentBlock = null;
   }
 
   arealistMouseNone() {
     this.areashow = true;
-    this.currentBlock = null;
+    this.map_model.currentBlock = null;
   }
 
 }
