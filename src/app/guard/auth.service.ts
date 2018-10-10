@@ -34,7 +34,7 @@ export class AuthService {
     public token: string;
 
     constructor(private http: Http,
-        private winRef: WindowRef, private _cookieService: CookieService,  public router: Router) {
+        private winRef: WindowRef, private _cookieService: CookieService,  public router: Router, ) {
         // set token if saved in local storage
         let currentUser: any;
         if (this._cookieService.getObject('currentUser')) {
@@ -59,6 +59,7 @@ export class AuthService {
                         // 设置全局变量
                         // this.winRef.nativeWindow.userId = this.userId;
                         this._cookieService.putObject('currentUser', { loginName: username, token: token, userId: userId });
+                        // localStorage.setItem('token', token);
                         this.isLoggedIn = true;
                         return true;
                     } else {
@@ -97,17 +98,19 @@ export class AuthService {
     login1(userName: String, password: String): Observable<any> {
         return this.http.post('/security/login', { 'userName': userName, 'password': password })
             .pipe(map((res: Response) => {
-                console.log(res);
+                // console.log(res);
                 if (res.status === 200) {
                     // localStorage.setItem('access_token', res['_body']);
                     console.log(res['_body']);
                     const token = res['_body'];
                     if (token) {
-                        console.log('reff');
                         this.token = token;
                         // 设置全局变量
                         // this.winRef.nativeWindow.userId = this.userId;
+                        // this._cookieService.putObject('aaaaaa', JSON.stringify({ loginName: userName }));
                         this._cookieService.putObject('currentUser', JSON.stringify({ loginName: userName, token: token }));
+                        localStorage.setItem('token', token);
+                        // this._cookieService.putObject('bbbbbb', JSON.stringify({ loginName: userName }));
                         this.isLoggedIn = true;
                         return true;
                     } else {
@@ -126,6 +129,7 @@ export class AuthService {
         this.isLoggedIn = false;
         this.token = null;
         this._cookieService.remove('currentUser');
+        localStorage.removeItem('token');
         this.router.navigate(['/login']);
     }
 

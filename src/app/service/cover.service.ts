@@ -3,6 +3,7 @@ import { Component, Injectable, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/';
 import { of } from 'rxjs/';
 import { tap, delay } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 import { Http, Headers, Response } from '@angular/http';
 import { CookieService } from 'ngx-cookie';
 import { Router } from '@angular/router';
@@ -16,7 +17,7 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class CoverService {
 
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
 
 
     }
@@ -31,12 +32,7 @@ export class CoverService {
 
         })
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else {
-                    return res.json().code.toString();
-                }
+                return res;
             }));
     }
 
@@ -44,12 +40,7 @@ export class CoverService {
     getIssues(deviceType: number, state: number): Observable<any> {
         return this.http.get(`/api/issue/open?deviceType=${deviceType}&state=${state}`)
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else  {
-                    return res.json().code.toString();
-                }
+                return res;
             }));
     }
 
@@ -57,12 +48,7 @@ export class CoverService {
     getDeviceIssues(deviceId: number, state: number): Observable<any> {
         return this.http.get(`/api/issue/open?deviceId=${deviceId}&state=${state}`)
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else {
-                    return res.json().code.toString();
-                }
+                return res;
             }));
     }
 
@@ -73,12 +59,8 @@ export class CoverService {
             'state': state
         })
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = { status: 200};
-                    return data;
-                } else {
-                    return res.json().code.toString();
-                }
+                const data = { status: 200 };
+                return data;
             }));
     }
 
@@ -91,12 +73,8 @@ export class CoverService {
             'state': state
         })
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = { status: 200 };
-                    return data;
-                } else {
-                    return res.json().code.toString();
-                }
+                const data = { status: 200 };
+                return data;
             }));
     }
 
@@ -108,12 +86,7 @@ export class CoverService {
             'state': state
         })
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else {
-                    return res.json().code.toString();
-                }
+                return res;
             }));
     }
 }

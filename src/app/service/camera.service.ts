@@ -3,6 +3,7 @@ import { Component, Injectable, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/';
 import { of } from 'rxjs/';
 import { tap, delay } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 import { Http, Headers, Response } from '@angular/http';
 import { CookieService } from 'ngx-cookie';
 import { Router } from '@angular/router';
@@ -16,7 +17,7 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class CameraService {
 
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
 
 
     }
@@ -27,12 +28,7 @@ export class CameraService {
             'sw': sw
         })
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                return res;
             }));
     }
 

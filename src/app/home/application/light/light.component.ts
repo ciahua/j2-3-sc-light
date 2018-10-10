@@ -17,7 +17,6 @@ import { NgbTimepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 // baidu map
 declare let BMap;
 declare let $: any;
-declare let BMapLib;
 declare let BMAP_ANCHOR_TOP_LEFT;
 
 @Component({
@@ -195,7 +194,6 @@ export class LightComponent implements OnInit, OnDestroy  {
 
   getLights() {
     const that = this;
-    const type = this.type;
     const Bounds = this.map.getBounds(); // 返回地图可视区域，以地理坐标表示
     const NorthEast = Bounds.getNorthEast(); // 返回矩形区域的东北角
     const SouthWest = Bounds.getSouthWest(); // 返回矩形区域的西南角

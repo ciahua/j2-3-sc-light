@@ -46,7 +46,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = this._cookieService.getObject('currentUser');
-    this.loginName = this.currentUser.loginName;
+    const currentUser = JSON.parse(this.currentUser);
+    this.loginName = currentUser.loginName;
 
 
   }

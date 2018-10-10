@@ -3,6 +3,7 @@ import { Component, Injectable, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/';
 import { of } from 'rxjs/';
 import { tap, delay } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 import { Http, Headers, Response } from '@angular/http';
 import { CookieService } from 'ngx-cookie';
 import { Router } from '@angular/router';
@@ -17,7 +18,7 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class MonitorService {
 
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
 
 
     }
@@ -25,13 +26,7 @@ export class MonitorService {
     getDevice(): Observable<any> {
         return this.http.get('/api/device/type/all')
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-
-                }
+                return res;
             }));
 
     }
@@ -42,15 +37,7 @@ export class MonitorService {
 
         return this.http.get('/api/zone/default')
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    data.regions[0].open = true;
-                    data.regions[0].children[0].open = true;
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-
-                }
+                return res;
             }));
     }
 
@@ -64,12 +51,7 @@ export class MonitorService {
             'device_type': type
         })
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                return res;
             }));
 
     }
@@ -86,12 +68,7 @@ export class MonitorService {
             'device_type': type
         })
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                return res;
             }));
     }
 
@@ -99,12 +76,7 @@ export class MonitorService {
     getDeviceDetails(positionId: string, deviceType: Number): Observable<any> {
         return this.http.get(`/api/position/device?positionId=${positionId}&deviceType=${deviceType}`)
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                return res;
             }));
     }
 

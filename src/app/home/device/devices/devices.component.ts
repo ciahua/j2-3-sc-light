@@ -441,7 +441,7 @@ export class DevicesComponent implements OnInit {
   getCity() {
     const that = this;
 
-    this.monitorService.getZoneDefault().subscribe({
+    this.deviceService.getZoneDefault().subscribe({
       next: function (val) {
         that.cityList = val.regions;
         // that.currentCity = val.zone;

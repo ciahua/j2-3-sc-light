@@ -42,9 +42,14 @@ import { WindowRef } from './windowserver';
 
 
 import { PageNotFoundComponent } from './not-found.component';
+// import { InterceptorService } from './interceptorService';
+import { HttpClientModule } from '@angular/common/http'; // HTTP_INTERCEPTORS,
+import { JwtModule } from '@auth0/angular-jwt';
+import { httpInterceptorProviders } from './index';
 
-
-
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
 
 @NgModule({
   declarations: [
@@ -73,12 +78,19 @@ import { PageNotFoundComponent } from './not-found.component';
     MaterialModule,
 
     ServiceModule,
-    SharedModule
+    SharedModule,
+    HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter
+      }
+    })
 
   ],
-  exports: [
+  exports: [],
+  providers: [
+    AuthGuard, AuthService, WindowRef, httpInterceptorProviders,
   ],
-  providers: [AuthGuard, AuthService, WindowRef, ],
   bootstrap: [AppComponent],
 
 })

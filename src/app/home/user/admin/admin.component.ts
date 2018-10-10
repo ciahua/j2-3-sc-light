@@ -85,11 +85,13 @@ export class AdminComponent implements OnInit {
     const that = this;
     this.adminService.getAllUser(this.queryStr, this.page, this.pageSize).subscribe({
       next: function(val) {
+        console.log(val);
         that.userList = val.items;
         that.total = val.total;
       },
       complete: function() {},
       error: function(error) {
+        // console.log('errorOnAdminpage');
         console.log(error);
       }
     });

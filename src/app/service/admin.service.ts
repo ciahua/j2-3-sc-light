@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/';
 import { map } from 'rxjs/operators';
-
+import { HttpClient } from '@angular/common/http';
 
 
 @Injectable()
 export class AdminService {
     public url: string;
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
 
     }
 
@@ -19,12 +19,7 @@ export class AdminService {
 
         return this.http.get(`/security/user?queryStr=${queryStr}&page=${page}&pageSize=${pageSize}`)
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                return res;
             }));
     }
 
@@ -43,12 +38,13 @@ export class AdminService {
             'roles': roleIds
         })
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else if (res.status === 400) {
-                    return res.json();
-                }
+                return res;
+                // if (res.status === 200) {
+                //     const data = res.json();
+                //     return data;
+                // } else if (res.status === 400) {
+                //     return res.json();
+                // }
             }));
     }
     // 修改用户
@@ -67,12 +63,14 @@ export class AdminService {
             'roles': roleIds
         })
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = {status: 200};
-                    return data;
-                } else if (res.status === 400) {
-                    return res.json();
-                }
+                const data = { status: 200 };
+                return data;
+                // if (res.status === 200) {
+                //     const data = {status: 200};
+                //     return data;
+                // } else if (res.status === 400) {
+                //     return res.json();
+                // }
             }));
     }
 
@@ -80,12 +78,14 @@ export class AdminService {
     deleteUser(id) {
         return this.http.delete(`/security/user?id=${id}`)
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = { status: 200};
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                const data = { status: 200 };
+                return data;
+                // if (res.status === 200) {
+                //     const data = { status: 200};
+                //     return data;
+                // } else if (res.status === 202) {
+                //     return res.json().code.toString();
+                // }
             }));
     }
 
@@ -93,12 +93,13 @@ export class AdminService {
     getAllRole(): Observable<any> {
         return this.http.get(`/security/role/all`)
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                return res;
+                // if (res.status === 200) {
+                //     const data = res.json();
+                //     return data;
+                // } else if (res.status === 202) {
+                //     return res.json().code.toString();
+                // }
             }));
     }
 

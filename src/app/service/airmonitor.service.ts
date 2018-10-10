@@ -1,6 +1,7 @@
 
 import { Component, Injectable, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/';
+import { HttpClient } from '@angular/common/http';
 import { Http, Headers, Response } from '@angular/http';
 import { CookieService } from 'ngx-cookie';
 
@@ -16,7 +17,7 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class AirmonitorService {
 
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
     }
     // 获取指定坐标范围内的所有设备
     getAirDevice(ne: Point, sw: Point): Observable<any> {
@@ -25,24 +26,14 @@ export class AirmonitorService {
             'sw': sw
         })
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                return res;
             }));
     }
     // 获取指定设备的多项历史数据
     getHistoryData(id: number, from: string, to: string, page: number, pageSize: number): Observable<any> {
         return this.http.get(`/api/airmonitor/history/${id}?from=${from}&to=${to}&page=${page}&pageSize=${pageSize}`)
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                return res;
             }));
     }
 
@@ -51,15 +42,7 @@ export class AirmonitorService {
         return this.http
         .get(`/api/airmonitor/stat/${id}/${field}/${agg}?from=${from}&to=${to}&interval=${interval}`)
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-
-                    const data = res.json();
-
-                    return data;
-                } else {
-
-                    return res.json().code.toString();
-                }
+                return res;
             }));
     }
 }

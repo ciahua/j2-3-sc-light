@@ -1,5 +1,6 @@
 
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/';
 import { map } from 'rxjs/operators';
@@ -9,7 +10,7 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class ProductService {
     public url: string;
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
 
     }
     // 城市列表
@@ -18,15 +19,7 @@ export class ProductService {
 
         return this.http.get('/api/zone/default')
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    data.regions[0].open = true;
-
-                    return data;
-                } else {
-                    return res.json().code.toString();
-
-                }
+                return res;
             }));
     }
 
@@ -34,13 +27,7 @@ export class ProductService {
     getDevice(): Observable<any> {
         return this.http.get('/api/device/type/all')
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else  {
-                    return res.json().code.toString();
-
-                }
+                return res;
             }));
 
     }
@@ -49,13 +36,7 @@ export class ProductService {
     getModel(queryStr: String, type: number, page: number, pagesize: number): Observable<any> {
         return this.http.get(`/api/device/model?queryStr=${queryStr}&type=${type}&page=${page}&pageSize=${pagesize}`)
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else  {
-                    return res.json().code.toString();
-
-                }
+                return res;
             }));
     }
 
@@ -68,13 +49,7 @@ export class ProductService {
             'isGateway': isGateway,
         })
         .pipe(map((res: Response) => {
-            if (res.status === 200) {
-                const data = res.json();
-                return data;
-            } else {
-                return res.json().code.toString();
-
-            }
+            return res;
         }));
     }
 
@@ -88,13 +63,8 @@ export class ProductService {
             'isGateway': isGateway
         })
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = { status: 200 };
-                    return data;
-                } else {
-                    return res.json().code.toString();
-
-                }
+                const data = { status: 200 };
+                return data;
             }));
     }
 
@@ -102,13 +72,8 @@ export class ProductService {
     delModel(id) {
         return this.http.delete(`/api/device/model?id=${id}`)
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = { status: 200 };
-                    return data;
-                } else {
-                    return res.json().code.toString();
-
-                }
+                const data = { status: 200 };
+                return data;
             }));
     }
 

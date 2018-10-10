@@ -3,6 +3,7 @@ import { Component, Injectable, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/';
 import { of } from 'rxjs/';
 import { tap, delay } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 import { Http, Headers, Response } from '@angular/http';
 import { CookieService } from 'ngx-cookie';
 import { Router } from '@angular/router';
@@ -16,7 +17,7 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class LightService {
 
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
 
 
     }
@@ -29,12 +30,7 @@ export class LightService {
             'sw': sw
         })
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                return res;
             }));
     }
 
@@ -46,13 +42,8 @@ export class LightService {
             'stopTime': stopTime
         })
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = { status: 200 };
-                    // console.log(res.json());
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                const data = { status: 200 };
+                return data;
             }));
     }
 
@@ -63,13 +54,8 @@ export class LightService {
             'ruleId': ruleId
         })
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = { status: 200 };
-                    // console.log(res.json());
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                const data = { status: 200 };
+                return data;
             }));
     }
 
@@ -77,12 +63,7 @@ export class LightService {
     getStrategy(): Observable<any> {
         return this.http.get(`/api/streetlight/rule`)
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                return res;
             }));
     }
 
@@ -94,13 +75,8 @@ export class LightService {
             'stopTime': stopTime
         })
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = { status: 200 };
-                    // console.log(res.json());
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                const data = { status: 200 };
+                return data;
             }));
     }
 
@@ -111,13 +87,15 @@ export class LightService {
             'ruleId': ruleId
         })
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = { status: 200 };
-                    // console.log(res.json());
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                const data = { status: 200 };
+                return data;
+                // if (res.status === 200) {
+                //     const data = { status: 200 };
+                //     // console.log(res.json());
+                //     return data;
+                // } else if (res.status === 202) {
+                //     return res.json().code.toString();
+                // }
             }));
     }
 

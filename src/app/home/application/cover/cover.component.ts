@@ -358,10 +358,6 @@ export class CoverComponent implements OnInit, OnDestroy {
     res1: 待处理
     res2: 处理中
     */
-    console.log('待处理');
-    console.log(res1);
-    console.log('处理');
-    console.log(res2);
     const that = this;
     const opts = {
       width: 350,     // 信息窗口宽度

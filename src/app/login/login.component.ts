@@ -54,9 +54,7 @@ export class LoginComponent {
           that.loading = false;
         }
       },
-      complete: function() {
-
-      },
+      complete: function() {},
       error: function(error) {
         console.log('error.json().toString()');
         console.log(error.json());

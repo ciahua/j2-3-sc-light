@@ -1,6 +1,7 @@
 
 import { Component, Injectable, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/';
+import { HttpClient } from '@angular/common/http';
 import { Http, Headers, Response } from '@angular/http';
 import { CookieService } from 'ngx-cookie';
 
@@ -16,18 +17,13 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class StrategyService {
 
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
     }
     // 获取策略表
     getStrategy(): Observable<any> {
         return this.http.get(`/api/streetlight/rule`)
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                return res;
             }));
     }
     // 新增策略
@@ -36,12 +32,7 @@ export class StrategyService {
             'name': name
         })
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                return res;
             }));
     }
 
@@ -52,12 +43,8 @@ export class StrategyService {
             'name': name
         })
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = { status: 200 };
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                const data = { status: 200 };
+                return data;
             }));
     }
 
@@ -65,24 +52,15 @@ export class StrategyService {
     delStrategy(id: number): Observable<any> {
         return this.http.delete(`/api/streetlight/rule?id=${id}`)
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = { status: 200 };
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                const data = { status: 200 };
+                return data;
             }));
     }
     // 获取指定策略的规则
     getRules(ruleId: number): Observable<any> {
         return this.http.get(`/api/streetlight/rule/${ruleId}`)
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                return res;
             }));
     }
 
@@ -96,12 +74,7 @@ export class StrategyService {
 
         })
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                return res;
             }));
     }
 
@@ -116,12 +89,8 @@ export class StrategyService {
 
         })
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = { status: 200 };
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                const data = { status: 200 };
+                return data;
             }));
     }
 
@@ -129,12 +98,8 @@ export class StrategyService {
     delRule(ruleId: number, ruleDateId: number): Observable<any> {
         return this.http.delete(`/api/streetlight/rule/${ruleId}?ruleDateId=${ruleDateId}`)
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = { status: 200 };
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                const data = { status: 200 };
+                return data;
             }));
     }
 
@@ -146,21 +111,7 @@ export class StrategyService {
 
         return this.http.get('/api/zone/default')
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-
-                    // console.log(data.regions[0]);
-                    data.regions[0].open = true;
-                    // data.regions[0].children[0].open = true;
-                    // data.regions[0].children.map((item, index) => {
-                    //     data.regions[0].children[index].open = true;
-                    // });
-
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-
-                }
+                return res;
             }));
     }
 
@@ -168,12 +119,7 @@ export class StrategyService {
     getRegionLights(regionId: number, page: number, pageSize: number): Observable<any> {
         return this.http.get(`/api/streetlight/region/${regionId}?page=${page}&pageSize=${pageSize}`)
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                return res;
             }));
     }
 
@@ -181,12 +127,7 @@ export class StrategyService {
     getRegion(ruleId: number): Observable<any> {
         return this.http.get(`/api/streetlight/rule/${ruleId}/region`)
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                return res;
             }));
     }
 
@@ -203,24 +144,16 @@ export class StrategyService {
     setRegion(ruleId: number, body: any): Observable<any> {
         return this.http.put(`/api/streetlight/rule/${ruleId}/region`, body)
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = { status: 200 };
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                const data = { status: 200 };
+                return data;
             }));
     }
     // 获取策略覆盖区域
     getZtreeRegion(ruleId: number): Observable<any> {
         return this.http.get(`/api/streetlight/rule/${ruleId}/region`)
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                const data = res.json();
+                return data;
             }));
     }
 }
