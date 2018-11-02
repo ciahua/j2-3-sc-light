@@ -6,7 +6,7 @@
         "target": "http://172.18.1.133:10003"
     },
     "/led-api": {
-        "target": "http://127.1.1.1:9600",
+        "target": "http://172.18.1.133:9600",
         "pathRewrite": {
             "^/led-api": ""
         }

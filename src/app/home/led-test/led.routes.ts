@@ -5,7 +5,7 @@ export const LedRoutes: Route[] = [
 
     {
         path: 'led',
-        component: LedTestComponent,
+        component: LedTestComponent
 
     }
 ];

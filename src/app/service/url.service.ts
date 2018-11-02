@@ -1,12 +1,10 @@
-import { Component, Injectable, EventEmitter } from '@angular/core';
-
-import { WindowRef } from '../windowserver';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class UrlService {
     public token: string;
     public userId: string;
-    constructor(private winRef: WindowRef) {
+    constructor() {
     }
 
     // 设置url中参数值

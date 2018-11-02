@@ -1,0 +1,248 @@
+<div class="row row-first">
+    <div class="col-md-6 ">
+
+        <div class="row align-items-center justify-content-center dash-item-first">
+            <div class="col-md-12 content" (click)="goToZheRoute('/home/homepage')">
+                <!-- <p>
+                      <span>
+                        <i class="fa fa-building nav-icon"></i>
+                      </span>
+                    </p> -->
+                <p>智慧城市</p>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="col-md-2">
+        <div class="row align-items-center justify-content-center dash-item-first">
+            <div class="col-md-12 content" (click)="goToZheRoute('/home/homepage')">
+                <!-- <p>
+                      <span>
+                        <i class="fa fa-map nav-icon"></i>
+                      </span>
+                    </p> -->
+                <p>设备管理</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="row align-items-center justify-content-center dash-item-first">
+            <div class="col-md-12 content" (click)="goToZheRoute('/home/homepage')">
+                <!-- <p>
+                      <span>
+                        <i class="fa fa-wrench nav-icon"></i>
+                      </span>
+                    </p> -->
+                <p>系统管理</p>
+            </div>
+        </div>
+    </div>
+    <!-- <div [class]="item.col" *ngFor="let item of routes">
+        <div class="row dash-parent" *ngFor="let sub of item.row">
+              <div [class]="last.col"  *ngFor="let last of sub.children"  (click)="goToZheRoute(last.routeLink)">
+              
+                <div  [class] = "last.class">
+                  <div class="col-12 content" >
+                    <p>
+                      <span>
+                        <i [class]="last.icon"></i>
+                      </span>
+                    </p>
+                    <p>{{last.routeTitel}}</p>
+                  </div>
+                </div>
+              
+              </div>
+        </div>
+
+
+      </div> -->
+
+
+</div>
+
+<div class="row row-second">
+    <div class="col-md-2">
+        <div class="row align-items-center justify-content-center dash-item-second">
+            <div class="col-md-12 content" (click)="goToZheRoute('home/application/calamity')">
+                <p>
+                    <span>
+                        <i class="fa fa-bolt nav-icon"></i>
+                    </span>
+                </p>
+                <p>灾害报警</p>
+            </div>
+
+        </div>
+        <div class="row align-items-center justify-content-center dash-item-second">
+            <div class="col-md-12 content" (click)="goToZheRoute('home/application/water')">
+                <p>
+                    <span>
+                        <i class="fa fa-tint nav-icon"></i>
+                    </span>
+                </p>
+                <p>水质监测</p>
+            </div>
+
+        </div>
+        <div class="row align-items-center justify-content-center dash-item-second">
+            <div class="col-md-12 content" (click)="goToZheRoute('/home/homepage')">
+                <p>
+                    <span>
+                        <i class="fa fa-eye nav-icon"></i>
+                    </span>
+                </p>
+                <p>电气安全</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="row align-items-center justify-content-center dash-item-second">
+            <div class="col-md-12 content" (click)="goToZheRoute('home/application/air')">
+                <p>
+                    <span>
+                        <i class="fa fa-snowflake-o nav-icon"></i>
+                    </span>
+                </p>
+                <p>空气质量</p>
+            </div>
+
+        </div>
+        <div class="row align-items-center justify-content-center dash-item-second">
+            <div class="col-md-12 content" (click)="goToZheRoute('home/application/light')">
+                <p>
+                    <span>
+                        <i class="fa fa-lightbulb-o nav-icon"></i>
+                    </span>
+                </p>
+                <p>智慧照明</p>
+            </div>
+
+        </div>
+        <div class="row align-items-center justify-content-center dash-item-second">
+            <div class="col-md-12 content" (click)="goToZheRoute('home/application/cover')">
+                <p>
+                    <span>
+                        <i class="fa fa-life-ring nav-icon"></i>
+                    </span>
+                </p>
+                <p>窨井管理</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="row align-items-center justify-content-center dash-item-second">
+            <div class="col-md-12 content" (click)="goToZheRoute('home/application/traffic')">
+                <p>
+                    <span>
+                        <i class="fa fa-car nav-icon"></i>
+                    </span>
+                </p>
+                <p>智慧交通</p>
+            </div>
+
+        </div>
+        <div class="row align-items-center justify-content-center dash-item-second">
+            <div class="col-md-12 content" (click)="goToZheRoute('home/monitor')">
+                <p>
+                    <span>
+                        <i class="fa fa-desktopnav-icon"></i>
+                    </span>
+                </p>
+                <p>设备监控</p>
+            </div>
+
+        </div>
+        <!-- <div class="row align-items-center justify-content-center dash-item-second">
+              <div class="col-md-12 content" (click)="goToZheRoute('/home/homepage')">
+                <p>
+                  <span>
+                    <i class="fa fa-building nav-icon"></i>
+                  </span>
+                </p>
+                <p>智慧城市</p>
+              </div>
+            
+            </div> -->
+    </div>
+
+    <div class="col-md-2">
+        <div class="row align-items-center justify-content-center dash-item-second">
+            <div class="col-md-12 content" (click)="goToZheRoute('home/device/devices')">
+                <p>
+                    <span>
+                        <i class="fa fa-window-restore nav-icon"></i>
+                    </span>
+                </p>
+                <p>设备</p>
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-center dash-item-second">
+            <div class="col-md-12 content" (click)="goToZheRoute('home/device/product')">
+                <p>
+                    <span>
+                        <i class="fa fa-product-hunt nav-icon"></i>
+                    </span>
+                </p>
+                <p>产品</p>
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-center dash-item-second">
+            <div class="col-md-12 content" (click)="goToZheRoute('home/device/position')">
+                <p>
+                    <span>
+                        <i class="fa fa-map-marker nav-icon"></i>
+                    </span>
+                </p>
+                <p>位置</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="row align-items-center justify-content-center dash-item-second">
+            <div class="col-md-12 content" (click)="goToZheRoute('home/user/admin')">
+                <p>
+                    <span>
+                        <i class="fa fa-user-o nav-icon"></i>
+                    </span>
+                </p>
+                <p>用户管理</p>
+            </div>
+        </div>
+
+        <div class="row align-items-center justify-content-center dash-item-second">
+            <div class="col-md-12 content" (click)="goToZheRoute('home/user/right')">
+                <p>
+                    <span>
+                        <i class="fa fa-user-secret nav-icon"></i>
+                    </span>
+                </p>
+                <p>角色管理</p>
+            </div>
+        </div>
+
+        <div class="row align-items-center justify-content-center dash-item-second-phone">
+            <div class="col-md-12 ">
+              <p>
+                <span>
+                  <i class="fa fa-user-secret nav-icon"></i>
+                </span>
+              </p>
+              <p>APP下载</p>
+            </div>        
+          </div>        
+        <!-- <div class="row align-items-center justify-content-center dash-item-second">
+            <div class="col-md-12 content" (click)="goToZheRoute('/home/homepage')">
+              <p>
+                <span>
+                  <i class="fa fa-building nav-icon"></i>
+                </span>
+              </p>
+              <p>智慧城市</p>
+            </div>
+          </div> -->
+    </div>
+</div>

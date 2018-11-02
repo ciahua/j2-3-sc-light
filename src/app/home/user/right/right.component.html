@@ -74,7 +74,8 @@
     <div class="user-info">
         <div class="form-inline">
           <label class="control-label"><span style="color: red;">*</span>角色名称：</label>
-          <input type="text" [(ngModel)]="role.name" name="rolename" class="form-control" placeholder="">
+          <input type="text" [(ngModel)]="role.name" name="rolename" class="form-control" placeholder=""
+            maxlength="50">
         </div>
     </div>
   </div>
@@ -108,7 +109,7 @@
           <div class="form-group">
             <!-- <input type="text" class="form-control border-none" name="search-content" id="" placeholder="{{'XXX'}}"/> -->
             <input type="text" class="form-control border-none" name="search-content" id="roleQuery" [(ngModel)]="queryStr" 
-              autocomplete="off" maxlength="256" placeholder="检索角色名"/>
+              autocomplete="off" maxlength="50" placeholder="检索角色名" (keydown)="onKeydown($event)"/>
             <i class="fa fa-search search-icon" (click)="execQuery()"></i>
           </div>
       </div>

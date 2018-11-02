@@ -1,12 +1,9 @@
 import { Input, Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgbModal, ModalDismissReasons, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import { PositionService } from '../../../service/position.service';
-import { Point } from '../../../data/point.type';
+
 // baidu map
 declare let BMap;
-declare let $: any;
-declare let BMapLib;
-declare let BMAP_ANCHOR_TOP_LEFT;
 
 @Component({
   selector: 'app-position',
@@ -85,7 +82,7 @@ export class PositionComponent implements OnInit {
 
   ngOnInit() {
     this.getCity();
-    this.getDevice();
+    this.getPositionType();
     this.getPosition(0, this.page, this.pagesize);
   }
   // 检索按键点击事件
@@ -165,13 +162,13 @@ export class PositionComponent implements OnInit {
             that.getPosition(that.currentType.id, that.page, that.pagesize);
           },
           error: function (error) {
-            const message = error.json().errors[0].defaultMessage;
+            console.log(error);
+            const message = error.error.errors[0].defaultMessage;
             that.alertsModal.push({
               id: 1,
               type: 'danger',
               message: `新建失败: ${message}！`,
             });
-            console.log(error.json());
           }
         });
     } else {
@@ -262,13 +259,13 @@ export class PositionComponent implements OnInit {
               that.getPosition(that.currentType.id, that.page, that.pagesize);
             },
             error: function (error) {
-              const message = error.json().errors[0].defaultMessage;
+              console.log(error);
+              const message = error.error.errors[0].defaultMessage;
               that.alertsModal.push({
                 id: 1,
                 type: 'danger',
                 message: `修改失败: ${message}！`,
               });
-              console.log(error);
             }
           });
     } else {
@@ -326,7 +323,8 @@ export class PositionComponent implements OnInit {
         }
       },
       error: function (error) {
-        const message = error.json().errors[0].defaultMessage;
+        console.log(error);
+        const message = error.error.errors[0].defaultMessage;
         that.alerts.push({
           id: 1,
           type: 'danger',
@@ -360,10 +358,10 @@ export class PositionComponent implements OnInit {
     this.getPosition(this.currentType.id, this.page, this.pagesize);
   }
 
-  // 获取设备列表
-  getDevice() {
+  // 获取位置类型列表
+  getPositionType() {
     const that = this;
-    this.positionService.getDevice().subscribe({
+    this.positionService.getPositionType().subscribe({
       next: function (val) {
         that.deviceList = val;
         that.model.device = val[0];
@@ -413,7 +411,7 @@ export class PositionComponent implements OnInit {
   openAddPositions(content) {
     const that = this;
 
-    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
+    this.modalService.open(content, { windowClass: 'md-modal' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
 
       console.log(this.closeResult);
@@ -507,6 +505,13 @@ export class PositionComponent implements OnInit {
 
   }
 
+
+  // 搜索Enter事件
+  onKeydown(event: any) {
+    if (event.keyCode === 13) {
+      this.execQuery();
+    }
+  }
 
   switchZone(level) {
     let zone = 12;

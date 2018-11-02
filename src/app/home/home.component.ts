@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
 
   constructor(public authService: AuthService, public router: Router, private _cookieService: CookieService,
     public messService: MessService,
-    private config: NgbDropdownConfig, private communicateService: CommunicateService) {
+    public config: NgbDropdownConfig, private communicateService: CommunicateService) {
     this.routeTree = ROUTETREE;
     // customize default values of dropdowns used by this component tree
     config.placement = 'top-left';

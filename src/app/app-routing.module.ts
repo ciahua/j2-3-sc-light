@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './not-found.component';
 
 import { CanDeactivateGuard } from './guard/can-deactivate-guard.service';
-import { AuthGuard } from './guard/auth-guard.service';
 import { SelectivePreloadingStrategy } from './selective-preloading-strategy';
 
 import { LoginComponent } from './login/login.component';
@@ -24,7 +23,7 @@ const appRoutes: Routes = [
             appRoutes,
             {
                 // enableTracing: true, // <-- debugging purposes only
-                preloadingStrategy: SelectivePreloadingStrategy,
+                preloadingStrategy: SelectivePreloadingStrategy
 
             }
         )

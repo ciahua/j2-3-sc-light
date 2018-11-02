@@ -3,9 +3,7 @@
   <div class="strategy-left">
     <div class="strategy-add">
       <span class="strategy-title">策略表</span>
-      <button type="button" class="btn btn-bg" (click)="openAddStrategy(contentAddStrategy)">
-        新建
-      </button>
+      <button type="button" class="btn btn-bg" (click)="openAddStrategy(contentAddStrategy)">新建</button>
     </div>
 
     <div class="strategy-list">
@@ -45,7 +43,7 @@
         <div class="col-6 col-md-4 ">
           <div class=" panel-default city-list">
             <div class="date-title">
-              <span >日期</span>
+              <span class="spanTitle">日期</span>
               <button class="btn btn-bg" (click)="openAddRule(contentAddRule)">添加</button>
 
             </div>
@@ -58,7 +56,7 @@
                 </div>
               </li>
             </ul>
-            <div *ngIf="ruleList.length === 0 || !ruleList" style="margin-bottom: 5px;">无数据！</div>
+            <!-- <div *ngIf="ruleList.length === 0 || !ruleList" style="margin-bottom: 5px;">无数据！</div> -->
 
           </div>
         </div>
@@ -66,149 +64,102 @@
         <div class="col-6 col-md-4 ">
           <div class="table-holiday panel-default">
             <div class="date-title">
-              <span>工作日</span>
+              <span class="spanTitle">工作日</span>
             </div>
-            <div *ngIf="ruleList && ruleList.length > 1"> 
-                    <!-- 开灯时间： -->
-                    <div class="row align-items-center justify-content-center">
-                      <div class="col-4 padding-0">
-                        <label for="brightnessTime">开灯时间：</label>
-                    
-                      </div>
-                      <div class="col-6 span-marg-bot">
-                        <!-- <span>17:00</span> -->
-                        <span *ngIf="currentRule && currentRule.workdayRules && currentRule.workdayRules[0]">
-                          {{currentRule.workdayRules[0].start.hour}}时 {{currentRule.workdayRules[0].start.minute}}分
-                        </span>
-                      </div>
-                    </div>
-                    <div class="row align-items-center justify-content-center">
-                      <div class="col-4 padding-0">
-                        <label for="changeBrightness">起始亮度：</label>
-                      </div>
-                      <div class="col-6 span-marg-bot">
-                        <!-- <span>30</span> -->
-                        <span *ngIf="currentRule && currentRule.workdayRules && currentRule.workdayRules[0]">
-                          {{currentRule.workdayRules[0].lightLevel}}%</span>
-                      </div>
-                    </div>
-                    
-                    
+            <div *ngIf="ruleList && ruleList.length > 0">                                        
+                    <!-- 表开始 -->
                     <table class="table table-hover">
                     
                       <thead>
                         <tr class="table-header">
-                          <th>中间时间段</th>
+                          <th></th>
+                          <th>时间</th>
                           <th>亮度</th>
                         </tr>
                       </thead>
-                    
-                      <tr *ngFor="let item of workdayList">
+                      <tr>
+                        <td for="brightnessTime">开 &nbsp;灯</td>
+                        <td *ngIf="currentRule && currentRule.workdayRules && currentRule.workdayRules[0]">{{currentRule.workdayRules[0].start.hour}}时 {{currentRule.workdayRules[0].start.minute}}分</td>
+                        <td *ngIf="currentRule && currentRule.workdayRules && currentRule.workdayRules[0]">{{currentRule.workdayRules[0].lightLevel}}%</td>
+                      </tr>
+                      <tr *ngFor="let item of workdayList; let i = index">
+                        <td >调光{{i+1}}</td>
                         <td>{{item.start.hour}}时{{item.start.minute}}分</td>
                         <td>{{item.lightLevel}}%</td>
                       </tr>
+                      <tr for="brightnessTime">
+                        <td>关 &nbsp;灯</td>
+                        <td *ngIf="currentRule && currentRule.workdayRules && currentRule.workdayRules[currentRule.workdayRules.length - 1]">
+                            {{currentRule.workdayRules[currentRule.workdayRules.length - 1].start.hour}}
+                            时 {{currentRule.workdayRules[currentRule.workdayRules.length - 1].start.minute}}分
+                        </td>
+                        <td>0%</td>
+                      </tr>
                     </table>
-                    <div *ngIf="workdayList.length === 0 || !workdayList" style="margin-bottom: 5px;">无数据！</div>
-                      <!-- 关灯时间： -->
-                    <div class="row align-items-center justify-content-center">
-                      <div class="col-4 padding-0">
-                        <label for="brightnessTime">关灯时间：</label>
-                    
-                      </div>
-                      <div class="col-6 span-marg-bot">
-                        <!-- <span>7:00</span> -->
-                        <span *ngIf="currentRule && currentRule.workdayRules && currentRule.workdayRules[currentRule.workdayRules.length - 1]">
-                          {{currentRule.workdayRules[currentRule.workdayRules.length - 1].start.hour}}
-                          时 {{currentRule.workdayRules[currentRule.workdayRules.length - 1].start.minute}}分</span>
-                      </div>
-                    </div>
+                    <!-- <div *ngIf="workdayList.length === 0 || !workdayList" style="margin-bottom: 2px;"><span style="margin-left:12px;">无数据！</span>
+                      <hr style=" height:2px;border:none;border-top:2px solid #ccc;" />
+                    </div>                                 -->
             </div>
-            <div *ngIf="ruleList.length === 0 || !ruleList" style="margin-bottom: 5px;">无数据！</div>
-
-
-        
-          </div>
-        
+            <!-- <div *ngIf="ruleList.length === 0 || !ruleList" style="margin-bottom: 1px;">无数据！</div>         -->
+          </div>        
         </div>
 
         <div class="col-6 col-md-4 ">
           <div class="table-holiday panel-default">
             <div class="date-title">
-              <span>节假日</span>
+              <span class="spanTitle">节假日</span>
             </div>
-            <div *ngIf="ruleList && ruleList.length > 1">
-                <!-- 开灯时间： -->
-                <div class="row align-items-center justify-content-center">
-                  <div class="col-4 padding-0">
-                    <label for="brightnessTime">开灯时间：</label>
-                
-                  </div>
-                  <div class="col-6 span-marg-bot">
-                    <!-- <span>17:00</span> -->
-                    <span *ngIf="currentRule && currentRule.holidayRules && currentRule.holidayRules[0]">
-                      {{currentRule.holidayRules[0].start.hour}}时 {{currentRule.holidayRules[0].start.minute}}分
-                    </span>
-                  </div>
-                </div>
-                <div class="row align-items-center justify-content-center">
-                  <div class="col-4 padding-0">
-                    <label for="changeBrightness">起始亮度：</label>
-                  </div>
-                  <div class="col-6 span-marg-bot">
-                    <!-- <span>30</span> -->
-                    <span *ngIf="currentRule && currentRule.holidayRules && currentRule.holidayRules[0]">
-                      {{currentRule.holidayRules[0].lightLevel}}%</span>
-                  </div>
-                </div>          
-                
+            <div *ngIf="ruleList && ruleList.length > 0">                                         
+                <!-- 表数据 -->
                 <table class="table table-hover">
                 
                   <thead>
                     <tr class="table-header">
-                      <th>中间时间段</th>
+                      <th> </th>
+                      <th>时间</th>
                       <th>亮度</th>
                     </tr>
                   </thead>
-                
-                  <tr *ngFor="let item of holidayList">
+
+                  <tr>
+                    <td for="brightnessTime">开 &nbsp;灯</td>
+                    <td *ngIf="currentRule && currentRule.holidayRules && currentRule.holidayRules[0]">
+                        {{currentRule.holidayRules[0].start.hour}}时 {{currentRule.holidayRules[0].start.minute}}分
+                    </td>
+                    <td *ngIf="currentRule && currentRule.holidayRules && currentRule.holidayRules[0]">
+                        {{currentRule.holidayRules[0].lightLevel}}%
+                    </td>
+                  </tr>
+                  <tr *ngFor="let item of holidayList;let i=index">
+                    <!-- 为时间添加一个下标 -->
+                    <td>调光{{i+1}}</td>
                     <td>{{item.start.hour}}时{{item.start.minute}}分</td>
                     <td>{{item.lightLevel}}%</td>
                   </tr>
+                  <tr>
+                    <td for="brightnessTime">关 &nbsp;灯</td>
+                    <td *ngIf="currentRule && currentRule.holidayRules && currentRule.holidayRules[currentRule.holidayRules.length - 1]">
+                        {{currentRule.holidayRules[currentRule.holidayRules.length - 1].start.hour}}
+                        时 {{currentRule.holidayRules[currentRule.holidayRules.length - 1].start.minute}}分
+                    </td>
+                    <td>0%</td>
+                  </tr>
                 </table>
-                <div *ngIf="holidayList.length === 0 || !holidayList" style="margin-bottom: 5px;">无数据！</div>
-                <!-- 关灯时间： -->
-                <div class="row align-items-center justify-content-center">
-                  <div class="col-4 padding-0">
-                    <label for="brightnessTime">关灯时间：</label>
-                
-                  </div>
-                  <div class="col-6 span-marg-bot">
-                    <!-- <span>7:00</span> -->
-                    <span *ngIf="currentRule && currentRule.holidayRules && currentRule.holidayRules[currentRule.holidayRules.length - 1]">
-                      {{currentRule.holidayRules[currentRule.holidayRules.length - 1].start.hour}}
-                      时 {{currentRule.holidayRules[currentRule.holidayRules.length - 1].start.minute}}分</span>
-                  </div>
-                </div>
+
+                <!-- <div *ngIf="holidayList.length === 0 || !holidayList" style="margin-bottom: 1px;">无数据！
+                  <hr style=" height:2px;border:none;border-top:2px solid #ccc;" />
+                </div>                 -->
             </div>
-            <div *ngIf="ruleList.length === 0 || !ruleList" style="margin-bottom: 5px;">无数据！</div>
-        
-
-        
-          </div>
-        
+            <!-- <div *ngIf="ruleList.length === 0 || !ruleList" style="margin-bottom: 1px;">无数据！</div>                -->
+          </div>        
         </div>
-
-
-
-
-
-
       </div>
     </div>
+
     <!-- 菜单二 策略范围 -->
     <div *ngIf="nav_index === 1" class="strategy-table">
       <div class="row">
-        <div class="col-3" style=" max-width: 250px; ">
+        <div class="col-3">
           <!-- 搜索列表 -->
           <div class="city-list panel-default">
             <ul id="treeDemo" class="ztree"></ul>
@@ -217,16 +168,20 @@
         <div class="col-9">
           <div class="panel-default page-list-table">
             <!-- 搜索 -->
-            <form class="form-inline xy-pad search-form">
+            <!-- <form class="form-inline xy-pad search-form">
 
               <div class="form-group">
-                <input id="sole-input" class="form-control searchbox-content-common" type="text" name="word" autocomplete="off" maxlength="256"
-                  placeholder="Search" value="">
+                <input id="sole-input" class="form-control searchbox-content-common" type="text" name="word" 
+                  autocomplete="off" maxlength="30" placeholder="Search" value="">
               </div>
             
               <button type="submit" class="btn btn-bg">搜索</button>
               <button type="submit" class="btn btn-bg form-btn" [disabled]="regionbody.length === 0" (click)="setRegion()">下发策略</button>
-            </form>
+            </form> -->
+
+            <div class="search-lsq">
+              <button type="submit" class="btn btn-bg form-btn search-btn-lsq" [disabled]="regionbody.length === 0" (click)="setRegion()">下发策略</button>
+            </div>
             
             <table class="table table-hover">
             
@@ -260,7 +215,7 @@
                 <td class="">{{item.error}}</td>
               </tr>
             </table>
-            <div *ngIf="rangeListItems.length === 0 || !rangeListItems">无数据！</div>
+            <!-- <div *ngIf="rangeListItems.length === 0 || !rangeListItems">无数据！</div> -->
             <div *ngIf="rangeListItems.length > 0">
                   <ngb-pagination [collectionSize]=total [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"
                     (pageChange)="pageChange()"></ngb-pagination>
@@ -283,7 +238,7 @@
   <!-- 添加策略 ok-->
   <ng-template #contentAddStrategy let-c="close" let-d="dismiss">
     <div class="modal-header">
-      <font class="modal-title">添加策略</font>
+      <h4 class="modal-title">添加策略</h4>
       <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -303,7 +258,7 @@
   <!-- 修改策略 ok-->
   <ng-template #contentUpdateStrategy let-c="close" let-d="dismiss">
     <div class="modal-header">
-      <font class="modal-title">添加策略</font>
+      <h4 class="modal-title">修改策略</h4>
       <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -311,7 +266,7 @@
     <div class="modal-body">
       <div>
         策略名称：
-        <input type="text" [(ngModel)]="strategyName" name="strategyName">
+        <input type="text" [(ngModel)]="strategyName" name="strategyName" maxlength="10">
       </div>
     </div>
     <div class="modal-footer">
@@ -330,7 +285,7 @@
   <!-- 创建策略规则 ok -->
   <ng-template #contentAddRule let-c="close" let-d="dismiss">
     <div class="modal-header">
-      <font class="modal-title">创建策略时间</font>
+      <h4 class="modal-title">创建策略时间</h4>
       <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -834,7 +789,7 @@
   <!-- 更改策略规则 ok -->
   <ng-template #contentUpdataRule let-c="close" let-d="dismiss">
     <div class="modal-header">
-      <font class="modal-title">更改策略时间</font>
+      <h4 class="modal-title">更改策略时间</h4>
       <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>

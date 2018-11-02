@@ -5,7 +5,7 @@ export const StrategyRoutes: Route[] = [
 
     {
         path: 'strategy',
-        component: StrategyComponent,
+        component: StrategyComponent
 
     }
 ];

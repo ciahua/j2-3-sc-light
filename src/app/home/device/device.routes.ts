@@ -21,7 +21,7 @@ export const DeviceRoutes: Route[] = [
                     { path: '', redirectTo: 'position', pathMatch: 'full' },
                     { path: 'position', component: PositionComponent },
                     { path: 'devices', component: DevicesComponent },
-                    { path: 'product', component: ProductComponent },
+                    { path: 'product', component: ProductComponent }
 
 
                 ]

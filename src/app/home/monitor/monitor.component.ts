@@ -6,7 +6,6 @@ import { GradOverlar } from '../../service/grad.overlay';
 
 import { UrlService } from '../../service/url.service';
 
-import { Point } from '../../data/point.type';
 
 import { MonitorService } from '../../service/monitor.service';
 import { MessService } from '../../service/mess.service';
@@ -357,7 +356,7 @@ export class MonitorComponent implements OnInit {
 
 
   // 获取详情
-  getDetails(sw: Point, ne: Point, zoom: Number) {
+  getDetails(sw: any, ne: any, zoom: Number) {
     const that = this;
     const type = this.type;
     let value;

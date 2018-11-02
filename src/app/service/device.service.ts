@@ -1,7 +1,6 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/';
 import { map } from 'rxjs/operators';
 
@@ -22,23 +21,7 @@ export class DeviceService {
                 const data = res;
                 // data.regions[0].open = true;
                 return data;
-                // if (res.status === 200) {
-                //     const data = res.json();
 
-                //     console.log(data.regions[0]);
-                //     data.regions[0].open = true;
-                //     // data.regions[0].children[0].open = true;
-                //     // data.regions[0].children.map((item, index) => {
-                //     //     data.regions[0].children[index].open = true;
-                //     // });
-
-                //     return data;
-                // } else if (res.status === 400) {
-                //     console.log(res.json());
-                //     return res.json();
-                //     // return res.json().errors.toString();
-
-                // }
             }));
     }
 

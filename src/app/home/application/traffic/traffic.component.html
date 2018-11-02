@@ -1,69 +1,70 @@
 <!-- 地图 -->
 <div class="map_warp">
-    <!-- 选择区域 -->
-    <div class="Selection-Region" *ngIf="visible == true">
-        <!-- 城市列表 -->
-        <div class="d-inline-block sel-area-block" (mouseleave)="citylistMouseleave()">
-    
-            <span class="cl-blue cur-pointer" (mouseover)="showCiyt()">
-                <span class="filter" *ngIf="map_model.currentCity">{{map_model.currentCity.name}}</span>
-                <span class="filter" *ngIf="!map_model.currentCity">选择城市</span>
-                <!-- <i class="fa fa-bell-o nav-icon " aria-hidden="true"></i> -->
-            </span>
-            <div id="city-panel" class="city-panel dropdown_panel" *ngIf="cityshow">
-                <div class="dropdown_panel_inner">
-                    <span class="menu_arrow_left"></span>
-                    <dl *ngFor="let item of map_model.cityList">
-                        <dt>{{item.name}}</dt>
-                        <dd *ngIf="item.children && item.children.length > 0">
-                            <a title="智慧城市" *ngFor="let itemc of item.children" (click)="selecteCity(itemc)">{{itemc.name}}</a>
-                        </dd>
-                    </dl>
-                </div>
-    
+<!-- 选择区域 -->
+<div class="Selection-Region" *ngIf="visible == true">
+    <!-- 城市列表 -->
+    <div class="d-inline-block sel-area-block" (mouseleave)="citylistMouseleave()">
+
+        <span class="cl-blue cur-pointer" (mouseover)="showCiyt()">
+            <span class="filter" *ngIf="map_model.currentCity">{{map_model.currentCity.name}}</span>
+            <span class="filter" *ngIf="!map_model.currentCity">选择城市</span>
+            <!-- <i class="fa fa-bell-o nav-icon " aria-hidden="true"></i> -->
+        </span>
+        <div id="city-panel" class="city-panel dropdown_panel" *ngIf="cityshow">
+            <div class="dropdown_panel_inner">
+                <span class="menu_arrow_left"></span>
+                <!-- ngFor 指令来显示数组中每一项的信息。 -->
+                <dl *ngFor="let item of map_model.cityList">
+                    <dt>{{item.name}}</dt>
+                    <dd *ngIf="item.children && item.children.length > 0">
+                        <a title="智慧城市" *ngFor="let itemc of item.children" (click)="selecteCity(itemc)">{{itemc.name}}</a>
+                    </dd>
+                </dl>
             </div>
-    
+
         </div>
-    
-        <!-- 区域列表 -->
-        <div class="d-inline-block sel-area-block" (mouseleave)="arealistMouseleave()">
-    
-            <span class="cl-blue cur-pointer" (mouseover)="showArea()">
-                <span class="filter" *ngIf="!map_model.currentArea">选择区域</span>
-                <span class="filter" *ngIf="map_model.currentArea">{{map_model.currentArea.name}}</span>
-            </span>
-    
-            <div class="arealist-wrap dropdown_panel" *ngIf="areashow">
-                <div class="dropdown_panel_inner">
-                    <span class="menu_arrow_left"></span>
-                    <ul class="arealist" data-type="area">
-                        <!-- <li data-val="0" class="arealist-item" (mouseover)="arealistMouseNone()">
+
+    </div>
+
+    <!-- 区域列表 -->
+    <div class="d-inline-block sel-area-block" (mouseleave)="arealistMouseleave()">
+
+        <span class="cl-blue cur-pointer" (mouseover)="showArea()">
+            <span class="filter" *ngIf="!map_model.currentArea">选择区域</span>
+            <span class="filter" *ngIf="map_model.currentArea">{{map_model.currentArea.name}}</span>
+        </span>
+
+        <div class="arealist-wrap dropdown_panel" *ngIf="areashow">
+            <div class="dropdown_panel_inner">
+                <span class="menu_arrow_left"></span>
+                <ul class="arealist" data-type="area">
+                    <!-- <li data-val="0" class="arealist-item" (mouseover)="arealistMouseNone()">
                         <em>不限</em>
                     </li> -->
-                        <li class="arealist-item" *ngFor="let node of map_model.currentChildren" (mouseover)="arealistMouseover(node)"
-                            (click)="selecteblock(node)">
-                            <em>{{node.name}}</em>
-                        </li>
-    
+                    <li class="arealist-item" *ngFor="let node of map_model.currentChildren" (mouseover)="arealistMouseover(node)"
+                        (click)="selecteblock(node)">
+                        <em>{{node.name}}</em>
+                    </li>
+
+                </ul>
+                <div class="blocklist-wrap" *ngIf="map_model.currentBlock.length > 0">
+                    <ul class="blocklist" data-type="block">
+                        <!-- <li data-val="0">不限</li> -->
+                        <li *ngFor="let block of map_model.currentBlock" (click)="selecteblock(block)">{{block.name}}</li>
+
                     </ul>
-                    <div class="blocklist-wrap" *ngIf="map_model.currentBlock.length > 0">
-                        <ul class="blocklist" data-type="block">
-                            <!-- <li data-val="0">不限</li> -->
-                            <li *ngFor="let block of map_model.currentBlock" (click)="selecteblock(block)">{{block.name}}</li>
-    
-                        </ul>
-                    </div>
-    
-    
                 </div>
-    
-    
+
+
             </div>
-    
+
+
         </div>
-    
-    
+
     </div>
+
+
+</div>
     
 
     <!-- 地图 -->
@@ -73,14 +74,38 @@
     <div class="camera-detail" *ngIf="currentCameraShowMe">
         <div class="camera-title">
             <span class="" >{{currentCamera.description}}</span>
+            <!-- <span class="" >{{videoUrl}}</span> -->
             <span class="camera-close float-right" (click)="closeDetail()"><i class="fa fa-times" aria-hidden="true"></i></span>
 
         </div>
         <div class="modal-body ">
-            <!-- <div class="video-block">
-                 
-            </div> -->
-            <div class="prism-player video-play" id="video_play" ></div>
+            <!-- <object name="player" width="370" height="480" id="player1" data="assets/js/GrindPlayer.swf" type="application/x-shockwave-flash"
+                style="visibility: visible;">
+                <param name="allowFullScreen" value="true" />
+                <param name="allowScriptAccess" value="always" />
+                <param name="bgcolor" value="#000000" />
+                <param name="flashvars" [value]="videoUrl" />
+
+            </object> -->
+            <object id="myId" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="370" height="480">
+                <param name="movie" [value]="videoUrl"/>
+                <!--[if !IE]>-->
+                <object type="application/x-shockwave-flash" data="assets/js/GrindPlayer.swf"  width="370" height="480">
+                    <param name="allowFullScreen" value="true" />
+                    <param name="allowScriptAccess" value="always" />
+                    <param name="bgcolor" value="#000000" />
+                    <param name="flashvars" [value]="videoUrl" />
+                    <!--<![endif]-->
+                    <div>
+                        <h1>Alternative content</h1>
+                        <p><a href="http://www.adobe.com/go/getflashplayer"><img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif"
+                                    alt="Get Adobe Flash player" /></a></p>
+                    </div>
+                    <!--[if !IE]>-->
+                </object>
+                <!--<![endif]-->
+            </object>
+
         </div>
 
         <!-- <div  class="modal-footer">

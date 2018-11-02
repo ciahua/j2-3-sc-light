@@ -9,15 +9,15 @@ import { AirmonitorService } from '../../service/airmonitor.service';
   styleUrls: ['./led-test.component.scss']
 })
 export class LedTestComponent implements OnInit {
+  url = 'http://172.18.8.46:3000';
   model: any = {}; // 存储数据
-  searchTaskBody: any = {}; // 存储数据
-  searchTaskBody1: any = {}; // 存储数据
-  searchTaskBody2: any = {}; // 存储数据
+
   user: any = {}; // 用户列表
-  task: any = {}; // 任务列表
+
   task1: any = {}; // 开关屏
   task2: any = {}; // 设置亮度
   task3: any = {}; // 更新节目单
+  task4: any = {}; // 更新欢迎词
   plays: any = {}; // 设置播放内容
   airs: any = {}; // 设置空气质量播放内容
   users = []; // 用户列表
@@ -31,13 +31,10 @@ export class LedTestComponent implements OnInit {
 
   total: number; // 分页
   total_1: number; // 分页
-  total_2: number; // 分页
-  total_3: number; // 分页
+
   total_4: number; // 分页
   page: number;
   page_1: number;
-  page_2: number;
-  page_3: number;
   page_4: number;
   pagesize = 10;
 
@@ -68,24 +65,21 @@ export class LedTestComponent implements OnInit {
   constructor(private ledService: LedService, private airmonitorService: AirmonitorService) {
     this.page = 1;
     this.page_1 = 1;
-    this.page_2 = 1;
-    this.page_3 = 1;
-    this.page_3 = 1;
     this.page_4 = 1;
     this.task2.value = 0;
-    this.searchTaskBody.id = 'DE1700220125';
-    this.searchTaskBody.task = [];
     this.currentType = this.playTypes[0];
     this.model.airdevicelist = [];
+    this.task1.id = 'DE1700220125';
+    this.task2.id = 'DE1700220125';
+    this.task3.id = 'DE1700220125';
+    this.task4.id = 'DE1700220125';
+    this.task4.fontsice = '16';
    }
 
   ngOnInit() {
-    // this.getUsers();
     this.getTasks();
-    this.getMedias();
     this.getPrograms();
-    this.searchAllTask();
-    this.getAirdevices();
+    // this.getAirdevices();
   }
 
   viewRegions(item) {
@@ -93,6 +87,7 @@ export class LedTestComponent implements OnInit {
     this.regions_list = item;
   }
 
+  // 分页获取节目单
   getPrograms() {
     const that = this;
     const page = this.page_4;
@@ -114,6 +109,229 @@ export class LedTestComponent implements OnInit {
     });
   }
 
+
+  // 获取空气质量点
+  getAirdevices() {
+    const that = this;
+    const NorthEast = {
+      'lng': 113.998944,
+      'lat': 22.590191
+    }; // 返回矩形区域的东北角
+    const SouthWest = {
+      'lng': 113.902502,
+      'lat': 22.527578
+    }; // 返回矩形区域的西南角
+
+
+    this.airmonitorService.getAirDevice(NorthEast, SouthWest).subscribe({
+      next: function (val) {
+
+        that.model.airdevicelist = val; // 变为新值
+      },
+      complete: function () {
+
+      },
+      error: function (error) {
+
+      }
+    });
+  }
+
+
+
+  getUsers() {
+    const that = this;
+    const page = this.page;
+    const pagesize = this.pagesize;
+
+    this.ledService.getUsers(page, pagesize).subscribe({
+      next: function (val) {
+
+        that.users = val.data;
+        that.total = val.total;
+        console.log(val);
+      },
+      complete: function () {
+
+      },
+      error: function (error) {
+        console.log(error);
+      }
+    });
+  }
+
+  createUser() {
+    const that = this;
+    const body = {
+      name: this.user.name,                 // 用户账号
+      password: '123456',                           // 密码
+    };
+
+    this.ledService.createUser(body).subscribe({
+      next: function (val) {
+        console.log(val);
+      },
+      complete: function () {
+
+        that.getUsers();
+      },
+      error: function (error) {
+        console.log(error);
+      }
+    });
+  }
+
+
+  // 删除任务
+  delTask(id) {
+    const that = this;
+    this.ledService.delTask(id).subscribe({
+      next: function (val) {
+        console.log(val);
+      },
+      complete: function () {
+        that.getTasks();
+
+      },
+      error: function (error) {
+        console.log(error);
+      }
+    });
+  }
+
+// 分页获取任务
+  getTasks() {
+    const that = this;
+    const page = this.page_1;
+    const pagesize = this.pagesize;
+
+    this.ledService.getTasks(page, pagesize).subscribe({
+      next: function (val) {
+
+        that.tasks = val.data;
+        that.total_1 = val.total;
+        console.log(val);
+      },
+      complete: function () {
+
+      },
+      error: function (error) {
+        console.log(error);
+      }
+    });
+  }
+// 创建任务接口
+  createTask(body) {
+    const that = this;
+    this.ledService.createTask(body).subscribe({
+      next: function (val) {
+        console.log(val);
+      },
+      complete: function () {
+
+        that.getTasks();
+      },
+      error: function (error) {
+        console.log(error);
+      }
+    });
+  }
+
+  // 开关屏
+  createTask1() {
+    const id = this.task1.id;
+    const value = this.contrL1 ? 1 : 0;
+    const body = {
+      'id': id,
+      'name': '开关屏',
+      'proid': '',
+      'status': 'PENDING',
+      'datagram': {
+        'request': 'screen_switch',
+        'arguments': [
+          {
+            'value': value
+          }
+        ]
+      }
+
+    };
+    this.createTask(body);
+
+
+  }
+
+  // 控制亮度
+  createTask2() {
+    const id = this.task2.id;
+    const value = Number(this.task2.value);
+    const auto_value = this.contrL2 ? '1' : '0';
+    const body = {
+
+      'id': id,
+      'name': '控制亮度',
+      'proid': '',
+      'status': 'PENDING',
+      'datagram': {
+        'request': 'set_brightness',
+        'arguments': [
+          {
+            'auto_mode': auto_value,
+            'value': value
+          }
+        ]
+      }
+
+    };
+
+    this.createTask(body);
+  }
+
+  // 欢迎词任务
+  createTask4(_pro_id) {
+    // 创建任务
+
+    const tid = this.task4.id;
+    const wellname = this.task4.wellname;
+    const task_body = {
+
+      'id': tid || 'DE1700220125',
+      'name': wellname,
+      'proid': _pro_id,
+      'status': 'PENDING',
+      'datagram': {
+        'request': 'update_program',
+        'arguments': [
+          {
+            'link': `${this.url}/programs/getProgram?id=${_pro_id}`,
+            'local': `/mnt/user/data/programs.json`
+          }
+        ]
+      }
+
+    };
+
+    this.createTask(task_body);
+  }
+
+  // 删除节目单
+  delProgram(id) {
+    const that = this;
+    this.ledService.delProgram(id).subscribe({
+      next: function (val) {
+        console.log(val);
+      },
+      complete: function () {
+        that.getPrograms();
+
+      },
+      error: function (error) {
+        console.log(error);
+      }
+    });
+  }
+
+  // 创建节目单
   createProgram(name) {
     const that = this;
     const body = {
@@ -131,19 +349,21 @@ export class LedTestComponent implements OnInit {
     this.ledService.createProgram(body).subscribe({
       next: function (val) {
         console.log(val);
+        that.createTask4(val.id);
       },
       complete: function () {
         that.getPrograms();
+
       },
       error: function (error) {
         console.log(error);
       }
     });
   }
+
+  // 空气质量播报节目单
   gProgram(item) {
-    // const p = [
-    //   {}
-    // ];
+
     this.regions = [];
 
 
@@ -319,6 +539,44 @@ export class LedTestComponent implements OnInit {
 
   }
 
+  // 欢迎词节目单
+  gProgram1() {
+
+
+    this.regions = [
+      {
+        'id': '1',
+        'name': 'Text Message',
+        'x': 0,
+        'y': 0,
+        'width': 96,
+        'height': 192,
+        'items': [
+          {
+            'background_color': '#00000000',
+            'id': '0',
+            'name': 'no name',
+            'length': 5000,
+            'type': 'text',
+            'effect_entry': '0',
+            'effect_exit': '18',
+            'font_name': 'msyh',
+            'font_size': this.task4.fontsice,
+            'font_color': '#ff0000',
+            'contents': [
+              {
+                'content': this.task4.wellname
+              }
+            ]
+          }
+        ]
+      }
+    ];
+
+
+    this.createProgram('欢迎词');
+  }
+
   getProgram(item) {
     this.ledService.getProgram(item._id).subscribe({
       next: function (val) {
@@ -332,729 +590,18 @@ export class LedTestComponent implements OnInit {
       }
     });
   }
-  gProgram1() {
-    // this.regions = [
-    //   {
-    //   'id': '1',
-    //   'name': 'row1',
-    //   'x': 16,
-    //   'y': 0,
-    //   'width': 176,
-    //   'height': 16,
-    //   'items': [{
-    //     'length': '10000',
-    //     'font_pixel': '16',
-    //     'font_color': '#FF0000',
-    //     'background_color': '#000000',
-    //     'line_spacing': '-3',
-    //     'letter_spacing': '0',
-    //     'effect_entry': '2',
-    //     'effect_exit': '2',
-    //     'type': 'metrics_text',
-    //     'align_v': 'align_center',
-    //     'align_h': 'align_left',
-    //     'contents': [{
-    //       'content': '四川南河国家湿地公园'
-    //     }]
-    //   }]
-    //   }, {
-    //     'id': '2',
-    //     'name': 'row2',
-    //     'x': 24,
-    //     'y': 18,
-    //     'width': 168,
-    //     'height': 12,
-    //     'items': [{
-    //       'length': '10000',
-    //       'font_pixel': '13',
-    //       'font_color': '#FF0000',
-    //       'background_color': '#000000',
-    //       'line_spacing': '-3',
-    //       'letter_spacing': '0',
-    //       'effect_entry': '2',
-    //       'effect_exit': '2',
-    //       'type': 'metrics_text',
-    //       'align_v': 'align_center',
-    //       'align_h': 'align_left',
-    //       'contents': [{
-    //         'content': '湿地生态微环境实时监测'
-    //       }]
-    //     }]
-    //   }, {
-    //     'id': '31',
-    //     'name': 'row3-1',
-    //     'x': 5,
-    //     'y': 32,
-    //     'width': 125,
-    //     'height': 12,
-    //     'items': [{
-    //       'length': '10000',
-    //       'font_pixel': '13',
-    //       'font_color': '#FFFF00',
-    //       'background_color': '#000000',
-    //       'line_spacing': '-3',
-    //       'letter_spacing': '0',
-    //       'effect_entry': '2',
-    //       'effect_exit': '2',
-    //       'type': 'metrics_text',
-    //       'align_v': 'align_center',
-    //       'align_h': 'align_left',
-    //       'contents': [{
-    //         'content': 'PM2.5   :  38'
-    //       }]
-    //     }]
-    //   }, {
-    //     'id': '32',
-    //     'name': 'row3-2',
-    //     'x': 130,
-    //     'y': 32,
-    //     'width': 62,
-    //     'height': 12,
-    //     'items': [{
-    //       'length': '10000',
-    //       'font_pixel': '9',
-    //       'font_color': '#FFFF00',
-    //       'background_color': '#000000',
-    //       'line_spacing': '-3',
-    //       'letter_spacing': '0',
-    //       'effect_entry': '2',
-    //       'effect_exit': '2',
-    //       'type': 'metrics_text',
-    //       'align_v': 'align_center',
-    //       'align_h': 'align_left',
-    //       'contents': [{
-    //         'content': 'ug/m3'
-    //       }]
-    //     }]
-    //   }, {
-    //     'id': '41',
-    //     'name': 'row4-1',
-    //     'x': 5,
-    //     'y': 46,
-    //     'width': 125,
-    //     'height': 12,
-    //     'items': [{
-    //       'length': '10000',
-    //       'font_pixel': '13',
-    //       'font_color': '#FFFF00',
-    //       'background_color': '#000000',
-    //       'line_spacing': '-3',
-    //       'letter_spacing': '0',
-    //       'effect_entry': '2',
-    //       'effect_exit': '2',
-    //       'type': 'metrics_text',
-    //       'align_v': 'align_center',
-    //       'align_h': 'align_left',
-    //       'contents': [{
-    //         'content': '空气温度:  30.3'
-    //       }]
-    //     }]
-    //   }, {
-    //     'id': '42',
-    //     'name': 'row4-2',
-    //     'x': 130,
-    //     'y': 46,
-    //     'width': 62,
-    //     'height': 12,
-    //     'items': [{
-    //       'length': '10000',
-    //       'font_pixel': '13',
-    //       'font_color': '#FFFF00',
-    //       'background_color': '#000000',
-    //       'line_spacing': '-3',
-    //       'letter_spacing': '0',
-    //       'effect_entry': '2',
-    //       'effect_exit': '2',
-    //       'type': 'metrics_text',
-    //       'align_v': 'align_center',
-    //       'align_h': 'align_left',
-    //       'contents': [{
-    //         'content': '℃'
-    //       }]
-    //     }]
-    //   }, {
-    //     'id': '51',
-    //     'name': 'row5-1',
-    //     'x': 5,
-    //     'y': 60,
-    //     'width': 125,
-    //     'height': 12,
-    //     'items': [{
-    //       'length': '10000',
-    //       'font_pixel': '13',
-    //       'font_color': '#FFFF00',
-    //       'background_color': '#000000',
-    //       'line_spacing': '-3',
-    //       'letter_spacing': '0',
-    //       'effect_entry': '2',
-    //       'effect_exit': '2',
-    //       'type': 'metrics_text',
-    //       'align_v': 'align_center',
-    //       'align_h': 'align_left',
-    //       'contents': [{
-    //         'content': '空气湿度:  67.4'
-    //       }]
-    //     }]
-    //   }, {
-    //     'id': '52',
-    //     'name': 'row5-2',
-    //     'x': 130,
-    //     'y': 60,
-    //     'width': 62,
-    //     'height': 12,
-    //     'items': [{
-    //       'length': '10000',
-    //       'font_pixel': '13',
-    //       'font_color': '#FFFF00',
-    //       'background_color': '#000000',
-    //       'line_spacing': '-3',
-    //       'letter_spacing': '0',
-    //       'effect_entry': '2',
-    //       'effect_exit': '2',
-    //       'type': 'metrics_text',
-    //       'align_v': 'align_center',
-    //       'align_h': 'align_left',
-    //       'contents': [{
-    //         'content': '%RH'
-    //       }]
-    //     }]
-    //   }, {
-    //     'id': '61',
-    //     'name': 'row6-1',
-    //     'x': 5,
-    //     'y': 74,
-    //     'width': 125,
-    //     'height': 12,
-    //     'items': [{
-    //       'length': '10000',
-    //       'font_pixel': '13',
-    //       'font_color': '#FFFF00',
-    //       'background_color': '#000000',
-    //       'line_spacing': '-3',
-    //       'letter_spacing': '0',
-    //       'effect_entry': '2',
-    //       'effect_exit': '2',
-    //       'type': 'metrics_text',
-    //       'align_v': 'align_center',
-    //       'align_h': 'align_left',
-    //       'contents': [{
-    //         'content': '负氧离子:  5118'
-    //       }]
-    //     }]
-    //   }, {
-    //     'id': '62',
-    //     'name': 'row6-2',
-    //     'x': 130,
-    //     'y': 74,
-    //     'width': 62,
-    //     'height': 12,
-    //     'items': [{
-    //       'length': '10000',
-    //       'font_pixel': '13',
-    //       'font_color': '#FFFF00',
-    //       'background_color': '#000000',
-    //       'line_spacing': '-3',
-    //       'letter_spacing': '0',
-    //       'effect_entry': '2',
-    //       'effect_exit': '2',
-    //       'type': 'metrics_text',
-    //       'align_v': 'align_center',
-    //       'align_h': 'align_left',
-    //       'contents': [{
-    //         'content': '个/cm3'
-    //       }]
-    //     }]
-    //   }
-    // ];
 
-    this.regions = [
-      {
 
-        'id': '1',
-        'name': 'Text Message',
-        'x': 0,
-        'y': 0,
-        'width': 96,
-        'height': 192,
-        'items': [
-          {
-            'font_name': 'msyh',
-            'font_size': '9',
-            'font_color': '#009CFF',
-            'background_color': '#00000000',
-            'effect_entry': '0',
-            'effect_exit': '18',
-            'time_entry': '3000',
-            'time_exit': '3000',
-            'id': '0',
-            'type': 'text',
-            'name': 'no name',
-            'loop': '1',
-            'length': 10000,
-            'contents': [
-              {
-                'content': 'price tag'
-              }
-            ]
 
-          }
-        ]
-      }
-    ];
 
-    // this.regions =  [
-    //   {
 
-    //     'id': '1',
-    //     'name': 'Text Message',
-    //     'x': 0,
-    //     'y': 0,
-    //     'width': 96,
-    //     'height': 192,
-    //     // 'id': '1',
-    //     // 'name': '滚动文本 - 1',
-    //     // 'x': 16,
-    //     // 'y': 16,
-    //     // 'width': 64,
-    //     // 'height': 32,
-    //     // 'layer': 2,
-    //     'items': [
-    //       {
-    //         'font_name': 'msyh',
-    //         'font_size': '16',
-    //         'font_color': '#ff0000',
-    //         'background_color': '#00000000',
-    //         'effect_entry': '0',
-    //         'effect_exit': '18',
-    //         'time_entry': '3000',
-    //         'time_exit': '3000',
-    //         'id': '0',
-    //         'type': 'text',
-    //         'name': 'no name',
-    //         'loop': '1',
-    //         'length': 10000,
-    //         'contents': [
-    //           {
-    //             'content': 'test display'
-    //           }
-    //         ]
-
-
-
-    //         // 'font_pixel': '16',
-    //         // 'font_color': '#FF0000',
-    //         // 'background_color': '#000000',
-    //         // 'line_spacing': '-3',
-    //         // 'letter_spacing': '0',
-    //         // 'effect_entry': '2',
-    //         // 'effect_exit': '2',
-    //         // 'type': 'metrics_text',
-    //         // 'align_v': 'align_center',
-    //         // 'align_h': 'align_left',
-    //         // 'contents': [{
-    //         //   'content': '四川南河国家湿地公园'
-    //         // }],
-
-
-    //         // 'background_color': '#00000000',
-    //         // 'effect': '0',
-    //         // 'is_continue': '0',
-    //         // 'speed': '2',
-    //         // 'pause_time': '3000',
-    //         // 'id': '0',
-    //         // 'type': 'slide',
-    //         // 'name': 'no name',
-    //         // 'length': 0,
-    //         // 'contents': [
-    //         //   {
-    //         //     'content': '/mnt/user/data/87E2289CD7173763A8A084E902E6D31E.png'
-    //         //   }
-    //         // ]
-    //       }
-    //     ]
-    //   }
-    // ];
-    // this.regions.push(
-    //   {
-    //     id: '1',
-    //     name: 'region1',
-    //     x: '0',
-    //     y: '0',
-    //     width: '96',
-    //     height: '192',
-    //     items: [
-    //       {
-    //         id: '11',
-    //         name: item.name,
-    //         type: item.type,
-    //         length: item.length,
-    //         contents: [
-    //           {
-    //             content: `${item.contents}`
-    //           }
-    //         ]
-    //       }
-    //     ]
-
-    //   }
-    // );
-
-    this.createProgram('自定义播放节目');
-  }
-  gFiles(item) {
-
-    this.ledService.gFiles(item._id).subscribe({
-      next: function (val) {
-        console.log(val);
-      },
-      complete: function () {
-
-      },
-      error: function (error) {
-        console.log(error);
-      }
-    });
-  }
-
-  // 获取空气质量点
-  getAirdevices() {
-    const that = this;
-    const NorthEast = {
-      'lng': 113.998944,
-      'lat': 22.590191
-    }; // 返回矩形区域的东北角
-    const SouthWest = {
-      'lng': 113.902502,
-      'lat': 22.527578
-    }; // 返回矩形区域的西南角
-
-
-    this.airmonitorService.getAirDevice(NorthEast, SouthWest).subscribe({
-      next: function (val) {
-
-        that.model.airdevicelist = val; // 变为新值
-      },
-      complete: function () {
-
-      },
-      error: function (error) {
-
-      }
-    });
-  }
-
-  playTypeChange() {}
-
-  createMedia() {
-    const that = this;
-    const body = {
-      name: this.plays.name,
-      type: this.currentType.type,
-      contents: this.plays.contents,
-      length: this.plays.length,
-    };
-
-    this.ledService.createMedia(body).subscribe({
-      next: function (val) {
-        console.log(val);
-      },
-      complete: function () {
-
-        that.getMedias();
-      },
-      error: function (error) {
-        console.log(error);
-      }
-    });
-  }
-
-  getMedias() {
-    const that = this;
-    const page = this.page_3;
-    const pagesize = this.pagesize;
-
-    this.ledService.getMedias(page, pagesize).subscribe({
-      next: function (val) {
-
-        that.medias = val.data;
-        that.total_3 = val.total;
-        console.log(val);
-      },
-      complete: function () {
-
-      },
-      error: function (error) {
-        console.log(error);
-      }
-    });
-  }
-
-
-  getUsers() {
-    const that = this;
-    const page = this.page;
-    const pagesize = this.pagesize;
-
-    this.ledService.getUsers(page, pagesize).subscribe({
-      next: function (val) {
-
-        that.users = val.data;
-        that.total = val.total;
-        console.log(val);
-      },
-      complete: function () {
-
-      },
-      error: function (error) {
-        console.log(error);
-      }
-    });
-  }
-
-  createUser() {
-    const that = this;
-    const body = {
-      name: this.user.name,                 // 用户账号
-      password: '123456',                           // 密码
-    };
-
-    this.ledService.createUser(body).subscribe({
-      next: function (val) {
-        console.log(val);
-      },
-      complete: function () {
-
-        that.getUsers();
-      },
-      error: function (error) {
-        console.log(error);
-      }
-    });
-  }
-
-  addTaskCtrl() {
-    this.searchTaskBody.task = [];
-    for (let index = 0; index < this.search_tasks_check.length; index++) {
-      const element = this.search_tasks_check[index];
-      if (element.check) {
-        this.searchTaskBody.task.push(this.search_tasks[index]);
-      }
-    }
-
-
-    console.log(this.searchTaskBody.task);
-  }
-
-  searchTask(type) {
-    const that = this;
-    let body;
-    if (type === 1) { // 常规请求
-      body = {
-        'version': '1.0',
-        'system_info': {
-          id: this.searchTaskBody.id,
-          width: 192,
-          height: 32,
-        }
-      };
-    } else if (type === 2) { // 终端任务执行中请求：
-      const task = [];
-      this.searchTaskBody.task.map((item, i) => {
-        task.push({
-          'id': item._id,
-          'status': 'PROCESSING',
-          'datagram': item.datagram
-        });
-
-      });
-      body = {
-        'version': '1.0',
-        'system_info': {
-          id: this.searchTaskBody.id,
-          width: 192,
-          height: 32,
-        },
-        'task': task
-      };
-    } else if (type === 3) { //  终端任务执行成功请求：
-      const task = [];
-      this.searchTaskBody.task.map((item, i) => {
-        task.push({
-          'id': item._id,
-          'status': 'SUCCESS',
-          'datagram': item.datagram
-        });
-
-      });
-      body = {
-        'version': '1.0',
-        'system_info': {
-          id: this.searchTaskBody.id,
-          width: '192',
-          height: '32',
-        },
-        'task': task
-      };
-    }
-
-
-    this.ledService.searchTask(body).subscribe({
-      next: function (val) {
-        console.log(val);
-
-      },
-      complete: function () {
-        that.getTasks();
-        that.searchAllTask();
-      },
-      error: function (error) {
-        console.log(error);
-      }
-    });
-  }
-
-  searchAllTask() {
-    const that = this;
-    const id = this.searchTaskBody.id;
-    const pageSize = this.pagesize;
-    const currentPage = this.page_2;
-    this.ledService.searchAllTask(id, currentPage, pageSize).subscribe({
-      next: function (val) {
-        console.log(val);
-        that.search_tasks = val.data;
-        that.total_2 = val.total;
-        for (let index = 0; index < that.search_tasks.length; index++) {
-          that.search_tasks_check.push({ check: false });
-        }
-      },
-      complete: function () {
-      },
-      error: function (error) {
-        console.log(error);
-      }
-    });
-  }
-
-  getTasks() {
-    const that = this;
-    const page = this.page_1;
-    const pagesize = this.pagesize;
-
-    this.ledService.getTasks(page, pagesize).subscribe({
-      next: function (val) {
-
-        that.tasks = val.data;
-        that.total_1 = val.total;
-        console.log(val);
-      },
-      complete: function () {
-
-      },
-      error: function (error) {
-        console.log(error);
-      }
-    });
-  }
-
-  createTask(body) {
-    const that = this;
-    this.ledService.createTask(body).subscribe({
-      next: function (val) {
-        console.log(val);
-      },
-      complete: function () {
-
-        that.getTasks();
-      },
-      error: function (error) {
-        console.log(error);
-      }
-    });
-  }
-
-  createTask1() {
-
-    const id = this.task1.id;
-    const value = this.contrL1 ? 1 : 0;
-    const body = {
-      'id': id,
-      'status': 'PENDING',
-      'datagram': {
-        'request': 'screen_switch',
-        'arguments': [
-          {
-            'value': value
-          }
-        ]
-      }
-
-    };
-    this.createTask(body);
-
-
-  }
-
-  createTask2() {
-    const id = this.task2.id;
-    const value = Number(this.task2.value);
-    const auto_value = this.contrL2 ? '1' : '0';
-    const body = {
-
-      'id': id,
-      'status': 'PENDING',
-      'datagram': {
-        'request': 'set_brightness',
-        'arguments': [
-          {
-            'auto_mode': auto_value,
-            'value': value
-          }
-        ]
-      }
-
-    };
-
-    this.createTask(body);
-  }
-
-  createTask3(id) {
-    const timestamp = (new Date()).valueOf();
-    const tid = this.task3.id;
-
-    const body = {
-
-      'id': tid || 'DE1700220125',
-      'status': 'PENDING',
-      'datagram': {
-        'request': 'update_program',
-        'arguments': [
-          {
-            'link': `http://172.18.8.44:9600/programs/getProgram?id=${id}`,
-            'local': `/mnt/user/data/programs.json`
-          }
-        ]
-      }
-
-    };
-
-    this.createTask(body);
-  }
-
-  pageChange() {
-    this.getUsers();
-  }
 
   pageChange_1() {
     this.getTasks();
   }
 
-  pageChange_2() {
-    this.searchAllTask();
-  }
 
-  pageChange_3() {
-    this.getMedias();
-  }
+
   pageChange_4() {
     this.getPrograms();
   }

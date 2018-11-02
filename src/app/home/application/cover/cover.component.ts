@@ -7,10 +7,10 @@ Author: luo.shuqi@live.com
 
 */
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy} from '@angular/core';
-import { Point } from '../../../data/point.type';
 import { MonitorService } from '../../../service/monitor.service';
 import { MessService } from '../../../service/mess.service';
 import { CoverService } from '../../../service/cover.service';
+import { Router } from '@angular/router';
 // baidu map
 declare let BMap;
 declare let BMAP_ANCHOR_TOP_LEFT;
@@ -43,7 +43,6 @@ export class CoverComponent implements OnInit, OnDestroy {
   @currentChildren: array // 区域列表一级
   @currentBlock: array // 当前城市街道 = []; // 区域列表2级
 
-
   */
 
   map_model: any = {}; // 存储数据
@@ -64,12 +63,14 @@ export class CoverComponent implements OnInit, OnDestroy {
   showfinishedlist = false; // 默认不显示“已处理”的异常消息
   timer: any; // 定时器
 
-  constructor(private coverService: CoverService, private monitorService: MonitorService, public messService: MessService) {
+  constructor(private coverService: CoverService, private monitorService: MonitorService, public messService: MessService,
+    public router: Router) {
     this.model.deviceType = 5; // 井盖
     this.model.messageList = []; // 待处理
     this.model.messageList1 = []; // 处理中
     this.model.messageList2 = []; // 已处理
     this.model.coverList = [];  // 当前井盖列表
+    this.model.userList = []; // 用户列表
     this.map_model.cityList = []; // 城市列表
     this.map_model.currentChildren = []; // 区域列表一级
     this.map_model.currentBlock = []; // // 当前城市街道 = []; // 区域列表2级
@@ -78,9 +79,22 @@ export class CoverComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.addBeiduMap();
     this.getCity(); // 获取城市列表
+    this.getUserList();
 
   }
 
+  getUserList() {
+    const that = this;
+    this.coverService.getAllUser().subscribe({
+      next: function(val) {
+        that.model.userList = val;
+      },
+      complete: function() {},
+      error: function(error) {
+        console.log(error);
+      }
+    });
+  }
   // 获取指定设备的事件
   getDeviceIssues(deviceId: number) {
     let res ;
@@ -122,6 +136,15 @@ export class CoverComponent implements OnInit, OnDestroy {
         console.log(error);
       }
     });
+    // this.coverService.getIssues(8, 2).subscribe({
+    //   next: function (val) {
+    //     console.log('(type: 8, state: 2): ');
+    //     console.log(val);
+    //   },
+    //   error: function (error) {
+    //     console.log(error);
+    //   }
+    // });
   }
   // 百度地图API功能
   addBeiduMap() {
@@ -151,14 +174,26 @@ export class CoverComponent implements OnInit, OnDestroy {
     map.addControl(navigationControl);
 
     this.addMarker();
+    this.dragendOff(map);
+    this.zoomendOff(map);
   }
-    // 返回地图可视区域，以地理坐标表示
-    // getBounds(baiduMap) {
-    //   const Bounds = baiduMap.getBounds(); // 返回地图可视区域，以地理坐标表示
-    //   this.NorthEast = Bounds.getNorthEast(); // 返回矩形区域的东北角
-    //   this.SouthWest = Bounds.getSouthWest(); // 返回矩形区域的西南角
-    //   this.zoom = baiduMap.getZoom(); // 地图级别
-    // }
+
+    // 监控-拖动地图事件-显示用户拖动地图后地图中心的经纬度信息。
+    dragendOff(baiduMap) {
+      const that = this;
+      baiduMap.addEventListener('dragend', function () {
+        // baiduMap.clearOverlays();
+        that.getCovers();  // 获取井盖
+      });
+    }
+    // 监控-地图缩放事件-地图缩放后的级别。
+    zoomendOff(baiduMap) {
+      const that = this;
+      baiduMap.addEventListener('zoomend', function () {
+          // baiduMap.clearOverlays();
+          that.getCovers();  // 获取井盖
+      });
+    }
 
   addMarker() {
     this.getCovers();  // 获取井盖
@@ -184,15 +219,14 @@ export class CoverComponent implements OnInit, OnDestroy {
     let value;
     this.coverService.getCovers(NorthEast, SouthWest).subscribe({
       next: function (val) {
+        // console.log(val);
         // value = val;
         compar = that.comparison(that.model.coverList, val);
         value = that.judgeChange(compar.a_arr, compar.b_arr);
 
         that.changeMarker(value); // 替换
         that.deleMarker(compar.a_surplus); // 删除
-        // that.deleMarker(value); // 删除
         that.addPoint(compar.b_surplus); // 添加
-        // that.addPoint(value); // 添加
 
         that.model.coverList = val; // 变为新值
       },
@@ -212,6 +246,11 @@ export class CoverComponent implements OnInit, OnDestroy {
     const a_surplus: any[] = [];
     const b_surplus: any[] = [];
     let i = 0;
+    if (b.length === 0) {
+      for (let k = 0; k < a.length; k++) {
+        a_surplus.push(a[k]);
+      }
+    }
     for (let j = 0; j < b.length; j++) {
       while (i < a.length && a[i].id < b[j].id) {
         a_surplus.push(a[i]);
@@ -223,6 +262,10 @@ export class CoverComponent implements OnInit, OnDestroy {
         a_arr.push(a[i]);
         i++;
         b_arr.push(b[j]);
+      }
+      while (i < a.length && j === b.length - 1) {
+        a_surplus.push(a[i]);
+        i++;
       }
     }
     return {
@@ -286,8 +329,8 @@ export class CoverComponent implements OnInit, OnDestroy {
       // 添加自定义覆盖物
       let myIcon;
 
-      if (item.alarm && item.alarm === true) { // 丢失
-        myIcon = new BMap.Icon('../../../../assets/imgs/cover-lose.png', new BMap.Size(36, 36));
+      if (item.alarm && item.alarm !== 0) { // 丢失
+        myIcon = new BMap.Icon('../../../../assets/imgs/cover-lose.gif', new BMap.Size(36, 36));
       } else if (item.offline === true) { // 掉线
         myIcon = new BMap.Icon('../../../../assets/imgs/cover-offline.png', new BMap.Size(36, 36));
 
@@ -296,7 +339,7 @@ export class CoverComponent implements OnInit, OnDestroy {
       } else { // 正常
         myIcon = new BMap.Icon('../../../../assets/imgs/cover-normal.png', new BMap.Size(36, 36));
       }
-      myIcon.setAnchor(new BMap.Size(16, 38));
+      // myIcon.setAnchor(new BMap.Size(16, 38));
       const marker2 = new BMap.Marker(point, { icon: myIcon });  // 创建标注
       this.map.addOverlay(marker2);
 
@@ -331,8 +374,11 @@ export class CoverComponent implements OnInit, OnDestroy {
   // 标注消息列表中点击的井盖事件
   findPoint(item) {
     let marker;
+    const that = this;
     const makers = this.map.getOverlays();
     const point = new BMap.Point(item.point.lng, item.point.lat);
+    that.map.centerAndZoom(point, 18);
+    that.getCovers();  // 获取井盖
     this.model.issueId = item.id;
     for (let index = 0; index < makers.length; index++) {
       const element = makers[index];
@@ -340,14 +386,12 @@ export class CoverComponent implements OnInit, OnDestroy {
       const lng = element.point && element.point.lng;
       if (point.lat === lat && point.lng === lng) {
         marker = element;
-        console.log(marker);
         if (marker) {
-          marker.V.click();
+            marker.V.click();
         }
       }
     }
 
-    this.map.centerAndZoom(point, 18);
 
   }
 
@@ -371,14 +415,14 @@ export class CoverComponent implements OnInit, OnDestroy {
 
     txt = txt + `设备编号 | ${mess.name} | ${mess.id}</p><p> 设备名称：${mess.description}</p>`;
     if (mess.lowBattery === false) {
-      txt = txt + `<p> 是否低电量：否</p>`;
+      txt = txt + `<p> <span style='color: blue'>电量：正常</span></p>`;
     } else {
-      txt = txt + `<p> 是否低电量：<span style='color: #f4516c'>是</span></p>`;
+      txt = txt + `<p> <span style='color: red'>电量：低</span></p>`;
     }
-    if (mess.alarm === false) {
-      txt = txt + `<p> 是否报警：否</p>`;
+    if (mess.alarm === 0) {
+      txt = txt + `<p> <span style='color: blue'>警报：正常</span></p>`;
     } else {
-      txt = txt + `<p> 是否报警：<span style='color: #f4516c'>是</span></p>`;
+      txt = txt + `<p> <span style='color: red'>警报：${mess.alarm}级</span></p>`;
     }
     // if (mess.error === false) {
     //   txt = txt + `<p> 是否故障：否</p>`;
@@ -386,20 +430,28 @@ export class CoverComponent implements OnInit, OnDestroy {
     //   txt = txt + `<p> 是否故障：<span style='color: red'>是</span></p>`;
     // }
     if (mess.offline === false) {
-      txt = txt + `<p> 是否离线：否</p>`;
+      txt = txt + `<p> <span style='color: blue'>在线</span></p>`;
     } else {
-      txt = txt + `<p> 是否离线：<span style='color: #f4516c'>是</span></p>`;
+      txt = txt + `<p> <span style='color: red'>离线</span></p>`;
     }
     // if (mess.lowBattery || mess.alarm || mess.error || mess.offline) {
 
     if (res1 && res1.length > 0) {
-      txt = txt + `<hr><p style='color: #f4516c;'>待处理事件：</p>`;
+      txt = txt + `<hr><span style='color: red;'>待处理事件：</span>`;
       for (let index = 0; index < res1.length; index++) {
         const element = res1[index];
-        txt = txt + `<p style='color: #f4516c;'>${element.typeName}</p>`;
+        txt = txt + `<span style='color: red;'>${element.typeName}</span>`;
       }
       const m = `massage-lsq${mess.id}`;
       const p = `massage-post${mess.id}`;
+      const selId = `select${mess.id}`;
+      txt = txt + `
+      <div class="form-inline">
+        <label class="control-label" style='font-size: 14px; margin: 5px'>
+          指派人员：<span style="color: red;">*</span>
+        </label>
+        <select name="assignUser" class="cur-pointer form-control" style='font-size: 14px; margin: 5px'
+          id="${selId}"></select></div>`; // onchange="${that.model.curUser}=options[selectedIndex].value"
       txt = txt + `<label>处理信息：</label><textarea id=${m}  rows="3"  style='width:100%;'></textarea>`;
       txt = txt + `<p><button id=${p} class='btn btn-outline-info cur-point' style='font-size: 14px; float: right; margin: 5px'>
       处理</button></p>`;
@@ -407,20 +459,28 @@ export class CoverComponent implements OnInit, OnDestroy {
 
     }
     if (res2 && res2.length > 0) {
-      txt = txt + `<hr><p style='color: #ffb822;'>处理中事件：</p>`;
+      txt = txt + `<hr><span style='color: #ffb822;'>处理中事件：</span>`;
       for (let index = 0; index < res2.length; index++) {
         const element = res2[index];
-        txt = txt + `<p style='color: #ffb822;'>${element.typeName}</p>`;
+        txt = txt + `<span style='color: #ffb822;'>${element.typeName}</span>`;
       }
     }
 
-
-
-
     const infoWindow = new BMap.InfoWindow(txt, opts);
+    that.model.infoW1 = infoWindow;
 
     marker.addEventListener('click', function () {
       that.model.infoW = baiduMap.openInfoWindow(infoWindow, point); // 开启信息窗口
+      that.model.deviceId = mess.id;
+
+      const obj = document.getElementById(`select${mess.id}`);
+      if (obj) {
+        // obj.append(new Option('请选择处理用户', ''));
+        for (let i = 0; i < that.model.userList.length; i++) {
+          // console.log('option');
+          (<any>obj).append(new Option(that.model.userList[i].userName, that.model.userList[i].userName));
+        }
+      }
       setTimeout(() => {
         that.deviceAddEventListener(mess);
       }, 0);
@@ -433,23 +493,38 @@ export class CoverComponent implements OnInit, OnDestroy {
     const that = this;
     const m = `massage-lsq${mess.id}`;
     const p = `massage-post${mess.id}`;
+    const selId = `select${mess.id}`;
     const message_l = document.getElementById(m);
     const message_p = document.getElementById(p);
+    const selectUser = document.getElementById(selId); // 用户下拉列表
+    let curUser = '';
+    if (selectUser) {
+      selectUser.addEventListener('change', function () { // 用户下拉列表 - 监听事件
+        const selIndex = selectUser['selectedIndex'];
+        curUser = that.model.userList[selIndex].id;
+      });
+    }
     if (message_p) {
-      message_p.addEventListener('click', function () {
-        console.log(message_l['value']);
-        const issueId = that.model.issueId;
-        that.setDeviceIssues(issueId, 0, 1, message_l['value']);
+      message_p.addEventListener('click', function () { // 处理按键 - 监听事件
+        if (curUser) {
+          const issueId = that.model.deviceId; // 当前弹框所指设备的id
+          that.setDeviceIssues(issueId, 0, 1, message_l['value'], curUser); // 更改该设备下所有待处理事件的状态
+          that.map.closeInfoWindow(that.model.infoW1); // 关闭窗口
+          that.getMessage(); // 刷新消息列表
+        }
       });
     }
   }
 
   // 设置指定设备事件状态
-  setDeviceIssues(issueId, orgState, state, comment) {
+  setDeviceIssues(issueId, orgState, state, comment, curUser) {
     const that = this;
-    this.coverService.setDeviceIssues(issueId, orgState, state, comment).subscribe({
+    this.coverService.setDeviceIssues(issueId, orgState, state, comment, curUser).subscribe({
       next: function () {
-        that.model.infoW.clickclose();
+        if (that.model.infoW) {
+          that.model.infoW.clickclose();
+        }
+
       },
       complete: function () {
 
@@ -598,6 +673,11 @@ export class CoverComponent implements OnInit, OnDestroy {
     return that.node;
   }
 
+  // 进入数据监控页面
+  jumpHandle() {
+    this.router.navigate([`home/issuedata`]);
+
+  }
 
   // 进入全屏
   enterFullScreen() {

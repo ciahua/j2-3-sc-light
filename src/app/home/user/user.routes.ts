@@ -17,7 +17,7 @@ export const UserRoutes: Route[] = [
                 children: [
                     { path: '', redirectTo: 'admin', pathMatch: 'full' },
                     { path: 'admin', component: AdminComponent },
-                    { path: 'right', component: RightComponent },
+                    { path: 'right', component: RightComponent }
 
                 ]
             }

@@ -13,6 +13,7 @@
         <div id="city-panel" class="city-panel dropdown_panel" *ngIf="cityshow">
           <div class="dropdown_panel_inner">
             <span class="menu_arrow_left"></span>
+            <!-- ngFor 指令来显示数组中每一项的信息。 -->
             <dl *ngFor="let item of map_model.cityList">
               <dt>{{item.name}}</dt>
               <dd *ngIf="item.children && item.children.length > 0">
@@ -64,6 +65,73 @@
     
     
     </div>
+  <!-- 灾害消息处理三按键 -->
+  <div class="calamity-issues">
+      <!-- 待处理 -->
+      <div class="d-inline-block calamity-issues-block" (mouseleave)="messageListMouseleave_1()">
+          <span class="cl-blue cur-pointer" (mouseover)="showUntartedList()">
+              <span class="filter">待处理
+                  <span class="m-badge m-badge-danger" >{{model.messageList.length}}</span>
+              </span>
+          </span>
+          <div class="messagelist-wrap" *ngIf="showunstartedlist && model.messageList.length > 0">
+              <div class="dropdown_panel_inner">
+                  <span class="menu_arrow_left"></span>
+                  <ul class="messagelist" data-type="area">
+                      <li class="messagelist-item" *ngFor="let mess of model.messageList" (click)="findPoint(mess)">
+                          <i class="fa fa-dot-circle-o" aria-hidden="true" style="color:#f4516c;padding-right:5px"></i>
+                          <span>{{mess.deviceDescription}}-{{mess.typeName}}-设备ID：{{mess.deviceId}}-{{mess.openTime}}</span>
+                      </li>
+                  </ul>
+              </div>
+
+          </div>
+      </div>
+      <!-- 处理中 -->
+      <div class="d-inline-block calamity-issues-block" (mouseleave)="messageListMouseleave_2()">
+          <span class="cl-blue cur-pointer" (mouseover)="showOnprogressList()">
+              <span class="filter">处理中
+                  <span class="m-badge m-badge-inprocess" >{{model.messageList1.length}}</span>
+              </span>
+          </span>
+          <div class="messagelist-wrap" *ngIf="showonprogresslist && model.messageList1.length > 0">
+              <div class="dropdown_panel_inner">
+                  <span class="menu_arrow_left"></span>
+                  <ul class="messagelist" data-type="area">
+                      <li class="messagelist-item" *ngFor="let mess of model.messageList1" (click)="findPoint(mess)">
+                          <span class="m-list-timeline__badge"></span>
+                          <i class="fa fa-circle" aria-hidden="true" style="color:#ffb822;padding-right:5px"></i>
+                          <span>{{mess.deviceDescription}}-{{mess.typeName}}-设备ID：{{mess.deviceId}}-{{mess.openTime}}</span>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+      <!-- 已处理 -->
+      <div class="d-inline-block calamity-issues-block" (mouseleave)="messageListMouseleave_3()">
+          <span class="cl-blue cur-pointer" (mouseover)="showFinishedList()">
+              <span class="filter">已处理
+                  <span class="m-badge m-badge-fixed" >{{model.messageList2.length}}</span>
+              </span>
+          </span>
+          <div class="messagelist-wrap" *ngIf="showfinishedlist && model.messageList2.length > 0">
+              <div class="dropdown_panel_inner">
+                  <span class="menu_arrow_left"></span>
+                  <ul class="messagelist " data-type="area">
+                      <li class="messagelist-item" *ngFor="let mess of model.messageList2" (click)="findPoint(mess)">
+                          <i class="fa fa-circle" aria-hidden="true" style="color:#36a3f7;padding-right:5px"></i>
+                          <span>{{mess.deviceDescription}}-{{mess.typeName}}-设备ID：{{mess.deviceId}}-{{mess.openTime}}</span>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </div> 
+
+  <div class="issue-history-data">
+      <button class="btn btn-bg iss-hist" (click)="jumpHandle()">消息记录</button>
+  </div>
+    
   <!-- 右边按钮 -->
   <div class="btn-icon" *ngIf="visible == true">
     <!-- <div class="d-inline-block icon-item cur-pointer">

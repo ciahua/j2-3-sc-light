@@ -1,16 +1,8 @@
 
-import { Component, Injectable, EventEmitter } from '@angular/core';
+import {  Injectable} from '@angular/core';
 import { Observable } from 'rxjs/';
 import { HttpClient } from '@angular/common/http';
-import { Http, Headers, Response } from '@angular/http';
-import { CookieService } from 'ngx-cookie';
 
-import { of } from 'rxjs/';
-import { tap, delay } from 'rxjs/operators';
-import { Router } from '@angular/router';
-import { WindowRef } from '../windowserver';
-
-// import { Point } from '../data/point.type';
 import { map } from 'rxjs/operators';
 
 
@@ -152,8 +144,9 @@ export class StrategyService {
     getZtreeRegion(ruleId: number): Observable<any> {
         return this.http.get(`/api/streetlight/rule/${ruleId}/region`)
             .pipe(map((res: Response) => {
-                const data = res.json();
-                return data;
+                return res;
+                // const data = res.json();
+                // return data;
             }));
     }
 }

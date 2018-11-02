@@ -4,7 +4,6 @@ import {
     ActivatedRouteSnapshot,
     RouterStateSnapshot,
     CanActivateChild,
-    NavigationExtras,
     CanLoad, Route
 } from '@angular/router';
 import { AuthService } from './auth.service';

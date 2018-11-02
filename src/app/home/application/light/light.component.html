@@ -65,21 +65,20 @@
     <!-- 右边按钮 -->
     <div class="btn-icon" *ngIf="visible == true">
         <div class="d-inline-block icon-item cur-pointer">
-            <img class= "img-background" src="../../../../assets/imgs/strategy.png" alt="图片" (click)="jumpHandle()">
-    
+            <!-- <img class= "img-background" src="../../../../assets/imgs/strategy.png" alt="图片" (click)="jumpHandle()"> -->
+            <button class="btn btn-default cover-btns" (click)="jumpHandle()">策略管理</button>
+            <button class="btn btn-default cover-btns" (click)="devicesControl()">路灯控制</button>
         </div>
 
-        <div class="d-inline-block icon-item cur-pointer">
+        <!-- <div class="d-inline-block icon-item cur-pointer">
             <img src="../../../../assets/imgs/control.png" alt="图片" (click)="devicesControl()">
         
-        </div>
+        </div> -->
     
         <!-- <div class="d-inline-block icon-item cur-pointer">
     
             <img  src="../../../../assets/imgs/switch.png" alt="图片" (click)="enterFullScreen()">
         </div> -->
-
-
     
     </div>
     <!-- 地图 -->
@@ -93,21 +92,9 @@
         </div>
         <div class="modal-body">
             <div class="form-inline queryDiv">
-                    <!-- <div class="form-inline">
-                        <label class="control-label">设备类型：</label>
-                        <select class="form-control">
-                            <option>太阳能灯</option>
-                        </select>
-                    </div>
-                    <div class="form-inline">
-                        <label class="control-label">设备位置：</label>
-                        <select class="form-control">
-                            <option>街道</option>
-                        </select>
-                    </div> -->
                     <div class="form-group">
                         <input id="sole-input" class="form-control searchbox-content-common" [(ngModel)]="queryString" name="queryString" 
-                        maxlength="20" placeholder="检索编号、名称" (keydown)="onKeydown($event)" >
+                        maxlength="30" placeholder="检索编号、名称" (keydown)="onKeydown($event)" >
                     </div>
                     <button  class="btn btn-bg" (click)="execQuery()">搜索</button>
                     <button class="btn btn-outline-info extral-margin" (click)="devicesStrategyCtrl()">批量操作</button>

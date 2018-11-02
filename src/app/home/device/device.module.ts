@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import {NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { NgbModule, } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
 import { SharedModule } from '../../shared/shared.module';
 
@@ -23,9 +23,8 @@ import { DevicesComponent } from './devices/devices.component';
     ],
     declarations: [
         PositionComponent,
-
         ProductComponent,
-        DevicesComponent,
+        DevicesComponent
 
     ],
     schemas: [

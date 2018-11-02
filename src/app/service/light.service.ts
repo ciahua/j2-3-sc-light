@@ -1,16 +1,9 @@
 
-import { Component, Injectable, EventEmitter } from '@angular/core';
+import { Injectable, } from '@angular/core';
 import { Observable } from 'rxjs/';
-import { of } from 'rxjs/';
-import { tap, delay } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { Http, Headers, Response } from '@angular/http';
-import { CookieService } from 'ngx-cookie';
-import { Router } from '@angular/router';
-import { WindowRef } from '../windowserver';
 
 
-import { Point } from '../data/point.type';
 import { map } from 'rxjs/operators';
 
 
@@ -19,12 +12,12 @@ export class LightService {
 
     constructor(private http: HttpClient) {
 
-
     }
 
 
     // 获取详细的位置数据
-    getLights(ne: Point, sw: Point): Observable<any> {
+    getLights(ne: any, sw: any): Observable<any> {
+        // 获取接口数据
         return this.http.post('/api/streetlight/inbounds', {
             'ne': ne,
             'sw': sw

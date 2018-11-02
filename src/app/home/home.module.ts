@@ -2,8 +2,7 @@ import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/cor
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule, } from '@ng-bootstrap/ng-bootstrap';
-import { GridsterModule } from 'angular-gridster2';
-import { MatButtonModule, MatStepperModule, MatInputModule, MatCardModule , MatSliderModule, MatSlideToggleModule} from '@angular/material';
+
 
 import { DeviceModule } from './device/device.module';
 import { ApplicationModule } from './application/application.module';
@@ -11,27 +10,35 @@ import { ApplicationModule } from './application/application.module';
 import { UserModule } from './user/user.module';
 
 import { SharedModule } from '../shared/shared.module';
+import { StrategyModule } from './strategy/strategy.module';
+import { AirreportModule } from './airreport/airreport.module';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { IssuedataModule } from './issuedata/issuedata.module';
+import { LedModule } from './led-test/led.module';
 
-
-import { DashbordComponent } from './dashbord/dashbord.component';
-import { MapComponent } from './map/map.component';
-import { StrategyComponent } from './strategy/strategy.component';
 import { HomepageComponent } from './homepage/homepage.component';
-import { AirreportComponent } from './airreport/airreport.component';
-import { EchartComponent } from './echart/echart.component';
-import { EchartMapComponent } from './echart-map/echart-map.component';
-import { LedTestComponent } from './led-test/led-test.component';
+// import { AirreportComponent } from './airreport/airreport.component';
+
+
+// import { IssuedataComponent } from './issuedata/issuedata.component';
+// import { DashboardComponent } from './dashboard/dashboard.component';
+
+// import { MapComponent } from './map/map.component';
+// import { LedTestComponent } from './led-test/led-test.component';
 
 @NgModule({
     imports: [BrowserModule, FormsModule, ReactiveFormsModule, NgbModule.forRoot(),
-         DeviceModule, UserModule, GridsterModule, ApplicationModule, SharedModule,
-        MatStepperModule, MatButtonModule, MatInputModule, MatCardModule,
-        MatSliderModule, MatSlideToggleModule
+         DeviceModule, UserModule, ApplicationModule, SharedModule,
+        StrategyModule, AirreportModule, DashboardModule, IssuedataModule,
+        LedModule
 
     ],
     declarations: [
-     DashbordComponent,
-     MapComponent, StrategyComponent, HomepageComponent, AirreportComponent, EchartComponent, EchartMapComponent, LedTestComponent,
+    HomepageComponent,
+    // LedTestComponent,
+    //   IssuedataComponent,
+    //  DashboardComponent,
+        // MapComponent, LedTestComponent,
 
 
     ],

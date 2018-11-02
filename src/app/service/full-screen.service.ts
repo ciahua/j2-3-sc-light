@@ -1,12 +1,11 @@
-import { Component, Injectable  } from '@angular/core';
+import { Injectable  } from '@angular/core';
 
-import { WindowRef } from '../windowserver';
 
 @Injectable()
 export class FullScreenService {
     public token: string;
     public userId: string;
-    constructor(private winRef: WindowRef) {
+    constructor() {
     }
     // 进入全屏
     enterFullScreen() {

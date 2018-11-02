@@ -15,15 +15,17 @@
       <div class="row center-align">
         <div class="modal-col">
           <div class="form-inline">
-            <label class="margin-bottom-15 label-left">产品名称:</label>
-            <input type="text" class="form-control form-control-left" id="add-product-name" placeholder="" [(ngModel)]="model.name">
+            <label class="margin-bottom-15 label-left"><span style="color:red;">*</span>&nbsp;产品名称:</label>
+            <input type="text" class="form-control form-control-left" id="add-product-name"
+              maxlength="30" placeholder="" [(ngModel)]="model.name">
           </div>
           <div class="form-inline">
-            <label class="margin-bottom-15 label-left">产品描述:</label>
-            <input type="text" class="form-control form-control-left" id="add-product-name" placeholder="" [(ngModel)]="model.description">
+            <label class="margin-bottom-15 label-left"><span style="color:red;">*</span>&nbsp;产品描述:</label>
+            <input type="text" class="form-control form-control-left" id="add-product-name"
+              maxlength="30" placeholder="" [(ngModel)]="model.description">
           </div>
           <div class="form-inline">
-            <label class="margin-bottom-15 label-left">产品描述:</label>
+            <label class="margin-bottom-15 label-left"><span style="color:red;">*</span>&nbsp;设备类型:</label>
             <select name="profile" [(ngModel)]="model.device"  class="form-control" style="margin-right: 15px;height: 100%;">
               <option *ngFor="let index of deviceList" [ngValue]="index">
                 {{ index.name }}
@@ -76,7 +78,7 @@
     <ngb-alert [type]="alert.type" (close)="closeAlertModal(alert)">{{ alert.message }}</ngb-alert>
   </p>
   <div class="modal-header">
-    <h4 class="modal-title">新建产品</h4>
+    <h4 class="modal-title">修改产品</h4>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -88,11 +90,13 @@
       <div class="modal-col">
         <div class="form-inline">
           <label class="margin-bottom-15 label-left">产品名称:</label>
-          <input type="text" class="form-control form-control-left" id="add-product-name" placeholder="" [(ngModel)]="model.name">
+          <input type="text" class="form-control form-control-left" id="add-product-name"
+            maxlength="30" placeholder="" [(ngModel)]="model.name">
         </div>
         <div class="form-inline">
           <label class="margin-bottom-15 label-left">产品描述:</label>
-          <input type="text" class="form-control form-control-left" id="add-product-name" placeholder="" [(ngModel)]="model.description">
+          <input type="text" class="form-control form-control-left" id="add-product-name"
+            maxlength="30" placeholder="" [(ngModel)]="model.description">
         </div>
         <div class="form-inline">
           <label class="margin-bottom-15 label-left">产品描述:</label>
@@ -247,7 +251,7 @@
                   <!-- <i class="fa fa-search search-icon"></i> -->
                   <!-- <input type="text" class="form-control border-none" name="search-content" id="" placeholder="{{'XXX'}}"/> -->
                   <input id="sole-input3" [(ngModel)]="queryStr" class="form-control searchbox-content-common" type="text" 
-                    name="word" autocomplete="off" maxlength="256" placeholder="检索名称、描述">
+                    name="word" autocomplete="off" maxlength="30" placeholder="检索名称、描述" (keydown)="onKeydown($event)">
                 </div>
             </div>
             <button class="btn btn-bg" (click)="execQuery()">搜索</button>

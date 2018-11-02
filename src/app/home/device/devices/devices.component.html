@@ -18,7 +18,7 @@
       <label class="control-label">上传填写好的信息表</label>
       <button type="button" class="btn btn-outline-dark btn1">选择文件</button>
     </div>
-    <table class="table table-bordered limited-width">
+    <!-- <table class="table table-bordered limited-width">
       <tr>
         <th>所属产品可填项</th>
       </tr>
@@ -28,7 +28,7 @@
       <tr>
         <td>井盖</td>
       </tr>
-    </table>
+    </table> -->
 
   </div>
   <div class="modal-footer">
@@ -56,7 +56,8 @@
         <div class="form-group">
           <label class="control-label">设备名称:</label>
           <!-- <div class="form-cont-left"> -->
-          <input type="text" [(ngModel)]="device.descr" class="form-control" id="add-product-name" placeholder="">
+          <input type="text" [(ngModel)]="device.descr" class="form-control" id="add-product-name" placeholder=""
+            maxlength="30">
           <span *ngIf="device.descr.length > 30" class="control-label" style="color: red">长度不可大于30！</span>
           <!-- </div> -->
         </div>
@@ -78,7 +79,7 @@
         </div> -->
         <div class="form-group">
           <label class="control-label">设备编号:</label>
-          <input type="text" [(ngModel)]="device.name" class="form-control" placeholder="">
+          <input type="text" [(ngModel)]="device.name" class="form-control" placeholder="" maxlength="30">
           <span *ngIf="device.name.length > 30" class="control-label" style="color: red">长度不可大于30！</span>
         </div>
       </div>
@@ -158,7 +159,7 @@
               <label class="control-label">检索产品:</label>
             </div>
             <input type="text" id="sole-input1" [(ngModel)]="queryStrPosi" class="form-control" name="word1" 
-              autocomplete="off" maxlength="256" placeholder="检索编号、名称" value="">
+              autocomplete="off" maxlength="30" placeholder="检索编号、名称" value="">
             <i *ngIf="currentArea" class="fa fa-search fa-lg query-btn" (click)="execQueryPosi()" aria-hidden="true"></i>
             <!-- <button class="btn btn-bg query-btn" (click)="execQueryPosi()" [disabled]="!currentArea">搜索</button> -->
         </div>
@@ -299,12 +300,11 @@
         </select>
         <!-- 日期，功能不明 -->
         <!-- <input type="date" class="form-control" value="2018-06-01" /> -->
-        <!-- 输入框，功能不明 -->
         <div class="form-group inner-addon left-addon ">
             <!-- <i class="fa fa-search search-icon"></i> -->
             <!-- <input type="text" class="form-control border-none" name="search-content" id="" placeholder="{{'XXX'}}" /> -->
             <input id="sole-input2" [(ngModel)]="queryStr" class="form-control searchbox-content-common" type="text" 
-              name="word" autocomplete="off" maxlength="256" placeholder="检索编号、名称" value="">
+              name="word" autocomplete="off" maxlength="30" placeholder="检索编号、名称"  (keydown)="onKeydown($event)">
         </div>
         <button class="btn btn-bg extral-marg" (click)="execQuery()">搜索</button>
         <!-- <button class="btn btn-bg extral-marg">清空选择</button> -->

@@ -1,17 +1,10 @@
 
-import { Component, Injectable, EventEmitter } from '@angular/core';
+import { Injectable} from '@angular/core';
 import { Observable } from 'rxjs/';
-import { of } from 'rxjs/';
-import { tap, delay } from 'rxjs/operators';
+
 import { HttpClient } from '@angular/common/http';
-import { Http, Headers, Response } from '@angular/http';
-import { CookieService } from 'ngx-cookie';
-import { Router } from '@angular/router';
-import { WindowRef } from '../windowserver';
+// import { Http, Headers, Response } from '@angular/http';
 
-
-
-import { Point } from '../data/point.type';
 import { map } from 'rxjs/operators';
 
 
@@ -42,7 +35,7 @@ export class MonitorService {
     }
 
     // 获取按区域汇总的位置数据
-    getRegions(sw: Point, ne: Point, level: number, type: number): Observable<any> {
+    getRegions(sw: any, ne: any, level: number, type: number): Observable<any> {
         return this.http.post(`/api/position/inbounds/sum/${level}`, {
             'bounds': {
                 'ne': ne,
@@ -59,7 +52,7 @@ export class MonitorService {
 
 
     // 获取详细的位置数据
-    getDetails(sw: Point, ne: Point, zoom: Number, type: Number): Observable<any> {
+    getDetails(sw: any, ne: any, zoom: Number, type: Number): Observable<any> {
         return this.http.post('/api/position/inbounds/details', {
             'bounds': {
                 'ne': ne,

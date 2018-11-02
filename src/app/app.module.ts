@@ -2,20 +2,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 
-
-
 import { NgModule } from '@angular/core';
+// import { enableProdMode } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { Router } from '@angular/router';
-import { HttpModule } from '@angular/http';
 import { CookieModule } from 'ngx-cookie';
-
-import { GridsterModule } from 'angular-gridster2';
-
-
-
 
 import { HomeModule } from './home/home.module';
 import { ServiceModule } from './service/service.module';
@@ -30,11 +22,7 @@ import { UserComponent } from './home/user/user.component';
 import { MonitorComponent } from './home/monitor/monitor.component';
 import { ApplicationComponent } from './home/application/application.component';
 
-
-
 import { AppRoutingModule } from './app-routing.module';
-import { LoginRoutingModule } from './login/login-routing.module';
-
 
 import { AuthGuard } from './guard/auth-guard.service';
 import { AuthService } from './guard/auth.service';
@@ -42,14 +30,16 @@ import { WindowRef } from './windowserver';
 
 
 import { PageNotFoundComponent } from './not-found.component';
-// import { InterceptorService } from './interceptorService';
+
 import { HttpClientModule } from '@angular/common/http'; // HTTP_INTERCEPTORS,
 import { JwtModule } from '@auth0/angular-jwt';
-import { httpInterceptorProviders } from './index';
+import { httpInterceptorProviders } from './interceptor/index';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
 }
+
+// enableProdMode();
 
 @NgModule({
   declarations: [
@@ -60,8 +50,7 @@ export function tokenGetter() {
     DeviceComponent,
     UserComponent,
     MonitorComponent,
-    ApplicationComponent,
-
+    ApplicationComponent
 
   ],
   imports: [
@@ -69,14 +58,11 @@ export function tokenGetter() {
     FormsModule,
     ReactiveFormsModule,
     NgbModule.forRoot(),
-    HttpModule,
     CookieModule.forRoot(),
     AppRoutingModule,
     BrowserAnimationsModule,
     HomeModule,
-    GridsterModule,
     MaterialModule,
-
     ServiceModule,
     SharedModule,
     HttpClientModule,
@@ -91,7 +77,7 @@ export function tokenGetter() {
   providers: [
     AuthGuard, AuthService, WindowRef, httpInterceptorProviders,
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 
 })
 export class AppModule {

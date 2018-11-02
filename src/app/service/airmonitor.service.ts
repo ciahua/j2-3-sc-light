@@ -1,16 +1,8 @@
 
-import { Component, Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/';
 import { HttpClient } from '@angular/common/http';
-import { Http, Headers, Response } from '@angular/http';
-import { CookieService } from 'ngx-cookie';
 
-import { of } from 'rxjs/';
-import { tap, delay } from 'rxjs/operators';
-import { Router } from '@angular/router';
-import { WindowRef } from '../windowserver';
-
-import { Point } from '../data/point.type';
 import { map } from 'rxjs/operators';
 
 
@@ -20,19 +12,19 @@ export class AirmonitorService {
     constructor(private http: HttpClient) {
     }
     // 获取指定坐标范围内的所有设备
-    getAirDevice(ne: Point, sw: Point): Observable<any> {
+    getAirDevice(ne: any, sw: any): Observable<any> {
         return this.http.post(`/api/airmonitor/inbounds`, {
             'ne': ne,
             'sw': sw
         })
-            .pipe(map((res: Response) => {
+            .pipe(map((res) => {
                 return res;
             }));
     }
     // 获取指定设备的多项历史数据
     getHistoryData(id: number, from: string, to: string, page: number, pageSize: number): Observable<any> {
         return this.http.get(`/api/airmonitor/history/${id}?from=${from}&to=${to}&page=${page}&pageSize=${pageSize}`)
-            .pipe(map((res: Response) => {
+            .pipe(map((res) => {
                 return res;
             }));
     }
@@ -41,7 +33,7 @@ export class AirmonitorService {
     getStatistics(id: number, field: string, agg: string, from: string, to: string, interval: string) {
         return this.http
         .get(`/api/airmonitor/stat/${id}/${field}/${agg}?from=${from}&to=${to}&interval=${interval}`)
-            .pipe(map((res: Response) => {
+            .pipe(map((res) => {
                 return res;
             }));
     }

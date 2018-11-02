@@ -5,7 +5,7 @@ export const MonitorRoutes: Route[] = [
 
     {
         path: 'monitor',
-        component: MonitorComponent,
+        component: MonitorComponent
 
     }
 ];

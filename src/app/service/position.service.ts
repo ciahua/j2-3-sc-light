@@ -1,7 +1,6 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/';
 import { map } from 'rxjs/operators';
 
@@ -24,8 +23,8 @@ export class PositionService {
     }
 
     // 设备列表
-    getDevice(): Observable<any> {
-        return this.http.get('/api/device/type/all')
+    getPositionType(): Observable<any> {
+        return this.http.get('/api/position/type')
             .pipe(map((res: Response) => {
                 return res;
             }));

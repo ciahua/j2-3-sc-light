@@ -1,0 +1,101 @@
+<div class="bodyofissuedata">
+
+  <div class="card card-primary panel-default" style="min-height: 400px;">
+    <p *ngFor="let alert of alerts" class="lsq-alert">
+      <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
+    </p>
+    <div class="card-header">
+      <span>消息记录</span>
+      <button type="button" class="close" aria-label="Close">
+        <!-- <span aria-hidden="true">&times;</span> -->
+        <span>
+          <i class="fa fa-arrow-circle-o-left fa-lg cur-pointer color-btn-text" (click)="jumpHandle('home/application/cover')"></i>
+        </span>
+      </button>
+    </div>
+
+    <form class="card-block form-inline admin-manage">
+      <!-- <div class="d-inline"> -->
+            
+          <div class="d-inline-block extral-margin">
+            <div class="input-group">
+                <label class=" text-label">开始时间：</label>
+                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="startDate" ngbDatepicker
+                    #ad="ngbDatepicker">
+                <div class="input-group-append">
+                  <button class="btn btn-primary " (click)="ad.toggle()" type="button">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                  </button>
+                </div>
+
+            </div>
+          </div>
+
+          <div class="d-inline-block extral-margin">
+            <div class="input-group">
+                <label class=" text-label">结束时间：</label>
+                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="endDate" ngbDatepicker #bd="ngbDatepicker">
+                <div class="input-group-append">
+                  <button class="btn btn-primary " (click)="bd.toggle()" type="button">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                  </button>
+                </div>
+        
+            </div>
+          </div>
+
+          <div class="d-inline-block extral-margin">
+            <input type="text" class="form-control border-none" name="search-content" id="issueQuery" [(ngModel)]="issue.posNum" 
+              autocomplete="off" maxlength="30" placeholder="按位置编号检索"/>
+            <!-- <i class="fa fa-search search-icon" (click)="execQuery()"></i> -->
+          </div>
+
+          <div class="d-inline-block extral-margin">
+              <button class="btn btn-bg extral-margin search-btn" (click)="execQuery()">搜索</button>
+              <!-- [disabled]="!issue.posNum || issue.posNum == ''" -->
+          </div>
+      
+    </form>
+
+    <div class="card-block">
+        <!-- 消息记录表 -->
+        <table class="table table-hover">
+            <thead class="table-header">
+              <tr>
+                <th>序号</th>
+                <th>事件ID</th>
+                <th>状态</th>
+                <th>附言</th>
+                <th>负责人ID</th>
+                <!-- <th>操作</th> -->
+              </tr>
+            </thead>
+            <tbody *ngIf="issueList">
+              <tr *ngFor="let item of issueList; let i = index" class="lineheight">
+                <td>{{i+1}}</td>
+                <td>{{item.issueId}}</td>
+                <td><span *ngIf="item.state === 0">未处理</span>
+                  <span *ngIf="item.state === 1">处理中</span>
+                  <span *ngIf="item.state === 2">已处理</span></td>
+                <td>{{item.comment}}</td>
+                <td><span *ngIf="!item.assigneeId || item.assigneeId === null">null</span>
+                  <span *ngIf="item.assigneeId">{{item.assigneeId}}</span></td>
+                <!-- <td>
+                  <div class="modify-strategy d-inline">
+                    <a class="cur-pointer btn-a theme-text d-inline">修改</a>
+                    <a class="cur-pointer btn-a theme-text d-inline">删除</a>
+                  </div>
+
+                </td> -->
+              </tr>
+            </tbody>
+        </table>
+        <div *ngIf="issueList.length === 0 || !issueList">无数据！</div>
+        <div *ngIf="issueList.length > 0">
+          <ngb-pagination [collectionSize]=total [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"
+            (pageChange)="pageChange()"></ngb-pagination>
+        </div>
+    </div>
+
+  </div>
+</div>

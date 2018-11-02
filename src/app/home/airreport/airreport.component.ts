@@ -3,10 +3,10 @@ import { Router } from '@angular/router';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { NgbTimepickerConfig } from '@ng-bootstrap/ng-bootstrap';
-import { NgbDateAdapter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import {  NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { AirmonitorService } from '../../service/airmonitor.service';
 import { saveAs } from 'file-saver';
-declare let echarts;
+
 
 const now = new Date();
 
@@ -100,8 +100,8 @@ export class AirreportComponent implements OnInit {
   // 获取指定设备的历史数据记录
   getHistoryData() {
     const that = this;
-    const fromdate1 = '2018-01-01T00:00';
-    const todate1 = '2018-12-30T23:59';
+    // const fromdate1 = '2018-01-01T00:00';
+    // const todate1 = '2018-12-30T23:59';
 
     const smonth = this.startDate.month.toString().length > 1 ? this.startDate.month.toString() : `0${this.startDate.month.toString()}`;
     const sday = this.startDate.day.toString().length > 1 ? this.startDate.day.toString() : `0${this.startDate.day.toString()}`;
@@ -143,17 +143,14 @@ export class AirreportComponent implements OnInit {
 
   // 搜索
   dataSearch() {
+    this.page = 1;
     this.getHistoryData();
   }
 
   // 本地存储数据
   getStatistics() {
     // id: number, field: string, agg: string, from: string, to: string, interval: string
-
-    const that = this;
     const id = this.currentdevice.id;
-    const field = this.fields[0].name;
-
     const agg = this.aggs[0].name;
     const fromdate = this.fromdate;
     const todate = this.todate;
@@ -195,7 +192,7 @@ export class AirreportComponent implements OnInit {
     const that = this;
     this.dashtrue = true;
     this.getStatistics();
-    this.jumpHandle('home/dashbord');
+    this.jumpHandle('home/dashboard');
   }
 
 

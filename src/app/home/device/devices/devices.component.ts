@@ -2,14 +2,11 @@ import { Input, Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { MonitorService } from '../../../service/monitor.service';
 import { DeviceService } from '../../../service/device.service';
-import { Point } from '../../../data/point.type';
 import { GradOverlar } from '../../../service/grad.overlay';
-import { take } from 'rxjs/operators';
+
 
 declare let BMap;
-declare let $: any;
-declare let BMapLib;
-declare let BMAP_ANCHOR_TOP_LEFT;
+
 
 @Component({
   selector: 'app-devices',
@@ -34,8 +31,8 @@ export class DevicesComponent implements OnInit {
   visible = true; // 控制可视区域
 
   zoom: any; // 地图级数
-  SouthWest: Point; // 地图视图西南角
-  NorthEast: Point; // 地图视图东北角
+  SouthWest: any; // 地图视图西南角
+  NorthEast: any; // 地图视图东北角
   parentNode = null; // 用于递归查询JSON树 父子节点
   node = null; // 用于递归查询JSON树 父子节点
 
@@ -220,13 +217,13 @@ export class DevicesComponent implements OnInit {
         that.getDevicesList(that.page, that.pageSize);
       },
       error: function (error) {
-        const message = error.json().errors[0].defaultMessage;
+        console.log(error);
+        const message = error.error.errors[0].defaultMessage;
         that.alertsModal.push({
           id: 1,
           type: 'danger',
           message: `新建失败: ${message}！`,
         });
-        console.log(error.json());
       }
     });
   }
@@ -293,14 +290,13 @@ export class DevicesComponent implements OnInit {
         that.getDevicesList(that.page, that.pageSize);
       },
       error: function (error) {
-        const message = error.json().errors[0].defaultMessage;
+        console.log(error);
+        const message = error.error.errors[0].defaultMessage;
         that.alertsModal.push({
           id: 1,
           type: 'danger',
           message: `修改失败: ${message}！`,
         });
-        console.log(error.json());
-        console.log(error);
       }
     });
   }
@@ -393,6 +389,13 @@ export class DevicesComponent implements OnInit {
     });
     // console.log(modelName);
     return modelName;
+  }
+
+  // 搜索Enter事件
+  onKeydown(event: any) {
+    if (event.keyCode === 13) {
+      this.execQuery();
+    }
   }
 
   // 根据positionId返回指定位置点

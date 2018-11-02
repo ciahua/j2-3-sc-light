@@ -176,3 +176,13 @@
     background:#36a3f7;
     color:#fff;
 }
+
+.issue-history-data {
+    position: absolute;
+    top: 15px;
+    right: 70px;
+    z-index: 3000;
+    .iss-hist {
+        padding: 4px 8px;
+    }
+}

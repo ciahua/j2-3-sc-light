@@ -8,8 +8,6 @@ Author: luo.shuqi@live.com
 */
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy} from '@angular/core';
 import { Router } from '@angular/router';
-import { Point } from '../../../data/point.type';
-import { LIGHTLIST } from '../../../data/light-list';
 import { MonitorService } from '../../../service/monitor.service';
 import { LightService } from '../../../service/light.service';
 import { NgbTimepickerConfig } from '@ng-bootstrap/ng-bootstrap';
@@ -49,14 +47,14 @@ export class LightComponent implements OnInit, OnDestroy  {
   visible = true; // 控制可视区域
 
   zoom: any; // 地图级数
-  SouthWest: Point; // 地图视图西南角
-  NorthEast: Point; // 地图视图东北角
+  SouthWest: any; // 地图视图西南角
+  NorthEast: any; // 地图视图东北角
   type = 0; // 设备类型
 
   parentNode = null; // 用于递归查询JSON树 父子节点
   node = null; // 用于递归查询JSON树 父子节点
 
-  light_list = LIGHTLIST.val.light_list; // 数据模拟
+
 
   timer: any; // 定时器
   lightList = []; // 当前数据
@@ -146,13 +144,13 @@ export class LightComponent implements OnInit, OnDestroy  {
     const map = this.map = new BMap.Map(this.map_container.nativeElement, {
       enableMapClick: true,
       // minZoom: 11,
-      // maxZoom : 11
+      // maxZoom : 20
     }); // 创建地图实例
 
     // 这里我们使用BMap命名空间下的Point类来创建一个坐标点。Point类描述了一个地理坐标点，其中116.404表示经度，39.915表示纬度。（为天安门坐标）
 
     const point = new BMap.Point(113.922329, 22.49656); // 坐标可以通过百度地图坐标拾取器获取 --万融大厦
-    map.centerAndZoom(point, 19); // 设置中心和地图显示级别
+    map.centerAndZoom(point, 20); // 设置中心和地图显示级别
 
     map.enableScrollWheelZoom(true); // 开启鼠标滚轮缩放
 
@@ -175,8 +173,25 @@ export class LightComponent implements OnInit, OnDestroy  {
     }, 5000);
 
     this.mapClickOff(map); // 地图点击信息框隐藏
+    this.dragendOff(map);
+    this.zoomendOff(map);
 
   }
+
+    // 监控-拖动地图事件-显示用户拖动地图后地图中心的经纬度信息。
+    dragendOff(baiduMap) {
+      const that = this;
+      baiduMap.addEventListener('dragend', function () {
+        that.getLights();  // 获取井盖
+      });
+    }
+    // 监控-地图缩放事件-地图缩放后的级别。
+    zoomendOff(baiduMap) {
+      const that = this;
+      baiduMap.addEventListener('zoomend', function () {
+          that.getLights();  // 获取井盖
+      });
+    }
 
   // 清除覆盖物
   remove_overlay(baiduMap) {
@@ -252,6 +267,11 @@ export class LightComponent implements OnInit, OnDestroy  {
     const a_surplus: any[] = [];
     const b_surplus: any[] = [];
     let i = 0;
+    if (b.length === 0) {
+      for (let k = 0; k < a.length; k++) {
+        a_surplus.push(a[k]);
+      }
+    }
     for (let j = 0; j < b.length; j++) {
       while (i < a.length && a[i].id < b[j].id) {
         a_surplus.push(a[i]);
@@ -263,6 +283,10 @@ export class LightComponent implements OnInit, OnDestroy  {
         a_arr.push(a[i]);
         i++;
         b_arr.push(b[j]);
+      }
+      while (i < a.length && j === b.length - 1) {
+        a_surplus.push(a[i]);
+        i++;
       }
     }
     return {
@@ -402,16 +426,16 @@ export class LightComponent implements OnInit, OnDestroy  {
 
     if (val.offline === true) {// 离线
         // 离线或异常
-      txt = txt + `   <p >是否在线： 否</p>`;
+      txt = txt + `   <p><span style='color: red'>离线</span></p>`;
       } else {
-      txt = txt + `   <p >是否在线： 是</p>`;
+      txt = txt + `   <p><span style='color: blue'>在线</span></p>`;
       }
 
     if (val.error === true) {// 离线
       // 离线或异常
-      txt = txt + `<p >是否故障： 是</p>`;
+      txt = txt + `<p><span style='color: red'>状态：故障</span></p>`;
     } else {
-      txt = txt + `<p >是否故障： 否</p>`;
+      txt = txt + `<p ><span style='color: blue'>状态：正常</span></p>`;
     }
     if (val.rule && val.rule.name) {
       txt = txt + `<p >应用策略： ${val.rule.name}</p>`;

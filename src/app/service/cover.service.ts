@@ -1,16 +1,10 @@
 
-import { Component, Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/';
-import { of } from 'rxjs/';
-import { tap, delay } from 'rxjs/operators';
+
 import { HttpClient } from '@angular/common/http';
-import { Http, Headers, Response } from '@angular/http';
-import { CookieService } from 'ngx-cookie';
-import { Router } from '@angular/router';
-import { WindowRef } from '../windowserver';
 
 
-import { Point } from '../data/point.type';
 import { map } from 'rxjs/operators';
 
 
@@ -24,14 +18,14 @@ export class CoverService {
 
 
     // 获取详细的位置数据
-    getCovers( ne: Point, sw: Point): Observable<any> {
+    getCovers( ne: any, sw: any): Observable<any> {
         return this.http.post('/api/manhole/inbounds', {
 
             'ne': ne,
             'sw': sw
 
         })
-            .pipe(map((res: Response) => {
+            .pipe(map((res) => {
                 return res;
             }));
     }
@@ -39,15 +33,16 @@ export class CoverService {
     // 获取指定类型的事件
     getIssues(deviceType: number, state: number): Observable<any> {
         return this.http.get(`/api/issue/open?deviceType=${deviceType}&state=${state}`)
-            .pipe(map((res: Response) => {
+            .pipe(map((res) => {
                 return res;
             }));
     }
+   
 
     // 获取指定设备的事件
     getDeviceIssues(deviceId: number, state: number): Observable<any> {
         return this.http.get(`/api/issue/open?deviceId=${deviceId}&state=${state}`)
-            .pipe(map((res: Response) => {
+            .pipe(map((res) => {
                 return res;
             }));
     }
@@ -58,7 +53,7 @@ export class CoverService {
             'comment': comment,
             'state': state
         })
-            .pipe(map((res: Response) => {
+            .pipe(map((res) => {
                 const data = { status: 200 };
                 return data;
             }));
@@ -66,13 +61,15 @@ export class CoverService {
 
 
     // 设置指定设备事件状态
-    setDeviceIssues(deviceId: number, orgState: number, state: number, comment: string): Observable<any> {
+    setDeviceIssues(deviceId: number, orgState: number, state: number, comment: string,
+        assigneeId: string): Observable<any> {
         return this.http.post(`/api/issue/state?deviceId=${deviceId}`, {
             'comment': comment,
             'orgState': orgState,
-            'state': state
+            'state': state,
+            'assigneeId': assigneeId
         })
-            .pipe(map((res: Response) => {
+            .pipe(map((res) => {
                 const data = { status: 200 };
                 return data;
             }));
@@ -85,6 +82,14 @@ export class CoverService {
             'comment': comment,
             'state': state
         })
+            .pipe(map((res) => {
+                return res;
+            }));
+    }
+
+    // 获取所有用户 - 分页
+    getAllUser(): Observable<any> {
+        return this.http.get(`/security/user/all`)
             .pipe(map((res: Response) => {
                 return res;
             }));

@@ -8,6 +8,7 @@ declare let Aliplayer;
 declare let BMap;
 declare let BMapLib;
 declare let BMAP_ANCHOR_TOP_RIGHT;
+declare let swfobject;
 
 
 
@@ -39,6 +40,7 @@ export class TrafficComponent implements OnInit {
   map: any; // 地图对象
 
   currentCamera: any;  // 当前摄像头
+  videoUrl: any;  // 当前摄像头
 
   currentCameraShowMe = false;
 
@@ -190,7 +192,7 @@ export class TrafficComponent implements OnInit {
 
   // 地图点注标-点击事件
   openSideBar(marker, camera) {
-    console.log(camera);
+
     const that = this;
 
     let txt = `<p style='font-size: 12px; line-height: 1.8em; border-bottom: 1px solid #ccc; padding-bottom: 10px;'>`;
@@ -211,14 +213,34 @@ export class TrafficComponent implements OnInit {
     // const infoWindow = new BMap.InfoWindow(txt, opts);
 
     marker.addEventListener('click', function () {
+      that.currentCameraShowMe = false;
       that.currentCamera = camera;
-      that.currentCameraShowMe = true;
+      that.videoUrl = `src=${camera.videoUrl}`;
+      console.log(camera);
+
 
       setTimeout(() => {
-        that.cameraAddEventListener();
+        that.currentCameraShowMe = true;
       }, 2);
     });
 
+  }
+
+  play(url) {
+
+    const flashvars = {
+      src: url
+    };
+    const params = {
+      allowFullScreen: true
+      , allowScriptAccess: 'always'
+      , bgcolor: '#000000'
+    };
+    const attrs = {
+      name: 'player'
+    };
+
+    swfobject.embedSWF('GrindPlayer.swf', 'player', '854', '480', '10.2', null, flashvars, params, attrs);
   }
   // 点击子设备
   cameraAddEventListener() {
@@ -291,7 +313,7 @@ export class TrafficComponent implements OnInit {
         // that.zoom = that.switchZone(val.zone.level);
         that.node = that.getNode(val.regions, val.zone.region_id);
         that.map_model.currentCity = that.node;
-        that.map_model.currentChildren = that.node.children;
+        that.map_model.currentChildren = that.node.children || [];
 
       },
       complete: function () {
@@ -392,7 +414,6 @@ export class TrafficComponent implements OnInit {
   // 选择城市
   selecteCity(city) {
     this.map_model.currentCity = city;
-    this.node = city;
     this.getPoint(this.map, city);  // 解析地址- 设置中心和地图显示级别
     this.map_model.currentChildren = city.children;
   }
@@ -410,25 +431,26 @@ export class TrafficComponent implements OnInit {
   showCiyt() {
     this.cityshow = true;
   }
-  // 离开城市
-  citylistMouseleave() {
-    this.cityshow = false;
-  }
+
+
   // 选择区域
   arealistMouseover(area) {
 
     this.map_model.currentBlock = area.children;
   }
-
   // 离开区域
   arealistMouseleave() {
     this.areashow = false;
-    this.map_model.currentBlock = null;
+    this.map_model.currentBlock = [];
+  }
+  // 离开城市
+  citylistMouseleave() {
+    this.cityshow = false;
   }
 
   arealistMouseNone() {
     this.areashow = true;
-    this.map_model.currentBlock = null;
+    this.map_model.currentBlock = [];
   }
 
 }

@@ -17,7 +17,6 @@ import { Router } from '@angular/router';
 
 import { StrategyService } from '../../service/strategy.service';
 
-const now = new Date();
 const equals = (one: NgbDateStruct, two: NgbDateStruct) =>
   one && two && two.year === one.year && two.month === one.month && two.day === one.day;
 const before = (one: NgbDateStruct, two: NgbDateStruct) =>
@@ -27,8 +26,7 @@ const after = (one: NgbDateStruct, two: NgbDateStruct) =>
   !one || !two ? false : one.year === two.year ? one.month === two.month ? one.day === two.day
     ? false : one.day > two.day : one.month > two.month : one.year > two.year;
 
-declare let echarts;
-declare let BMap;
+
 declare let $: any;
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -242,6 +240,8 @@ export class StrategyComponent implements OnInit {
     this.getZoneDefault(); // 获取城市
 
   }
+
+  
   // 获取策略表
   getStrategyList() {
     const that = this;
@@ -262,10 +262,12 @@ export class StrategyComponent implements OnInit {
 
   // 点击策略及初始化时调用
   getRules(item) {
+    
     const that = this;
     const strategyId = item.id;
     this.strategyService.getRules(strategyId).subscribe({
       next: function (val) {
+        
         that.ruleList = val;
       },
       complete: function () {
@@ -291,15 +293,18 @@ export class StrategyComponent implements OnInit {
     this.getRules(item);
 
   }
+  
   // 点击一个规则
   selectRule(item, i) {
     this.currentRule = item;
     this.getWorkdayList(item);
     this.rule_index = i;
+   
   }
   // 获取工作日中间段时间
   getWorkdayList(rule) {
     this.workdayList = [];
+    
     this.holidayList = [];
     if (!rule) {
       return;
@@ -313,11 +318,10 @@ export class StrategyComponent implements OnInit {
     if (len1 > 2) {
       this.holidayList = rule.holidayRules.slice(1, len1 - 1);
     }
-
   }
 
   // 添加策略弹框操作
-  openAddStrategy(content, index) {
+  openAddStrategy(content) {
 
     // 初始参数
     const that = this;
@@ -349,7 +353,7 @@ export class StrategyComponent implements OnInit {
 
   // 更新策略-弹框操作
   openUpdataStrategy(content, item, index) {
-
+    console.log("item",item);
     const that = this;
     const modal = this.modalService.open(content, { size: 'sm' });
     this.mr = modal;
@@ -871,8 +875,8 @@ export class StrategyComponent implements OnInit {
       console.log('from :' + this.fromDate.day);
       console.log('to :' + this.toDate.day);
 
-      const fromStr = this.fromDate.year + '-' + this.fromDate.month + '-' + this.fromDate.day;
-      const toStr = this.toDate.year + '-' + this.toDate.month + '-' + this.toDate.day;
+      // const fromStr = this.fromDate.year + '-' + this.fromDate.month + '-' + this.fromDate.day;
+      // const toStr = this.toDate.year + '-' + this.toDate.month + '-' + this.toDate.day;
 
     }
   }
@@ -1039,6 +1043,7 @@ export class StrategyComponent implements OnInit {
         next: function (res) {
           that.model.ZoneDefault = res;
           that.zNodes = res.regions;
+          that.zNodes['open'] = true;
           const id = that.currentTreeNodeId = res.regions[0].id;
           that.getRegionLights(id);
 

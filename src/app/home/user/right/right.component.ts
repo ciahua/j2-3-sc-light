@@ -1,9 +1,9 @@
 import { Input, Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { GUIZTREENODE } from '../../../data/gui-z-tree';
+
 import { RightService } from '../../../service/right.service';
 
-declare var $: any;
+
 @Component({
   selector: 'app-right',
   templateUrl: './right.component.html',
@@ -16,7 +16,7 @@ export class RightComponent implements OnInit {
   setting = {}; // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
 
   // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
-  zNodes = GUIZTREENODE;
+
 
   role: any = {}; // 存储数据
   public mr: NgbModalRef; // 当前弹框
@@ -52,7 +52,7 @@ export class RightComponent implements OnInit {
     this.rightService.getAllRole(this.queryStr, this.page, this.pageSize).subscribe({
       next: function(val) {
         that.roleList = val.items;
-        console.log(that.roleList);
+        // console.log(that.roleList);
         that.total = val.total;
       },
       complete: function() {},
@@ -94,13 +94,13 @@ export class RightComponent implements OnInit {
         that.getRoleList();
       },
       error: function (error) {
-        const message = error.json().errors[0].defaultMessage;
+        console.log(error);
+        const message = error.error.errors[0].defaultMessage;
         that.alertsModal.push({
           id: 1,
           type: 'danger',
           message: `新增失败：${message}！`,
         });
-        console.log(error);
       }
     });
   }
@@ -137,13 +137,13 @@ export class RightComponent implements OnInit {
         that.getRoleList();
       },
       error: function (error) {
-        const message = error.json().errors[0].defaultMessage;
+        console.log(error);
+        const message = error.error.errors[0].defaultMessage;
         that.alertsModal.push({
           id: 1,
           type: 'danger',
           message: `修改失败：${message}！`,
         });
-        console.log(error);
       }
     });
   }
@@ -166,7 +166,7 @@ export class RightComponent implements OnInit {
 
   // 删除设备规则
   closeUser($event) {
-    console.log($event);
+    // console.log($event);
     if ($event === 'ok') {
       this.delRole();
     }
@@ -203,7 +203,9 @@ export class RightComponent implements OnInit {
     });
   }
 
-  pageChange() {}
+  pageChange() {
+    this.getRoleList();
+  }
 
   execQuery() {
     this.getRoleList();
@@ -225,6 +227,13 @@ export class RightComponent implements OnInit {
   public closeAlertModal(alert: IAlert) {
     const index: number = this.alertsModal.indexOf(alert);
     this.alertsModal.splice(index, 1);
+  }
+
+  // 搜索Enter事件
+  onKeydown(event: any) {
+    if (event.keyCode === 13) {
+      this.execQuery();
+    }
   }
 }
 
