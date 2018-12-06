@@ -1,9 +1,5 @@
 @import '../../assets/css/variable.scss';
-
 @media (max-width:  773px /*575.98px*/) { 
-    // .product-name , .product-title, .login-left{
-    //     display: none;
-    // }
     .product-title{
         display:none;
     }
@@ -41,7 +37,6 @@
 }
 .btn-login {
     display: inline-block;
-    // background-color: #434f5c;
     background-color: $color-theme-text;
     border-color: $color-theme-text;
     color: #fff;
@@ -82,46 +77,31 @@
     position: absolute;
     width: calc(100vw - 300px);
     left: 30px;
-    // background: rgba(0, 0, 0, 0.5);
     top: 36px;
     height: 93vh;
-    // height: 140px;
-    // bottom: 0;
     color: #fff;
     font-size: 36px;
-
     .product-title {
         position: absolute;
-        // float: right;
-        // text-align: right;
         bottom: 0;
         padding: 0 20px;
         text-shadow:5px 2px 6px #000;
-        // right: 80px;
     }
-        // .product-title p {
-        //     color: #506173;
-        //     margin-left: 12px;
-        // }
+
 }
 
 .product-name {
     position: absolute;
     top: 20px;
-    // left: 40px;
     right: 40px;
 }
 .login-center {
  height: 100vh;
  margin: 0;
  background: #d7d8d2;
-//  background-image: url(../../assets/imgs/login-bg.jpg);
-//  background-repeat: no-repeat;
-//  background-size: cover;
  position: relative;
 }
 .login-title {
-    // margin-bottom: 40px;
     font-size: 23px
 }
 .login-icon{

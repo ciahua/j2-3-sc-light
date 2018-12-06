@@ -241,7 +241,7 @@ export class StrategyComponent implements OnInit {
 
   }
 
-  
+
   // 获取策略表
   getStrategyList() {
     const that = this;
@@ -262,12 +262,10 @@ export class StrategyComponent implements OnInit {
 
   // 点击策略及初始化时调用
   getRules(item) {
-    
     const that = this;
     const strategyId = item.id;
     this.strategyService.getRules(strategyId).subscribe({
       next: function (val) {
-        
         that.ruleList = val;
       },
       complete: function () {
@@ -293,18 +291,15 @@ export class StrategyComponent implements OnInit {
     this.getRules(item);
 
   }
-  
   // 点击一个规则
   selectRule(item, i) {
     this.currentRule = item;
     this.getWorkdayList(item);
     this.rule_index = i;
-   
   }
   // 获取工作日中间段时间
   getWorkdayList(rule) {
     this.workdayList = [];
-    
     this.holidayList = [];
     if (!rule) {
       return;
@@ -353,7 +348,6 @@ export class StrategyComponent implements OnInit {
 
   // 更新策略-弹框操作
   openUpdataStrategy(content, item, index) {
-    console.log("item",item);
     const that = this;
     const modal = this.modalService.open(content, { size: 'sm' });
     this.mr = modal;
@@ -806,7 +800,6 @@ export class StrategyComponent implements OnInit {
 
   // 删除策略规则弹框
   openDelRule(content, item, i) {
-    const that = this;
     this.strategy_rule_del_id = item.id;
     this.strategy_rule_del_index = i;
     const modal = this.modalService.open(content, { size: 'sm' });
@@ -914,61 +907,29 @@ export class StrategyComponent implements OnInit {
     this.nav_index = index;
     if (index === 1) {
       this.getZtreeRegion();
-      // setTimeout(() => {
-      //   this.getZoneTree();
-      //   this.setZtreeNode();
-      // }, 1);
 
     }
   }
 
   setZtreeNode() {
-    const that = this;
     const treeObj = $.fn.zTree.getZTreeObj('treeDemo');
     this.regionList.map(item => {
       const node = treeObj.getNodeByParam('id', item.regionId, null);
       if (node) {
         treeObj.checkNode(node, true, true);
-        // console.log(11111111);
-        // console.log(node);
-        // console.log(node.parentTId);
-        // console.log(node.isParent);
-        this.findParent(node);
         this.findParent(node.getParentNode());
 
-        // that.findFinalParent(node);
-        // for (let i = that.nodeParentList.length - 1; i > 0; i--) {
-        //   that.nodeParentList[i].open = true;
-        //   console.log(333333);
-        //   console.log(that.nodeParentList[i]);
-        // }
       }
     });
 
   }
 
-  // findFinalParent(node) {
-  //   const that = this;
-  //   console.log(44444444444);
-  //   let p = node.getParentNode();
-  //   while (p && !p.open) {
-  //     that.nodeParentList.push(p);
-  //     p = p.getParentNode();
-  //   }
-  // }
 
   findParent(node) {
     const p = node.getParentNode();
     if (p && !p.open) {
       console.log(444);
       p.open = true;
-
-      // console.log(p.open);
-      // const treeObj = $.fn.zTree.getZTreeObj('treeDemo');
-      // const node1 = treeObj.getNodeByTId(p.tId);
-      // console.log(node1);
-      // node1.open = true;
-      // this.findParent(p);
     }
   }
   // 获取策略所覆盖的区域集合

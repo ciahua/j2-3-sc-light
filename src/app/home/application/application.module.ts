@@ -1,11 +1,12 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgModule } from '@angular/core';
+import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgbModule, } from '@ng-bootstrap/ng-bootstrap';
 import { MatButtonModule, MatCheckboxModule, MatSliderModule, MatSlideToggleModule} from '@angular/material';
 
-
+import { ApplicationRoutingModule } from './application-routing.module';
+import { ApplicationComponent } from './application.component';
 import { CoverComponent } from './cover/cover.component';
 import { CalamityComponent } from './calamity/calamity.component';
 
@@ -18,10 +19,11 @@ import { ElectricalComponent } from './electrical/electrical.component';
 
 
 @NgModule({
-    imports: [BrowserModule, FormsModule, NgbModule,
+    imports: [CommonModule, FormsModule, NgbModule, ApplicationRoutingModule,
         MatButtonModule, MatCheckboxModule, MatSliderModule, MatSlideToggleModule
     ],
     declarations: [
+        ApplicationComponent,
         CoverComponent, CalamityComponent,
         LightComponent, SecurityComponent, TrafficComponent, WaterComponent, AirComponent, ElectricalComponent
 ],

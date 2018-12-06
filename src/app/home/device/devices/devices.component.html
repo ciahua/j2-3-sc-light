@@ -18,17 +18,6 @@
       <label class="control-label">上传填写好的信息表</label>
       <button type="button" class="btn btn-outline-dark btn1">选择文件</button>
     </div>
-    <!-- <table class="table table-bordered limited-width">
-      <tr>
-        <th>所属产品可填项</th>
-      </tr>
-      <tr>
-        <td>灯</td>
-      </tr>
-      <tr>
-        <td>井盖</td>
-      </tr>
-    </table> -->
 
   </div>
   <div class="modal-footer">
@@ -53,151 +42,150 @@
     <div class="row">
       <!-- 左列 -->
       <div class="col-3 div-left">
+
         <div class="form-group">
-          <label class="control-label">设备名称:</label>
-          <!-- <div class="form-cont-left"> -->
-          <input type="text" [(ngModel)]="device.descr" class="form-control" id="add-product-name" placeholder=""
-            maxlength="30">
-          <span *ngIf="device.descr.length > 30" class="control-label" style="color: red">长度不可大于30！</span>
-          <!-- </div> -->
-        </div>
-        <div class="form-group">
-          <label class="control-label">设备型号:</label>
+          <label class="control-label"><span style="color:red;">*</span>&nbsp;设备型号:</label>
           <select name="profile1" [(ngModel)]="device.model" class="form-control">
             <option *ngFor="let index of deviceModels1" [ngValue]="index">
               {{ index.name }}
             </option>
           </select>
         </div>
-        <!-- <div class="form-group">
-          <label class="control-label">制造商:</label>
-          <input type="text" class="form-control" placeholder="">
-        </div>
+
         <div class="form-group">
-          <label class="control-label">制造商联系方式:</label>
-          <input type="text" class="form-control" placeholder="">
-        </div> -->
-        <div class="form-group">
-          <label class="control-label">设备编号:</label>
+          <label class="control-label"><span style="color:red;">*</span>&nbsp;设备编号:</label>
           <input type="text" [(ngModel)]="device.name" class="form-control" placeholder="" maxlength="30">
           <span *ngIf="device.name.length > 30" class="control-label" style="color: red">长度不可大于30！</span>
         </div>
+        <div class="form-group">
+          <label class="control-label"><span style="color:red;">*</span>&nbsp;设备名称:</label>
+          <input type="text" [(ngModel)]="device.descr" class="form-control" id="add-product-name" placeholder="" maxlength="30">
+          <span *ngIf="device.descr.length > 30" class="control-label" style="color: red">长度不可大于30！</span>
+
+        </div>
       </div>
-      <!-- 中列 -->
-      <div class="col-4">
-        <label class="control-label">
-          <b>位置绑定</b>
-        </label>
-
-        <div class="form-inline">
-          <div class="label-mid">
-            <label class="control-label">区域:</label>
-          </div>
-          <!-- 选择区域 -->
-          <div class="area-selection" *ngIf="visible == true">
-            <!-- 城市列表 -->
-            <div class="d-inline-block area-selection-block" (mouseleave)="citylistMouseleave()">
-
-              <span class="cl-blue cur-pointer" (mouseover)="showCiyt()">
-                <span class="filter" *ngIf="currentCity">{{currentCity.name}}</span>
-                <span class="filter" *ngIf="!currentCity">选择城市</span>
-                <!-- <i class="fa fa-bell-o nav-icon " aria-hidden="true"></i> -->
-              </span>
-              <div id="city-panel" class="city-panel dropdown_panel" *ngIf="cityshow">
-                <div class="dropdown_panel_inner">
-                  <span class="menu_arrow_left"></span>
-
-                  <dl *ngFor="let item of cityList">
-                    <dt>{{item.name}}</dt>
-                    <dd *ngIf="item.children && item.children.length > 0">
-                      <a title="智慧城市" *ngFor="let itemc of item.children" (click)="selecteCity(itemc)">{{itemc.name}}</a>
-                    </dd>
-                  </dl>
+      <div class="col-9 row">
+        <div class="col-12" style="margin-bottom: 10px;">
+          <label class="control-label">
+            <b>位置绑定</b>
+          </label>
+        </div>
+        <div class="col-12 row">
+          <div class="col-12 col-md-6">
+              <div class="form-inline ">
+                <div class="label-mid">
+                  <label class="control-label">选择区域:</label>
                 </div>
-
-              </div>
-            </div>
-
-            <!-- 区域列表 -->
-            <div class="d-inline-block area-selection-block" (mouseleave)="arealistMouseleave()">
-
-              <span class="cl-blue cur-pointer" (mouseover)="showArea()">
-                  <span class="filter" *ngIf="!currentArea">选择区域</span>
-                  <span class="filter" *ngIf="currentArea">{{currentArea.name}}</span>
-              </span>
-
-              <div class="arealist-wrap dropdown_panel" *ngIf="areashow">
-                <div class="dropdown_panel_inner">
-                  <span class="menu_arrow_left"></span>
-
-                  <ul class="arealist" data-type="area">
-                    <!-- <li data-val="0" class="arealist-item" (mouseover)="arealistMouseNone()">
-                      <em>不限</em>
-                    </li> -->
-                    <li class="arealist-item" *ngFor="let node of currentChildren" (mouseover)="arealistMouseover(node)">
-                      <em>{{node.name}}</em>
-                    </li>
-                  </ul>
-                  <div class="blocklist-wrap" *ngIf="currentBlock">
-                    <ul class="blocklist" data-type="block">
-                      <!-- <li data-val="0">不限</li> -->
-                      <li *ngFor="let block of currentBlock" (click)="selecteblock(block)">{{block.name}}</li>
-                    </ul>
+                <!-- 选择区域 -->
+                <div class="area-selection" *ngIf="visible == true">
+                  <!-- 城市列表 -->
+                  <div class="d-inline-block area-selection-block" (mouseleave)="citylistMouseleave()">
+              
+                    <span class="cl-blue cur-pointer" (mouseover)="showCiyt()">
+                      <span class="filter" *ngIf="currentCity">{{currentCity.name}}</span>
+                      <span class="filter" *ngIf="!currentCity">选择城市</span>
+                      <!-- <i class="fa fa-bell-o nav-icon " aria-hidden="true"></i> -->
+                    </span>
+                    <div id="city-panel" class="city-panel dropdown_panel" *ngIf="cityshow">
+                      <div class="dropdown_panel_inner">
+                        <span class="menu_arrow_left"></span>
+              
+                        <dl *ngFor="let item of cityList">
+                          <dt>{{item.name}}</dt>
+                          <dd *ngIf="item.children && item.children.length > 0">
+                            <a title="智慧城市" *ngFor="let itemc of item.children" (click)="selecteCity(itemc)">{{itemc.name}}</a>
+                          </dd>
+                        </dl>
+                      </div>
+              
+                    </div>
                   </div>
+              
+                  <!-- 区域列表 -->
+                  <div class="d-inline-block area-selection-block" (mouseleave)="arealistMouseleave()">
+              
+                    <span class="cl-blue cur-pointer" (mouseover)="showArea()">
+                      <span class="filter" *ngIf="!currentArea">选择区域</span>
+                      <span class="filter" *ngIf="currentArea">{{currentArea.name}}</span>
+                    </span>
+              
+                    <div class="arealist-wrap dropdown_panel" *ngIf="areashow">
+                      <div class="dropdown_panel_inner">
+                        <span class="menu_arrow_left"></span>
+              
+                        <ul class="arealist" data-type="area">
+                          <li class="arealist-item" *ngFor="let node of currentChildren" (mouseover)="arealistMouseover(node)">
+                            <em>{{node.name}}</em>
+                          </li>
+                        </ul>
+                        <div class="blocklist-wrap" *ngIf="currentBlock">
+                          <ul class="blocklist" data-type="block">
+                            <li *ngFor="let block of currentBlock" (click)="selecteblock(block)">{{block.name}}</li>
+                          </ul>
+                        </div>
+                      </div>
+              
+                    </div>
+              
+                  </div>
+              
+              
                 </div>
-
               </div>
-
-            </div>
-
-
           </div>
-        </div>
-
-        <div class="form-inline query-div">
-            <div class="label-mid">
-              <label class="control-label">检索产品:</label>
+          <div class="col-12 col-md-6">
+            <div class="form-inline query-div ">
+              <div class="label-mid">
+                <label class="control-label">检索位置:</label>
+              </div>
+              <input type="text" id="sole-input1" [(ngModel)]="queryStrPosi" class="form-control" name="word1" autocomplete="off"
+                maxlength="30" placeholder="检索编号、名称" value="">
+              <i *ngIf="currentArea" class="fa fa-search fa-lg query-btn" (click)="execQueryPosi()" aria-hidden="true"></i>
             </div>
-            <input type="text" id="sole-input1" [(ngModel)]="queryStrPosi" class="form-control" name="word1" 
-              autocomplete="off" maxlength="30" placeholder="检索编号、名称" value="">
-            <i *ngIf="currentArea" class="fa fa-search fa-lg query-btn" (click)="execQueryPosi()" aria-hidden="true"></i>
-            <!-- <button class="btn btn-bg query-btn" (click)="execQueryPosi()" [disabled]="!currentArea">搜索</button> -->
+          </div>
+
+                  
+
+                  
+
         </div>
-
-        <div #map2 id="survey_map" class="map_container"></div>
-
-        <label class="control-label">已选位置：</label>
-        <span *ngIf="bindedPosition">{{bindedPosition.name}}-{{bindedPosition.number}}</span>
+        <!-- 中列 -->
+        <div class="col-6" style="height: 497px;">     
+          <div #map2 id="survey_map" class="map_container"></div> 
+          <label class="control-label" style="margin-top: 15px;"><span style="color:red;">*</span>&nbsp;已选位置：</label>
+          <span *ngIf="bindedPosition">{{bindedPosition.name}}-{{bindedPosition.number}}</span>
+        </div>
+        
+        <!-- 右列 -->
+        <div class="col-6"> 
+          <table class="table table-bordered table-hover small-size">
+            <thead class="table-header">
+              <tr>
+        
+                <th>位置编号</th>
+                <th>位置名称</th>
+                <th>位置经纬</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let position of posiListByRegion" class="lineheight cur-pointer" (click)="bindPosition(position)">
+                <td>{{position.number}}</td>
+                <td>{{position.name}}</td>
+        
+                <td><span *ngIf="position.point"></span>X:{{position.point.lng}} Y:{{position.point.lat}}</td>
+              </tr>
+            </tbody>
+        
+          </table>
+          <div *ngIf="posiListByRegion.length === 0 || !posiListByRegion">无数据！</div>
+          <div *ngIf="posiListByRegion.length > 0">
+            <ngb-pagination [collectionSize]=total1 [(page)]="pagePosi" [maxSize]="5" [rotate]="true" [ellipses]="false"
+              [boundaryLinks]="true" (pageChange)="pageChangePosi()"></ngb-pagination>
+          </div>
+        
+        </div>
       </div>
 
-      <!-- 右列 -->
-      <div class="col-5">
-        <!-- <label class="control-label">地图:</label> -->
-
-        <table class="table table-bordered table-hover small-size">
-          <thead class="table-header">
-            <tr>
-              <th>位置名称</th>
-              <th>位置编号</th>
-              <th>位置经纬</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let position of posiListByRegion" class="lineheight cur-pointer" (click)="bindPosition(position)">
-              <td>{{position.name}}</td>
-              <td>{{position.number}}</td>
-              <td><span *ngIf="position.point"></span>X:{{position.point.lng}} Y:{{position.point.lat}}</td>
-            </tr>
-          </tbody>
-
-        </table>
-        <div *ngIf="posiListByRegion.length === 0 || !posiListByRegion">无数据！</div>
-        <div *ngIf="posiListByRegion.length > 0">
-          <ngb-pagination [collectionSize]=total1 [(page)]="pagePosi" [maxSize]="5" [rotate]="true" [ellipses]="false" 
-            [boundaryLinks]="true" (pageChange)="pageChangePosi()"></ngb-pagination>
-        </div>
-
-      </div>
     </div>
   </div>
 
@@ -229,69 +217,6 @@
     <div class="row card-block search-survey">
       <!-- 搜索设备 -->
       <form class="form-inline search-options">
-        <!-- <select class="form-control">
-              <option>区域</option>
-              <option>...</option>
-            </select> -->
-
-        <!-- 选择区域 -->
-        <!-- <div class="area-selection" *ngIf="visible1 == true">
-          城市列表
-          <div class="d-inline-block area-selection-block" (mouseleave)="citylistMouseleave1()">
-
-            <span class="cl-blue cur-pointer" (mouseover)="showCiyt1()">
-              <span class="filter" *ngIf="node1">{{node1.name}}</span>
-              <span class="filter" *ngIf="!currentCity1">选择城市</span>
-            </span>
-            <div id="city-panel1" class="city-panel dropdown_panel" *ngIf="cityshow1">
-              <div class="dropdown_panel_inner">
-                <span class="menu_arrow_left"></span>
-                <dl *ngFor="let item of cityList1">
-                  <dt>{{item.name}}</dt>
-                  <dd *ngIf="item.children && item.children.length > 0">
-
-                    <a title="智慧城市" *ngFor="let itemc of item.children" (click)="selecteCity1(itemc)">{{itemc.name}}</a>
-                  </dd>
-                </dl>
-              </div>
-            </div>
-          </div>
-
-          区域列表
-          <div class="d-inline-block area-selection-block" (mouseleave)="arealistMouseleave1()">
-
-            <span class="cl-blue cur-pointer" (mouseover)="showArea1()">
-              <span class="filter">选择区域</span>
-            </span>
-
-            <div class="arealist-wrap dropdown_panel" *ngIf="areashow1">
-              <div class="dropdown_panel_inner">
-                <span class="menu_arrow_left"></span>
-
-                <ul class="arealist" data-type="area">
-                  <li data-val="0" class="arealist-item" (mouseover)="arealistMouseNone1()">
-                    <em>不限</em>
-                  </li>
-
-                  <li class="arealist-item" *ngFor="let node of currentChildren1" (mouseover)="arealistMouseover1(node)">
-                    <em>{{node.name}}</em>
-                  </li>
-                </ul>
-
-                <div class="blocklist-wrap" *ngIf="currentBlock1">
-                  <ul class="blocklist" data-type="block">
-                    <li data-val="0">不限</li>
-                    <li *ngFor="let block of currentBlock1">{{block.name}}</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-
-        </div> -->
-
         <span>设备型号：</span>
         <select name="profile" [(ngModel)]="currentModel" (change)="deviceTypeChange()" class="form-control">
           <option *ngFor="let index of deviceModels" [ngValue]="index">
@@ -299,15 +224,11 @@
           </option>
         </select>
         <!-- 日期，功能不明 -->
-        <!-- <input type="date" class="form-control" value="2018-06-01" /> -->
         <div class="form-group inner-addon left-addon ">
-            <!-- <i class="fa fa-search search-icon"></i> -->
-            <!-- <input type="text" class="form-control border-none" name="search-content" id="" placeholder="{{'XXX'}}" /> -->
             <input id="sole-input2" [(ngModel)]="queryStr" class="form-control searchbox-content-common" type="text" 
               name="word" autocomplete="off" maxlength="30" placeholder="检索编号、名称"  (keydown)="onKeydown($event)">
         </div>
         <button class="btn btn-bg extral-marg" (click)="execQuery()">搜索</button>
-        <!-- <button class="btn btn-bg extral-marg">清空选择</button> -->
       </form>
     </div>
 
@@ -332,11 +253,6 @@
             <td>{{modelName(device.modelId)}}</td>
             <td><span *ngIf="device.point.lng">{{device.point.lng}}/{{device.point.lat}}</span></td>
             <td style="text-align: center">
-              <!-- <div>
-                  <a class="manage-class"><i class="fa fa-eye"></i></a>
-                  <a class="manage-class"><i class="fa fa-wrench"></i></a>
-                  <a class="manage-class"><i class="fa fa-times-circle"></i></a>
-                </div> -->
               <div class="modify-strategy d-inline">
                 <a class="cur-pointer btn-a theme-text d-inline" (click)="openUpdataDevice(content2, device, i)">修改</a>
                 <a class="cur-pointer btn-a theme-text d-inline" (click)="openDelDevice(contentDelDevice, device)">删除</a>
@@ -344,8 +260,6 @@
             </td>
           </tr>
         </tbody>
-
-
       </table>
       <div *ngIf="deviceslist.length === 0 || !deviceslist">无数据！</div>
       <div *ngIf="deviceslist.length > 0">

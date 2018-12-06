@@ -1,14 +1,13 @@
 @import '../../../../assets/css/variable.scss';
 @import '../../../../assets/css/xylg.scss';
 .map_container{
-    height: 320px;
+    height: 400px;
 }
 .bodyofclass {
     width: calc(100vw - 50px);
     height: 100vh;
     padding: 30px;
     position: relative;
-    // padding: 15px;
 }
 .card-header {
     border-bottom: 0px;
@@ -27,8 +26,7 @@
 }
 .search-survey {
     font-size: 14px;
-    // margin-top: 5px;
-    // margin-bottom: 5px;
+
     .extral-marg {
         margin-right: 5px;
     }
@@ -76,14 +74,6 @@
     background-color: $color-hover-color;
 }
 
-// .modal-title {
-//     font-size: $font-cpm-title-font-size;
-//     line-height: $font-cpm-title-line-height;
-//     color: $font-cpm-title-color;
-//     font-style: $font-cpm-title-font-style;
-//     font-weight: $font-cpm-title-font-weight;
-//     font-family: $font-cpm-title-font-family;
-// }
 .modal-body {
     .form-control {
         //max-width: 100px;
@@ -111,9 +101,6 @@
     .padding-left-zero {
         padding-left: 0px;
     }
-    // .area-selection {
-    //     margin: 0 0 5px 5px;
-    // }
     .label-mid {
         width: 65px;
         text-align: right;
@@ -121,7 +108,7 @@
     }
     .query-div {
         position: relative;
-        margin-top: 5px;
+        left: 15px;
         .query-btn {
             position: relative;
             top: -2px;

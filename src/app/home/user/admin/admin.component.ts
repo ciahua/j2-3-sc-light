@@ -19,44 +19,41 @@ export class AdminComponent implements OnInit {
   setting = {}; // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
 
       // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
-  zNodes = [
-    {
-      name: '设备概览', open: true, children: [
-        { name: 'test1_1' }, { name: 'test1_2' }]
-    },
-    {
-      name: '设备监控', open: true, children: [
-        { name: 'test2_1' }, { name: 'test2_2' }]
-    },
-    {
-      name: '设备管理', open: true, children: [
-        { name: '新增' }, { name: '添加' }, { name: '报销' }]
-    },
-    {
-      name: '系统管理', open: true, children: [
-        {
-          name: '用户管理', children: [
-            { name: '新增' }, { name: '添加' }, { name: '修改' }
-          ]
-        },
-        {
-          name: '权限管理', children: [
-            { name: '新增' }, { name: '添加' }, { name: '修改' }
-          ]
-        }
-      ]
-    }
-  ];
+  // zNodes = [
+  //   {
+  //     name: '设备概览', open: true, children: [
+  //       { name: 'test1_1' }, { name: 'test1_2' }]
+  //   },
+  //   {
+  //     name: '设备监控', open: true, children: [
+  //       { name: 'test2_1' }, { name: 'test2_2' }]
+  //   },
+  //   {
+  //     name: '设备管理', open: true, children: [
+  //       { name: '新增' }, { name: '添加' }, { name: '报销' }]
+  //   },
+  //   {
+  //     name: '系统管理', open: true, children: [
+  //       {
+  //         name: '用户管理', children: [
+  //           { name: '新增' }, { name: '添加' }, { name: '修改' }
+  //         ]
+  //       },
+  //       {
+  //         name: '权限管理', children: [
+  //           { name: '新增' }, { name: '添加' }, { name: '修改' }
+  //         ]
+  //       }
+  //     ]
+  //   }
+  // ];
 
   public mr: NgbModalRef; // 当前弹框
   modelData = {
     title: '删除',
     body: 'hh',
   };
-  genderData = [
-    {name: '男', value: 0},
-    {name: '女', value: 1}
-  ];
+
 
   user: any = {}; // 存储数据
   closeResult: string;
@@ -84,8 +81,10 @@ export class AdminComponent implements OnInit {
     // 树的操作
     // 点击
     const that = this;
-    this.zTreeOnClick = (event, treeId, treeNode) => {    // 点击
-    };
+    // this.zTreeOnClick = (event, treeId, treeNode) => {    // 点击
+    //   treeNode.checked = true;
+    //   console.log(treeNode);
+    // };
     this.zTreeOnCheck = (event, treeId, treeNode) => { // 勾选
       this.user.roleIds = []; // 重新赋值前先清空
       const treeObj = $.fn.zTree.getZTreeObj('treeDemo1');
@@ -97,16 +96,18 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.zTreeObj = $.fn.zTree.init($('#treeDemo'), this.setting, this.zNodes);
+    // this.zTreeObj = $.fn.zTree.init($('#treeDemo'), this.setting, this.zNodes);
+    this.zTreeObj = $.fn.zTree.init($('#treeDemo'), this.setting);
     this.getUserList();
     this.getRoleList();
+    // console.log(this.zNodes);
   }
   // 获取用户列表
   getUserList() {
     const that = this;
     this.adminService.getAllUser(this.queryStr, this.page, this.pageSize).subscribe({
       next: function(val) {
-        // console.log(val);
+        console.log('user', val);
         that.userList = val.items;
         that.total = val.total;
       },
@@ -122,10 +123,14 @@ export class AdminComponent implements OnInit {
     const that = this;
     this.adminService.getAllRole().subscribe({
       next: function(val) {
+        // console.log('role', val);
         that.roleList1 = val;
+        // console.log(that.roleList1);
         that.roleList = val.map((item) => Object.assign({}, item));
+        // console.log(that.roleList);
         that.roleList.unshift({ id: 0, name: '不限' }); // 所有项
         that.curRole = that.roleList[0];
+        // console.log(that.curRole);
       },
       complete: function() {},
       error: function(error) {
@@ -155,7 +160,7 @@ export class AdminComponent implements OnInit {
     this.user.mobile = '';
     this.user.fullName = '';
     this.user.nickName = '';
-    this.user.gender = '';
+    this.user.gender = '0';
     this.user.avatar = '';
 
     this.user.roleListCheck = []; // 新建用户时各角色的选中状态（check）
@@ -173,7 +178,7 @@ export class AdminComponent implements OnInit {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       console.log(this.closeResult);
     });
-
+    // 树状图里面内容为空号
     this.setZtreeNode([]);
   }
   private getDismissReason(reason: any): string {
@@ -188,7 +193,7 @@ export class AdminComponent implements OnInit {
   // 新增用户点击事件
   addUser() {
     const that = this;
-    this.adminService.addNewUser(this.user.userName, this.user.password, this.user.gender.value, this.user.avatar,
+    this.adminService.addNewUser(this.user.userName, this.user.password, this.user.gender, this.user.avatar,
       this.user.email, this.user.mobile, this.user.fullName, this.user.nickName, this.user.roleIds).subscribe({
       next: function(val) {
         that.alerts.push({
@@ -212,7 +217,7 @@ export class AdminComponent implements OnInit {
       }
     });
   }
-  // 打开修改用户信息 框
+  // 打开修改用户信息框
   openUpdateUser(content, item) {
     const that = this;
     this.addOrUpdate = '修改用户';
@@ -223,12 +228,10 @@ export class AdminComponent implements OnInit {
     this.user.mobile = item.mobile;
     this.user.fullName = item.fullName;
     this.user.nickName = item.nickName;
-    // this.user.gender = item.gender;
-    if (item.gender === 0) {
-      this.user.gender = this.genderData[0];
-    } else {
-      this.user.gender = this.genderData[1];
-    }
+    this.user.gender = String(item.gender);
+    console.log(item);
+    console.log(item.gender);
+
     this.user.avatar = item.avatarurl;
 
     this.user.roleListCheck = []; // 新建及修改用户时各角色的选中状态（check）
@@ -264,7 +267,7 @@ export class AdminComponent implements OnInit {
   // 修改用户点击事件
   updataUser() {
     const that = this;
-    this.adminService.updateUser(this.user.curUser.id, this.user.userName, this.user.password, this.user.gender.value, this.user.avatar,
+    this.adminService.updateUser(this.user.curUser.id, this.user.userName, this.user.password, this.user.gender, this.user.avatar,
       this.user.email, this.user.mobile, this.user.fullName, this.user.nickName, this.user.roleIds).subscribe({
       next: function(val) {
         that.alerts.push({
@@ -399,7 +402,7 @@ export class AdminComponent implements OnInit {
         that.user.roleIds[i] = that.roleList1.find(t => t.name === item).id;
       }
     });
-    // console.log(that.user.roleIds);
+    console.log(that.user.roleIds);
 
   }
 

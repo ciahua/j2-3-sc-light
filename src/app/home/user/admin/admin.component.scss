@@ -1,4 +1,7 @@
 @import '../../../../assets/css/variable.scss';
+.margin-bottom15{
+    margin-bottom: 15px;
+}
 .bodyofadmin {
     width: calc(100vw - 50px);
     padding: 30px;
@@ -38,6 +41,7 @@
     .control-label {
         width: 75px;
         text-align: left;
+        justify-content: left;
     }
     .user-info {
         margin: 0px auto;

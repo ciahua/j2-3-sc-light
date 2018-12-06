@@ -1,3 +1,7 @@
+<link rel="stylesheet" />
+    <script src="Script/zTree/js/jquery-1.4.4.min.js"></script>
+    <script src="Script/zTree/jquery.ztree.core-3.5.js"></script>
+
 <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
       <h4 class="modal-title">新建角色</h4>
@@ -22,6 +26,7 @@
           </td>
         </tr>
       </table>
+      <!-- 权限 -->
       <div>
         <div class="div-a">
           <div>
@@ -37,6 +42,7 @@
             </tr>
           </table>
         </div>
+        
         <div class="div-a">
           <div>
             数据权限：
@@ -52,13 +58,14 @@
           </table>
         </div>
       </div>
-
+      
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-outline-info" (click)="c('Save click')">确定</button>
       <button type="button" class="btn btn-outline-metal" (click)="d('Cross click')">取消</button>
     </div>
   </ng-template>
+
 <!-- 新增、修改角色 -->
 <ng-template #content1 let-c="close" let-d="dismiss">
   <p *ngFor="let alert of alertsModal" class="lsq-alert">
@@ -74,10 +81,14 @@
     <div class="user-info">
         <div class="form-inline">
           <label class="control-label"><span style="color: red;">*</span>角色名称：</label>
-          <input type="text" [(ngModel)]="role.name" name="rolename" class="form-control" placeholder=""
+          <input type="text" [(ngModel)]="role.name" name="name" class="form-control" placeholder=""
             maxlength="50">
         </div>
     </div>
+    <!-- 添加的权限的树 -->
+    <ul id="treeDemo" class="ztree"></ul>
+    <!-- <p *ngFor="let deskList of deskList">{{ deskList.name }}</p> -->
+ 
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-info" (click)="addorUpdt()" [disabled]="!role.name || role.name == '' 
@@ -124,6 +135,7 @@
               <th>序号</th>
               <!-- <th>ID</th> -->
               <th>角色名</th>
+              <th>权限</th>
               <th>操作</th>
             </tr>
           </thead>
@@ -132,11 +144,14 @@
               <td>{{i + 1}}</td>
               <!-- <td class="success" >{{role.id}}</td> -->
               <td>{{role.name}}</td>
+              <td>{{ getVaule(role.authorities) }}</td>
+
               <td>
                 <div class="modify-strategy d-inline">
                   <a class="cur-pointer btn-a theme-text d-inline" (click)="openUpdateRole(content1, role)">修改</a>
                   <a class="cur-pointer btn-a theme-text d-inline" (click)="openDelRole(contentDelRole, role)">删除</a>
                 </div>
+              </td>
             </tr>
           </tbody>
         </table>

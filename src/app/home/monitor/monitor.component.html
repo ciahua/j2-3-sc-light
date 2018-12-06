@@ -1,17 +1,11 @@
-
-
-
-
 <div class="map_warp">
   <!-- 选择区域 -->
   <div class="Selection-Region" *ngIf="visible == true">
       <!-- 城市列表 -->
       <div class="d-inline-block sel-area-block" (mouseleave)="citylistMouseleave()">
-      
         <span class="cl-blue cur-pointer" (mouseover)="showCiyt()">
           <span class="filter" *ngIf="map_model.currentCity">{{map_model.currentCity.name}}</span>
           <span class="filter" *ngIf="!map_model.currentCity">选择城市</span>
-          <!-- <i class="fa fa-bell-o nav-icon " aria-hidden="true"></i> -->
         </span>
         <div id="city-panel" class="city-panel dropdown_panel" *ngIf="cityshow">
           <div class="dropdown_panel_inner">
@@ -23,14 +17,11 @@
               </dd>
             </dl>
           </div>
-      
-        </div>
-      
+        </div> 
       </div>
       
       <!-- 区域列表 -->
-      <div class="d-inline-block sel-area-block" (mouseleave)="arealistMouseleave()">
-      
+      <div class="d-inline-block sel-area-block" (mouseleave)="arealistMouseleave()">  
         <span class="cl-blue cur-pointer" (mouseover)="showArea()">
           <span class="filter" *ngIf="!map_model.currentArea">选择区域</span>
           <span class="filter" *ngIf="map_model.currentArea">{{map_model.currentArea.name}}</span>
@@ -40,9 +31,6 @@
           <div class="dropdown_panel_inner">
             <span class="menu_arrow_left"></span>
             <ul class="arealist" data-type="area">
-              <!-- <li data-val="0" class="arealist-item" (mouseover)="arealistMouseNone()">
-                              <em>不限</em>
-                          </li> -->
               <li class="arealist-item" *ngFor="let node of map_model.currentChildren" (mouseover)="arealistMouseover(node)"
                 (click)="selecteblock(node)">
                 <em>{{node.name}}</em>
@@ -51,28 +39,19 @@
             </ul>
             <div class="blocklist-wrap" *ngIf="map_model.currentBlock.length > 0">
               <ul class="blocklist" data-type="block">
-                <!-- <li data-val="0">不限</li> -->
                 <li *ngFor="let block of map_model.currentBlock" (click)="selecteblock(block)">{{block.name}}</li>
-      
               </ul>
             </div>
-      
-      
           </div>
-      
-      
         </div>
       
       </div>
 
-  
     <!-- 设备列表 -->
     <div class="d-inline-block sel-area-block" (mouseleave)="devicelistMouseleave()">
-  
       <span class="cl-blue cur-pointer" (mouseover)="showDevice()">
         <span class="filter" *ngIf="!typeName">设备类别</span>
         <span class="filter" *ngIf="typeName">{{typeName}}</span>
-  
       </span>
       <div id="device-panel" class="device-panel dropdown_panel" *ngIf="deviceshow">
         <div class="dropdown_panel_inner">
@@ -97,19 +76,11 @@
 
   <!-- 右边按钮 -->
   <div class="btn-icon" *ngIf="visible == true">
-    <!-- <div class="d-inline-block icon-item cur-pointer">
-      <img src="../../../assets/imgs/control.png" alt="图片">
-
-    </div> -->
-
     <div class="d-inline-block icon-item cur-pointer">
-    
       <img src="../../../assets/imgs/switch.png" alt="图片" (click)="enterFullScreen()">
     </div>
 
   </div>
-
-
 
   <!-- 地图 -->
   <div #map1 id="map_container1" class="map_container fulls-map" ></div>
@@ -132,8 +103,7 @@
             <tr>
               <th>参数</th>
               <th>值</th>
-              <th>单位</th>
-          
+              <th>单位</th>       
             </tr>
             <tr *ngFor="let items of item.deviceProperties">
               <td>{{items.name}}</td>
@@ -142,14 +112,7 @@
             </tr>
           </table>
     </div>
-
-
   </div>
-
-
 </div>
-<!-- <div class="tag-bule">
-
-</div> -->
 
 

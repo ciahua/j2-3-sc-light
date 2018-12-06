@@ -1,70 +1,29 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './material.module';
-
 import { NgModule } from '@angular/core';
-// import { enableProdMode } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
 import { CookieModule } from 'ngx-cookie';
-
-import { HomeModule } from './home/home.module';
-import { ServiceModule } from './service/service.module';
-import { SharedModule } from './shared/shared.module';
-
-import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
-
-import { DeviceComponent } from './home/device/device.component';
-import { UserComponent } from './home/user/user.component';
-import { MonitorComponent } from './home/monitor/monitor.component';
-import { ApplicationComponent } from './home/application/application.component';
-
-import { AppRoutingModule } from './app-routing.module';
-
-import { AuthGuard } from './guard/auth-guard.service';
-import { AuthService } from './guard/auth.service';
-import { WindowRef } from './windowserver';
-
-
-import { PageNotFoundComponent } from './not-found.component';
-
 import { HttpClientModule } from '@angular/common/http'; // HTTP_INTERCEPTORS,
 import { JwtModule } from '@auth0/angular-jwt';
 import { httpInterceptorProviders } from './interceptor/index';
-
+import { ServiceModule } from './service/service.module';
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { AuthGuard } from './guard/auth-guard.service';
+import { AuthService } from './guard/auth.service';
+import { PageNotFoundComponent } from './not-found.component';
 export function tokenGetter() {
   return localStorage.getItem('token');
 }
 
-// enableProdMode();
-
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    HomeComponent,
     PageNotFoundComponent,
-    DeviceComponent,
-    UserComponent,
-    MonitorComponent,
-    ApplicationComponent
-
   ],
   imports: [
     BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NgbModule.forRoot(),
     CookieModule.forRoot(),
     AppRoutingModule,
-    BrowserAnimationsModule,
-    HomeModule,
-    MaterialModule,
     ServiceModule,
-    SharedModule,
     HttpClientModule,
     JwtModule.forRoot({
       config: {
@@ -75,14 +34,18 @@ export function tokenGetter() {
   ],
   exports: [],
   providers: [
-    AuthGuard, AuthService, WindowRef, httpInterceptorProviders,
+    AuthGuard, AuthService,
+     httpInterceptorProviders,
   ],
   bootstrap: [AppComponent]
 
 })
-export class AppModule {
- // Diagnostic only: inspect router configuration
-  // constructor(router: Router) {
-  //   console.log('Routes: ', JSON.stringify(router.config, undefined, 2));
-  // }
- }
+export class AppModule {}
+/*
+
+Copyright(c): 2018 深圳创新设计研究院
+Author: luo.shuqi@live.com
+@file: app.module.ts
+@time: 2018 / 7 / 2 17: 18
+
+*/

@@ -2,11 +2,7 @@
 $fa-font-path: "../node_modules/font-awesome/fonts";
 @import '~font-awesome/scss/font-awesome.scss';
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-// @import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
-// @import '~https://fonts.googleapis.com/icon?family=Material+Icons';
-
 @import './assets/css/variable.scss';
-// @import '~src/app/main.css';
 
 ol, ul {
     list-style: none;
@@ -22,7 +18,6 @@ address, cite, code, em, th, i, strong {
     cursor: pointer;
 }
 .active {
-    //  background-color:#476480 !important;
      background-color:#2A697A !important;
      color: #fff !important;
 }
@@ -47,21 +42,12 @@ address, cite, code, em, th, i, strong {
 
 .no-fulls-map {
     height: 100vh;
-    // margin-top: 80px;
 }
 // 隐藏百度地图logo
 .BMap_cpyCtrl, .anchorBL{
     display: none;
 }
 
-// 头部导航
-// .nav-margin {
-//     margin-top: 80px;
-// }
-
-// .i-circle:hover, .i-circle >a:hover {
-//     background: tomato;
-// }
 // 主题样色
 .bg-blue {
     background: #87a2b7;
@@ -163,18 +149,14 @@ address, cite, code, em, th, i, strong {
 }
 
 // 地图浮动按钮
-
 // 城市列表  设备列表
-
 .city-panel ,.device-panel{
 
     font-size: 12px;
     dl {
         width: 222px;
-        /* padding: 7px 0 6px 0; */
         margin: 0;
         border: 0;
-        /* line-height: 23px; */
         overflow: hidden;
         zoom: 1;
     }
@@ -202,11 +184,7 @@ address, cite, code, em, th, i, strong {
 }
 .device-panel {
     width: 100px;
-    dl {
-        // width: 122px;
-    }
     dt {
-        // width: 120px;
         a {
             width: 100%;
             float: left;
@@ -222,12 +200,6 @@ address, cite, code, em, th, i, strong {
     }
 
 }
-// .device-panel:hover {
-//     dl {
-//         background: #fff;
-//     }
-// }
-
 
 .device-panel dt a:link, .moreCity:link, .device-panel dt a:visited, .moreCity:visited, .device-panel dt a:active, .moreCity:active {
     color: #1a519f;
@@ -256,7 +228,6 @@ address, cite, code, em, th, i, strong {
     font-size: 14px;
     margin-left: 21px;
     border-radius: 5px;
-    // float: left;
 }
 
 //区域列表
@@ -264,8 +235,6 @@ address, cite, code, em, th, i, strong {
     position: absolute;
     padding: 0;
     margin: 0px;
-    // width: 90px;
-    // width: 212px;
     top: 31px;
     left: -1px;
     z-index: 99;
@@ -307,7 +276,6 @@ address, cite, code, em, th, i, strong {
     background: #fff;
     box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.08);
     border-radius: 4px;
-
     z-index: 100;
     .blocklist {
         width: 90px;
@@ -325,10 +293,8 @@ address, cite, code, em, th, i, strong {
 }
 
 .area-selection {
-    // z-index: 3000;
     z-index: 1040;
     top: 15px;
-
     .area-selection-block {
         cursor: pointer;
         position: relative;
@@ -426,7 +392,6 @@ address, cite, code, em, th, i, strong {
 }
 
 // 红色字体
-
 .mat-error {
     font-size: 12px;
 }
@@ -519,7 +484,6 @@ address, cite, code, em, th, i, strong {
     }
 }
 // 提示信息
-
 .lsq-alert{
     position: absolute;
     padding: 0 30px;
@@ -528,4 +492,3 @@ address, cite, code, em, th, i, strong {
     right: 0;
     z-index: 1000;
 }
-

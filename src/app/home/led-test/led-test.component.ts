@@ -634,6 +634,14 @@ export class LedTestComponent implements OnInit {
     console.log(arg);
     this.task2.value = arg;
   }
-
-
 }
+/*
+
+Copyright(c): 2018 深圳创新设计研究院
+Author: luo.shuqi@live.com
+@file: led-test.component.ts
+@ introduction: led
+@ln:637
+@time: 2018 / 7 / 2 17: 18
+
+*/

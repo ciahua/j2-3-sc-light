@@ -7,7 +7,6 @@ import {  NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { AirmonitorService } from '../../service/airmonitor.service';
 import { saveAs } from 'file-saver';
 
-
 const now = new Date();
 
 @Component({
@@ -100,9 +99,6 @@ export class AirreportComponent implements OnInit {
   // 获取指定设备的历史数据记录
   getHistoryData() {
     const that = this;
-    // const fromdate1 = '2018-01-01T00:00';
-    // const todate1 = '2018-12-30T23:59';
-
     const smonth = this.startDate.month.toString().length > 1 ? this.startDate.month.toString() : `0${this.startDate.month.toString()}`;
     const sday = this.startDate.day.toString().length > 1 ? this.startDate.day.toString() : `0${this.startDate.day.toString()}`;
 
@@ -126,7 +122,6 @@ export class AirreportComponent implements OnInit {
         that.historydatalist = val;
         that.historydatalistItems = val.items;
         that.total = val.total;
-        // console.log(that.historydatalist);
       },
       complete: function () {
       },
@@ -149,16 +144,12 @@ export class AirreportComponent implements OnInit {
 
   // 本地存储数据
   getStatistics() {
-    // id: number, field: string, agg: string, from: string, to: string, interval: string
     const id = this.currentdevice.id;
     const agg = this.aggs[0].name;
     const fromdate = this.fromdate;
     const todate = this.todate;
     const interval = this.intervals[0].name;
     localStorage.setItem('dash_data', JSON.stringify({ id: id, agg, fromdate, todate, interval}));
-
-
-
   }
 
 
@@ -185,8 +176,6 @@ export class AirreportComponent implements OnInit {
   }
 
 
-
-
   // 生成图表
   openGenerateTables() {
     const that = this;
@@ -194,7 +183,6 @@ export class AirreportComponent implements OnInit {
     this.getStatistics();
     this.jumpHandle('home/dashboard');
   }
-
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
@@ -206,3 +194,13 @@ export class AirreportComponent implements OnInit {
     }
   }
 }
+/*
+
+Copyright(c): 2018 深圳创新设计研究院
+Author: luo.shuqi@live.com
+@file: airreport.component.ts
+@ introduction: 监测大数据
+@ln:196
+@time: 2018 / 7 / 2 17: 18
+
+*/

@@ -55,9 +55,7 @@ export class InterceptorService implements HttpInterceptor { //  implements Http
         | HttpEvent<any>
         | HttpResponse<any>
         | HttpUserEvent<any>> {
-        const that = this;
         const url = req.url;
-        const currentUser = this._cookieService.getObject('currentUser');
         const newReq = req.clone({
             url: url,
         });

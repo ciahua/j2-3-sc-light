@@ -6,7 +6,7 @@ Author: luo.shuqi@live.com
 @time: 2018 /8 / 9 9: 00
 
 */
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy, Input} from '@angular/core';
 import { Router } from '@angular/router';
 import { MonitorService } from '../../../service/monitor.service';
 import { LightService } from '../../../service/light.service';
@@ -85,6 +85,9 @@ export class LightComponent implements OnInit, OnDestroy  {
   allCheck = false;
 
   queryString: any;
+  queryStr: any;
+  @Input()
+  public alerts: Array<IAlert> = [];
 
 
   constructor(private monitorService: MonitorService, private lightService: LightService, public router: Router,
@@ -99,9 +102,11 @@ export class LightComponent implements OnInit, OnDestroy  {
     this.getStrategy(); // 获取策略表
   }
 
-  // searchStringMe() {
-  //   console.log(this.queryString);
-  // }
+  public closeAlert(alert: IAlert) {
+    const index: number = this.alerts.indexOf(alert);
+    this.alerts.splice(index, 1);
+  }
+
 
   execQuery() {
     let str_name = '';
@@ -119,6 +124,71 @@ export class LightComponent implements OnInit, OnDestroy  {
         this.lightListRes.push(item);
       }
     });
+  }
+
+  execQueryId() {
+    if (this.queryStr === '' || !this.queryStr) {
+      return;
+    }
+    console.log(1111111111);
+    this.getLightByDeviceName();
+
+  }
+  // 按位置编号搜索
+  getLightByDeviceName() {
+    const that = this;
+    const posNum = this.queryStr;
+    console.log('typeof (posNum)');
+    console.log(typeof (posNum));
+    that.lightService.getLightByDeviceName(posNum).subscribe({
+      next: function (val) {
+        console.log('val');
+        console.log(val);
+        const point = new BMap.Point(val.point.lng, val.point.lat);
+        that.map.centerAndZoom(point, 19);
+        that.getLights();
+        that.findPoint(point);
+        // that.mySquare = new CircleOverlayService(point, val.name, 128, 38, 'green');
+        // that.map.addOverlay(that.mySquare);
+      },
+      complete: function () {
+        that.alerts = [];
+      },
+      error: function (error) {
+        let message;
+        if (error.error.errors) {
+          message = error.error.errors[0].defaultMessage;
+        } else {
+          message = '结果不唯一！';
+        }
+        that.alerts.push({
+          id: 1,
+          type: 'danger',
+          message: message,
+        });
+        console.log(message);
+        that.alerts.map((alert: IAlert) => Object.assign({}, alert));
+      }
+    });
+  }
+
+  // 标注消息列表中点击的井盖事件
+  findPoint(point) {
+    let marker;
+    const makers = this.map.getOverlays();
+    for (let index = 0; index < makers.length; index++) {
+      const element = makers[index];
+      const lat = element.point && element.point.lat;
+      const lng = element.point && element.point.lng;
+      if (point.lat === lat && point.lng === lng) {
+        marker = element;
+        if (marker) {
+          marker.V.click();
+        }
+      }
+    }
+
+
   }
 
   // 监控-点击地图事件
@@ -149,7 +219,7 @@ export class LightComponent implements OnInit, OnDestroy  {
 
     // 这里我们使用BMap命名空间下的Point类来创建一个坐标点。Point类描述了一个地理坐标点，其中116.404表示经度，39.915表示纬度。（为天安门坐标）
 
-    const point = new BMap.Point(113.922329, 22.49656); // 坐标可以通过百度地图坐标拾取器获取 --万融大厦
+    const point = new BMap.Point(113.923519, 22.497253); // 坐标可以通过百度地图坐标拾取器获取 --万融大厦
     map.centerAndZoom(point, 20); // 设置中心和地图显示级别
 
     map.enableScrollWheelZoom(true); // 开启鼠标滚轮缩放
@@ -422,14 +492,24 @@ export class LightComponent implements OnInit, OnDestroy  {
     `;
     txt = txt +
       `<p>灯杆编号： ${val.positionNumber}</p>
+      <p>路灯编号： ${val.name}</p>
      `;
 
+
+    if (val.rule && val.rule.name) {
+      txt = txt + `<p >应用策略： ${val.rule.name}</p>`;
+    } else {
+      txt = txt + `<p >应用策略：无</p>`;
+    }
+    txt = txt + `<p >亮度级别： ${val.level}%</p>`;
+    txt = txt + `<p >电流强度： ${val.current}(mA)</p>`;
+    txt = txt + `<p >电压大小： ${val.volt}(mv)</p>`;
     if (val.offline === true) {// 离线
-        // 离线或异常
+      // 离线或异常
       txt = txt + `   <p><span style='color: red'>离线</span></p>`;
-      } else {
+    } else {
       txt = txt + `   <p><span style='color: blue'>在线</span></p>`;
-      }
+    }
 
     if (val.error === true) {// 离线
       // 离线或异常
@@ -437,14 +517,6 @@ export class LightComponent implements OnInit, OnDestroy  {
     } else {
       txt = txt + `<p ><span style='color: blue'>状态：正常</span></p>`;
     }
-    if (val.rule && val.rule.name) {
-      txt = txt + `<p >应用策略： ${val.rule.name}</p>`;
-    } else {
-      txt = txt + `<p >应用策略：无</p>`;
-    }
-    txt = txt + `<p >亮度级别： ${val.level}%</p>`;
-    txt = txt + `<p >电流强度： ${val.current}毫安(mA)</p>`;
-    txt = txt + `<p >电压大小： ${val.volt}毫伏(mv)</p>`;
     txt = txt + `<button class='btn btn-outline-info cur-point' style='font-size: 14px; float: right; margin: 5px;'
       id='${val.id}'>控制</button>`;
 
@@ -454,6 +526,8 @@ export class LightComponent implements OnInit, OnDestroy  {
     marker.addEventListener('click', function () {
       that.closeDevicesControl();
       that.device = val;
+      that.getLights(); // 获取地图上的点
+      that.map.centerAndZoom(point, 19); // 设置中心和地图显示级别
       baiduMap.openInfoWindow(infoWindow, point); // 开启信息窗口
       setTimeout(() => {
         that.deviceAddEventListener();
@@ -941,4 +1015,9 @@ export class LightComponent implements OnInit, OnDestroy  {
   ngOnDestroy() {
     window.clearInterval(this.timer);
   }
+}
+export interface IAlert {
+  id: number;
+  type: string;
+  message: string;
 }

@@ -1,5 +1,10 @@
 <!-- 地图 -->
 <div class="map_warp">
+    <div class="alert-play">
+        <p *ngFor="let alert of alerts" >
+            <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
+        </p>
+    </div>
     <!-- 选择区域 -->
     <div class="Selection-Region" *ngIf="visible == true">
         <!-- 城市列表 -->
@@ -59,6 +64,12 @@
         
             </div>
         
+        </div>
+
+        <div class="d-inline-block search-warp">
+            <input type="text" [(ngModel)]="queryStr" class="form-control search-input" name="word1" autocomplete="off"
+                maxlength="30" placeholder="检索路灯编号" value="">
+                <span class="search-icon" (click)="execQueryId()"><i class="fa fa-search" aria-hidden="true"></i></span>
         </div>
     </div>
     

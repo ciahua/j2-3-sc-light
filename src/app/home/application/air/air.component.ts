@@ -6,7 +6,6 @@ import { CircleOverlarAirService } from '../../../service/circle-overlay-air.ser
 
 // baidu map
 declare let BMap;
-
 declare let BMAP_ANCHOR_TOP_LEFT;
 
 @Component({
@@ -32,18 +31,13 @@ export class AirComponent implements OnInit, OnDestroy {
 */
 
   map_model: any = {}; // 存储数据
-
   map: any; // 地图对象
-
   currentAirIndex: any; // 当前空气指标选项
-
   visible = true; // 控制可视区域
   areashow = false; // 默认区域列表不显示
   cityshow = false; // 默认区域列表不显示
-
   parentNode = null; // 用于递归查询JSON树 父子节点
   node = null; // 用于递归查询JSON树 父子节点
-
   indexofHtml: any; // 默认环境
   allIndexs = [ // 环境分类列表
     {
@@ -68,7 +62,6 @@ export class AirComponent implements OnInit, OnDestroy {
     },
   ];
   timer: any; // 定时器
-
 
   constructor(private monitorService: MonitorService, private airmonitorService: AirmonitorService,
     public router: Router) {
@@ -105,15 +98,12 @@ export class AirComponent implements OnInit, OnDestroy {
       offset: offset,
     });
     map.addControl(navigationControl);
-
     this.getAirdevices(); // 获取地图上的点
     this.timer = setInterval(() => {
       this.getAirdevices(); // 获取地图上的点
     }, 5000);
 
     map.enableScrollWheelZoom(true); // 启动滚轮放大缩小，默认禁用
-    // const marker = new BMap.Marker(point);  // 创建标注
-    // map.addOverlay(marker);               // 将标注添加到地图中
     this.dragendOff(map);
     this.zoomendOff(map);
   }
@@ -143,7 +133,6 @@ export class AirComponent implements OnInit, OnDestroy {
     const SouthWest = Bounds.getSouthWest(); // 返回矩形区域的西南角
     localStorage.setItem('NE', JSON.stringify(NorthEast));
     localStorage.setItem('SW', JSON.stringify(SouthWest));
-
     let compar;
     let value;
     this.airmonitorService.getAirDevice(NorthEast, SouthWest).subscribe({
@@ -161,9 +150,6 @@ export class AirComponent implements OnInit, OnDestroy {
         // that.addCertainMarker(value, that.currentAirIndex);
       },
       error: function (error) {
-        console.log(error);
-        console.log(NorthEast);
-        console.log(SouthWest);
       }
     });
   }
@@ -262,11 +248,9 @@ export class AirComponent implements OnInit, OnDestroy {
   addCertainMarker(val, index) {
     const markers = [];
     const points: any[] = [];
-
     const that = this;
     const length = 60;  // 图标大小
-    let color;  // 背景色
-    color = '#4eb4cf'; // 按不同指标对应不同背景色，待确定
+    const color = '#4eb4cf';  // 背景色
     const name = index; // 圆形图标中显示的名字
     let indexvalue; // 圆形图标中显示的值
     const mouseoverColor = '#9bd9dd';  // 划过背景色
@@ -285,7 +269,6 @@ export class AirComponent implements OnInit, OnDestroy {
       // 添加覆盖物图标
       myIcon = new CircleOverlarAirService(point, name, indexvalue, length, color, mouseoverColor);
       this.map.addOverlay(myIcon);
-
       markers.push(myIcon); // 聚合
       points.push(point);
     });
@@ -300,15 +283,10 @@ export class AirComponent implements OnInit, OnDestroy {
 
   // 地图点注标-点击事件
   openSideBar(marker, baiduMap, airDevice, point) {
-    console.log('air', airDevice);
-    const that = this;
     const opts = {
       width: 350,     // 信息窗口宽度
-      // height: 100,     // 信息窗口高度
-      // title: `${val.name} | ${val.id }`, // 信息窗口标题
-      // enableMessage: true, // 设置允许信息窗发送短息
       enableAutoPan: true, // 自动平移
-      // border-radius: 5px,
+
     };  // ${airDevice.id} ${airDevice.description}
     let txt = `<p style='font-size: 12px; line-height: 1.8em; border-bottom: 1px solid #ccc; padding-bottom: 10px;'>`;
     txt = txt + `设备编号 | ${airDevice.name} </p><p> 设备名称：${airDevice.description}</p>`;
@@ -335,13 +313,11 @@ export class AirComponent implements OnInit, OnDestroy {
     this.monitorService.getZoneDefault().subscribe({
       next: function (val) {
         that.map_model.cityList = val.regions;
-        // that.zoom = that.switchZone(val.zone.level);
         that.node = that.getNode(val.regions, val.zone.region_id);
         that.map_model.currentCity = that.node;
         that.map_model.currentChildren = that.node.children;
       },
       complete: function () {
-        // that.addBeiduMap(); // 创建地图
 
       },
       error: function (error) {
@@ -360,7 +336,6 @@ export class AirComponent implements OnInit, OnDestroy {
     this.currentAirIndex = this.indexofHtml.name;
     this.map.clearOverlays();
     this.addCertainMarker(this.model.airdevicelist, this.currentAirIndex); // 添加
-    // this.getAirdevices();
   }
 
   // 省市区街道-地图级别
@@ -490,3 +465,13 @@ export class AirComponent implements OnInit, OnDestroy {
   }
 
 }
+/*
+
+Copyright(c): 2018 深圳创新设计研究院
+Author: luo.shuqi@live.com
+@file: air.component.ts
+@ introduction: 空气质量监测及预警
+@ln:467
+@time: 2018 / 7 / 2 17: 18
+
+*/

@@ -117,22 +117,15 @@ export class ProductComponent implements OnInit {
 
   // 打开心建产品弹框
   openNewProduct(content) {
-    const that = this;
-
     this.model.name = ''; // name
     this.model.description = ''; // description
     this.model.device = this.deviceList[0]; // 类型
-
     const modal = this.modalService.open(content, { size: 'lg' });
     this.mr = modal;
 
     modal.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
-      // console.log(this.closeResult);
-      // that.setModel();
     }, (reason) => {
-      // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      // console.log(this.closeResult);
     });
   }
 
@@ -170,11 +163,9 @@ export class ProductComponent implements OnInit {
   // 修改产品型号
   openUpdataModal(content, item) {
     const that = this;
-
     this.model.name = item.name; // name
     this.model.description = item.description; // description
     this.model.updateItemId = item.id; // id
-
     const id = item.type; // 类型
     for (let index = 0; index < this.deviceList.length; index++) {
       const element = this.deviceList[index];
@@ -188,11 +179,7 @@ export class ProductComponent implements OnInit {
 
     modal.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
-      // console.log(this.closeResult);
-      // that.updateModel();
     }, (reason) => {
-      // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      // console.log(this.closeResult);
     });
   }
 
@@ -319,4 +306,3 @@ export interface IAlert {
   type: string;
   message: string;
 }
-

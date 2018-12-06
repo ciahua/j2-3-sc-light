@@ -4,9 +4,7 @@ import { MonitorService } from '../../../service/monitor.service';
 import { DeviceService } from '../../../service/device.service';
 import { GradOverlar } from '../../../service/grad.overlay';
 
-
 declare let BMap;
-
 
 @Component({
   selector: 'app-devices',
@@ -16,7 +14,6 @@ declare let BMap;
 export class DevicesComponent implements OnInit {
   closeResult: string;
   map: any; // 地图对象
-
   cityList: any; // 城市列表
   deviceList: any; // 城市列表
   defaultZone: any; // 默认城市
@@ -27,15 +24,12 @@ export class DevicesComponent implements OnInit {
   areashow = false; // 默认区域列表不显示
   cityshow = false; // 默认区域列表不显示
   deviceshow = false; // 默认设备列表不显示
-
   visible = true; // 控制可视区域
-
   zoom: any; // 地图级数
   SouthWest: any; // 地图视图西南角
   NorthEast: any; // 地图视图东北角
   parentNode = null; // 用于递归查询JSON树 父子节点
   node = null; // 用于递归查询JSON树 父子节点
-
   deviceslist = [];  // 设备列表
   page: any;
   pageSize = 10;
@@ -45,7 +39,6 @@ export class DevicesComponent implements OnInit {
   currentModel: any; // 当前设备型号
   queryStr: any; // 检索字符串
   queryStrPosi: any; // 按区域显示的位置点，检索字符串
-
   device: any = {}; // 存储数据
   public mr: NgbModalRef; // 当前弹框
   modelData = {
@@ -58,19 +51,15 @@ export class DevicesComponent implements OnInit {
   total1: number;
   showPosiTable = false; // 默认不显示表格内容，只显示表头
   bindedPosition: any; // 修改的设备
-
   addOrUpdate: any; // 新建/修改标识
   curModelIndex: any; // 当前设备型号标识
 
   @Input()
   public alerts: Array<IAlert> = [];
   public alertsModal: Array<IAlert> = [];
-
   private backup: Array<IAlert>;
-
   constructor(private modalService: NgbModal, private monitorService: MonitorService,
     private deviceService: DeviceService) {
-
     this.page = 1;
     this.pagePosi = 1;
     this.curModelIndex = 0; // 全选
@@ -90,9 +79,7 @@ export class DevicesComponent implements OnInit {
 
   ngOnInit() {
     this.getCity();
-    // this.getDevice();
     this.getAllDeviceModel();
-    // this.getCityDropdownListgetCityDropdownList();
     this.getDevicesList(this.page, this.pageSize);
   }
 
@@ -122,7 +109,6 @@ export class DevicesComponent implements OnInit {
       next: function (val) {
         that.deviceslist = val.items;
         that.total = val.total;
-        // console.log(that.deviceslist);
       },
       complete: function () { },
       error: function (error) {
@@ -169,15 +155,12 @@ export class DevicesComponent implements OnInit {
     this.device.descr = '';
     this.device.bindedPosi = this.bindedPosition;
     this.bindedPosition = null;
-
     const modal = this.modalService.open(content, { windowClass: 'ex-lg-modal' });
     this.mr = modal;
     this.addBaiduMap();
 
     modal.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
-
-      // this.addDevice();
       this.showPosiTable = false;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -248,16 +231,11 @@ export class DevicesComponent implements OnInit {
         break;
       }
     }
-
     const modal = this.modalService.open(content, { windowClass: 'ex-lg-modal' });
     this.mr = modal;
     this.addBaiduMap();
-
     modal.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
-      // console.log(this.closeResult);
-      // this.device.modelId = this.device.model.id; // 关闭模态框时同步modelId以便更新。device.model为双向绑定的设备类型
-      // that.updataDevice();
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       console.log(this.closeResult);
@@ -270,12 +248,10 @@ export class DevicesComponent implements OnInit {
     const name = this.device.name;
     const modelId = this.device.modelId;
     const descr = this.device.descr;
-
     const bindedPosi = this.bindedPosition;
     const lng = bindedPosi.point.lng;
     const lat = bindedPosi.point.lat;
     const posiId = bindedPosi.id;
-
     this.deviceService.updateDevice(id, name, modelId, descr, posiId, lng, lat).subscribe({
       next: function (val) {
         that.alerts.push({
@@ -361,7 +337,6 @@ export class DevicesComponent implements OnInit {
   addBaiduMap() {
     const map = this.map = new BMap.Map('survey_map', {
       enableMapClick: true,
-      // minZoom: 11
     }); // 创建地图实例
     const point = new BMap.Point(113.922329, 22.49656); // 坐标可以通过百度地图坐标拾取器获取 --万融大厦
     map.centerAndZoom(point, 17); // 设置中心和地图显示级别
@@ -421,7 +396,6 @@ export class DevicesComponent implements OnInit {
 
   // 传入'修改设备位置点所在区域'到模态框
   updatePosiRegion() {
-
     const that = this;
     let region_id; // 当前城市id
     const crrentProvince = this.cityList[0]; // 当前省会
@@ -435,7 +409,6 @@ export class DevicesComponent implements OnInit {
     that.node = null; // 用于递归查询JSON树 父子节点
     that.currentCity = that.getNode(that.cityList, region_id); // 当前城市
     that.currentChildren = that.node.children; // 当前城市下的区域列表
-
     const area_id = that.bindedPosition.regionId; // 当前区域id
     that.node = null; // 用于递归查询JSON树 父子节点
     that.currentArea = that.getNode(that.cityList, area_id); // 当前区域i
@@ -443,19 +416,15 @@ export class DevicesComponent implements OnInit {
 
   getCity() {
     const that = this;
-
     this.deviceService.getZoneDefault().subscribe({
       next: function (val) {
         that.cityList = val.regions;
-        // that.currentCity = val.zone;
         that.zoom = that.switchZone(val.zone.level);
         that.node = that.getNode(val.regions, val.zone.region_id);
         that.currentCity = that.node;
         that.currentChildren = that.node.children;
-
       },
       complete: function () {
-        // that.addBaiduMap(); // 创建地图
 
       },
       error: function (error) {
@@ -496,8 +465,6 @@ export class DevicesComponent implements OnInit {
       if (!obj || !obj.id) {
         continue;
       }
-      // console.log(nodeId);
-      // console.log(obj.id);
       // 2.有节点就开始找，一直递归下去
       if (obj.id === nodeId) {
         // 找到了与nodeId匹配的节点，结束递归
@@ -520,24 +487,14 @@ export class DevicesComponent implements OnInit {
     if (!that.node) {
       that.parentNode = null;
     }
-    // 6.返回结果obj
-    // return {
-    //   parentNode: that.parentNode,
-    //   node: that.node
-    // };
+
     return that.node;
   }
   getPoint(baiduMap, city) {
-    const that = this;
-    // 创建地址解析器实例
-    const myGeo = new BMap.Geocoder();
     const zoom = this.zoom = this.switchZone(city.level);
-    const fullName = city.full_name;
     const pt = city.center;
     const point = new BMap.Point(pt.lng, pt.lat);
     baiduMap.centerAndZoom(point, zoom);
-
-
 
   }
 
@@ -549,7 +506,6 @@ export class DevicesComponent implements OnInit {
     this.currentCity = city;
     this.currentChildren = city.children;
     this.currentArea = null;
-
     this.node = city;
     this.getPoint(this.map, city);  // 解析地址- 设置中心和地图显示级别
   }
@@ -616,3 +572,11 @@ export interface IAlert {
   type: string;
   message: string;
 }
+/*
+
+Copyright(c): 2018 深圳创新设计研究院
+Author: luo.shuqi@live.com
+@file: 	devices.component.ts
+@time: 2018 / 7 / 2 17: 18
+
+*/

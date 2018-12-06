@@ -8,7 +8,6 @@
         <span class="cl-blue cur-pointer" (mouseover)="showCiyt()">
             <span class="filter" *ngIf="map_model.currentCity">{{map_model.currentCity.name}}</span>
             <span class="filter" *ngIf="!map_model.currentCity">选择城市</span>
-            <!-- <i class="fa fa-bell-o nav-icon " aria-hidden="true"></i> -->
         </span>
         <div id="city-panel" class="city-panel dropdown_panel" *ngIf="cityshow">
             <div class="dropdown_panel_inner">
@@ -37,9 +36,6 @@
             <div class="dropdown_panel_inner">
                 <span class="menu_arrow_left"></span>
                 <ul class="arealist" data-type="area">
-                    <!-- <li data-val="0" class="arealist-item" (mouseover)="arealistMouseNone()">
-                        <em>不限</em>
-                    </li> -->
                     <li class="arealist-item" *ngFor="let node of map_model.currentChildren" (mouseover)="arealistMouseover(node)"
                         (click)="selecteblock(node)">
                         <em>{{node.name}}</em>
@@ -73,15 +69,6 @@
   <div class="data-monitor">
       <button class="btn btn-bg" (click)="jumpHandle()">监测大数据</button>
   </div>
-  <!-- <div class="legend">
-      <ul>
-        <li class="color-level-1">优</li>
-        <li class="color-level-2">良</li>
-        <li class="color-level-3">轻度污染</li>
-        <li class="color-level-4">污染</li>
-        <li class="color-level-5">严重污染</li>
-      </ul>
-  </div> -->
 
   <!-- 地图 -->
   <div #map6 id="map_container6 " class="map_container no-fulls-map"></div>

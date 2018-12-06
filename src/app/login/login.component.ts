@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  Router,
-  NavigationExtras
-} from '@angular/router';
+import {Router, NavigationExtras } from '@angular/router';
 import { AuthService } from '../guard/auth.service';
 
 @Component({
@@ -19,7 +16,6 @@ export class LoginComponent {
 
   }
 
-
   onKeydown(event: any) {
     if (event.keyCode !== 13) {
       this.error = '';
@@ -30,8 +26,8 @@ export class LoginComponent {
     const that = this;
     this.loading = true;
     // this.authService.login1(this.model.username, this.model.password).subscribe(() => {});
-
-    this.authService.login1(this.model.username, this.model.password)
+    // 登录进入home页面
+    this.authService.login(this.model.username, this.model.password)
     .subscribe({
       next: function(val) {
         if (that.authService.isLoggedIn) {
@@ -64,7 +60,7 @@ export class LoginComponent {
     });
   }
 
-
+  // 初始login页面
   logout() {
     this.authService.logout();
   }

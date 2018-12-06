@@ -14,6 +14,14 @@ export class LightService {
 
     }
 
+    // 获取策略表
+    getLightByDeviceName(lightName: String): Observable<any> {
+        return this.http.get(`/api/streetlight?lightName=${lightName}`)
+            .pipe(map((res: Response) => {
+                return res;
+            }));
+    }
+
 
     // 获取详细的位置数据
     getLights(ne: any, sw: any): Observable<any> {

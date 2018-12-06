@@ -8,6 +8,7 @@ import { MatButtonModule, MatStepperModule, MatInputModule, MatCardModule, MatSl
 
 import { SharedModule } from '../../shared/shared.module';
 
+import { StrategyRoutingModule } from './strategy-routing.module';
 import { StrategyComponent } from './strategy.component';
 
 
@@ -19,6 +20,7 @@ import { StrategyComponent } from './strategy.component';
         SharedModule,
         MatStepperModule, MatButtonModule, MatInputModule, MatCardModule,
         MatSliderModule, MatSlideToggleModule,
+        StrategyRoutingModule
     ],
     declarations: [StrategyComponent],
     schemas: [

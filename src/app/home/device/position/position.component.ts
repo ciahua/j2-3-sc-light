@@ -14,10 +14,8 @@ declare let BMap;
 export class PositionComponent implements OnInit {
   @ViewChild('map1') map_container: ElementRef;
   model: any = {}; // 存储数据
-
   closeResult: string;
   map: any; // 地图对象
-
   cityList: any; // 城市列表
   deviceList = []; // 设备列表
   deviceTypes = []; // 设备列表
@@ -29,37 +27,27 @@ export class PositionComponent implements OnInit {
   currentBlockList: any; // // 当前城市街道列表
   areashow = false; // 默认区域列表不显示
   cityshow = false; // 默认区域列表不显示
-
-
   visible = true; // 控制可视区域
-
   zoom: any; // 地图级数
-
   parentNode = null; // 用于递归查询JSON树 父子节点
   node = null; // 用于递归查询JSON树 父子节点---当前城市
-
   positionListItems = []; // 位置列表
   positionList: any; // 位置列表
   total: number; // 分页
   page: number;
   pagesize = 10;
   queryStr: any;
-
-
   public mr: NgbModalRef; // 当前弹框
   modelData = {
     title: '删除',
     body: 'hh',
   };
-
   errorMess = []; // 经纬度错误消息
 
   @Input()
   public alerts: Array<IAlert> = [];
   public alertsModal: Array<IAlert> = [];
-
   private backup: Array<IAlert>;
-
 
   constructor(private modalService: NgbModal, private positionService: PositionService) {
     this.queryStr = '';
@@ -113,24 +101,17 @@ export class PositionComponent implements OnInit {
     this.model.name = ''; // name
     this.model.number = ''; // number
     this.model.point = { lng: '', lat: '' }; // 坐标
-
     that.currentChildren = that.currentCity.children; // 当前城市下的区域列表
     that.model.installZoneId = that.currentCity.installZoneId; // 安装区域
     that.currentArea = that.currentChildren[0].children[0]; // 当前区域
-
     that.model.device = this.deviceList[0]; // 类型
-
     const modal = this.modalService.open(content, { size: 'lg' });
     this.mr = modal;
     this.addBaiduMap();
-
     modal.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
-      // console.log(this.closeResult);
-      // that.setPosition();
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      // console.log(this.closeResult);
     });
 
   }
@@ -186,12 +167,10 @@ export class PositionComponent implements OnInit {
     const that = this;
     this.errorMess = [];
     this.model.updataId = item.id;
-    // this.model.installZoneId = item.installZoneId;
     this.model.installZoneId = item.installZoneId; // 安装区域
     this.model.name = item.name; // name
     this.model.number = item.number; // number
     this.model.point = item.point; // point
-
     const id = item.type; // 类型
     for (let index = 0; index < this.deviceList.length; index++) {
       const element = this.deviceList[index];
@@ -212,19 +191,15 @@ export class PositionComponent implements OnInit {
     that.currentCity = that.getNode(that.cityList, region_id); // 当前城市
     that.currentChildren = that.node.children; // 当前城市下的区域列表
     that.model.installZoneId = that.node.installZoneId; // 安装区域
-
-
     const area_id = item.regionId; // 当前区域id
     that.node = null; // 用于递归查询JSON树 父子节点
     that.currentArea = that.getNode(that.cityList, area_id); // 当前区域i
-
     const modal = this.modalService.open(content, { size: 'lg' });
     this.mr = modal;
     this.addBaiduMap();
     modal.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
       console.log(this.closeResult);
-      // that.updataPosition();
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       console.log(this.closeResult);
@@ -343,7 +318,6 @@ export class PositionComponent implements OnInit {
         that.positionList = val;
         that.total = val.total;
         that.positionListItems = val.items;
-
       },
       complete: function () {
       },
@@ -370,7 +344,6 @@ export class PositionComponent implements OnInit {
         that.currentType = that.deviceTypes[0];
       },
       complete: function () {
-
       },
       error: function (error) {
         console.log(error);
@@ -386,7 +359,6 @@ export class PositionComponent implements OnInit {
   // 获取城市列表
   getCity() {
     const that = this;
-
     this.positionService.getZoneDefault().subscribe({
       next: function (val) {
         that.cityList = val.regions;
@@ -398,7 +370,6 @@ export class PositionComponent implements OnInit {
 
       },
       complete: function () {
-        //  that.addBaiduMap(); // 创建地图
 
       },
       error: function (error) {
@@ -409,13 +380,9 @@ export class PositionComponent implements OnInit {
 
 
   openAddPositions(content) {
-    const that = this;
-
     this.modalService.open(content, { windowClass: 'md-modal' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
-
       console.log(this.closeResult);
-
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       console.log(this.closeResult);
@@ -451,8 +418,6 @@ export class PositionComponent implements OnInit {
     const that = this;
     baiduMap.addEventListener('click', function (e) {
       that.model.point = e.point;
-      // console.log(typeof(that.model.point.lat));
-
     });
   }
 
@@ -546,8 +511,6 @@ export class PositionComponent implements OnInit {
       if (!obj || !obj.id) {
         continue;
       }
-      // console.log(nodeId);
-      // console.log(obj.id);
       // 2.有节点就开始找，一直递归下去
       if (obj.id === nodeId) {
         // 找到了与nodeId匹配的节点，结束递归
@@ -570,11 +533,6 @@ export class PositionComponent implements OnInit {
     if (!that.node) {
       that.parentNode = null;
     }
-    // 6.返回结果obj
-    // return {
-    //   parentNode: that.parentNode,
-    //   node: that.node
-    // };
     return that.node;
   }
   getPoint(baiduMap, city) {

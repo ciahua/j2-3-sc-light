@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-
 declare var $: any;
 
 @Component({
@@ -16,15 +15,12 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-
+  // 切换路由时滚动条回到顶部
     this.router.events
       .subscribe((event) => {
         $(window).scrollTop(0);
 
       });
 
-
   }
-
-
 }

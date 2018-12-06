@@ -18,11 +18,8 @@ export class IssuedataComponent implements OnInit {
   page: any;
   pageSize = 10;
   total: number;
-
   startDate: NgbDateStruct = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() }; // 开始日期
   endDate: NgbDateStruct = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() }; // 开始日期
-
-
   startTime: NgbTimeStruct = { hour: 0, minute: 0, second: 0 };
   endTime: NgbTimeStruct = { hour: 23, minute: 59, second: 59 };
   seconds = true;

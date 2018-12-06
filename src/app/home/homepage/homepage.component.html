@@ -5,7 +5,7 @@
     <div class="row row-first">
       <div class="col-md-1"></div>
       <!-- 智慧城市标题 -->
-      <div class="col-md-6 padding-left-0 margin-right-33">
+      <div class="col-md-6 padding-left-0 margin-right-33" *ngIf="getture('SC-000')">
         <div class="row align-items-center justify-content-center dash-item-first">
           <div class="col-md-12 content" (click)="goToZheRoute('/home/homepage')">
             <h5>智慧城市</h5>
@@ -13,7 +13,7 @@
         </div>
       </div>
       <!-- 设备管理标题 -->
-      <div class="col-md-2 padding-left-0 margin-right-33">
+      <div class="col-md-2 padding-left-0 margin-right-33" *ngIf="getture('DM-000')">
         <div class="row align-items-center justify-content-center dash-item-first">
           <div class="col-md-12 content" (click)="goToZheRoute('/home/homepage')">
             <h5>设备管理</h5>
@@ -21,7 +21,7 @@
         </div>
       </div>
       <!-- 系统管理标题 -->
-      <div class="col-md-2 padding-left-0">
+      <div class="col-md-2 padding-left-0" >
         <div class="row align-items-center justify-content-center dash-item-first">
           <div class="col-md-12 content" (click)="goToZheRoute('/home/homepage')">
             <h5>系统管理</h5>
@@ -34,9 +34,9 @@
     <div class="row row-second">
       <div class="col-md-1"></div>
       <!-- 1列 -->
-      <div class="col-md-2 col-12 padding-left-0 ">
+      <div class="col-md-2 col-12 padding-left-0 " *ngIf="getture('SC-000')">
         <!-- 灾害报警 -->
-        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/application/calamity')">
+        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/application/calamity')" *ngIf="getture('SC-001')">
           <div class="col-md-12 content" >
             <p>
               <span>
@@ -48,7 +48,7 @@
 
         </div>
         <!-- 水质 -->
-        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/application/water')">
+        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/application/water')" *ngIf="getture('SC-002')">
           <div class="col-md-12 content" >
             <p>
               <span>
@@ -60,7 +60,7 @@
 
         </div>
         <!-- 电气 -->
-        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/application/electrical')">
+        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/application/electrical')" *ngIf="getture('SC-003')">
           <div class="col-md-12 content" >
             <p>
               <span>
@@ -74,9 +74,9 @@
       </div>
 
       <!-- 2列 -->
-      <div class="col-md-2 col-12 padding-left-0">
+      <div class="col-md-2 col-12 padding-left-0" *ngIf="getture('SC-000')">
         <!-- 空气质量 -->
-        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/application/air')">
+        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/application/air')" *ngIf="getture('SC-004')">
           <div class="col-md-12 content" >
             <p>
               <span>
@@ -88,7 +88,7 @@
 
         </div>
         <!-- 智慧照明 -->
-        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/application/light')">
+        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/application/light')" *ngIf="getture('SC-005')">
           <div class="col-md-12 content" >
             <p>
               <span>
@@ -100,7 +100,7 @@
 
         </div>
         <!-- 窨井管理 -->
-        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/application/cover')">
+        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/application/cover')" *ngIf="getture('SC-006')">
           <div class="col-md-12 content" >
             <p>
               <span>
@@ -114,9 +114,9 @@
       </div>
 
       <!-- 3列 -->
-      <div class="col-md-2 col-12 padding-left-0 margin-right-33">
+      <div class="col-md-2 col-12 padding-left-0 margin-right-33" *ngIf="getture('SC-000')">
         <!-- 智慧交通 -->
-        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/application/traffic')">
+        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/application/traffic')" *ngIf="getture('SC-007')">
           <div class="col-md-12 content" >
             <p>
               <span>
@@ -128,7 +128,7 @@
 
         </div>
         <!-- 设备监控 -->
-        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/monitor')">
+        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/monitor')" *ngIf="getture('DA-000')">
           <div class="col-md-12 content" >
             <p>
               <span>
@@ -140,7 +140,7 @@
 
         </div>
         <!-- LED控制 -->
-        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('/home/led')">
+        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('/home/led')" *ngIf="getture('SC-008')">
               <div class="col-md-12 content" >
                 <p>
                   <span>
@@ -154,9 +154,9 @@
       </div>
 
       <!-- 4列 -->
-      <div class="col-md-2 col-12 padding-left-0 margin-right-33">
+      <div class="col-md-2 col-12 padding-left-0 margin-right-33" *ngIf="getture('DM-000')">
         <!-- 设备 -->
-        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/device/devices')">
+        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/device/devices')" *ngIf="getture('DM-001')">
           <div class="col-md-12 content" >
             <p>
               <span>
@@ -167,7 +167,7 @@
           </div>
         </div>
         <!-- 产品 -->
-        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/device/product')">
+        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/device/product')" *ngIf="getture('DM-002')">
           <div class="col-md-12 content" >
             <p>
               <span>
@@ -178,7 +178,7 @@
           </div>
         </div>
         <!-- 位置 -->
-        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/device/position')">
+        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/device/position')" *ngIf="getture('DM-003')">
           <div class="col-md-12 content" >
             <p>
               <span>
@@ -193,7 +193,7 @@
       <!-- 用户管理 -->
       <div class="col-md-2 col-12 padding-left-0">
         <!-- 用户管理 -->
-        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/user/admin')">
+        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/user/admin')" *ngIf="getture('SM-001')">
           <div class="col-md-12 content" >
             <p>
               <span>
@@ -204,7 +204,7 @@
           </div>
         </div>
         <!-- 角色管理 -->
-        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/user/right')">
+        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/user/right')" *ngIf="getture('SM-002')">
           <div class="col-md-12 content" >
             <p>
               <span>
@@ -239,7 +239,7 @@
 
 <div class="dash-phone">
         <!-- 智慧城市标题 -->
-        <div class="row align-items-center justify-content-center dash-item-first-phone margin-15">
+        <div class="row align-items-center justify-content-center dash-item-first-phone margin-15" *ngIf="getture('SC-000')">
           <div class="col-md-12 " (click)="goToZheRoute('/home/homepage')">
             <h5 class="title-phone">智慧城市</h5>
           </div>
@@ -249,7 +249,7 @@
         <div class="row padding-left-15">
           <div class="col-4 padding-left-0 ">
             <!-- 灾害报警 -->
-            <div class="row align-items-center justify-content-center dash-item-second-phone">
+            <div class="row align-items-center justify-content-center dash-item-second-phone" *ngIf="getture('SC-001')">
                   
               <div class="col-md-12 pointer" (click)="goToZheRoute('home/application/calamity')">
                 <p>
@@ -262,7 +262,7 @@
           
             </div>
             <!-- 水质检查 -->
-            <div class="row align-items-center justify-content-center dash-item-second-phone">
+            <div class="row align-items-center justify-content-center dash-item-second-phone" *ngIf="getture('SC-002')">
               <div class="col-md-12 " style="cursor: pointer;" (click)="goToZheRoute('home/application/water')">
                 <p>
                   <span>
@@ -274,7 +274,7 @@
           
             </div>
             <!-- 电气安全 -->
-            <div class="row align-items-center justify-content-center dash-item-second-phone">
+            <div class="row align-items-center justify-content-center dash-item-second-phone" *ngIf="getture('SC-003')">
               <div class="col-md-12 " (click)="goToZheRoute('home/application/electrical')">
                 <p>
                   <span>
@@ -289,7 +289,7 @@
 
           <div class="col-4 padding-left-0">
             <!-- 空气质量 -->
-            <div class="row align-items-center justify-content-center dash-item-second-phone">
+            <div class="row align-items-center justify-content-center dash-item-second-phone" *ngIf="getture('SC-004')">
               <div class="col-md-12 " (click)="goToZheRoute('home/application/air')">
                 <p>
                   <span>
@@ -301,7 +301,7 @@
           
             </div>
             <!-- 智慧照明 -->
-            <div class="row align-items-center justify-content-center dash-item-second-phone">
+            <div class="row align-items-center justify-content-center dash-item-second-phone" *ngIf="getture('SC-005')">
               <div class="col-md-12 " (click)="goToZheRoute('home/application/light')">
                 <p>
                   <span>
@@ -313,7 +313,7 @@
           
             </div>
             <!-- 窨井管理 -->
-            <div class="row align-items-center justify-content-center dash-item-second-phone">
+            <div class="row align-items-center justify-content-center dash-item-second-phone" *ngIf="getture('SC-006')">
               <div class="col-md-12" (click)="goToZheRoute('home/application/cover')">
                 <p>
                   <span>
@@ -328,7 +328,7 @@
 
           <div class="col-4 padding-left-0 ">
             <!-- 智慧交通 -->
-            <div class="row align-items-center justify-content-center dash-item-second-phone">
+            <div class="row align-items-center justify-content-center dash-item-second-phone" *ngIf="getture('SC-007')">
               <div class="col-md-12 " (click)="goToZheRoute('home/application/traffic')">
                 <p>
                   <span>
@@ -340,7 +340,7 @@
           
             </div>
             <!-- 设备监控 -->
-            <div class="row align-items-center justify-content-center dash-item-second-phone">
+            <div class="row align-items-center justify-content-center dash-item-second-phone" *ngIf="getture('DA-000')">
               <div class="col-md-12 " (click)="goToZheRoute('home/monitor')">
                 <p>
                   <span>
@@ -352,7 +352,7 @@
           
             </div>
             <!-- LED控制 -->
-            <div class="row align-items-center justify-content-center dash-item-second-phone">
+            <div class="row align-items-center justify-content-center dash-item-second-phone" *ngIf="getture('SC-008')">
                   <div class="col-md-12" (click)="goToZheRoute('/home/led')">
                     <p>
                       <span>
@@ -367,7 +367,7 @@
         </div>
 
         <!-- 设备管理标题 -->
-        <div class="row align-items-center justify-content-center dash-item-first-phone margin-15">
+        <div class="row align-items-center justify-content-center dash-item-first-phone margin-15" *ngIf="getture('DM-000')">
           <div class="col-md-12 " (click)="goToZheRoute('/home/homepage')">
             <h5 class="title-phone"> 设备管理</h5>
           </div>
@@ -375,7 +375,7 @@
         <!-- 设备管理 竖条3个 -->
         <div class="row padding-left-15">
           <!-- 设备 -->
-          <div class="col-4 padding-left-0 ">
+          <div class="col-4 padding-left-0 " *ngIf="getture('DM-001')">
             <div class="row align-items-center justify-content-center dash-item-second-phone">
         
         
@@ -392,8 +392,8 @@
 
           </div>
           <!-- 产品 -->
-          <div class="col-4 padding-left-0">
-            <div class="row align-items-center justify-content-center dash-item-second-phone">
+          <div class="col-4 padding-left-0" *ngIf="getture('DM-002')">
+            <div class="row align-items-center justify-content-center dash-item-second-phone" >
             <div class="col-md-12 " (click)="goToZheRoute('home/device/product')">
               <p>
                 <span>
@@ -407,8 +407,8 @@
 
           </div>
           <!-- 位置 -->
-          <div class="col-4 padding-left-0 ">
-            <div class="row align-items-center justify-content-center dash-item-second-phone">
+          <div class="col-4 padding-left-0 " *ngIf="getture('DM-003')">
+            <div class="row align-items-center justify-content-center dash-item-second-phone" >
               <div class="col-md-12 " (click)="goToZheRoute('home/device/position')">
                 <p>
                   <span>
@@ -424,7 +424,7 @@
         </div>
 
         <!-- 系统管理标题 -->
-        <div class="row align-items-center justify-content-center dash-item-first-phone margin-15">
+        <div class="row align-items-center justify-content-center dash-item-first-phone margin-15" >
           <div class="col-md-12 " (click)="goToZheRoute('/home/homepage')">
             <h5 class="title-phone">系统管理</h5>
           </div>
@@ -432,7 +432,7 @@
         <!-- 系统管理标题 -->
         <div class="row padding-left-15">
           <!-- 用户管理 -->
-          <div class="col-4 padding-left-0 ">
+          <div class="col-4 padding-left-0 " *ngIf="getture('SM-001')">
             <div class="row align-items-center justify-content-center dash-item-second-phone">             
               <div class="col-md-12 " (click)="goToZheRoute('home/user/admin')">
                 <p>
@@ -445,7 +445,7 @@
             </div>       
           </div>
           <!-- 角色管理 -->
-          <div class="col-4 padding-left-0 ">
+          <div class="col-4 padding-left-0 " *ngIf="getture('SM-002')">
             <div class="row align-items-center justify-content-center dash-item-second-phone">
               <div class="col-md-12 " (click)="goToZheRoute('home/user/right')">
                 <p>

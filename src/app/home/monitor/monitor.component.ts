@@ -1,17 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { CircleOverlarService } from '../../service/circle-overlay.service';
 import { GradOverlar } from '../../service/grad.overlay';
-
 import { UrlService } from '../../service/url.service';
-
-
 import { MonitorService } from '../../service/monitor.service';
 import { MessService } from '../../service/mess.service';
 import { FullScreenService } from '../../service/full-screen.service';
 import { CommunicateService } from '../../service/communicate.service';
-
 
 // baidu map
 declare let BMap;
@@ -19,7 +14,6 @@ declare let $: any;
 declare let BMAP_STATUS_SUCCESS;
 declare let BMAP_ANCHOR_TOP_LEFT;
 declare let BMAP_ANCHOR_BOTTOM_LEFT;
-
 
 @Component({
   selector: 'app-monitor',
@@ -74,28 +68,20 @@ export class MonitorComponent implements OnInit {
     public fullScreenService: FullScreenService, private communicateService: CommunicateService,
 
     ) {
-
     this.model.light_list = []; // 城市列表
     this.map_model.deviceList = []; // 城市列表
     this.map_model.cityList = []; // 城市列表
     this.map_model.currentChildren = []; // 区域列表一级
     this.map_model.currentBlock = []; // // 当前城市街道 = []; // 区域列表2级
     this.zoom = 12; // 默认
-    // config.placement = 'bottom-left';
-
     this.visible = urlService.getURLParam('visible') === '' ? true : false;
-
-
-
   }
 
 
   ngOnInit() {
-
     this.getCity(); // 获取城市列表
     this.getDevice(); // 获取设备列表
     const that = this;
-
     // 退出全屏
     window.onresize = function () {
       if (!that.checkFull()) {
@@ -116,7 +102,6 @@ export class MonitorComponent implements OnInit {
       // maxZoom : 11
     }); // 创建地图实例
 
-
     // 这里我们使用BMap命名空间下的Point类来创建一个坐标点。Point类描述了一个地理坐标点，其中116.404表示经度，39.915表示纬度。（为天安门坐标）
     const point = new BMap.Point(114.064675, 22.550651); // 坐标可以通过百度地图坐标拾取器获取
     map.centerAndZoom(point, this.zoom); // 设置中心和地图显示级别
@@ -135,19 +120,13 @@ export class MonitorComponent implements OnInit {
       offset: offset,
     });
     map.addControl(navigationControl);
-
     const top_left_control = new BMap.ScaleControl({ anchor: BMAP_ANCHOR_BOTTOM_LEFT, offset: new BMap.Size(20, 85) }); // 左上角，添加比例尺
     map.addControl(top_left_control);
-
     map.enableScrollWheelZoom(true); // 启动滚轮放大缩小，默认禁用
     // map.enableContinuousZoom(true); // 连续缩放效果，默认禁用
-
     this.dragendOff(map);
     this.zoomendOff(map);
     this.mapClickOff(map);
-
-
-
   }
 
   // 监控-点击地图事件
@@ -169,11 +148,9 @@ export class MonitorComponent implements OnInit {
   // 监控-地图缩放事件-地图缩放后的级别。
   zoomendOff(baiduMap) {
     const that = this;
-
     baiduMap.addEventListener('zoomend', function () {
       that.remove_overlay(baiduMap);
       that.addMarker(); // 添加标注
-
     });
 
   }
@@ -181,7 +158,6 @@ export class MonitorComponent implements OnInit {
   checkFull() {
     let isFull: any;
     isFull = document.fullscreenEnabled || document.webkitIsFullScreen;
-
     if (isFull === undefined) {
       isFull = false;
     }
@@ -215,33 +191,12 @@ export class MonitorComponent implements OnInit {
   getPoint(baiduMap, city) {
     const that = this;
     // 创建地址解析器实例
-    const myGeo = new BMap.Geocoder();
     const zoom  = this.switchZone(city.level);
-    const fullName = city.full_name;
-    // console.log(city);
     const pt = city.center;
     const point = new BMap.Point(pt.lng, pt.lat);
     baiduMap.centerAndZoom(point, zoom);
-
-
     that.addMarker(); // 获取数据-添加标注
-
-    // 将地址解析结果显示在地图上,并调整地图视野，获取数据-添加标注
-    // myGeo.getPoint(fullName, function (point) {
-    //   if (point) {
-    //     console.log(point);
-    //     baiduMap.centerAndZoom(point, zoom);
-    //     pt = point;
-
-    //     that.addMarker(); // 获取数据-添加标注
-    //   } else {
-    //     console.log('您选择地址没有解析到结果!');
-    //   }
-    // }, that.node.name);
   }
-
-
-
 
   // 省市区街道-地图级别
   switchZone(level) {
@@ -280,15 +235,11 @@ export class MonitorComponent implements OnInit {
     return level;
   }
 
-
-
-
   // 获取数据
 
   // 获取城市列表 --ok
   getCity() {
     const that = this;
-
     this.monitorService.getZoneDefault().subscribe({
       next: function (val) {
         that.map_model.cityList = val.regions;
@@ -296,11 +247,9 @@ export class MonitorComponent implements OnInit {
         that.node = that.getNode(val.regions, val.zone.region_id);
         that.map_model.currentCity = that.node;
         that.map_model.currentChildren = that.node.children;
-
       },
       complete: function () {
         that.addBeiduMap(); // 创建地图
-
       },
       error: function (error) {
         console.log(error);
@@ -310,15 +259,11 @@ export class MonitorComponent implements OnInit {
   // 获取设备列表 -- ok
   getDevice() {
     const that = this;
-
     this.monitorService.getDevice().subscribe({
       next: function (val) {
         that.map_model.deviceList = val;
-
       },
       complete: function () {
-
-
       },
       error: function (error) {
         console.log(error);
@@ -332,7 +277,6 @@ export class MonitorComponent implements OnInit {
     const that = this;
     let value;
     const zoom = this.map.getZoom(); // 地图级数
-
     const Bounds = this.map.getBounds(); // 返回地图可视区域，以地理坐标表示
     const ne = Bounds.getNorthEast(); // 返回矩形区域的东北角
     const sw = Bounds.getSouthWest(); // 返回矩形区域的西南角
@@ -341,7 +285,6 @@ export class MonitorComponent implements OnInit {
     this.monitorService.getRegions(sw, ne, level, type).subscribe({
       next: function (val) {
         value = val;
-
       },
       complete: function () {
 
@@ -352,8 +295,6 @@ export class MonitorComponent implements OnInit {
       }
     });
   }
-
-
 
   // 获取详情
   getDetails(sw: any, ne: any, zoom: Number) {
@@ -404,25 +345,19 @@ export class MonitorComponent implements OnInit {
     const Bounds = this.map.getBounds(); // 返回地图可视区域，以地理坐标表示
     const ne = Bounds.getNorthEast(); // 返回矩形区域的东北角
     const sw = Bounds.getSouthWest(); // 返回矩形区域的西南角
-
     const zoom = this.map.getZoom();
-
     let length, color, mouseoverColor;
     if (zoom <= 13) {
-
       length = 90;
       color = '#87a2b7';
       mouseoverColor = '#9bd9dd';
       that.getRegion(length, color, mouseoverColor);
-
     } else if (zoom <= 16 && zoom > 13) {
-
       length = 90;
       color = '#87a2b7';
       mouseoverColor = '#9bd9dd';
       that.getRegion(length, color, mouseoverColor);
     } else {
-
       that.getDetails(sw, ne, zoom);
     }
 
@@ -430,7 +365,6 @@ export class MonitorComponent implements OnInit {
 
   // 添加点标注
   addPoint(val) {
-
     this.markers = [];
     const points: any[] = [];
     const that = this;
@@ -438,20 +372,14 @@ export class MonitorComponent implements OnInit {
       const pt = new BMap.Point(item.point.lng, item.point.lat);
       // 添加自定义覆盖物
       let mySquare;
-
       if (item.with_error && item.with_error === true) { // 异常
         mySquare = new GradOverlar(pt, 36, 'tag-red');
-        // console.log('异常');
       } else if (item.with_offline === false) { // 掉线
         mySquare = new GradOverlar(pt, 36, 'tag-grad');
-        // console.log('掉线');
       } else { // 正常
         mySquare = new GradOverlar(pt, 36, 'tag-bule');
-        // console.log('正常');
       }
-
       that.map.addOverlay(mySquare);
-
       that.markers.push(mySquare); // 聚合
       points.push(pt); // 聚合
 
@@ -461,8 +389,6 @@ export class MonitorComponent implements OnInit {
     for (let index = 0; index < that.markers.length; index++) {
       const marker = that.markers[index];
       that.openSideBar(marker, that.map, val[index], points[index]);
-
-
     }
   }
 
@@ -470,28 +396,19 @@ export class MonitorComponent implements OnInit {
   addCirCle(val, length, color, mouseoverColor) {
     this.markers = [];
     const that = this;
-    // const markers: any[] = [];
     val.map((item, i) => {
-
       const pt = new BMap.Point(item.center.lng, item.center.lat);
       const name = item.name;
       const count = item.count;
-
       // 添加自定义覆盖物
       const mySquare = new CircleOverlarService(pt, name, count, length, color, mouseoverColor);
       that.map.addOverlay(mySquare);
-
       that.markers.push(mySquare); // 聚合
-
-
     });
-
     // 点击圆形标注事件
-
     for (let index = 0; index < that.markers.length; index++) {
       const marker = that.markers[index];
       const item = val[index];
-
       this.setZoom(marker, this.map, item);
     }
   }
@@ -499,7 +416,6 @@ export class MonitorComponent implements OnInit {
 
 // 圆圈区域点击事件
   setZoom(marker, baiduMap, item) {
-
     let zoom = this.map.getZoom();
     switch (zoom) {
       case 11:
@@ -516,7 +432,6 @@ export class MonitorComponent implements OnInit {
         break;
     }
     marker.V.addEventListener('click', function () {
-
       const point = new BMap.Point(item.center.lng, item.center.lat); // 坐标可以通过百度地图坐标拾取器获取 --万融大厦
       baiduMap.centerAndZoom(point, zoom); // 设置中心和地图显示级别
       // baiduMap.setZoom(zoom);
@@ -525,14 +440,9 @@ export class MonitorComponent implements OnInit {
 
   // 点注标点击事件
   openSideBar(marker, baiduMap, val, point) {
-
     const that = this;
-    // <p style=’font - size: 12px; lineheight: 1.8em; ’> ${ val.name } </p>
     const opts = {
       width: 0,     // 信息窗口宽度
-      // height: 100,     // 信息窗口高度
-      // title: `${val.name} | ${val.id }`, // 信息窗口标题
-      // enableMessage: true, // 设置允许信息窗发送短息
       enableAutoPan: true, // 自动平移
     };
     let txt = `
@@ -546,9 +456,7 @@ export class MonitorComponent implements OnInit {
       }
     }
 
-
     const infoWindow = new BMap.InfoWindow(txt, opts);
-
     marker.V.addEventListener('click', function () {
       that.device = val;
       baiduMap.openInfoWindow(infoWindow, point); // 开启信息窗口
@@ -568,7 +476,6 @@ export class MonitorComponent implements OnInit {
         const deviceType = this.device.device_types[index].id;
         const device = $(`#${deviceType}`);
         device.on('click', function () {
-
           that.getDeviceDetails(positionId, deviceType);
         });
       }
@@ -579,7 +486,6 @@ export class MonitorComponent implements OnInit {
   // 点击关闭操作详情
   closeDetail() {
     this.deviceChild = null;
-
   }
 
 
@@ -595,12 +501,9 @@ export class MonitorComponent implements OnInit {
   getGeolocation(baidumap) {
     const geolocation = new BMap.Geolocation(); // 获取当前位置坐标
     geolocation.getCurrentPosition(function (r) {
-
     if (this.getStatus() === BMAP_STATUS_SUCCESS) {
-      // fun(r);
       const mk = new BMap.Marker(r.point);
       baidumap.addOverlay(mk); // 标注当前位置
-
       // 在创建地图实例后，我们需要对其进行初始化，BMap.Map.centerAndZoom()方法要求设置中心点坐标和地图级别。 地图必须经过初始化才可以执行其他操作。
       baidumap.centerAndZoom(r.point, 17); // 设置中心和地图显示级别
     } else {
@@ -608,11 +511,6 @@ export class MonitorComponent implements OnInit {
     }
   }, { enableHighAccuracy: true });
   }
-
-  //
-    /*
-     * 递归查询JSON树 父子节点
-     */
 
 
   /**
@@ -625,15 +523,12 @@ export class MonitorComponent implements OnInit {
 
   getNode(json, nodeId) {
     const that = this;
-
     // 1.第一层 root 深度遍历整个JSON
     for (let i = 0; i < json.length; i++) {
       if (that.node) {
         break;
       }
-
       const obj = json[i];
-
       // 没有就下一个
       if (!obj || !obj.id) {
         continue;
@@ -643,15 +538,12 @@ export class MonitorComponent implements OnInit {
       if (obj.id === nodeId) {
         // 找到了与nodeId匹配的节点，结束递归
         that.node = obj;
-
         break;
       } else {
-
         // 3.如果有子节点就开始找
         if (obj.children) {
           // 4.递归前，记录当前节点，作为parent 父亲
           that.parentNode = obj;
-
           // 递归往下找
           that.getNode(obj.children, nodeId);
         } else {
@@ -661,17 +553,11 @@ export class MonitorComponent implements OnInit {
       }
     }
 
-
     // 5.如果木有找到父节点，置为null，因为没有父亲
     if (!that.node) {
       that.parentNode = null;
     }
 
-    // 6.返回结果obj
-    // return {
-    //   parentNode: that.parentNode,
-    //   node: that.node
-    // };
     return that.node ;
   }
 
@@ -683,25 +569,20 @@ export class MonitorComponent implements OnInit {
 
   // 打开新页面
   addURLParamAddOpen() {
-
     this.urlService.addURLParamAddOpen('visible', 'false');
     localStorage.setItem('visible', 'false');
 
   }
 
 
-
   // 进入全屏
   enterFullScreen() {
-
     this.visible = false;
     localStorage.setItem('visible', 'false');
     console.log('进入全屏');
-
     // 设置缩放控件偏移量
     const offset = new BMap.Size(20, 15);
     this.navigationControl.setOffset(offset);
-
     this.communicateService.sendMessage(this.visible); // 发布一条消息
     this.fullScreenService.enterFullScreen();
 
@@ -718,7 +599,6 @@ export class MonitorComponent implements OnInit {
     // 设置缩放控件偏移量
     const offset = new BMap.Size(20, 60);
     this.navigationControl.setOffset(offset);
-
     this.communicateService.sendMessage(this.visible); // 发布一条消息
     // this.fullScreenService.exitFullScreen();
 
@@ -795,14 +675,12 @@ export class MonitorComponent implements OnInit {
     this.map_model.currentBlock = [];
   }
 
-
-
-
-
-
-
-
-
-
-
 }
+/*
+
+Copyright(c): 2018 深圳创新设计研究院
+Author: luo.shuqi@live.com
+@file: 	monitor.component.ts
+@time: 2018 / 7 / 2 17: 18
+
+*/

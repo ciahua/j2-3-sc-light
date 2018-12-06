@@ -71,7 +71,6 @@ export class TrafficComponent implements OnInit {
     const map = this.map = new BMap.Map(this.map_container.nativeElement, {
       enableMapClick: true,
       minZoom: 11,
-      // maxZoom : 11
     }); // 创建地图实例
 
 
