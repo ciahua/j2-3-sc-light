@@ -1,40 +1,38 @@
 
-import { Component, Injectable, EventEmitter } from '@angular/core';
+import { Injectable, } from '@angular/core';
 import { Observable } from 'rxjs/';
-import { of } from 'rxjs/';
-import { tap, delay } from 'rxjs/operators';
-import { Http, Headers, Response } from '@angular/http';
-import { CookieService } from 'ngx-cookie';
-import { Router } from '@angular/router';
-import { WindowRef } from '../windowserver';
+import { HttpClient } from '@angular/common/http';
 
 
-import { Point } from '../data/point.type';
 import { map } from 'rxjs/operators';
 
 
 @Injectable()
 export class LightService {
 
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
 
+    }
 
+    // 获取策略表
+    getLightByDeviceName(lightName: String): Observable<any> {
+        console.log(lightName);
+        return this.http.get(`/api/streetlight?lightName=${lightName}`)
+            .pipe(map((res: Response) => {
+                return res;
+            }));
     }
 
 
     // 获取详细的位置数据
-    getLights(ne: Point, sw: Point): Observable<any> {
+    getLights(ne: any, sw: any): Observable<any> {
+        // 获取接口数据
         return this.http.post('/api/streetlight/inbounds', {
             'ne': ne,
             'sw': sw
         })
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                return res;
             }));
     }
 
@@ -46,13 +44,8 @@ export class LightService {
             'stopTime': stopTime
         })
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = { status: 200 };
-                    // console.log(res.json());
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                const data = { status: 200 };
+                return data;
             }));
     }
 
@@ -63,13 +56,8 @@ export class LightService {
             'ruleId': ruleId
         })
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = { status: 200 };
-                    // console.log(res.json());
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                const data = { status: 200 };
+                return data;
             }));
     }
 
@@ -77,12 +65,7 @@ export class LightService {
     getStrategy(): Observable<any> {
         return this.http.get(`/api/streetlight/rule`)
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                return res;
             }));
     }
 
@@ -94,13 +77,8 @@ export class LightService {
             'stopTime': stopTime
         })
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = { status: 200 };
-                    // console.log(res.json());
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                const data = { status: 200 };
+                return data;
             }));
     }
 
@@ -111,13 +89,15 @@ export class LightService {
             'ruleId': ruleId
         })
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = { status: 200 };
-                    // console.log(res.json());
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                const data = { status: 200 };
+                return data;
+                // if (res.status === 200) {
+                //     const data = { status: 200 };
+                //     // console.log(res.json());
+                //     return data;
+                // } else if (res.status === 202) {
+                //     return res.json().code.toString();
+                // }
             }));
     }
 

@@ -1,0 +1,153 @@
+.test-cs{
+    height: 90px;
+    width: 90px;
+    background: #56c5ff;
+    padding: 24px 0;
+}
+
+.map_container{
+    width: calc(100% - 50px);
+
+}
+.alert-play{
+    position: absolute;
+    z-index: 3000;
+    top: 50px;
+    width: calc(100% - 50px);
+}
+.fulls-map {
+    height: 100vh;
+}
+
+.dropdown-menu{
+    top: 29px !important;
+    min-width: 90px!important;
+    .dropdown-item{
+        font-size: 14px!important;
+    }
+}
+
+// 设备详情
+.device-detail{
+    width: 300px;
+    background: #fff;
+    border: 1px solid #ccc;
+    z-index: 4000;
+    position: absolute;
+    right: 85px;
+    top: 0px;
+    padding: 0px 15px;
+    max-height: 100%;
+    overflow-y: auto;
+}
+.device-close{
+    cursor: pointer;
+     color: #8e8f91;
+}
+.device-title{
+    display: block;
+    padding: 0;
+    margin: 0;
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #ccc;
+}
+// 底部消息框
+.color-red{
+    color: #f44336;
+}
+.color-yellow {
+    color: #fe9001
+}
+.color-orange {
+    color: #f0c001
+}
+//
+.info-footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    margin: 0;
+}
+
+.info-logo{
+    position: absolute;
+    left: 70px;
+}
+.info-text {
+        margin-left: 130px;
+        font-size: 16px;
+}
+// 蒙板
+.mask-zt{
+    padding: 15px;
+    z-index: 2;
+    position: relative;
+    height: 150px;
+
+}
+.mask-zt:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0px;
+    right: 0px;
+    background: rgba(0, 0, 0, 0.6);
+    height: 100%;
+    z-index: -1;
+}
+
+// 按设备标号搜索框
+.form-control {
+    font-size: 14px;
+    // width: auto;
+    width: 90px;
+    height: calc(1.8rem + 2px);
+    margin-right: 5px;
+}
+.search-warp {
+    position: relative;
+}
+.search-input, .search-input2{
+    font-size: 14px;
+    width: 200px;
+    height: 32px;
+    margin-right: 5px;
+    margin-left: 20px;
+}
+.search-input2 {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+.search-icon, .search-icon2{
+    position: absolute;
+    right: 5px;
+    top: 0;
+    display: inline-block;
+    width: 30px;
+    height: 31px;
+    line-height: 32px;
+    text-align: center;
+    cursor: pointer;
+    background: #ccc;
+    border-radius:0 5px 5px 0;
+}
+.search-icon2 {
+    right: 22px;
+}
+//
+.video-play{
+    position: absolute;
+    bottom: 0px;
+    right: 0;
+    img {
+        position: absolute;
+        right: 115px;
+        bottom: 10px;
+    }
+}
+
+.info-border{
+    border-bottom: 1px solid;
+    margin-bottom: 10px;
+}

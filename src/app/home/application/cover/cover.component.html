@@ -6,14 +6,14 @@
         <div class="d-inline-block sel-area-block" (mouseleave)="citylistMouseleave()">
 
                 <span class="cl-blue cur-pointer" (mouseover)="showCiyt()">
-                  <span class="filter" *ngIf="node">{{node.name}}</span>
-                  <span class="filter" *ngIf="!currentCity">选择城市</span>
+                  <span class="filter" *ngIf="map_model.currentCity">{{map_model.currentCity.name}}</span>
+                  <span class="filter" *ngIf="!map_model.currentCity">选择城市</span>
                   <!-- <i class="fa fa-bell-o nav-icon " aria-hidden="true"></i> -->
                 </span>
                 <div id="city-panel" class="city-panel dropdown_panel" *ngIf="cityshow" >
                   <div class="dropdown_panel_inner">
                     <span class="menu_arrow_left"></span>
-                    <dl *ngFor="let item of cityList">
+                    <dl *ngFor="let item of map_model.cityList">
                       <dt>{{item.name}}</dt>
                       <dd *ngIf="item.children && item.children.length > 0">
                         <a title="智慧城市" *ngFor="let itemc of item.children" (click)="selecteCity(itemc)">{{itemc.name}}</a>
@@ -29,25 +29,26 @@
         <div class="d-inline-block sel-area-block" (mouseleave)="arealistMouseleave()">
 
         <span class="cl-blue cur-pointer" (mouseover)="showArea()">
-            <span class="filter">选择区域</span>
+            <span class="filter" *ngIf="!map_model.currentArea">选择区域</span>
+            <span class="filter" *ngIf="map_model.currentArea">{{map_model.currentArea.name}}</span>
         </span>
 
         <div class="arealist-wrap dropdown_panel"  *ngIf="areashow">
             <div class="dropdown_panel_inner">
                 <span class="menu_arrow_left"></span>
                 <ul class="arealist" data-type="area">
-                <li data-val="0" class="arealist-item" (mouseover)="arealistMouseNone()">
+                <!-- <li data-val="0" class="arealist-item" (mouseover)="arealistMouseNone()">
                     <em>不限</em>
-                </li>
-                <li class="arealist-item" *ngFor="let node of currentChildren" (mouseover)="arealistMouseover(node)" (click)="selecteblock(node)">
+                </li> -->
+                <li class="arealist-item" *ngFor="let node of map_model.currentChildren" (mouseover)="arealistMouseover(node)" (click)="selecteblock(node)">
                     <em>{{node.name}}</em>
                 </li>
                 
                 </ul>
-                <div class="blocklist-wrap" *ngIf="currentBlock">
+                <div class="blocklist-wrap" *ngIf="map_model.currentBlock.length > 0">
                 <ul class="blocklist"  data-type="block">
-                    <li data-val="0">不限</li>
-                    <li *ngFor="let block of currentBlock" (click)="selecteblock(block)">{{block.name}}</li>
+                    <!-- <li data-val="0">不限</li> -->
+                    <li *ngFor="let block of map_model.currentBlock" (click)="selecteblock(block)">{{block.name}}</li>
                 
                 </ul>
                 </div>
@@ -62,40 +63,22 @@
 
 
     </div>
-
-
-    <!-- <div ngbDropdown class="dropup nav-user">
-            <div class="cl-blue display-inoneline" id="dropdownBasic2" ngbDropdownToggle>
-              <i class="fa fa-user-circle-o nav-icon cl-blue" aria-hidden="true"></i>
-              <span class="currentUsername">{{loginName}}</span>
-            </div>
-            <ul ngbDropdownMenu aria-labelledby="dropdownBasic2" class="user-menus">
-              <li class="dropdown-item">
-                <span class="dropdown-menu-list">用户管理</span>
-              </li>
-              <li class="dropdown-item">
-                <a (click)="logout()" class="cur-pointer ">
-                  <span class="dropdown-menu-list">退出登录</span>
-                </a>
-              </li>
-            </ul>
-          </div> -->
     <!-- 井盖消息处理三按键 -->
     <div class="cover-issues">
         <!-- 待处理 -->
         <div class="d-inline-block cover-issues-block" (mouseleave)="messageListMouseleave_1()">
             <span class="cl-blue cur-pointer" (mouseover)="showUntartedList()">
                 <span class="filter">待处理
-                    <span class="m-badge m-badge-danger" *ngIf="messageList">{{messageList.length}}</span>
+                    <span class="m-badge m-badge-danger" >{{model.messageList.length}}</span>
                 </span>
             </span>
-            <div class="messagelist-wrap" *ngIf="showunstartedlist">
+            <div class="messagelist-wrap" *ngIf="showunstartedlist && model.messageList.length > 0">
                 <div class="dropdown_panel_inner">
                     <span class="menu_arrow_left"></span>
                     <ul class="messagelist" data-type="area">
-                        <li class="messagelist-item" *ngFor="let mess of messageList" (click)="findPoint(mess)">
+                        <li class="messagelist-item" *ngFor="let mess of model.messageList" (click)="findPoint(mess)">
                             <i class="fa fa-dot-circle-o" aria-hidden="true" style="color:#f4516c;padding-right:5px"></i>
-                            <span>{{mess.address}}-{{mess.name}}-{{mess.id}}-{{mess.message}}</span>
+                            <span>{{mess.deviceDescription}}-{{mess.typeName}}-设备ID：{{mess.deviceId}}-{{mess.openTime}}</span>
                         </li>
                     </ul>
                 </div>
@@ -106,17 +89,17 @@
         <div class="d-inline-block cover-issues-block" (mouseleave)="messageListMouseleave_2()">
             <span class="cl-blue cur-pointer" (mouseover)="showOnprogressList()">
                 <span class="filter">处理中
-                    <span class="m-badge m-badge-inprocess" *ngIf="messageList1">{{messageList1.length}}</span>
+                    <span class="m-badge m-badge-inprocess" >{{model.messageList1.length}}</span>
                 </span>
             </span>
-            <div class="messagelist-wrap" *ngIf="showonprogresslist">
+            <div class="messagelist-wrap" *ngIf="showonprogresslist && model.messageList1.length > 0">
                 <div class="dropdown_panel_inner">
                     <span class="menu_arrow_left"></span>
                     <ul class="messagelist" data-type="area">
-                        <li class="messagelist-item" *ngFor="let mess of messageList1" (click)="findPoint(mess)">
+                        <li class="messagelist-item" *ngFor="let mess of model.messageList1" (click)="findPoint(mess)">
                             <!-- <span class="m-list-timeline__badge"></span> -->
                             <i class="fa fa-circle" aria-hidden="true" style="color:#ffb822;padding-right:5px"></i>
-                            <span>{{mess.address}}-{{mess.name}}-{{mess.id}}-{{mess.message}}</span>
+                            <span>{{mess.deviceDescription}}-{{mess.typeName}}-设备ID：{{mess.deviceId}}-{{mess.openTime}}</span>
                         </li>
                     </ul>
                 </div>
@@ -126,16 +109,16 @@
         <div class="d-inline-block cover-issues-block" (mouseleave)="messageListMouseleave_3()">
             <span class="cl-blue cur-pointer" (mouseover)="showFinishedList()">
                 <span class="filter">已处理
-                    <span class="m-badge m-badge-fixed" *ngIf="messageList2">{{messageList2.length}}</span>
+                    <span class="m-badge m-badge-fixed" >{{model.messageList2.length}}</span>
                 </span>
             </span>
-            <div class="messagelist-wrap" *ngIf="showfinishedlist">
+            <div class="messagelist-wrap" *ngIf="showfinishedlist && model.messageList2.length > 0">
                 <div class="dropdown_panel_inner">
                     <span class="menu_arrow_left"></span>
                     <ul class="messagelist " data-type="area">
-                        <li class="messagelist-item" *ngFor="let mess of messageList2" (click)="findPoint(mess)">
+                        <li class="messagelist-item" *ngFor="let mess of model.messageList2" (click)="findPoint(mess)">
                             <i class="fa fa-circle" aria-hidden="true" style="color:#36a3f7;padding-right:5px"></i>
-                            <span>{{mess.address}}-{{mess.name}}-{{mess.id}}-{{mess.message}}</span>
+                            <span>{{mess.deviceDescription}}-{{mess.typeName}}-设备ID：{{mess.deviceId}}-{{mess.openTime}}</span>
                         </li>
                     </ul>
                 </div>
@@ -143,18 +126,13 @@
         </div>
     </div> 
 
+    <div class="issue-history-data">
+        <!-- 点击进入数据监控页面 issuedata.component.html -->
+        <button class="btn btn-bg iss-hist" (click)="jumpHandle()">消息记录</button>
+    </div>
 
     <!-- 右边按钮 -->
     <div class="btn-icon" *ngIf="visible == true">
-        <!-- <div class="d-inline-block icon-item cur-pointer">
-            <img src="../../../../assets/imgs/control.png" alt="图片">
-        
-        </div> -->
-
-        <div class="d-inline-block icon-item cur-pointer">
-
-            <img src="../../../../assets/imgs/switch.png" alt="图片" (click)="enterFullScreen()">
-        </div>
 
     </div>
     <!-- 地图 -->

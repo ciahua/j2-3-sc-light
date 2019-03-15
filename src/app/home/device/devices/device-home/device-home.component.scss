@@ -1,0 +1,210 @@
+@import '../../../../../assets/css/variable.scss';
+@import '../../../../../assets/css/xylg.scss';
+.my-drop-zone { border: dotted 3px lightgray; }
+.nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
+.another-file-over-class { border: dotted 3px green; }
+.map_container{
+    height: 400px;
+}
+.way-table{
+    width: 250px;
+    overflow-x: auto;
+}
+.bodyofclass {
+    width: calc(100vw - 50px);
+    height: 100vh;
+    padding: 30px;
+    position: relative;
+}
+.card-header {
+    border-bottom: 0px;
+    position: relative;
+}
+.card-block {
+    margin: 5px 0px 0px;
+    min-height: 38px;
+}
+.add-survey {
+    margin: 0px;
+    text-align: right;
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+}
+.search-survey {
+    position: relative;
+    font-size: 14px;
+
+    .extral-marg {
+        margin-right: 5px;
+    }
+    .search-options {
+        //padding-left: 20px;
+        
+        .form-control {
+            font-size: 14px;
+            width: auto;
+            height: 38px;
+            margin-right: 5px;
+        }
+        .search-icon {
+            font-size: 20px;
+            margin: 5px;
+        }
+    }
+    .add-survey {
+        margin: 0px;
+        text-align: right;
+    }
+}
+.parentDescription{
+    right: 28px;
+    position: absolute;
+}
+.btn-survey {
+    font-size: 14px;
+    margin-right: 5px;
+    margin-top: 5px;
+    background-color: $color-brand-color;
+}
+.btn-survey-end {
+    margin-right: 0px;
+}
+.btn-survey:hover {
+    background-color: $color-hover-color;
+}
+
+.manage-class {
+    font-size: 20px;
+    padding-right: 1px;
+    cursor: pointer;
+}
+.manage-class:focus, .manage-class:hover {
+    background-color: $color-brand-color;
+}
+.manage-class:active {
+    background-color: $color-hover-color;
+}
+
+.modal-body {
+    .form-control {
+        //max-width: 100px;
+        font-size: 14px;
+        height: calc(1.8rem + 2px);
+        margin-bottom: 5px;
+    }
+    .form-cont-left {
+        padding-left: 0px;
+    }
+    .extral-margin {
+        margin-left: 5px;
+    }
+    .limited-width {
+        width: 133px;
+    }
+    .btn1 {
+        font-size: 14px;
+        margin-left: 5px;
+    }
+    .sm-width {
+        width: 70px;
+        margin: 0 3px 5px;
+    }
+    .padding-left-zero {
+        padding-left: 0px;
+    }
+    .label-mid {
+        width: 65px;
+        text-align: right;
+        margin-right: 5px;
+    }
+    .query-div {
+        position: relative;
+        left: 15px;
+        .query-btn {
+            position: relative;
+            top: -2px;
+            right: 22px;
+        }
+        .query-btn:hover, .query-btn:active {
+            color: red;
+        }
+    }
+
+}
+
+.div-left {
+    border-right: thin solid #9BD9DD;
+}
+
+.lineheight {
+    line-height: 1.0;
+}
+
+.small-size {
+    td, th {
+        padding: 0.25rem;
+    }
+}
+
+.device-issues-block {
+    border-radius: 5px;
+}
+.filter {
+    width: 76px;
+}
+.messagelist-wrap {  // ul容器div样式
+    position: absolute;
+    padding: 7px 0;
+    margin: 0px;
+    top: 31px;
+    right: 0;
+    z-index: 99;
+    text-align: left;
+    .dropdown_panel_inner {
+        box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.08);
+        background-color: #fff;
+        padding: 20px;
+        font-size: 12px;
+        border-radius: 4px;
+    }
+    .menu_arrow_left:before {
+        display: block;
+        border-width: 7px;
+        position: absolute;
+        top: -7px;
+        right: 35px;
+        border-style: solid dashed dashed;
+        border-color: transparent transparent #fff transparent;
+        font-size: 0;
+        line-height: 0;
+        content: "";
+    }
+}
+.messagelist {  // ul样式
+    position: relative;
+    padding: 0;
+    margin: 0px;
+    margin-bottom: 0;
+    width: max-content;
+    font-size: 12px;
+    z-index: 99;
+    max-height: 300px;
+    overflow-y: auto;
+    cursor: pointer;
+}
+.messagelist-item {  // li样式
+    font-size: 12px;
+    margin: 5px 0;
+    padding: 0 10px;
+}
+.messagelist .messagelist-item:hover {
+    background: #f6f6f6;
+    color:#f60;
+    .blocklist{
+    display: block;
+    }
+}
+.messagelist .messagelist-item:hover em {
+    color:#f60;
+}

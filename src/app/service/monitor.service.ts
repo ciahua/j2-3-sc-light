@@ -1,23 +1,17 @@
 
-import { Component, Injectable, EventEmitter } from '@angular/core';
+import { Injectable} from '@angular/core';
 import { Observable } from 'rxjs/';
-import { of } from 'rxjs/';
-import { tap, delay } from 'rxjs/operators';
-import { Http, Headers, Response } from '@angular/http';
-import { CookieService } from 'ngx-cookie';
-import { Router } from '@angular/router';
-import { WindowRef } from '../windowserver';
 
+import { HttpClient } from '@angular/common/http';
+// import { Http, Headers, Response } from '@angular/http';
 
-
-import { Point } from '../data/point.type';
 import { map } from 'rxjs/operators';
 
 
 @Injectable()
 export class MonitorService {
 
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
 
 
     }
@@ -25,13 +19,7 @@ export class MonitorService {
     getDevice(): Observable<any> {
         return this.http.get('/api/device/type/all')
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-
-                }
+                return res;
             }));
 
     }
@@ -42,20 +30,12 @@ export class MonitorService {
 
         return this.http.get('/api/zone/default')
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    data.regions[0].open = true;
-                    data.regions[0].children[0].open = true;
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-
-                }
+                return res;
             }));
     }
 
     // 获取按区域汇总的位置数据
-    getRegions(sw: Point, ne: Point, level: number, type: number): Observable<any> {
+    getRegions(sw: any, ne: any, level: number, type: number): Observable<any> {
         return this.http.post(`/api/position/inbounds/sum/${level}`, {
             'bounds': {
                 'ne': ne,
@@ -64,20 +44,16 @@ export class MonitorService {
             'device_type': type
         })
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                return res;
             }));
 
     }
 
+    // 获取策略表
 
 
     // 获取详细的位置数据
-    getDetails(sw: Point, ne: Point, zoom: Number, type: Number): Observable<any> {
+    getDetails(sw: any, ne: any, zoom: Number, type: Number): Observable<any> {
         return this.http.post('/api/position/inbounds/details', {
             'bounds': {
                 'ne': ne,
@@ -86,12 +62,17 @@ export class MonitorService {
             'device_type': type
         })
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                return res;
+            }));
+    }
+
+    // 获取详细的位置数据ByDeviceNumber
+    getDetailsByDeviceNumber(number): Observable<any> {
+        return this.http.post(`/api/position/inbounds/details/${number}`, {
+
+        })
+            .pipe(map((res: Response) => {
+                return res;
             }));
     }
 
@@ -99,15 +80,31 @@ export class MonitorService {
     getDeviceDetails(positionId: string, deviceType: Number): Observable<any> {
         return this.http.get(`/api/position/device?positionId=${positionId}&deviceType=${deviceType}`)
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else if (res.status === 202) {
-                    return res.json().code.toString();
-                }
+                return res;
             }));
     }
 
+    // 获取设备型号
+    getModels(): Observable<any> {
+        return this.http.get(`/api/device/model/all`)
+            .pipe(
+                map((res) => {
+                    return res;
+                },
+
+                ));
+    }
+
+    // 获取设备信息
+    getDeviceByName(name): Observable<any> {
+        return this.http.get(`/api/device/getByName?name=${name}`)
+            .pipe(
+                map((res) => {
+                    return res;
+                },
+
+                ));
+    }
 
 
 

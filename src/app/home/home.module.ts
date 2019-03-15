@@ -1,35 +1,28 @@
 import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule, } from '@ng-bootstrap/ng-bootstrap';
-import { GridsterModule } from 'angular-gridster2';
-import { MatButtonModule, MatStepperModule, MatInputModule, MatCardModule } from '@angular/material';
-
-import { DeviceModule } from './device/device.module';
-import { ApplicationModule } from './application/application.module';
-
-import { UserModule } from './user/user.module';
-
+import { MaterialModule } from '../material.module';
 import { SharedModule } from '../shared/shared.module';
 
+import { HomeRoutingModule } from './home-routing.module';
+import { HomeComponent } from './home.component';
 
-import { DashbordComponent } from './dashbord/dashbord.component';
-import { MapComponent } from './map/map.component';
-import { StrategyComponent } from './strategy/strategy.component';
-import { HomepageComponent } from './homepage/homepage.component';
-import { AirreportComponent } from './airreport/airreport.component';
-import { EchartComponent } from './echart/echart.component';
-import { EchartMapComponent } from './echart-map/echart-map.component';
+
 
 @NgModule({
-    imports: [BrowserModule, FormsModule, ReactiveFormsModule, NgbModule.forRoot(),
-         DeviceModule, UserModule, GridsterModule, ApplicationModule, SharedModule,
-        MatStepperModule, MatButtonModule, MatInputModule, MatCardModule
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, NgbModule.forRoot(),
+         SharedModule,
+         MaterialModule,
+         HomeRoutingModule,
+
 
     ],
     declarations: [
-     DashbordComponent,
-     MapComponent, StrategyComponent, HomepageComponent, AirreportComponent, EchartComponent, EchartMapComponent,
+    HomeComponent,
+
+
+
 
 
     ],

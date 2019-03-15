@@ -1,25 +1,10 @@
 .map_container{
     height: 100vh;
-    width: 100%;
+     width: calc(100% - 50px);
 }
 .map-has-footer {
     height: calc(100vh);
 }
-// .cover-footer {
-//     height: 400px;
-//     width: calc(100vw - 100px);
-//     margin-right: 0;
-//     margin-left: 0;
-// }
-// .cover_td_1 {
-//     background-color: red;
-// }
-// .cover_td_2 {
-//     background-color: yellow;
-// }
-// .cover_td_3{
-//     background-color: green;
-// }
 
 .mes-list{
     border: 1px solid #ccc;
@@ -87,8 +72,6 @@
     }
     .filter {
         width: 76px;
-        // display: inline-block;
-        // text-align: center;
     }
     .messagelist-wrap {  // ul容器div样式
         position: absolute;
@@ -121,23 +104,17 @@
     }
     .messagelist {  // ul样式
         position: relative;
-        //left: -10px;
         padding: 0;
         margin: 0px;
         margin-bottom: 0;
         width: max-content;
         font-size: 12px;
         z-index: 99;
-        // border: 1px solid #e6e6e6;
-        // border-top-width: 0;
-        // background: #f6f6f6;
-        // box-shadow: 0 0 4px 0 rgba(0,0,0,0.10);
         max-height: 300px;
         overflow-y: auto;
         cursor: pointer;
     }
     .messagelist-item {  // li样式
-        // text-indent: 15px;
         font-size: 12px;
         margin: 5px 0;
         padding: 0 10px;
@@ -175,4 +152,14 @@
 .m-badge-fixed {
     background:#36a3f7;
     color:#fff;
+}
+
+.issue-history-data {
+    position: absolute;
+    top: 15px;
+    right: 70px;
+    z-index: 3000;
+    .iss-hist {
+        padding: 4px 8px;
+    }
 }

@@ -1,0 +1,176 @@
+
+<!-- 调用服务 -->
+<ng-template #serviceCall  class="modal1" let-c="close" let-d="dismiss">
+    <p *ngFor="let alert of alertsModal" class="lsq-alert">
+      <ngb-alert [type]="alert.type" (close)="closeAlertModal(alert)">{{ alert.message }}</ngb-alert>
+    </p>
+    <div class="modal-header">
+      <h4 class="modal-title"><span style="color: #28a745;">"{{serviceName}}"</span>服务调用</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  
+    <div class="modal-body">
+      <div *ngIf="inPutList.length == 0" class="form-group">
+        <span>无输入参数！</span><hr>
+        <!-- <span>无输出参数！</span> -->
+      </div>
+      <div class="form-group">
+        <div *ngIf="inPutList.length !== 0">
+            <span>输入参数</span>
+        <table class="table table-hover">
+          <thead class="table-header table-align">
+            <tr>
+
+              <th>名称</th>
+              <th>数据类型</th> 
+
+              <th style="text-align: center;">值</th>
+
+            </tr>
+          </thead>
+          <tbody>        
+            <tr *ngFor="let item of inPutList">
+
+              <td>{{ item.dataKey }}</td> 
+              <td>{{ item.dataType }}</td>
+
+              <td *ngIf="item.dataType.toLowerCase() == 'int' || item.dataType.toLowerCase() == 'float' || item.dataType.toLowerCase() == 'double'">
+                  <input type="number" class="form-control form-control-left" maxlength="30" placeholder=""
+                [(ngModel)]="item.value">
+              </td>
+              <td *ngIf="item.dataType.toLowerCase() == 'text'">
+                  <input type="text" class="form-control form-control-left" maxlength="30" placeholder=""
+                [(ngModel)]="item.value">
+              </td>
+              <td *ngIf="item.dataType.toLowerCase() == 'bool'">
+                <span style="margin-right:15px;"><input type="radio" name="iotPlatform" [value]="1" placeholder="" [(ngModel)]="item.value"> 1 </span>
+                <span><input type="radio" name="iotPlatform" [value]="0" placeholder="" [(ngModel)]="item.value"> 0 </span>                                  
+              </td>
+              <td *ngIf="item.dataType.toLowerCase() == 'date'">
+                  <input type="date" class="form-control form-control-left" placeholder=""
+                [(ngModel)]="item.value">
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-info" (click)="addInvokeService()">调用</button>
+      <button type="button" class="btn btn-outline-metal" (click)="d('Cross click')">关闭</button>
+    </div>
+</ng-template>
+<!-- 产品管理页面 -->
+<div class="bodyofproduct cart-over">
+    <p *ngFor="let alert of alerts" class="lsq-alert">
+        <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
+      </p>
+  <!-- <p class="lsq-alert">
+        <ngb-alert  (close)="closeAlert(alert)"></ngb-alert>
+      </p> -->
+  <!-- 卡片形式 -->
+  <div class="card card-primary panel-default cart-min">
+    <div class="card-header">
+      <div>
+              <span>设备详情</span>
+              <button type="button" class="close" aria-label="Close">
+              
+                <span>
+                  <i class="fa fa-arrow-circle-o-left fa-lg cur-pointer color-btn-text" (click)="jumpHandle('home/device/devices/devices-home')"></i>
+                </span>
+              </button>
+      </div>
+      <a class="cur-pointer theme-text btn-a" style=" font-size: 20px;">{{deviceInfo.description}}</a>
+      <!-- 菜单-->
+      <div class="nav-strategy">
+        <ul class="nav nav-tabs">
+          <li *ngFor="let item of navs;let i = index" role="presentation " class=" cur-pointer" (click)="changeNav(i)"
+            [ngClass]="{'active':item.id === nav_index}">
+            <a>{{item.name}}</a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+
+    <!-- 显示已有产品 -->
+    <div class="card-block ">
+      <div *ngIf="nav_index == 0" >
+        <div class="nav_index0">
+          <a style="padding-left: 20px; color: #41aee6;" *ngIf="deviceInfo">
+            <span>设备状态：</span>
+            <span *ngIf="deviceInfo.online">在线</span>
+            <span *ngIf="deviceInfo.online === false">离线</span>
+          </a>
+          <a style="padding-left: 20px; color: #41aee6;" class="cur-pointer" (click)="getDataNew()">刷新数据</a>
+        </div>
+        <table class="table table-hover">
+          <thead class="table-header">
+            <tr>
+              <th>属性名称</th>
+              <th>更新时间</th>
+              <th>最新值</th>
+              <th style="text-align: center">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+        
+            <tr *ngFor="let item of CurrentPropertyList">
+              <td>{{item.name}}</td>
+              <td>{{item.lastTime | date: 'yyyy-MM-ddTHH:mm:ss'}}</td>
+              <td>{{item.dataValue}}</td>
+              <td style="text-align: center">
+                <div class="modify-strategy d-inline">
+                  <a class="cur-pointer btn-a theme-text d-inline" (click)="goToZheRoute('home/device/devices/history-data',item.dataKey)">查看历史数据</a>
+                </div>
+              </td>
+        
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="CurrentPropertyList.length === 0 || !CurrentPropertyList">无数据！</div>
+        <div *ngIf="CurrentPropertyList.length > 0">
+          <ngb-pagination [collectionSize]=total [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false"
+            [boundaryLinks]="true" (pageChange)="pageChange()"></ngb-pagination>
+        </div>
+      </div>
+      <div *ngIf="nav_index == 1">
+        <table class="table table-hover">
+          <thead class="table-header">
+            <tr>
+              <th>序号</th>
+              <th>标识符</th>
+              <th>服务名称</th>             
+              <th>调用方式</th>
+              <th>描述</th>
+              <th>操作</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            
+            <tr *ngFor="let item of functionList;let i = index;"  >
+              <td>{{i + 1}}</td>
+              <td>{{item.identifier}}</td>
+              <td>{{item.name }}</td>
+              <td>{{item.synchrony === 0 ? '同步' : '异步'}}</td>
+              <td>{{item.description}}</td>
+              <td>
+                <a class="cur-pointer btn-a theme-text d-inline" (click)="openServiceModel(serviceCall, item)">调用</a>
+              </td>  
+
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="functionList.length === 0 || !functionList">无数据！</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

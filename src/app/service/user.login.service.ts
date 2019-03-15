@@ -1,5 +1,5 @@
-import { Component, Injectable, EventEmitter } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
+import { Injectable } from '@angular/core';
+import { Http,  Response } from '@angular/http';
 import { CookieService } from 'ngx-cookie';
 import { Observable } from 'rxjs/';
 import { map } from 'rxjs/operators';

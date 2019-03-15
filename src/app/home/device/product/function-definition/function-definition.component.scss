@@ -1,0 +1,76 @@
+.bodyofproduct {
+    width: calc(100vw - 50px);
+    height: 100vh;
+    padding: 30px;
+    position: relative;
+}
+.card-header {
+    border-bottom: 0px;
+    position: relative;
+}
+.add-product {
+    margin: 0px;
+    text-align: right;
+    position: absolute;
+    right: 54px;
+    bottom: 5px;
+
+}
+.modal-body {
+    padding-left: 80px;
+    padding-right: 80px;
+    max-height: 600px;
+    overflow-y: auto;
+
+}
+
+.myCustomModalClass .modal-dialog {
+  max-width: 800px;
+}
+
+.modal-body {
+    .form-control {
+    font-size: 14px;
+    height: calc(1.8rem + 2px);
+    }
+    .form-control-left {
+        margin-bottom: 5px;
+        width: 200px;
+        
+    }
+    .label-left {
+        margin-right: 5px;
+        text-align: right;
+        width: 121px;
+    }
+    .modal-col {
+        margin-left: 15px;
+    }
+    .sm-width {
+        width: 200px;
+    }
+    .sm-width1 {
+        width: 108px;
+    }
+    .sm-width2 {
+            width: 185px;
+    }
+    .sm-width3 {
+        width: 158px;
+    }
+    .sm-width4 {
+        width: 138px;
+    }
+    .ssm-width {
+        width: 11px;
+        margin: 0 5px 0;
+    }
+}
+.nav > li > a {
+    font-size: 16px;
+}
+.para-descript{
+    position: relative;
+    left: 165px;
+
+}

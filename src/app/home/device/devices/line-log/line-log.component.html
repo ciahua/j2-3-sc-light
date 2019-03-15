@@ -1,0 +1,102 @@
+<!-- 产品管理页面 -->
+<div class="bodyofall cart-over">
+  <!-- <p class="lsq-alert">
+    <ngb-alert  (close)="closeAlert(alert)"></ngb-alert>
+  </p> -->
+  <!-- 卡片形式 -->
+  <div class="card card-primary panel-default cart-min">
+    <div class="card-header">
+
+      <button type="button" class="close" aria-label="Close">
+        <!-- <span aria-hidden="true">&times;</span> -->
+        <span>
+          <i class="fa fa-arrow-circle-o-left fa-lg cur-pointer color-btn-text" (click)="goback()"></i>
+        </span>
+      </button>
+    </div>
+
+
+    <div class="d-inline mtb20 fl">
+
+      <div class="d-inline-block extral-margin">
+        <label class="text-label">开始时间：</label>
+
+        <div class="d-inline-block">
+          <div class="input-group">
+            <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="startDate" ngbDatepicker #ad="ngbDatepicker">
+            <div class="input-group-append">
+              <button class="btn btn-primary " (click)="ad.toggle()" type="button">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div class="d-inline-block extral-margin">
+        <label class="text-label">结束时间：</label>
+
+        <div class="d-inline-block">
+          <div class="input-group">
+            <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="endDate" ngbDatepicker #bd="ngbDatepicker">
+            <div class="input-group-append">
+              <button class="btn btn-primary " (click)="bd.toggle()" type="button">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+      <div class="d-inline-block extral-margin">
+        <input id="sole-input2" [(ngModel)]="queryStr" class="form-control searchbox-content-common" type="text" name="word"
+          autocomplete="off" maxlength="30" placeholder="设备编号、设备描述">
+
+      </div>
+
+      <div class="d-inline-block extral-margin">
+        <button class="btn btn-bg extral-margin search-btn" (click)="dataSearch()">搜索</button>
+      </div>
+
+    </div>
+
+
+    <!-- 显示已有产品 -->
+    <div class="card-block cart-over">
+
+      <table class="table table-hover">
+        <thead class="table-header">
+          <tr>
+            <th>设备编号</th>
+            <th>设备描述</th>
+            <th>上下线</th>
+            <th>时间</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr *ngFor="let item of historyList">
+            <td>{{item.deviceName}}</td>
+            <td>{{item.description}}</td>
+            <td>{{item.isOnline}}</td>
+            <td>{{item.lastTime | date: 'yyyy-MM-ddTHH:mm:ss'}}</td>
+            
+
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- 判断显示无数据 -->
+      <div *ngIf="historyList.length === 0 || !historyList">无数据！</div>
+      <!-- 判断显示页面 -->
+      <div *ngIf="historyList.length > 0">
+        <ngb-pagination [collectionSize]=total [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false"
+          [boundaryLinks]="true" (pageChange)="pageChange()"></ngb-pagination>
+      </div>
+
+    </div>
+

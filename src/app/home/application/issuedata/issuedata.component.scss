@@ -1,0 +1,25 @@
+@import '../../../../assets/css/variable.scss';
+.bodyofissuedata {
+    width: calc(100vw - 50px);
+    padding: 30px;
+}
+.card-header {
+    border-bottom: 0px;
+    position: relative;
+}
+.card-block {
+    margin: 5px 0px 0px;
+    min-height: 38px;
+}
+
+.lineheight {
+    line-height: 1.0;
+}
+.extral-margin {
+    margin-right: 10px;
+}
+.input-group {
+    .form-control {
+        width: 120px;
+    }
+}

@@ -1,0 +1,102 @@
+<!-- 新建/修改用户信息 -->
+<ng-template #content let-c="close" let-d="dismiss">
+  <p *ngFor="let alert of alertsModal" class="lsq-alert">
+    <ngb-alert [type]="alert.type" (close)="closeAlertModal(alert)">{{ alert.message }}</ngb-alert>
+  </p>
+  <div class="modal-header">
+    <h4 class="modal-title">{{AddorUpdate}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body add-user-modal">
+    <!-- 新建信息表单 -->
+    <div class="row user-info">
+      <div class="col-12 col-md-3">
+          <!-- 行政区域列表 -->
+          <div style="padding: 20px;">
+            <!-- 树状 -->
+            <ul id="treeDemo" class="ztree"></ul>
+          </div>
+      </div>
+      
+
+    </div>
+            
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-info" (click)="addorUpdt()" [disabled]="">确定</button>
+    <button type="button" class="btn btn-outline-metal" (click)="d('Cross click')">取消</button>
+  </div>
+</ng-template>
+<!-- 删除位置 -->
+<ng-template #contentDelUser let-c="close" let-d="dismiss">
+  <app-sq-modal  [input]="InstallData" (output)="closeInstall($event)"></app-sq-modal>
+</ng-template>
+  
+  <!-- 安装区域管理页面 -->
+  <div class="bodyofproduct cart-over">
+      <div class="card card-primary panel-default cart-min">
+        <div class="card-header">
+          <span>安装区域管理</span>
+          <div class="card-block add-product">
+            <a class="cur-pointer theme-text btn-a" (click)="openNewInstallZone(content)">新增区域</a>
+          </div>
+        </div>
+        <!-- 搜索产品 -->
+        <div class="row card-block search-product">
+            <!-- 表单，搜索安装区域 -->
+            <form class="form-inline search-options">
+              <!-- 输入框 -->
+              <div class="form-group inner-addon left-addon ">
+                  <div class="form-group">
+                    <!-- <input id="sole-input3" [(ngModel)]="queryStr" class="form-control searchbox-content-common" type="text" 
+                      name="word" autocomplete="off" maxlength="30" placeholder="检索区域名称" (keydown)="onKeydown($event)"> -->
+                    <input id="sole-input3" class="form-control searchbox-content-common" type="text" 
+                    name="word" autocomplete="off" placeholder="检索区域名称" [(ngModel)]="queryStr">
+                  </div>
+              </div>
+              <button class="btn btn-bg" (click)="execQuery()">搜索</button>
+            </form>
+        </div>
+  
+        <!-- 显示已有产品 -->
+        <div class="card-block">
+          <table class="table table-hover">
+            <thead class="table-header">
+              <tr>
+                <th>序号</th>
+                <th>区域id</th>
+                <th>安装区域名称</th>
+                <th style="text-align: center">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+  
+              <tr *ngFor="let install of installList">
+                <td>{{install.id}}</td>
+                <td>{{install.region_id}}</td>
+                <td>{{install.full_name}}</td>
+                <td style="text-align: center">
+                  <div class="modify-strategy d-inline">
+                    <a class="cur-pointer btn-a theme-text d-inline" (click)="openUpdataInstall(content, install)">修改</a>
+                    <a class="cur-pointer btn-a theme-text d-inline" (click)="openDelInstall(contentDelUser, install)">删除</a>
+                  </div>
+                </td>
+  
+              </tr>
+            </tbody>
+          </table>
+  
+          <!-- 判断显示无数据 -->
+          <div *ngIf="installList.length === 0 || !installList">无数据！</div>
+          <!-- 判断显示页面 -->
+          <div *ngIf="installList.length > 0">
+            <ngb-pagination [collectionSize]=total [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"
+              (pageChange)="pageChange()"></ngb-pagination>
+          </div>
+  
+        </div>
+      </div>
+  
+  </div>

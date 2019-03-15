@@ -1,0 +1,148 @@
+<!-- modal:新建产品 修改产品-->
+<ng-template #content let-c="close" let-d="dismiss">
+  <p *ngFor="let alert of alertsModal" class="lsq-alert">
+    <ngb-alert [type]="alert.type" (close)="closeAlertModal(alert)">{{ alert.message }}</ngb-alert>
+  </p>
+  <div class="modal-header">
+    <h4 class="modal-title">{{addOrUpdate}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body add-product-modal">
+    <!-- <p>One fine body&hellip;</p> -->
+    <!-- 左列 -->
+    <div class="row center-align">
+      <div class="modal-col">
+        <div class="form-inline">
+          <label class="margin-bottom-15 label-left"><span style="color:red;">*</span>&nbsp;产品名称:</label>
+          <input type="text" class="form-control form-control-left" id="add-product-name" maxlength="30" placeholder=""
+            [(ngModel)]="model.name">
+        </div>
+        <div class="form-inline">
+          <label class="margin-bottom-15 label-left"><span style="color:red;">*</span>&nbsp;产品描述:</label>
+          <input type="text" class="form-control form-control-left" id="add-product-name" maxlength="30" placeholder=""
+            [(ngModel)]="model.description">
+        </div>
+        <div class="form-inline">
+          <label class="margin-bottom-15 label-left"><span style="color:red;">*</span>&nbsp;产品类型:</label>
+          <div>
+            <input type="radio" name="iotPlatform" [value]="1" placeholder="" [(ngModel)]="model.iotPlatform">阿里云IOT
+            <input type="radio" name="iotPlatform" [value]="0" placeholder="" [(ngModel)]="model.iotPlatform">非阿里云IOT
+          </div>
+        </div>
+        <div class="form-inline">
+          <label class="margin-bottom-15 label-left"><span style="color:red;">*</span>&nbsp;设备类型:</label>
+          <select name="profile" [(ngModel)]="model.device" class="form-control" style="margin-right: 15px;height: 100%; width: 200px;">
+            <option *ngFor="let index of deviceList" [ngValue]="index">
+              {{ index.name }}
+            </option>
+          </select>
+        </div>
+
+      </div>
+
+
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-info" (click)="addorupdate()" [disabled]="!model.name || model.name == '' || !model.description || model.description == '' || model.name.length > 30 || 
+      model.description.length > 40">确认</button>
+    <button type="button" class="btn btn-outline-metal" (click)="d('Cross click')">取消</button>
+  </div>
+</ng-template>
+
+
+
+<!-- 删除位置 -->
+<ng-template #contentDel let-c="close" let-d="dismiss">
+  <app-sq-modal [input]="modelData" (output)="closeModal($event)"></app-sq-modal>
+</ng-template>
+
+
+
+
+<!-- 产品管理页面 -->
+<div class="bodyofproduct cart-over">
+  <p *ngFor="let alert of alerts" class="lsq-alert">
+    <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
+  </p>
+  <!-- 卡片形式 -->
+  <div class="card card-primary panel-default cart-min">
+    <div class="card-header">
+      <span>产品管理</span>
+      <div class="card-block add-product">
+        <a class="cur-pointer theme-text btn-a" (click)="openNewProduct(content)">新建产品</a>
+      </div>
+    </div>
+    <!-- 搜索产品 -->
+    <div class="row card-block search-product">
+      <!-- 表单，搜索产品 -->
+      <form class="form-inline search-options">
+        <span>所属类型：</span>
+        <select name="profile" [(ngModel)]="currentType" (change)="deviceTypeChange()" class="form-control">
+          <option *ngFor="let index of deviceTypes" [ngValue]="index">
+            {{ index.name }}
+          </option>
+        </select>
+        <!-- 日期 -->
+        <!-- <input type="date" class="form-control" value="2018-06-01"/> -->
+        <!-- 输入框 -->
+        <div class="form-group inner-addon left-addon ">
+          <div class="form-group">
+            <!-- <i class="fa fa-search search-icon"></i> -->
+            <!-- <input type="text" class="form-control border-none" name="search-content" id="" placeholder="{{'XXX'}}"/> -->
+            <input id="sole-input3" [(ngModel)]="queryStr" class="form-control searchbox-content-common" type="text"
+              name="word" autocomplete="off" maxlength="30" placeholder="检索名称、描述" (keydown)="onKeydown($event)">
+          </div>
+        </div>
+        <button class="btn btn-bg" (click)="execQuery()">搜索</button>
+      </form>
+    </div>
+
+    <!-- 显示已有产品 -->
+    <div class="card-block">
+      <table class="table table-hover">
+        <thead class="table-header">
+          <tr>
+            <th>序号</th>
+            <th>产品名称</th>
+            <th>产品描述</th>
+            <th>设备类型</th>
+            <th>阿里云IOT设备</th>
+            <th style="text-align: center">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr *ngFor="let item of productListItems; let i = index">
+            <td>{{i + 1}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.description}}</td>
+            <td>{{changeName(item.type)}}</td>
+            <td>
+              <span *ngIf="item.iotPlatform == 0">否</span>
+              <span *ngIf="item.iotPlatform == 1">是</span>
+            </td>
+            <td style="text-align: center">
+              <div class="modify-strategy d-inline">
+                <a class="cur-pointer btn-a theme-text d-inline" (click)="goToZheRoute('home/device/product/function-definition',item)">功能定义</a>
+                <a class="cur-pointer btn-a theme-text d-inline" (click)="openUpdataModal(content, item)">修改</a>
+                <a class="cur-pointer btn-a theme-text d-inline" (click)="openDelModal(contentDel, item)">删除</a>
+              </div>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+
+      <div *ngIf="productListItems.length === 0 || !productListItems">无数据！</div>
+      <div *ngIf="productListItems.length > 0">
+        <ngb-pagination [collectionSize]=total [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false"
+          [boundaryLinks]="true" (pageChange)="pageChange()"></ngb-pagination>
+      </div>
+
+    </div>
+  </div>
+
+</div>

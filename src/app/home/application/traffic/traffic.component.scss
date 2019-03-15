@@ -2,8 +2,7 @@
     position: relative;
 }
 .map_container{
-    // height: 100vh;
-    width: 100%;
+     width: calc(100% - 50px);
 }
 
 // 设备详情
@@ -32,6 +31,9 @@
         cursor: pointer;
         color: #8e8f91;
     }
+    // .camera-titlename {
+    //     padding-bottom: 10px;
+    // }
 }
 
 .video-play{

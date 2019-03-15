@@ -1,0 +1,323 @@
+<!-- 地图 -->
+<div class="map_warp">
+  <div class="alert-play">
+      <p *ngFor="let alert of alerts" >
+          <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
+      </p>
+  </div>
+  <!-- 选择区域 -->
+  <div class="Selection-Region" *ngIf="visible == true">
+      <!-- 城市列表 -->
+      <div class="d-inline-block sel-area-block" (mouseleave)="citylistMouseleave()">
+      
+          <span class="cl-blue cur-pointer" (mouseover)="showCiyt()">
+              <span class="filter" *ngIf="currentCity">{{currentCity.name}}</span>
+              <span class="filter" *ngIf="!currentCity">选择城市</span>
+              <!-- <i class="fa fa-bell-o nav-icon " aria-hidden="true"></i> -->
+          </span>
+          <div id="city-panel" class="city-panel dropdown_panel" *ngIf="cityshow">
+              <div class="dropdown_panel_inner">
+                  <span class="menu_arrow_left"></span>
+                  <dl *ngFor="let item of cityList">
+                      <dt>{{item.name}}</dt>
+                      <dd *ngIf="item.children && item.children.length > 0">
+                          <a title="智慧城市" *ngFor="let itemc of item.children" (click)="selecteCity(itemc)">{{itemc.name}}</a>
+                      </dd>
+                  </dl>
+              </div>
+      
+          </div>
+      
+      </div>
+      
+      <!-- 区域列表 -->
+      <div class="d-inline-block sel-area-block" (mouseleave)="arealistMouseleave()">
+      
+          <span class="cl-blue cur-pointer" (mouseover)="showArea()">
+              <span class="filter" *ngIf="!currentArea">选择区域</span>
+              <span class="filter" *ngIf="currentArea">{{currentArea.name}}</span>
+          </span>
+      
+          <div class="arealist-wrap dropdown_panel" *ngIf="areashow">
+              <div class="dropdown_panel_inner">
+                  <span class="menu_arrow_left"></span>
+                  <ul class="arealist" data-type="area">
+                      <li data-val="0" class="arealist-item" (mouseover)="arealistMouseNone()">
+                          <em>不限</em>
+                      </li>
+                      <li class="arealist-item" *ngFor="let node of currentChildren" (mouseover)="arealistMouseover(node)" (click)="selecteblock(node)">
+                          <em>{{node.name}}</em>
+                      </li>
+      
+                  </ul>
+                  <div class="blocklist-wrap" *ngIf="currentBlock">
+                      <ul class="blocklist" data-type="block">
+                          <li data-val="0">不限</li>
+                          <li *ngFor="let block of currentBlock" (click)="selecteblock(block)">{{block.name}}</li>
+      
+                      </ul>
+                  </div>
+      
+      
+              </div>
+      
+      
+          </div>
+      
+      </div>
+
+      <div class="d-inline-block search-warp">
+          <input type="text" [(ngModel)]="queryStr" class="form-control search-input" name="word1" autocomplete="off"
+              maxlength="30" placeholder="检索路灯编号" value="">
+              <span class="search-icon" (click)="execQueryId()"><i class="fa fa-search" aria-hidden="true"></i></span>
+      </div>
+  </div>
+  
+  <!-- 右边按钮 -->
+  <div class="btn-icon" *ngIf="visible == true">
+      <div class="d-inline-block icon-item cur-pointer">
+          <!-- <img class= "img-background" src="../../../../assets/imgs/strategy.png" alt="图片" (click)="jumpHandle()"> -->
+          <button class="btn btn-default cover-btns" (click)="jumpHandle()">策略管理</button>
+          <button class="btn btn-default cover-btns" (click)="devicesControl()">路灯控制</button>
+      </div>
+
+      <!-- <div class="d-inline-block icon-item cur-pointer">
+          <img src="../../../../assets/imgs/control.png" alt="图片" (click)="devicesControl()">
+      
+      </div> -->
+  
+      <!-- <div class="d-inline-block icon-item cur-pointer">
+  
+          <img  src="../../../../assets/imgs/switch.png" alt="图片" (click)="enterFullScreen()">
+      </div> -->
+  
+  </div>
+  <!-- 地图 -->
+  <div #map8 id="map_container5" class="map_container no-fulls-map"></div>
+
+  <!-- 多设备操作 -->
+  <div class="devices-control" *ngIf="showDevicesControl">
+      <div class="device-title">
+          <span>设备控制</span>
+          <span class="device-close float-right" (click)="closeDevicesControl()"><i class="fa fa-times" aria-hidden="true"></i></span>
+      </div>
+      <div class="modal-body">
+          <div class="form-inline queryDiv">
+                  <div class="form-group">
+                      <input id="sole-input" class="form-control searchbox-content-common" [(ngModel)]="queryString" name="queryString" 
+                      maxlength="30" placeholder="检索编号、名称" (keydown)="onKeydown($event)" >
+                  </div>
+                  <button  class="btn btn-bg" (click)="execQuery()">搜索</button>
+                  <button class="btn btn-outline-info extral-margin" (click)="devicesStrategyCtrl()">批量操作</button>
+          </div>
+          <!-- <form class="lights-form"> -->
+              <table class="table table-hover">
+                  <thead class="table-header">
+                      <tr>
+                          <th><input type="checkbox" [checked]="allCheck" [(ngModel)]="allCheck" (change)="allCheckMe()" ></th>
+                          <th>设备编号</th>
+                          <th>灯柱编号</th>
+                          <th>应用策略</th>
+                          <!-- <th>电压(mV)</th>
+                          <th>电流(mA)</th> -->
+                          <th>设备名称</th>
+                          <th>亮度</th>
+                          <th>离线</th>
+                          <th>故障</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let light of lightListRes; let i = index">
+                          <td><input type="checkbox" (change)="addLightstoCtrl()"
+                               [checked]="lightList_check[i].check" [(ngModel)]="lightList_check[i].check"></td>
+                          <td>{{light.name}}</td>
+                          <td>{{light.positionNumber}}</td>
+                          <td > <span *ngIf="light.rule && light.rule.name">{{light.rule.name}}</span></td>
+                          <!-- <td>{{light.volt}}</td>
+                          <td>{{light.current}}</td> -->
+                          <td>{{light.description}}</td>
+                          <td>{{light.level}}</td>
+                          <td>
+                              <span *ngIf="light.offline">离线</span>
+                              <span *ngIf="!light.offline">在线</span>
+                          </td>
+                          <td>
+                              <span *ngIf="light.error">故障</span>
+                              <span *ngIf="!light.error">正常</span>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+
+          <!-- </form> -->
+      </div>
+  </div>
+
+  <!-- 多设备策略分配 -->
+  <div *ngIf="showDevicesStrategyCtrl" class="lights-strategy-ctrl">
+      <div class="device-title">
+          <span>策略分配</span>
+          <span class="device-close float-right" (click)="closeDevicesStrategyCtrl()">
+              <i class="fa fa-times" aria-hidden="true"></i>
+          </span>
+      </div>
+      <div class="modal-body">
+
+          <div class="str-body-item">
+              <div class="body-item">
+                  <span>可选策略：</span>
+                  <select name="profile" [(ngModel)]="strategyList1" (change)="strategyListsChange1()"
+                      class="form-control d-inline-block selece-str">
+                      <option *ngFor="let index of strategyLists" [ngValue]="index">
+                          {{ index.name }}
+                      </option>
+                  </select>
+              </div>
+              <div>
+                  <button type="button" class="btn btn-outline-info btn-100"
+                      (click)="setStrategyRules()">下发策略</button>
+              </div>
+              <mat-error *ngIf="StrategyRuleMess1">
+                  <strong class="error-mass">修改成功！</strong>
+              </mat-error>
+          </div>
+      
+          <hr>
+          <div class="str-body-item">
+      
+              <div>
+                  <p>
+                      <span>结束时间：</span>
+                      <label style="margin-left: 21px;">
+                          <ngb-timepicker [(ngModel)]="time1" (change)="changeTime1()"></ngb-timepicker>
+                      </label>
+                  </p>
+              </div>
+              <div>
+                  <p><span>亮度调整：</span></p>
+                  <p><label>
+                          <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="30" min="0"
+                              max="100" [(ngModel)]="lightLevel1" (change)="changeSlider()"></mat-slider>
+                      </label>
+                  </p>
+                  <div class="row control-text">
+                      <div class="col-6 text-left">
+                          <span>关</span>
+                      </div>
+                      <div class="col-6 text-right">
+                          <span>100%</span>
+                      </div>
+      
+                  </div>
+                  <div>
+                      <button type="button" class="btn btn-outline-info btn-100"
+                          (click)="setLightsContr1()">临时控制</button>
+                  </div>
+                  <mat-error *ngIf="LightsContrMess1">
+                      <strong class="error-mass">修改成功！</strong>
+                  </mat-error>
+              </div>
+      
+          </div>
+      
+      
+      </div>
+
+      <!-- <div  class="modal-footer">
+              <button type="button" class="btn btn-outline-info"
+                      (click)="lightsContr(deviceChild.id)">确定</button>
+              <button type="button" class="btn btn-outline-metal"
+                  (click)="closeDevicesStrategyCtrl()">取消</button>
+      </div> -->
+  </div>
+
+  <!-- 单灯设备操作 -->
+  <div class="device-detail" *ngIf="deviceChild">
+      <div class="device-title">
+          <span  *ngIf="deviceChild">{{deviceChild.description}}</span>
+          <span class="device-close float-right" (click)="closeDetail()">
+              <i class="fa fa-times" aria-hidden="true"></i>
+          </span>
+      </div>
+      <div class="modal-body">
+                  <!-- <div>
+                      <p><span>灯杆编号：</span>
+                          <span *ngIf="deviceChild">{{deviceChild.positionNumber}}</span>
+                      </p>
+                  </div> -->
+                  <!-- <div>
+                      <p><span>策略选择</span></p>
+                  </div> -->
+                  <div class="str-body-item">
+                      <div class="body-item">
+                              <span>当前策略：</span>
+                              <select name="profile" [(ngModel)]="strategyList"(change)="strategyListsChange()"
+                                  class="form-control d-inline-block selece-str">
+                                  <option *ngFor="let index of strategyLists" [ngValue]="index">
+                                      {{ index.name }}
+                                  </option>
+                              </select>
+                      </div>
+                      <div >
+                          <button type="button" class="btn btn-outline-info btn-100"
+                              (click)="setStrategyRule(deviceChild.id)">下发策略</button>
+                      </div>
+                      <mat-error *ngIf="StrategyRuleMess">
+                          <strong class="error-mass">修改成功！</strong>
+                      </mat-error>
+                  </div>
+
+                  <hr>
+                  <!-- <div>
+                      <p><span>临时控制</span>
+                          <label style="margin-left: 21px;">
+                              <mat-slide-toggle (change) = "changeContr()"></mat-slide-toggle>
+                          </label>
+                      </p>
+                  </div> -->
+                  <div class="str-body-item">
+
+                      <div>
+                          <p>
+                              <span>结束时间：</span>
+                              <label style="margin-left: 21px;">
+                                  <ngb-timepicker [(ngModel)]="time" (change) = "changeTime()"></ngb-timepicker>
+                              </label>
+                          </p>
+                      </div>
+                      <div>
+                          <p><span>亮度调整：</span></p>
+                          <p>
+                              <label>
+                                  <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="30" min="0" 
+                                  max="100" [(ngModel)]="lightLevel" (change) = "changeSlider()"></mat-slider>
+                              </label>
+                          </p>
+                          <div class="row control-text">
+                              <div class="col-6 text-left">
+                                  <span>关</span>
+                              </div>
+                              <div class="col-6 text-right">
+                                  <span>100%</span>
+                              </div>
+                      
+                      
+                          </div>
+                          <div>
+                              <button type="button" class="btn btn-outline-info btn-100"
+                                  (click)="setLightsContr(deviceChild.id)">临时控制</button>
+                          </div>
+                          <mat-error *ngIf="LightsContrMess">
+                              <strong class="error-mass">修改成功！</strong>
+                          </mat-error>
+                      </div>
+
+                  </div>
+
+
+      </div>
+
+  </div>
+
+</div>
+

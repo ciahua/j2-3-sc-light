@@ -1,6 +1,6 @@
 
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/';
 import { map } from 'rxjs/operators';
 
@@ -9,90 +9,46 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class PositionService {
     public url: string;
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
 
     }
     // 城市列表
-    getZoneDefault(): Observable<any> {
+    getZoneDefault(...cusid): Observable<any> {
         // return Observable.of(ARTICLESTYPE);
+        // console.log(cusid);
+        // console.log(typeof cusid);
+        const url = cusid && cusid[0] ? `/api/zone/default?cusid=${cusid}` : `/api/zone/default`;
 
-        return this.http.get('/api/zone/default')
+
+        return this.http.get(url)
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    data.regions[0].open = true;
-
-                    return data;
-                } else  {
-                    return res.json().code.toString();
-
-                }
+                return res;
             }));
     }
 
     // 设备列表
-    getDevice(): Observable<any> {
-        return this.http.get('/api/device/type/all')
+    getPositionType(): Observable<any> {
+        return this.http.get('/api/position/type')
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-                    const data = res.json();
-                    return data;
-                } else {
-                    return res.json().code.toString();
-
-                }
+                return res;
             }));
 
     }
 
     // 获取位置分页
 
-    getPosition(type: number, page: number, pagesize: number): Observable<any> {
-        return this.http.get(`/api/position?type=${type}&page=${page}&pageSize=${pagesize}`)
+    getPosition(queryStr: String, type: number, page: number, pagesize: number): Observable<any> {
+        return this.http.get(`/api/position?queryStr=${queryStr}&type=${type}&page=${page}&pageSize=${pagesize}`)
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-
-                    const data = res.json();
-                    return data;
-                } else  {
-                    return res.json().code.toString();
-
-                }
+                return res;
             }));
     }
 
-    // 新增位置信息
-
-//     {
-//     "id": 0,
-//         "installZoneId": 0,
-//             "name": "string",
-//                 "number": "string",
-//                     "point": {
-//         "lat": 0,
-//             "lng": 0
-//     },
-//     "regionId": "string",
-//      "type": 0
-// }
-    setPosition(installZoneId, regionId, name, number, point, type): Observable<any> {
-        return this.http.post(`/api/position`, {
-            'installZoneId': installZoneId,
-            'name': name,
-            'number': number,
-            'point': point,
-            'regionId': regionId,
-            'type': type
-        })
+// 新增
+    setPosition(body): Observable<any> {
+        return this.http.post(`/api/position`, body)
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-
-                    const data = res.json();
-                    return data;
-                } else {
-                    return res.json().code.toString();
-
-                }
+                return res;
             }));
     }
 
@@ -100,39 +56,43 @@ export class PositionService {
     delPosition(id) {
         return this.http.delete(`/api/position?id=${id}`)
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-
-                    const data = { status: 200};
-                    return data;
-                } else {
-                    return res.json().code.toString();
-
-                }
+                const data = { status: 200};
+                return data;
             }));
     }
 
     // 修改位置
-    updataPosition(id, installZoneId, regionId, name, number, point, type): Observable<any> {
-        return this.http.put(`/api/position`, {
-            'id': id,
-            'installZoneId': installZoneId,
-            'name': name,
-            'number': number,
-            'point': point,
-            'regionId': regionId,
-            'type': type
-        })
+    updataPosition(body): Observable<any> {
+        return this.http.put(`/api/position`, body)
             .pipe(map((res: Response) => {
-                if (res.status === 200) {
-
-                    const data = { status: 200 };
-                    return data;
-                } else {
-                    return res.json().code.toString();
-
-                }
+                const data = { status: 200 };
+                return data;
             }));
     }
+
+    // 分页获取道路
+    getRoads(page, pageSize, queryStr): Observable<any> {
+
+
+        return this.http.get(`api/geo_way/?page=${page}&pageSize=${pageSize}&queryStr=${queryStr}`)
+            .pipe(
+                map((res) => {
+                    return res;
+                },
+                ));
+
+    }
+
+    // 获取所有Customer
+    getCustomer(page, pageSize, queryStr): Observable<any> {
+        // return Observable.of(ARTICLESTYPE);
+
+        return this.http.get(`/api/customer?page=${page}&pageSize=${pageSize}&queryStr=${queryStr}`)
+            .pipe(map((res: Response) => {
+                return res;
+            }));
+    }
+
 
 
 

@@ -1,106 +1,112 @@
-import { Component, Injectable, EventEmitter } from '@angular/core';
-
+import { Injectable} from '@angular/core';
 import { Observable } from 'rxjs/';
-import { of } from 'rxjs/';
-import { tap, delay } from 'rxjs/operators';
-// import { UserLoginService} from '../service/user.login.service';
-
-
-import { Http, Headers, Response } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie';
 import { Router } from '@angular/router';
-
-
-import { WindowRef } from '../windowserver';
-
-
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { RightService } from '../service/right.service';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class AuthService {
     isLoggedIn = false;
     error: boolean;
     model: any;
-
+    routerList: Array<any>;
+    urlid: string;
     // store the URL so we can redirect after logging in
+    // 存储URL以便在登录后可以重定向
     redirectUrl: string;
-    HEROES = {
-        token: Date(),
-        userId: 'lsq1098',
-        status: 200,
-        username: 'admin',
-        password: '123456'
-    };
 
     public token: string;
-    public userId: string;
-    constructor(private http: Http,
-        private winRef: WindowRef, private _cookieService: CookieService,  public router: Router) {
-        // set token if saved in local storage
-        let currentUser: any;
-        if (this._cookieService.getObject('currentUser')) {
-            // currentUser = JSON.parse(this._cookieService.getObject('currentUser'));
-            currentUser = this._cookieService.getObject('currentUser');
 
-        }
-        this.token = currentUser && currentUser.token;
-        this.userId = currentUser && currentUser.userId;
+    constructor(private http: HttpClient, private _cookieService: CookieService, public router: Router, public jwtHelper: JwtHelperService,
+        private rightService: RightService) {
+
     }
 
 
-    login(username: string, password: string): Observable<any> {
-        return of(this.HEROES).pipe(
-            delay(1000),
-            tap(val => {
-                // console.log(val);
-                if (val.status === 200) {
-                    const token = val.token;
-                    const userId = val.userId;
-                    if (token && username === val.username && password === val.password) {
-                        this.token = token;
-                        this.userId = userId;
-                        // 设置全局变量
-                        this.winRef.nativeWindow.userId = this.userId;
-                        this._cookieService.putObject('currentUser', { loginName: username, token: token, userId: userId });
-                        this.isLoggedIn = true;
-                        return true;
-                    } else {
-                        this.isLoggedIn = false;
-                        return false;
-                    }
+    login(userName: String, password: String): Observable<any> {
+        return this.http.post('/security/login', { 'userName': userName, 'password': password }, { responseType: 'text' })
+            .pipe(map((res) => {
+                const token = res;
+                if (token) {
+                    this.token = token;
+                    // 设置全局变量
+                    // this.winRef.nativeWindow.userId = this.userId;
+                    this._cookieService.putObject('currentUser', JSON.stringify({ loginName: userName, token: token }));
+                    // this.getAuthorities(token);
+
+                    localStorage.setItem('token', token);
+                    this.isLoggedIn = true;
+                    return true;
+                } else {
+                    this.isLoggedIn = false;
+                    return false;
                 }
-            })
-        );
-
-        // return this.http.post('/manager/auth/login', JSON.stringify({ loginName: username, password: password }))
-        //     .map((res: Response) => {
-        //         if (res.status === 200) {
-        //             const token = res.json() && res.json().token;
-        //             const userId = res.json() && res.json().userId;
-        //             if (token) {
-        //                 this.token = token;
-        //                 this.userId = userId;
-        //                 // 设置全局变量
-        //                 this.winRef.nativeWindow.userId = this.userId;
-        //                 this._cookieService.putObject('currentUser',
-        //  JSON.stringify({ loginName: username, token: token, userId: userId }));
-        //                 this.isLoggedIn = true;
-        //                 return true;
-        //             } else {
-        //                 this.isLoggedIn = false;
-        //                 return false;
-        //             }
-        //         } else if (res.status === 202) {
-        //             return res.json().code.toString();
-
-        //         }
-        //     });
+            }));
     }
-
     logout(): void {
         this.isLoggedIn = false;
         this.token = null;
         this._cookieService.remove('currentUser');
+        localStorage.removeItem('token');
+        localStorage.removeItem('Authorities');
         this.router.navigate(['/login']);
+    }
+
+    getAuthorities(token ) {
+        const userId = this.jwtHelper.decodeToken(token).userid;
+        this.getAuthoritiesByUserId(userId)
+        .then(function (res) {
+            localStorage.setItem('Authorities', JSON.stringify({ Authorities: res }));
+        })
+        .catch(function (reason) {
+            console.log('Failed: ' + reason);
+        });
+    }
+
+    // 获取用户权限
+    getAuthoritiesByUserId(id) {
+        const that = this;
+        const promise = new Promise(function (resolve, reject) {
+            that.rightService.getAuthoritiesByUserId(id).subscribe({
+                next: function (val) {
+                    console.log('获取用户权限');
+                    const res = that.getVaule(val);
+                    that.routerList = [];
+                    res.map((item, i) => {
+                        that.routerList.push(that.getVaule(item)[0]);
+                    });
+                },
+                complete: function () {
+                    resolve(that.routerList);
+                },
+                error: function (error) {
+                    console.log(error);
+                    reject(error);
+                }
+            });
+        });
+        return promise;
+
+    }
+
+
+    // 获取对象value
+    getkeys(obj) {
+        if (!obj) {
+            return;
+        }
+        return Object.keys(obj);
+    }
+
+    // 获取对象value
+    getVaule(obj) {
+        if (!obj) {
+            return;
+        }
+        return Object.values(obj);
     }
 
 }

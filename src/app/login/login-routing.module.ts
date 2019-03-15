@@ -5,7 +5,7 @@ import { AuthService } from '../guard/auth.service';
 import { LoginComponent } from './login.component';
 
 const loginRoutes: Routes = [
-    { path: 'login', component: LoginComponent }
+    { path: '', component: LoginComponent } // 注意path: ''
 ];
 
 @NgModule({

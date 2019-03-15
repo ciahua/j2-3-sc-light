@@ -1,80 +1,167 @@
-<!-- 地图 -->
-<div class="map_warp">
-  <!-- 选择区域 -->
-  <div class="Selection-Region" *ngIf="visible == true">
-    <!-- 城市列表 -->
-    <div class="d-inline-block sel-area-block" (mouseleave)="citylistMouseleave()">
-
-      <span class="cl-blue cur-pointer" (mouseover)="showCiyt()">
-        <span class="filter" *ngIf="node">{{node.name}}</span>
-        <span class="filter" *ngIf="!currentCity">选择城市</span>
-        <!-- <i class="fa fa-bell-o nav-icon " aria-hidden="true"></i> -->
-      </span>
-      <div id="city-panel" class="city-panel dropdown_panel" *ngIf="cityshow">
-        <div class="dropdown_panel_inner">
-          <span class="menu_arrow_left"></span>
-          <dl *ngFor="let item of cityList">
-            <dt>{{item.name}}</dt>
-            <dd *ngIf="item.children && item.children.length > 0">
-              <a title="智慧城市" *ngFor="let itemc of item.children" (click)="selecteCity(itemc)">{{itemc.name}}</a>
-            </dd>
-          </dl>
+<div class="panel-default">
+  <div class="row">
+      <div class="col-md-4">
+        <div>
+          <p>生成任务：</p>
+      
         </div>
-
-      </div>
-
-    </div>
-
-    <!-- 区域列表 -->
-    <div class="d-inline-block sel-area-block" (mouseleave)="arealistMouseleave()">
-
-      <span class="cl-blue cur-pointer" (mouseover)="showArea()">
-        <span class="filter">选择区域</span>
-      </span>
-
-      <div class="arealist-wrap dropdown_panel" *ngIf="areashow">
-        <div class="dropdown_panel_inner">
-          <span class="menu_arrow_left"></span>
-          <ul class="arealist" data-type="area">
-            <li data-val="0" class="arealist-item" (mouseover)="arealistMouseNone()">
-              <em>不限</em>
-            </li>
-            <li class="arealist-item" *ngFor="let node of currentChildren" (mouseover)="arealistMouseover(node)" (click)="selecteblock(node)">
-              <em>{{node.name}}</em>
-            </li>
-
-          </ul>
-          <div class="blocklist-wrap" *ngIf="currentBlock">
-            <ul class="blocklist" data-type="block">
-              <li data-val="0">不限</li>
-              <li *ngFor="let block of currentBlock" (click)="selecteblock(block)">{{block.name}}</li>
-
-            </ul>
+        <hr>
+        <!-- 开关屏 -->
+        <div>
+          <p>开关屏</p>
+          <p>LED_ID: <input type="text" [(ngModel)]="task1.id"></p>
+          <div>
+            <p><span>控制开关：</span>
+              <label style="margin-left: 21px;">
+                <mat-slide-toggle (change)="changeContr1()"></mat-slide-toggle>
+              </label>
+            </p>
           </div>
-
-
+          <button class="btn btn-bg" (click)="createTask1()" [disabled]="!task1.id">确定</button>
+      
         </div>
+        <hr>
+        <!-- 设置亮度 -->
+        <div>
+          <p>设置亮度</p>
+          <p>LED_ID: <input type="text" [(ngModel)]="task2.id"></p>
+      
+          <div>
+            <p><span>自动模式开关：</span>
+              <label style="margin-left: 21px;">
+                <mat-slide-toggle (change)="changeContr2()"></mat-slide-toggle>
+              </label>
+            </p>
+          </div>
+          <!-- 亮度值：<input type="text" [(ngModel)]="task.value"> -->
+          <p>
+            <label>
+              <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="10" min="1" max="64" [(ngModel)]="task2.value"
+                (change)="changeSlider(task2.value)"></mat-slider>
+            </label>
+          </p>
+      
+          <button class="btn btn-bg" (click)="createTask2()" [disabled]="!task2.id">确定</button>
+      
+        </div>
+        <hr>
 
+      
+      </div>
+      <div class="col-md-8">
+        <p>服务端任务列表</p>
+        <table class="table table-hover">
+          <thead class="table-header">
+            <tr>
+              <th>序号</th>
+              <th>LED_ID</th>
+              <!-- <th>任务_ID</th> -->
+              <th>任务名称</th>
+              <th>任务类型</th>
+              <th>状态</th>
+      
+              <th style="text-align: center">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+      
+            <tr *ngFor="let item of tasks; let i = index">
+              <td>{{i + 1}}</td>
+              <td>{{item.id}}</td>
+              <!-- <td>{{item._id}}</td> -->
+              <td><span>{{item.name}}</span></td>
+              <td><span>{{item.datagram.request}}</span></td>
+              <td>{{item.status}}</td>
+      
+              <td style="text-align: center">
+                <div class="modify-strategy d-inline">
+                  <!-- <a class="cur-pointer btn-a theme-text d-inline">修改</a> -->
+                  <a class="cur-pointer btn-a theme-text d-inline" (click)="delTask(item._id)">删除</a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="tasks.length === 0 || !tasks">无数据！</div>
+        <div *ngIf="tasks.length > 0">
+          <ngb-pagination [collectionSize]=total_1 [(page)]="page_1" [maxSize]="5" [rotate]="true" [ellipses]="false"
+            [boundaryLinks]="true" (pageChange)="pageChange_1()"></ngb-pagination>
+        </div>
+      </div>
 
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-4">
+      <!-- 欢迎词 -->
+      <div>
+        <p>欢迎词</p>
+        <p>LED_ID:    <input style="margin-left:24px;" type="text" [(ngModel)]="task4.id"></p>
+        <p>节目单地址: <input type="text" [(ngModel)]="url"></p>
+        <p>欢迎词:    <input style="margin-left:27px;" type="text" [(ngModel)]="task4.wellname"></p>
+        <p>字体大小:  <input style="margin-left:12px;" type="text" [(ngModel)]="task4.fontsice"></p>
+        <button class="btn btn-bg" (click)="gProgram1()" [disabled]="!task4.wellname" >确定</button>
+      </div>
+      <hr>
+      <!-- 欢迎词 -->
+      <div>
+        <p>纯文本节目</p>
+        <p>LED_ID: <input style="margin-left:24px;" type="text" [(ngModel)]="task4.id"></p>
+        <p>节目单地址: <input type="text" [(ngModel)]="url"></p>
+        <p>节目内容：</p>
+        <textarea name="" id="" cols="30" rows="10" [(ngModel)]="task4.wellname"></textarea>
+        <p>字体大小: <input style="margin-left:12px;" type="text" [(ngModel)]="task4.fontsice"></p>
+        <button class="btn btn-bg" (click)="gProgram1()" [disabled]="!task4.wellname">确定</button>
       </div>
 
     </div>
+    <div class="col-md-8">
+      <p>节目单列表</p>
+      <table class="table table-hover">
+        <thead class="table-header">
+          <tr>
+    
+            <th>节目_ID</th>
+            <th>名称</th>
+            <th>宽度</th>
+            <th>高度</th>
+            <!-- <th>布局数</th> -->
+    
+    
+            <th style="text-align: center">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+    
+          <tr *ngFor="let item of programs; let i = index">
+            <td>{{item._id}}</td>
+            <td><span>{{item.name}}</span></td>
+            <td>{{item.width}}</td>
+            <td>{{item.height}}</td>
+            <!-- <td>{{item.regions.length}}
+              <a (click)="viewRegions(item.regions)" class="cur-pointer" style="color: blue;">查看</a>
+    
+            </td> -->
+    
+            <td style="text-align: center">
+              <div class="modify-strategy d-inline">
+                <a class="cur-pointer btn-a theme-text d-inline" (click)="delProgram(item._id)">删除</a>
 
-  </div>
-
-  <!-- 右边按钮 -->
-  <div class="btn-icon" *ngIf="visible == true">
-    <div class="d-inline-block icon-item cur-pointer">
-      <img src="../../../../assets/imgs/control.png" alt="图片">
+    
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="programs.length === 0 || !programs">无数据！</div>
+      <div *ngIf="programs.length > 0">
+        <ngb-pagination [collectionSize]=total_4 [(page)]="page_4" [maxSize]="5" [rotate]="true" [ellipses]="false"
+          [boundaryLinks]="true" (pageChange)="pageChange_4()"></ngb-pagination>
+      </div>
+      <hr>
 
     </div>
-
-    <div class="d-inline-block icon-item cur-pointer">
-
-      <img src="../../../../assets/imgs/switch.png" alt="图片" (click)="enterFullScreen()">
-    </div>
-
   </div>
-  <!-- 地图 -->
-  <div #map5 id="map_container5" class="map_container no-fulls-map"></div>
+ 
+  <hr>
 </div>

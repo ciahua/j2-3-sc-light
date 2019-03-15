@@ -1,0 +1,61 @@
+@import '../../../../../assets/css/variable.scss';
+@import '../../../../../assets/css/xylg.scss';
+.bodyofproduct {
+    width: calc(100vw - 50px);
+    height: 100vh;
+    padding: 30px;
+    position: relative;
+}
+.card-header {
+    border-bottom: 0px;
+    position: relative;
+}
+
+.card-block {
+    margin: 5px 0px 0px;
+    min-height: 38px;
+}
+.card-primary {
+    margin-bottom: 15px;
+}
+.nav_index0 {
+    text-align: right;
+    height: 50px;
+    line-height: 50px;
+}
+.modal-body {
+    .form-control {
+    font-size: 14px;
+    height: calc(1.8rem + 2px);
+    }
+    .form-control-left {
+        margin-bottom: 5px;
+        width: 200px;
+        
+    }
+    .label-left {
+        margin-right: 5px;
+        text-align: right;
+        width: 121px;
+    }
+    .modal-col {
+        margin-left: 15px;
+    }
+    .sm-width {
+        width: 168px;
+    }
+    .ssm-width {
+        width: 11px;
+        margin: 0 5px 0;
+    }
+}
+
+.add-product-modal {
+    text-align: center;
+    width: 100%;
+    // 使居中
+    .center-align {
+        margin: 0 auto;
+        width: 500px;
+    }
+}

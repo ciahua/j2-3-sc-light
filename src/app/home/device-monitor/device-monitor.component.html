@@ -1,0 +1,143 @@
+<div class="map_warp">
+
+  <div class="alert-play">
+    <p *ngFor="let alert of alerts">
+      <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
+    </p>
+  </div>
+  <!-- 选择区域 -->
+  <div class="Selection-Region" >
+    <!-- 城市列表 -->
+    <div class="d-inline-block sel-area-block" (mouseleave)="citylistMouseleave()">
+      <span class="cl-blue cur-pointer" (mouseover)="showCiyt()">
+        <span class="filter" *ngIf="map_model.currentCity">{{map_model.currentCity.name}}</span>
+        <span class="filter" *ngIf="!map_model.currentCity">选择城市</span>
+      </span>
+      <div id="city-panel" class="city-panel dropdown_panel" *ngIf="domShow.cityshow">
+        <div class="dropdown_panel_inner">
+          <span class="menu_arrow_left"></span>
+          <dl *ngFor="let item of map_model.cityList">
+            <dt>{{item.name}}</dt>
+            <dd *ngIf="item.children && item.children.length > 0">
+              <a title="智慧城市" *ngFor="let itemc of item.children" (click)="selecteCity(itemc)">{{itemc.name}}</a>
+            </dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <!-- 区域列表 -->
+    <div class="d-inline-block sel-area-block" (mouseleave)="arealistMouseleave()">
+      <span class="cl-blue cur-pointer" (mouseover)="showArea()">
+        <span class="filter" *ngIf="!map_model.currentArea">选择区域</span>
+        <span class="filter" *ngIf="map_model.currentArea">{{map_model.currentArea.name}}</span>
+      </span>
+
+      <div class="arealist-wrap dropdown_panel" *ngIf="domShow.areashow">
+        <div class="dropdown_panel_inner">
+          <span class="menu_arrow_left"></span>
+          <ul class="arealist" data-type="area">
+            <li class="arealist-item" *ngFor="let node of map_model.currentRegion" (mouseover)="arealistMouseover(node)"
+              (click)="selecteblock(node)">
+              <em>{{node.name}}</em>
+            </li>
+
+          </ul>
+          <div class="blocklist-wrap" *ngIf="map_model.currentBlock && map_model.currentBlock.length > 0">
+            <ul class="blocklist" data-type="block">
+              <li *ngFor="let block of map_model.currentBlock" (click)="selecteblock(block)">{{block.name}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 设备列表 -->
+    <div class="d-inline-block sel-area-block" (mouseleave)="devicelistMouseleave()">
+      <span class="cl-blue cur-pointer" (mouseover)="showDevice()">
+        <span class="filter" *ngIf="!typeName">设备类别</span>
+        <span class="filter" *ngIf="typeName">{{typeName}}</span>
+      </span>
+      <div id="device-panel" class="device-panel dropdown_panel" *ngIf="domShow.deviceshow">
+        <div class="dropdown_panel_inner">
+          <span class="menu_arrow_left"></span>
+          <dl>
+            <dt>
+              <a (click)="selecteDeviceNone()">不限</a>
+            </dt>
+          </dl>
+          <dl *ngFor="let device of map_model.deviceList">
+            <dt>
+              <a title="智慧城市" (click)="selecteDevice(device)">{{device.name}}</a>
+            </dt>
+          </dl>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- 按设备编号搜索和定位设备功能 -->
+    <div class="d-inline-block search-warp">
+      <input type="text" [(ngModel)]="queryStr" class="form-control search-input" autocomplete="off" maxlength="30"
+        placeholder="检索设备编号">
+      <span class="search-icon" (click)="execQueryId()"><i class="fa fa-search" aria-hidden="true"></i></span>
+    </div>
+  </div>
+
+
+
+  <!-- 地图 -->
+  <div #map1 id="map_container1" class="map_container fulls-map"></div>
+
+  <!-- 设备操作 -->
+  <div class="device-detail" *ngIf="currentDevice && currentDevice.deviceChild">
+    <div class="device-title">
+      <span class="device-close float-right" (click)="closeDetail()">X</span>
+    </div>
+    <div style="border-bottom: 1px solid #39c32f;">
+      <p>设备总数：{{currentDevice.deviceChild && currentDevice.deviceChild.length}}</p>
+      <p>设备搜索：</p>
+      <p style="position: relative">
+              <input type="text" [(ngModel)]="queryStr" class="form-control search-input2" autocomplete="off" maxlength="30"
+                placeholder="检索设备编号">
+              <!-- <span class="search-icon2" (click)="execQueryId()"><i class="fa fa-search" aria-hidden="true"></i></span> -->
+              <span class="search-icon2" ><i class="fa fa-search" aria-hidden="true"></i></span>
+           
+      </p>
+
+    </div>
+    <div *ngFor="let item of currentDevice.deviceChild">
+      <p>
+        <span>设备描述:</span>
+        <span>{{item.description}}</span>
+      </p>
+      <!-- <p>
+        <span>设备ID:</span>
+        <span>{{item.name}}</span>
+      </p> -->
+      <p>
+        <span>设备编号:</span>
+        <span>{{item.name}}</span>
+      </p>
+      <p>
+        <span>设备型号:</span>
+        <span>{{getModel(item.model)}}</span>
+      </p>
+      <table class="table" style="border-bottom: 1px solid #39c32f;">
+        <tr>
+          <th>参数</th>
+          <th>值</th>
+          <th>单位</th>
+        </tr>
+        <tr *ngFor="let items of item.deviceProperties">
+          <td>{{items.name}}</td>
+          <td>{{items.value}}</td>
+          <td>{{items.Unit}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,113 @@
+<!-- 新建/修改设备 -->
+<ng-template #contentAdd let-c="close" let-d="dismiss">
+  <p *ngFor="let alert of alertsModal" class="lsq-alert">
+    <ngb-alert [type]="alert.type" (close)="closeAlertModal(alert)">{{ alert.message }}</ngb-alert>
+  </p>
+  <div class="modal-header">
+    <h5 class="modal-title">{{addOrUpdate}}</h5>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+
+    <div class="form-group">
+      <label class="control-label"><span style="color:red;">*</span>&nbsp;道路名称:</label>
+      <input type="text" [(ngModel)]="ROADMODEL.wayName" class="form-control">
+    
+    </div>
+    <div  style="margin-bottom: 10px;">
+      <label class="control-label">
+        <b>所跨区域</b>
+      </label>
+      <!-- 行政区域列表 -->
+      <div style="padding: 20px;">
+        <!-- 树状 -->
+        <ul id="treeDemo" class="ztree"></ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-info" (click)="addorUpdate()">确认</button>
+    <button type="button" class="btn btn-outline-metal" (click)="d('Cross click')">取消</button>
+  </div>
+</ng-template>
+<!-- 删除位置 -->
+<ng-template #contentDel let-c="close" let-d="dismiss">
+  <app-sq-modal [input]="modelData" (output)="closeDelRoad($event)"></app-sq-modal>
+</ng-template>
+<div class="bodyofall cart-over">
+  <p *ngFor="let alert of alerts" class="lsq-alert">
+    <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
+  </p>
+
+  <!-- 卡片形式 -->
+  <div class="card card-primary panel-default cart-min">
+    <div class="card-header">
+    <span>道路管理</span>
+      <div class="add-survey">
+
+        <a class="theme-text btn-a cur-pointer" (click)="openNew(contentAdd)">新建道路</a>&nbsp;
+
+      </div>
+    </div>
+
+
+    <div class="card-block">
+
+      <div class="d-inline-block extral-margin">
+        <input id="sole-input2" [(ngModel)]="queryStr" class="form-control searchbox-content-common" type="text" name="word"
+          autocomplete="off" maxlength="30" placeholder="名称">
+
+      </div>
+
+      <div class="d-inline-block extral-margin">
+        <button class="btn btn-bg extral-margin search-btn" (click)="dataSearch()">搜索</button>
+      </div>
+
+    </div>
+
+
+    <!-- 显示已有道路 -->
+    <div class="card-block cart-over">
+
+      <table class="table table-hover">
+        <thead class="table-header">
+          <tr>
+            <th>名称</th>
+            <th>所跨区域</th>
+            <th style="text-align: center;">操作</th>
+
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr *ngFor="let item of roadList">
+            <td>{{item.wayName}}</td>
+            <td>
+              <span *ngFor="let item1 of item.regions">{{item1.full_name}};</span>
+            </td>
+            
+            <td style="text-align: center">
+              <div class="modify-strategy d-inline">
+                <a class="cur-pointer btn-a theme-text d-inline" (click)="openUpdata(contentAdd, item)">修改</a>
+                <a class="cur-pointer btn-a theme-text d-inline" (click)="openDel(contentDel, item)">删除</a>
+              </div>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- 判断显示无数据 -->
+      <div *ngIf="roadList.length === 0 || !roadList">无数据！</div>
+      <!-- 判断显示页面 -->
+      <div *ngIf="roadList.length > 0">
+        <ngb-pagination [collectionSize]=total [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false"
+          [boundaryLinks]="true" (pageChange)="pageChange()"></ngb-pagination>
+      </div>
+
+    </div>

@@ -1,0 +1,74 @@
+<!-- 报表 -->
+<div class="panel-default info-form dash" >
+  <div >
+    <div class="car-header">
+          <span class="car-title">可视化报表</span>
+          <button type="button" class="close" aria-label="Close">
+            <!-- <span aria-hidden="true">&times;</span> -->
+            <span>
+              <i class="fa fa-arrow-circle-o-left fa-lg cur-pointer color-btn-text" (click)="jumpHandle('home/application/air/theairreport')"></i>
+            </span>
+          </button>
+    </div>
+    <hr>
+    <div class="dash-type">
+          <label for="profile">统计方式：</label>
+          <select name="profile" [(ngModel)]="agg" (change)="aggsChange()" class="form-control d-inline-block sel-area-block select-item">
+            <option *ngFor="let item of aggs" [ngValue]="item">
+              {{ item.type }}
+            </option>
+          </select>
+
+          <label for="profile">时间间隔：</label>
+          <select name="profile" [(ngModel)]="interval" (change)="aggsChange()" class="form-control d-inline-block sel-area-block select-item">
+            <option *ngFor="let item of intervals" [ngValue]="item">
+              {{ item.type }}
+            </option>
+          </select>
+    </div>
+  </div>
+  <div class="modal-body">
+    <div class="row" style=" margin-bottom: 15px; ">
+      <div class="col-6">
+        <mat-card>
+          <div id="line_container1" style="height: 500px;">
+          </div>
+        </mat-card>
+
+      </div>
+      <div class="col-6">
+        <mat-card>
+          <div id="line_container2" style="height: 500px;">
+          </div>
+        </mat-card>
+
+      </div>
+
+    </div>
+    <div class="row" style=" margin-bottom: 15px; ">
+      <div class="col-12">
+        <mat-card>
+          <div id="line_container3" style="height: 500px;">
+          </div>
+        </mat-card>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <mat-card>
+          <div id="line_container4" style="height: 500px;">
+          </div>
+        </mat-card>
+      </div>
+      <div class="col-6">
+        <mat-card>
+          <div id="line_container5" style="height: 500px;">
+          </div>
+        </mat-card>
+      </div>
+
+    </div>
+  </div>
+
+
+</div>

@@ -12,9 +12,12 @@ $color-noneSelectColor1: #8DD5FF;
 $color-noneSelectColor2: #DDDDDD;
 $color-placeholderColor1: #E2EFF8;
 $color-white: #FFFFFF; // 白色
-$color-sidebar-bg: #506173; //侧边栏背景
-$color-sidebar-text: #9BD9DD; //侧边栏文字 增删改查选中
-$color-sidebar-active: #476480; // 侧边栏选中
+// $color-sidebar-bg: #506173; //侧边栏背景
+$color-sidebar-bg: #366c71; //侧边栏背景
+// $color-sidebar-text: #9BD9DD; //侧边栏文字 增删改查选中
+$color-sidebar-text: #84D0DD; //侧边栏文字 增删改查选中
+// $color-sidebar-active: #476480; // 侧边栏选中
+$color-sidebar-active: #2A697A; // 侧边栏选中
 $color-mask: rgba(153, 153, 153, 0.5); //灰度蒙版
 $color-table-bg: #EEEEEE; //表格底色
 $color-menu-bg: #E9EDF1; // 阿里云菜单底

@@ -37,19 +37,20 @@
             // width: 50px;
             // background-color: dimgray;
         }
-        .currentUsername {
+        .currentUsername { // 侧边栏 - 用户图标
             color: $color-sidebar-text;
-            padding-left: 20px;
+            padding-left: 24px;
             font-size: 20px;
             // line-height: 24px;
         }
-        .dropdown-item {
+        .dropdown-item { // 侧边栏
             // width: 50%;
             color: $color-sidebar-text;
+            cursor: pointer;
         }
-        .dropdown-item:hover, .dropdown-item:active {
-            color: #d7f8ff;   //ymZhao
-            background-color: $color-sidebar-active; 
+        .dropdown-item:hover, .dropdown-item:active { // 侧边栏 - 菜单选中
+            color: #d7f8ff;
+            background-color: $color-sidebar-active;
         }
     }
     .display-inoneline {
@@ -62,10 +63,15 @@
         position: absolute;
         left: 0;
         top: 80px;
-        right: -17px;
+        right: -25px;
         bottom: 0;
         overflow-x: hidden;
         overflow-y: scroll;
+        height: calc(100vh - 140px);
+    }
+
+    .sidebar-bg {
+        background-color: $color-sidebar-bg;
     }
         // sidebar
     .sidebar-dark-primary {
@@ -160,6 +166,7 @@
         .nav-log {
             overflow: hidden;
             // height: 50px;
+            font-weight: 900;
         }
         .logo-title {
             color: $color-sidebar-text;

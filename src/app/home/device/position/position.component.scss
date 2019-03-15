@@ -1,5 +1,18 @@
 @import '../../../../assets/css/variable.scss';
 @import '../../../../assets/css/xylg.scss';
+.way-list{
+    width: 360px;
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+.way-table{
+    width: 100%;
+    overflow-x: auto;
+}
+.area-selection {
+    z-index: 1;
+}
 .bodyofposition {
     width: calc(100vw - 50px);
     height: 100vh;
@@ -20,6 +33,10 @@
 }
 .card-block {
     margin: 5px 0px;
+
+    .search-form {
+        padding-bottom: 5px;
+    }
 }
 
 .search-options {
@@ -103,12 +120,16 @@
 }
 
 .map_container{
-    height: 300px;
-    min-width: 200px;
+    height: 400px;
+    width: 450px;
 }
 .padding-15{
     padding-bottom: 15px;
 }
-
-
-
+.btn-point {
+    padding: 3px 6px;
+}
+.errMes {
+    color: #41AEE6;
+    margin-left: 5px
+}

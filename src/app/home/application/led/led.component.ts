@@ -1,185 +1,106 @@
-/*
+import { Component, OnInit } from '@angular/core';
+import { LedService } from '../../../service/led.service';
+import { AirmonitorService } from '../../../service/airmonitor.service';
 
-Copyright(c): 2018 深圳创新设计研究院
-Author: luo.shuqi@live.com
-@file: led.component.ts
-@time: 2018 /9 / 7 14: 22
 
-*/
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Point } from '../../../data/point.type';
-import { MAPLIST } from '../../../data/map-list';
-import { MonitorService } from '../../../service/monitor.service';
-// baidu map
-declare let BMap;
-declare let $: any;
-declare let BMapLib;
-declare let BMAP_ANCHOR_TOP_LEFT;
 @Component({
   selector: 'app-led',
   templateUrl: './led.component.html',
   styleUrls: ['./led.component.scss']
 })
-
 export class LedComponent implements OnInit {
-
-  @ViewChild('map5') map_container: ElementRef;
+  url = 'http://172.18.8.46:3000';
   model: any = {}; // 存储数据
 
-  map: any; // 地图对象
+  user: any = {}; // 用户列表
 
-  cityList: any; // 城市列表
-  deviceList: any; // 城市列表
-  defaultZone: any; // 默认城市
-  currentCity: any; // 当前城市
-  currentChildren: any; // 当前城市节点
-  currentBlock: any; // // 当前城市街道
-  device: any; // // 当前设备点
+  task1: any = {}; // 开关屏
+  task2: any = {}; // 设置亮度
+  task3: any = {}; // 更新节目单
+  task4: any = {}; // 更新欢迎词
+  plays: any = {}; // 设置播放内容
+  airs: any = {}; // 设置空气质量播放内容
+  users = []; // 用户列表
+  tasks = []; // 任务列表
+  medias = []; // 媒体列表
+  programs = []; // 节目列表
+  search_tasks = []; // led任务列表
+  search_tasks_check = [];
+  regions = [];
+  regions_list = [];
 
-  deviceChild: any; // // 当前设备点上-被点击的子设备
-  areashow = false; // 默认区域列表不显示
-  cityshow = false; // 默认区域列表不显示
-  deviceshow = false; // 默认设备列表不显示
+  total: number; // 分页
+  total_1: number; // 分页
 
-  visible = true; // 控制可视区域
+  total_4: number; // 分页
+  page: number;
+  page_1: number;
+  page_4: number;
+  pagesize = 10;
 
-  zoom: any; // 地图级数
-  SouthWest: Point; // 地图视图西南角
-  NorthEast: Point; // 地图视图东北角
-  type = 0; // 设备类型
+  contrL1 = false; // 临时控制
+  contrL2 = false; // 临时控制
+  playTypes = [
+    {
+      type: 'text'
+    },
+    {
+      type: 'image'
+    },
+    {
+      type: 'git'
+    },
+    {
+      type: 'video'
+    },
+    {
+      type: 'slide_text'
+    },
+    {
+      type: 'metrics_text'
+    }
+  ];
+  currentType: any;
 
-  parentNode = null; // 用于递归查询JSON树 父子节点
-  node = null; // 用于递归查询JSON树 父子节点
-
-  light_list = MAPLIST.val.light_list; // 数据模拟
-
-  constructor(private monitorService: MonitorService, ) { }
+  constructor(private ledService: LedService, private airmonitorService: AirmonitorService) {
+    this.page = 1;
+    this.page_1 = 1;
+    this.page_4 = 1;
+    this.task2.value = 0;
+    this.currentType = this.playTypes[0];
+    this.model.airdevicelist = [];
+    this.task1.id = 'DE1700220125';
+    this.task2.id = 'DE1700220125';
+    this.task3.id = 'DE1700220125';
+    this.task4.id = 'DE1700220125';
+    this.task4.fontsice = '16';
+   }
 
   ngOnInit() {
-    this.addBeiduMap();
-    this.getCity(); // 获取城市列表
-    this.getDevice(); // 获取设备列表
+    this.getTasks();
+    this.getPrograms();
+    // this.getAirdevices();
   }
 
-  // 百度地图API功能
-  addBeiduMap() {
-
-    const map = this.map = new BMap.Map(this.map_container.nativeElement, {
-      enableMapClick: true,
-      // minZoom: 11,
-      // maxZoom : 11
-    }); // 创建地图实例
-
-
-    // 这里我们使用BMap命名空间下的Point类来创建一个坐标点。Point类描述了一个地理坐标点，其中116.404表示经度，39.915表示纬度。（为天安门坐标）
-
-    const point = new BMap.Point(113.922329, 22.49656); // 坐标可以通过百度地图坐标拾取器获取 --万融大厦
-    map.centerAndZoom(point, 19); // 设置中心和地图显示级别
-
-    map.enableScrollWheelZoom(true); // 开启鼠标滚轮缩放
-
-
-
-    // map.setMapStyle({ style: 'dark' });
-
-
-    // 添加控件缩放
-
-    const offset = new BMap.Size(20, 55);
-    const navigationControl = new BMap.NavigationControl({
-      anchor: BMAP_ANCHOR_TOP_LEFT,
-      offset: offset,
-    });
-    map.addControl(navigationControl);
-
-
-
-
-    this.addMarker();
-
+  viewRegions(item) {
+    console.log(item);
+    this.regions_list = item;
   }
 
-  addMarker() {
-    for (let index = 0; index < this.light_list.length; index++) {
-      const item = this.light_list[index];
-      const point = new BMap.Point(item.lng, item.lat);
-
-      let myIcon;
-      if (item.is_exception && item.is_exception === 1) { // 异常
-        myIcon = new BMap.Icon('../../../../assets/imgs/LED3.png', new BMap.Size(300, 157));
-        // console.log('异常');
-      } else if (item.is_online === 0) { // 灯亮
-        myIcon = new BMap.Icon('../../../../assets/imgs/LED2.png', new BMap.Size(300, 157));
-        // console.log('掉线');
-      } else { // 正常
-        myIcon = new BMap.Icon('../../../../assets/imgs/LED1.png', new BMap.Size(300, 157));
-        // console.log('正常');
-
-      }
-      myIcon.setAnchor(new BMap.Size(16, 38));
-      const marker2 = new BMap.Marker(point, { icon: myIcon });  // 创建标注
-      this.map.addOverlay(marker2);
-    }
-  }
-
-  // 解析地址- 设置中心和地图显示级别
-  getPoint(baiduMap, city) {
+  // 分页获取节目单
+  getPrograms() {
     const that = this;
-    // 创建地址解析器实例
-    const myGeo = new BMap.Geocoder();
-    const zoom = this.zoom = this.switchZone(city.level);
-    const fullName = city.full_name;
-    console.log(city);
+    const page = this.page_4;
+    const pagesize = this.pagesize;
 
-    let pt;
-
-    // 将地址解析结果显示在地图上,并调整地图视野，获取数据-添加标注
-    myGeo.getPoint(fullName, function (point) {
-      if (point) {
-        baiduMap.centerAndZoom(point, zoom);
-        pt = point;
-
-      } else {
-        console.log('您选择地址没有解析到结果!');
-      }
-    }, '');
-  }
-
-  // 获取数据
-
-  // 获取城市列表 --ok
-  getCity() {
-    const that = this;
-
-    this.monitorService.getZoneDefault().subscribe({
+    this.ledService.getPrograms(page, pagesize).subscribe({
       next: function (val) {
-        that.cityList = val.regions;
-        that.currentCity = val.zone;
-        that.zoom = that.switchZone(val.zone.level);
-        that.node = that.getNode(val.regions, val.zone.region_id);
-        that.currentChildren = that.node.children;
 
+        that.programs = val.data;
+        that.total_4 = val.total;
+        console.log(val);
       },
       complete: function () {
-        that.addBeiduMap(); // 创建地图
-
-      },
-      error: function (error) {
-        console.log(error);
-      }
-    });
-  }
-  // 获取设备列表 -- ok
-  getDevice() {
-    const that = this;
-
-    this.monitorService.getDevice().subscribe({
-      next: function (val) {
-        that.deviceList = val;
-
-      },
-      complete: function () {
-
 
       },
       error: function (error) {
@@ -188,158 +109,539 @@ export class LedComponent implements OnInit {
     });
   }
 
-  // 省市区街道-地图级别
-  switchZone(level) {
-    let zone = 12;
-    switch (level) {
-      case 1:
-        zone = 10;
-        break;
-      case 2:
-        zone = 12;
-        break;
-      case 3:
-        zone = 15;
-        break;
-      case 4:
-        zone = 19;
-        break;
-      default:
-        break;
-    }
-    return zone;
-  }
 
-  //
-  /*
-   * 递归查询JSON树 父子节点
-   */
-
-
-  /**
-   * 根据NodeID查找当前节点以及父节点
-   *
-   * @param  {[type]}
-   * @param  {[type]}
-   * @return {[type]}
-   */
-
-  getNode(json, nodeId) {
+  // 获取空气质量点
+  getAirdevices() {
     const that = this;
+    const NorthEast = {
+      'lng': 113.998944,
+      'lat': 22.590191
+    }; // 返回矩形区域的东北角
+    const SouthWest = {
+      'lng': 113.902502,
+      'lat': 22.527578
+    }; // 返回矩形区域的西南角
 
-    // 1.第一层 root 深度遍历整个JSON
-    for (let i = 0; i < json.length; i++) {
-      if (that.node) {
-        break;
+
+    this.airmonitorService.getAirDevice(NorthEast, SouthWest).subscribe({
+      next: function (val) {
+
+        that.model.airdevicelist = val; // 变为新值
+      },
+      complete: function () {
+
+      },
+      error: function (error) {
+
+      }
+    });
+  }
+
+
+
+  getUsers() {
+    const that = this;
+    const page = this.page;
+    const pagesize = this.pagesize;
+
+    this.ledService.getUsers(page, pagesize).subscribe({
+      next: function (val) {
+
+        that.users = val.data;
+        that.total = val.total;
+        console.log(val);
+      },
+      complete: function () {
+
+      },
+      error: function (error) {
+        console.log(error);
+      }
+    });
+  }
+
+  createUser() {
+    const that = this;
+    const body = {
+      name: this.user.name,                 // 用户账号
+      password: '123456',                           // 密码
+    };
+
+    this.ledService.createUser(body).subscribe({
+      next: function (val) {
+        console.log(val);
+      },
+      complete: function () {
+
+        that.getUsers();
+      },
+      error: function (error) {
+        console.log(error);
+      }
+    });
+  }
+
+
+  // 删除任务
+  delTask(id) {
+    const that = this;
+    this.ledService.delTask(id).subscribe({
+      next: function (val) {
+        console.log(val);
+      },
+      complete: function () {
+        that.getTasks();
+
+      },
+      error: function (error) {
+        console.log(error);
+      }
+    });
+  }
+
+// 分页获取任务
+  getTasks() {
+    const that = this;
+    const page = this.page_1;
+    const pagesize = this.pagesize;
+
+    this.ledService.getTasks(page, pagesize).subscribe({
+      next: function (val) {
+
+        that.tasks = val.data;
+        that.total_1 = val.total;
+        console.log(val);
+      },
+      complete: function () {
+
+      },
+      error: function (error) {
+        console.log(error);
+      }
+    });
+  }
+// 创建任务接口
+  createTask(body) {
+    const that = this;
+    this.ledService.createTask(body).subscribe({
+      next: function (val) {
+        console.log(val);
+      },
+      complete: function () {
+
+        that.getTasks();
+      },
+      error: function (error) {
+        console.log(error);
+      }
+    });
+  }
+
+  // 开关屏
+  createTask1() {
+    const id = this.task1.id;
+    const value = this.contrL1 ? 1 : 0;
+    const body = {
+      'id': id,
+      'name': '开关屏',
+      'proid': '',
+      'status': 'PENDING',
+      'datagram': {
+        'request': 'screen_switch',
+        'arguments': [
+          {
+            'value': value
+          }
+        ]
       }
 
-      const obj = json[i];
+    };
+    this.createTask(body);
 
-      // 没有就下一个
-      if (!obj || !obj.id) {
-        continue;
+
+  }
+
+  // 控制亮度
+  createTask2() {
+    const id = this.task2.id;
+    const value = Number(this.task2.value);
+    const auto_value = this.contrL2 ? '1' : '0';
+    const body = {
+
+      'id': id,
+      'name': '控制亮度',
+      'proid': '',
+      'status': 'PENDING',
+      'datagram': {
+        'request': 'set_brightness',
+        'arguments': [
+          {
+            'auto_mode': auto_value,
+            'value': value
+          }
+        ]
       }
-      // console.log(nodeId);
-      // console.log(obj.id);
-      // 2.有节点就开始找，一直递归下去
-      if (obj.id === nodeId) {
-        // 找到了与nodeId匹配的节点，结束递归
-        that.node = obj;
 
-        break;
-      } else {
+    };
 
-        // 3.如果有子节点就开始找
-        if (obj.children) {
-          // 4.递归前，记录当前节点，作为parent 父亲
-          that.parentNode = obj;
+    this.createTask(body);
+  }
 
-          // 递归往下找
-          that.getNode(obj.children, nodeId);
-        } else {
-          // 跳出当前递归，返回上层递归
-          continue;
-        }
+  // 欢迎词任务
+  createTask4(_pro_id) {
+    // 创建任务
+
+    const tid = this.task4.id;
+    const wellname = this.task4.wellname;
+    const task_body = {
+
+      'id': tid || 'DE1700220125',
+      'name': wellname,
+      'proid': _pro_id,
+      'status': 'PENDING',
+      'datagram': {
+        'request': 'update_program',
+        'arguments': [
+          {
+            'link': `${this.url}/programs/getProgram?id=${_pro_id}`,
+            'local': `/mnt/user/data/programs.json`
+          }
+        ]
       }
+
+    };
+
+    this.createTask(task_body);
+  }
+
+  // 删除节目单
+  delProgram(id) {
+    const that = this;
+    this.ledService.delProgram(id).subscribe({
+      next: function (val) {
+        console.log(val);
+      },
+      complete: function () {
+        that.getPrograms();
+
+      },
+      error: function (error) {
+        console.log(error);
+      }
+    });
+  }
+
+  // 创建节目单
+  createProgram(name) {
+    const that = this;
+    const body = {
+      'name': name,
+      'id': '1',
+      'display_time': 0,
+      'width': 96,
+      'height': 192,
+      'type': 0,
+      regions: this.regions
+
+    };
+    console.log(this.regions);
+
+    this.ledService.createProgram(body).subscribe({
+      next: function (val) {
+        console.log(val);
+        that.createTask4(val.id);
+      },
+      complete: function () {
+        that.getPrograms();
+
+      },
+      error: function (error) {
+        console.log(error);
+      }
+    });
+  }
+
+  // 空气质量播报节目单
+  gProgram(item) {
+
+    this.regions = [];
+
+
+    this.regions.push(
+      {
+        'id': '1',
+        'name': 'row1',
+        'x': 0,
+        'y': 0,
+        'width': 96,
+        'height': 38,
+        'items': [
+          {
+            'font_name': 'msyh',
+            'font_size': '9',
+            'font_color': '#009CFF',
+            'background_color': '#00000000',
+            'effect_entry': '0',
+            'effect_exit': '18',
+            'time_entry': '3000',
+            'time_exit': '3000',
+            'id': '0',
+            'type': 'text',
+            'name': 'no name',
+            'loop': '1',
+            'length': 10000,
+            'contents': [
+              {
+                'content': `PM10: ${item.pm10}`
+              }
+            ]
+          }
+        ]
+
+      }
+    );
+
+    this.regions.push(
+      {
+        'id': '2',
+        'name': 'row2',
+        'x': 0,
+        'y': 39,
+        'width': 96,
+        'height': 38,
+        'items': [
+          {
+            'font_name': 'msyh',
+            'font_size': '9',
+            'font_color': '#009CFF',
+            'background_color': '#00000000',
+            'effect_entry': '0',
+            'effect_exit': '18',
+            'time_entry': '3000',
+            'time_exit': '3000',
+            'id': '0',
+            'type': 'text',
+            'name': 'no name',
+            'loop': '1',
+            'length': 10000,
+            'contents': [
+              {
+                'content': `PM2.5: ${item.pm25}`
+              }
+            ]
+          }
+        ]
+
+      }
+    );
+
+    this.regions.push(
+      {
+        'id': '31',
+        'name': 'row3-1',
+        'x': 0,
+        'y': 80,
+        'width': 96,
+        'height': 38,
+        'items': [
+          {
+            'font_name': 'msyh',
+            'font_size': '9',
+            'font_color': '#009CFF',
+            'background_color': '#00000000',
+            'effect_entry': '0',
+            'effect_exit': '18',
+            'time_entry': '3000',
+            'time_exit': '3000',
+            'id': '0',
+            'type': 'text',
+            'name': 'no name',
+            'loop': '1',
+            'length': 10000,
+            'contents': [
+              {
+                'content': `TVOC: ${item.tvoc}`
+              }
+            ]
+          }
+        ]
+
+      }
+    );
+
+    this.regions.push(
+      {
+        'id': '41',
+        'name': 'row4-1',
+        'x': 0,
+        'y': 115,
+        'width': 96,
+        'height': 38,
+        'items': [
+          {
+            'font_name': 'msyh',
+            'font_size': '9',
+            'font_color': '#009CFF',
+            'background_color': '#00000000',
+            'effect_entry': '0',
+            'effect_exit': '18',
+            'time_entry': '3000',
+            'time_exit': '3000',
+            'id': '0',
+            'type': 'text',
+            'name': 'no name',
+            'loop': '1',
+            'length': 10000,
+            'contents': [
+              {
+                'content': `温度: ${item.temperature}`
+              }
+            ]
+          }
+        ]
+
+      }
+    );
+    this.regions.push(
+      {
+        'id': '51',
+        'name': 'row5-1',
+        'x': 0,
+        'y': 152,
+        'width': 96,
+        'height': 38,
+        'items': [
+          {
+            'font_name': 'msyh',
+            'font_size': '9',
+            'font_color': '#009CFF',
+            'background_color': '#00000000',
+            'effect_entry': '0',
+            'effect_exit': '18',
+            'time_entry': '3000',
+            'time_exit': '3000',
+            'id': '0',
+            'type': 'text',
+            'name': 'no name',
+            'loop': '1',
+            'length': 10000,
+            'contents': [
+              {
+                'content': `湿度: ${item.humidity}`
+              }
+            ]
+          }
+        ]
+
+      }
+    );
+    this.createProgram('空气质量播报');
+
+  }
+
+  // 欢迎词节目单
+  gProgram1() {
+
+
+    this.regions = [
+      {
+        'id': '1',
+        'name': 'Text Message',
+        'x': 0,
+        'y': 0,
+        'width': 96,
+        'height': 192,
+        'items': [
+          {
+            'background_color': '#00000000',
+            'id': '0',
+            'name': 'no name',
+            'length': 5000,
+            'type': 'text',
+            'effect_entry': '0',
+            'effect_exit': '18',
+            'font_name': 'msyh',
+            'font_size': this.task4.fontsice,
+            'font_color': '#ff0000',
+            'contents': [
+              {
+                'content': this.task4.wellname
+              }
+            ]
+          }
+        ]
+      }
+    ];
+
+
+    this.createProgram('欢迎词');
+  }
+
+  getProgram(item) {
+    this.ledService.getProgram(item._id).subscribe({
+      next: function (val) {
+        console.log(val);
+      },
+      complete: function () {
+
+      },
+      error: function (error) {
+        console.log(error);
+      }
+    });
+  }
+
+
+
+
+
+
+  pageChange_1() {
+    this.getTasks();
+  }
+
+
+
+  pageChange_4() {
+    this.getPrograms();
+  }
+
+  changeContr1() {
+    this.contrL1 = !this.contrL1;
+  }
+
+  changeContr2() {
+    this.contrL2 = !this.contrL2;
+  }
+  // 路灯控制页亮度调节
+  formatLabel(value: number | null) {
+    // this.prompt = false;
+    if (!value) {
+      return 0;
+    }
+
+    if (value > 64) {
+      return Math.round(value / 64) + '%';
     }
 
 
-    // 5.如果木有找到父节点，置为null，因为没有父亲
-    if (!that.node) {
-      that.parentNode = null;
-    }
-
-    // 6.返回结果obj
-    // return {
-    //   parentNode: that.parentNode,
-    //   node: that.node
-    // };
-    return that.node;
+    return value + '%';
   }
 
-
-  // 进入全屏
-  enterFullScreen() {
-    console.log('进入全屏');
-    console.log(this.visible);
-    // this.visible = false;
-    // localStorage.setItem('visible', 'false');
-
-    // 设置缩放控件偏移量
-    // const offset = new BMap.Size(20, 15);
-    // this.navigationControl.setOffset(offset);
-
-    // this.communicateService.sendMessage(this.visible); // 发布一条消息
-    // this.fullScreenService.enterFullScreen();
-
-  }
-
-
-  // 选择区域
-  // 选择城市
-  selecteCity(city) {
-    this.currentCity = city;
-    this.getPoint(this.map, city);  // 解析地址- 设置中心和地图显示级别
-    this.currentChildren = city.children;
-  }
-
-  selecteblock(block) {
-    this.getPoint(this.map, block);  // 解析地址- 设置中心和地图显示级别
-  }
-
-  // 显示区域
-  showArea() {
-    this.areashow = true;
-  }
-  // 显示城市
-  showCiyt() {
-    this.cityshow = true;
-  }
-  // 显示设备
-  showDevice() {
-    this.deviceshow = true;
-  }
-
-  // 选择区域
-  arealistMouseover(area) {
-
-    this.currentBlock = area.children;
-  }
-  // 离开区域
-  arealistMouseleave() {
-    this.areashow = false;
-    this.currentBlock = null;
-  }
-  // 离开城市
-  citylistMouseleave() {
-    this.cityshow = false;
-  }
-  // 离开设备
-  devicelistMouseleave() {
-    this.deviceshow = false;
-  }
-  arealistMouseNone() {
-    this.areashow = true;
-    this.currentBlock = null;
+  // 亮度改变
+  changeSlider(arg) {
+    console.log('亮度改变');
+    console.log(arg);
+    this.task2.value = arg;
   }
 }
+/*
+
+Copyright(c): 2018 深圳创新设计研究院
+Author: luo.shuqi@live.com
+@file: led-test.component.ts
+@ introduction: led
+@ln:637
+@time: 2018 / 7 / 2 17: 18
+
+*/

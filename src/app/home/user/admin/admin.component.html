@@ -1,103 +1,206 @@
+<!-- 新建/修改用户信息 -->
 <ng-template #content let-c="close" let-d="dismiss">
+  <p *ngFor="let alert of alertsModal" class="lsq-alert">
+    <ngb-alert [type]="alert.type" (close)="closeAlertModal(alert)">{{ alert.message }}</ngb-alert>
+  </p>
   <div class="modal-header">
-    <h4 class="modal-title">新建用户</h4>
+    <h4 class="modal-title">{{addOrUpdate}}</h4>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body add-user-modal">
     <!-- 新建信息表单 -->
-    <form class="user-info">
-      <div class="form-inline">
-        <label class="control-label">账户名称：</label>
-        <input type="text" class="form-control" placeholder="">
+    <div class="row user-info">
+      <div class="col-12 col-md-3">
+          
+          <div><a href=""><img src="../../../../assets/imgs/user-profile.png" alt="..." class="img-circle"></a></div>
       </div>
-      <div class="form-inline">
-        <label class="control-label">密码：</label>
-        <input type="text" class="form-control" placeholder="">
+      <div class="col-12 col-md-5">
+          <!-- 未完成：客户绑定 -->
+          <div class="form-inline margin-bottom15" *ngIf="!customerId">
+            
+            <label class="control-label"><span>&nbsp;</span>所属客户:</label>
+            <div class="area-selection1" >
+              <div class="d-inline-block area-selection-block" (mouseleave)="CustomerlistMouseleave()">
+          
+                <span class="cl-blue cur-pointer" (mouseover)="showCustomer()">
+                  <span class="filter" *ngIf="currentCustomer.name" style="width: 175px;">{{currentCustomer.name}}</span>
+                  <span class="filter" *ngIf="!currentCustomer.name" style="width: 175px;">选择客户</span>
+                  <!-- <i class="fa fa-bell-o nav-icon " aria-hidden="true"></i> -->
+                </span>
+                <div class="city-panel dropdown_panel way-list" *ngIf="Customershow">
+                  <div class="dropdown_panel_inner">
+                    <span class="menu_arrow_left"></span>
+                    <table class="table table-hover way-table" style="min-width: 300px;">
+                      <thead class="table-header">
+                        <tr>
+                          <th>名称</th>
+                          <th>客户代码</th>
+          
+                        </tr>
+                      </thead>
+                      <tbody>
+          
+                        <tr *ngFor="let item of CustomerList" (click)="selecteCustomer(item)">
+                          <td>{{item.name}}</td>
+                          <td>{{item.code}}</td>
+          
+          
+                        </tr>
+                      </tbody>
+                    </table>
+          
+                    <!-- 判断显示无数据 -->
+                    <div *ngIf="CustomerList.length === 0 || !CustomerList">无数据！</div>
+                    <!-- 判断显示页面 -->
+                    <div *ngIf="CustomerList.length > 0">
+                      <ngb-pagination [collectionSize]=total2 [(page)]="page2" [maxSize]="5" [rotate]="true" [ellipses]="false"
+                        [boundaryLinks]="true" (pageChange)="pageChange2()"></ngb-pagination>
+                    </div>
+          
+                  </div>
+                </div>
+          
+          
+              </div>
+          
+            </div>
+          </div>
+          <div class="form-inline margin-bottom15">
+            <label class="control-label"><span style="color: red;">*</span>账户名称：</label>
+            <input type="text" [(ngModel)]="user.userName" name="userName" class="form-control" placeholder=""
+              maxlength="50">
+          </div>
+          <div class="form-inline margin-bottom15">
+            <label class="control-label"><span style="color: red;">*</span>密码：</label>
+            <input type="password" [(ngModel)]="user.password" name="password" class="form-control" placeholder=""
+              maxlength="60">
+          </div>
+          <div class="form-inline margin-bottom15" style="height: 35.8px;">
+            <label class="control-label"><span style="color: red;">*</span>性别：</label>
+            <input type="radio" name="sex" [(ngModel)]="user.gender" value="0">男
+            <input type="radio" name="sex" [(ngModel)]="user.gender" value="1" style="margin-left: 30px;">女
+
+          </div>
+
+          <div class="form-inline margin-bottom15">
+            <label class="control-label">电子邮件：</label>
+            <input type="email" [(ngModel)]="user.email" name="email" class="form-control" placeholder=""
+              maxlength="255">
+          </div>
+          <div class="form-inline margin-bottom15">
+            <label class="control-label">手机：</label>
+            <input type="text" [(ngModel)]="user.mobile" name="mobile" class="form-control" placeholder=""
+              maxlength="13">
+          </div>
+          <div class="form-inline margin-bottom15">
+            <label class="control-label">姓名：</label>
+            <input type="text" [(ngModel)]="user.fullName" name="fullName" class="form-control" placeholder=""
+              maxlength="50">
+          </div>
+          <div class="form-inline">
+            <label class="control-label">昵称：</label>
+            <input type="text" [(ngModel)]="user.nickName" name="nickName" class="form-control" placeholder=""
+              maxlength="50">
+          </div>
+
+
+          
       </div>
-      <div class="form-inline">
-        <label class="control-label">确认密码：</label>
-        <input type="text" class="form-control" placeholder="">
+      <div class="col-12 col-md-3">
+          <!-- 角色列表 -->
+          <div class="city-list panel-default" style="padding: 20px;">
+            <div class="control-label"><span style="color: red;">*</span>选择角色</div>
+            <!-- 树状 -->
+            <ul id="treeDemo1" class="ztree"></ul>
+          </div>
       </div>
-      <div class="form-inline">
-        <label class="control-label">联系方式：</label>
-        <input type="text" class="form-control" placeholder="">
-      </div>
-      <div class="form-inline">
-        <label class="control-label">所属角色：</label>
-        <select class="form-control">
-          <option value="">选择</option>
-          <option value="">管理员</option>
-        </select>
-      </div>
-    </form>
+      
+
+    </div>
             
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-info" (click)="c('Save click')">确定</button>
+    <button type="button" class="btn btn-outline-info" (click)="addorUpdt()" [disabled]="!user.userName || user.userName == '' ||
+    !user.password || user.password == '' || !user.gender || user.gender == '' ">确定</button>
     <button type="button" class="btn btn-outline-metal" (click)="d('Cross click')">取消</button>
   </div>
 </ng-template>
+<!-- 删除位置 -->
+<ng-template #contentDelUser let-c="close" let-d="dismiss">
+  <app-sq-modal  [input]="modelData" (output)="closeUser($event)"></app-sq-modal>
+</ng-template>
 
-<div class="bodyofadmin">
-  <div class="card card-primary panel-default">
+<div class="bodyofadmin cart-over">
+  <p *ngFor="let alert of alerts" class="lsq-alert">
+    <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
+  </p>
+  <div class="card card-primary panel-default cart-min">
     <div class="card-header">
       <span>用户管理</span>
       <div class="add-user">
-          <a class="btn-a theme-text" (click)="open(content)">新建用户</a>
+          <a class="cur-pointer btn-a theme-text" (click)="openAddUser(content)">新建用户</a>
       </div>
     </div>
+
     <form class="card-block form-inline admin-manage">
       <!-- 搜索输入框 -->
       <div class="form-group inner-addon left-addon ">
           <div class="form-group">
-            <input type="text" class="form-control border-none" name="search-content" id="" placeholder="{{'XXX'}}"/>
-            <i class="fa fa-search search-icon"></i>
+            <input type="text" class="form-control border-none" name="search-content" id="userQuery" [(ngModel)]="queryStr" 
+              autocomplete="off" maxlength="30" placeholder="检索用户名、用户姓名" (keydown)="onKeydown($event)"/>
+            <i class="fa fa-search search-icon" (click)="execQuery()"></i>
           </div>
       </div>
-      <select class="form-control">
-          <option>角色</option>
-          <option>管理员</option>
-      </select>
-      <input type="date" class="form-control" value="Start date" />
-      <input type="date" class="form-control" value="End date" />
+
       
     </form>
 
     <div class="card-block">
         <!-- 用户信息表 -->
         <table class="table table-hover">
-          <tr class="table-header">
-            <th class="th-top-border">账户名称</th>
-            <th class="th-top-border">联系方式</th>
-            <th class="th-top-border">时间</th>
-            <th class="th-top-border">角色</th>
-            <th class="th-top-border">操作</th>
-          </tr>
-          <tr>
-            <td class="success" style="border: none">...</td>
-            <td class="success" style="border: none">...</td>
-            <td class="warning" style="border: none">...</td>
-            <td class="success" style="border: none">...</td>
-            <td class="success " style="border: none">
-              <div>
-                <button class="btn-check">
-                  <i class="fa fa-wrench" aria-hidden="true" style="margin-right: 6px;"></i>
-                </button>
-                <button class="btn-check">
-                  <i class="fa fa-lock" aria-hidden="true" style="margin-right: 6px;"></i>
-                </button>
-                <button class="btn-check">
-                  <i class="fa fa-times-circle" aria-hidden="true" style="margin-right: 6px;"></i>
-                </button>
-              </div>
+            <thead class="table-header">
+              <tr>
 
-            </td>
-            <!-- <td class="danger">...</td>
-            <td class="info">...</td> -->
-          </tr>
+                <th>账户名称</th>
+                <th>所属客户</th>
+                <th>角色</th>
+                <th>用户姓名</th>
+                <th>昵称</th>
+                <th>性别</th>
+                <th>联系方式</th>
+                <!-- <th>邮箱</th> -->
+                <th style="min-width: 100px;">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of userList" class="lineheight">
+
+                <td>{{user.userName}}</td>
+                <td>
+                  <span *ngIf="user.customerId">{{user.customerName}}</span>
+                  <span *ngIf="!user.customerId">平台用户</span>
+                </td>
+                <td>{{user.roles}}</td>
+                <td>{{user.fullName}}</td>
+                <td>{{user.nickName}}</td>
+                <td><span *ngIf="user.gender === 0">男</span><span *ngIf="user.gender === 1">女</span></td>
+                <td>{{user.mobile}}</td>
+                <td>
+                  <div class="modify-strategy d-inline">
+                    <a class="cur-pointer btn-a theme-text d-inline" (click)="openUpdateUser(content, user)">修改</a>
+                    <a class="cur-pointer btn-a theme-text d-inline" (click)="openDelUser(contentDelUser, user)">删除</a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
         </table>
+        <div *ngIf="!userList || userList.length === 0">无数据！</div>
+        <div *ngIf="userList && userList.length > 0">
+          <ngb-pagination [collectionSize]=total [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"
+            (pageChange)="pageChange()"></ngb-pagination>
+        </div>
     </div>
 
   </div>

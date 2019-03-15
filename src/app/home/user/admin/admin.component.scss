@@ -1,7 +1,10 @@
 @import '../../../../assets/css/variable.scss';
+.margin-bottom15{
+    margin-bottom: 15px;
+}
 .bodyofadmin {
     width: calc(100vw - 50px);
-    // padding: 15px;
+    padding: 30px;
 }
 .card-header {
     border-bottom: 0px;
@@ -16,12 +19,18 @@
     }
 }
 .card-block {
-    margin: 5px 0px;
+    margin: 5px 0px 0px;
+    min-height: 38px;
 }
 .search-icon {
     font-size: 20px;
     margin: 5px;
     margin-left: 0px;
+}
+.search-icon:hover, .search-icon:active {
+    color: #007bff;
+    cursor: pointer;
+    // background-color: #007bff;
 }
 .modal-body {
     .form-control {
@@ -30,13 +39,35 @@
         margin-bottom: 5px;
     }
     .control-label {
-        width: 75px;
+        width: 75px ;
         text-align: left;
+        justify-content: left;
     }
     .user-info {
         margin: 0px auto;
-        width: 280px;
+        // width: 280px;
+
+        .control-label {
+            // min-width: 90px;
+            width: 90px;
+        }
     }
+    .role-check {
+        // position: relative;
+        // .role-check-list {
+        //     position: relative;
+        //     left: 90px;
+        // }
+
+        .checkbox-inline {
+            padding-right: 10px;
+            padding-bottom: 5px;
+        }
+        .role-check-list {
+            max-width: 188px;
+        }
+    }
+
 }
 .add-user-modal {
     text-align: center;
@@ -55,12 +86,15 @@
     .form-control {
         font-size: 14px;
         width: auto;
-        height: calc(1.8rem + 2px);
+        height: 38px;
         margin-right: 5px;
-        margin-top: 5px;
     }
 }
 .th-top-border {
     border: none;
     border-top: 1px solid;
+}
+
+.lineheight {
+    line-height: 1.0;
 }

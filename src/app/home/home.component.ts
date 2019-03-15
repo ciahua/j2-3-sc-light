@@ -2,13 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../guard/auth.service';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie';
-import { NgbCollapse} from '@ng-bootstrap/ng-bootstrap';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
-import { ROUTETREE } from '../data/route-tree';
-import { MessageService } from '../service/message.service';
+import { AUTHORITYTREECOPYROUTE } from '../data/Authority.tree.route';
 import { MessService } from '../service/mess.service';
-import { UrlService } from '../service/url.service';
 import { CommunicateService } from '../service/communicate.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 declare let $: any;
 
 @Component({
@@ -25,37 +23,38 @@ export class HomeComponent implements OnInit {
   messageList: any; // 消息列表
   queryPoint: any;
   visible = true; // 控制可视区域
+  customerId: any;
 
 
   constructor(public authService: AuthService, public router: Router, private _cookieService: CookieService,
-    private messageService: MessageService, public messService: MessService, public urlService: UrlService,
-    private config: NgbDropdownConfig, private communicateService: CommunicateService) {
-    this.routeTree = ROUTETREE;
+    public messService: MessService,
+    public config: NgbDropdownConfig,
+    private communicateService: CommunicateService,
+    public jwtHelper: JwtHelperService,
+     ) {
+    this.routeTree = AUTHORITYTREECOPYROUTE;
     // customize default values of dropdowns used by this component tree
     config.placement = 'top-left';
-    // config.autoClose = false;
+    const token = localStorage.getItem('token');
+    this.customerId = this.jwtHelper.decodeToken(token) && this.jwtHelper.decodeToken(token).customerid;
 
-    this.visible = urlService.getURLParam('visible') === '' ? true : false;
 
+    // this.visible = urlService.getURLParam('visible') === '' ? true : false;
 
+ // 全屏
     this.communicateService.getMessage().subscribe((message: any) => {
       // console.log(message); // send a message
 
-      if (message.mess === false) {
-        // this.messageList = null;
-        this.visible = message.mess;
-      } else {
-        this.visible = message.mess;
-        this.getMessage();
-      }
+      this.visible = message.mess;
 
     });
   }
 
   ngOnInit() {
     this.currentUser = this._cookieService.getObject('currentUser');
-    this.loginName = this.currentUser.loginName;
-    this.getMessage();
+    const currentUser = JSON.parse(this.currentUser);
+    this.loginName = currentUser.loginName;
+
 
   }
 
@@ -67,7 +66,27 @@ export class HomeComponent implements OnInit {
     this.router.navigate([`home/monitor`]);
 
   }
-
+  // 判断数组中是否存在值
+  getture( str) {
+    const Authorities = JSON.parse(localStorage.getItem('Authorities'));
+    const Auth = Authorities ? Authorities.Authorities : [];
+    let res = false;
+    if (str === 'HP-000') {
+      res = true;
+      return res;
+    }
+    if (this.customerId && str === 'DM-007') {
+      res = false;
+      return res;
+    }
+    Auth.map(item => {
+      if (item === str) {
+        res = true;
+        return res;
+      }
+    });
+    return res;
+  }
 
 
   // 退出登录
@@ -82,27 +101,6 @@ export class HomeComponent implements OnInit {
     console.log(this.open);
   }
 
-  // 获取消息列表
-  getMessage() {
-    const that = this;
-
-    this.messageService.getMessage().subscribe({
-      next: function (val) {
-
-        that.messageList = val.list;
-
-      },
-      complete: function () {
-        setTimeout(() => {
-          that.marquee();
-        }, 10);
-
-      },
-      error: function (error) {
-        console.log(error);
-      }
-    });
-  }
 
   // 字幕动画
   marquee() {

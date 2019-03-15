@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ROUTELIST } from './route-list';
+import { Component, ElementRef, OnInit } from '@angular/core';
+// import { ROUTELIST } from './route-list';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-homepage',
@@ -9,9 +10,16 @@ import { Router } from '@angular/router';
 })
 export class HomepageComponent implements OnInit {
 
-  routes = ROUTELIST;
+  customerId: any;
+  constructor(public router: Router,  private elementRef: ElementRef,
+      public jwtHelper: JwtHelperService,
+    ) {
+    const token = localStorage.getItem('token');
+    this.customerId = this.jwtHelper.decodeToken(token) && this.jwtHelper.decodeToken(token).customerid;
+  }
 
-  constructor(public router: Router, ) { }
+  flag = true;
+
 
   ngOnInit() {
   }
@@ -19,5 +27,39 @@ export class HomepageComponent implements OnInit {
   goToZheRoute(para) {
     this.router.navigate([para]);
   }
+
+  goToChange() {
+    // this.setChange();
+
+    if (this.flag === true) {
+      this.flag = false;
+    } else {
+      this.flag = true;
+    }
+
+  }
+
+  // 判断数组中是否存在值
+  getture(str) {
+    const Authorities = JSON.parse(localStorage.getItem('Authorities'));
+    const Auth = Authorities ? Authorities.Authorities : [];
+    let res = false;
+    if (str === 'HP-000') {
+      res = true;
+      return res;
+    }
+    if (this.customerId && str === 'DM-007') {
+      res = false;
+      return res;
+    }
+    Auth.map(item => {
+      if (item === str) {
+        res = true;
+        return res;
+      }
+    });
+    return res;
+  }
+
 
 }

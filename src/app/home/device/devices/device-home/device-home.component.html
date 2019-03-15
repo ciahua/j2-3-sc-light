@@ -1,0 +1,483 @@
+<!-- 批量导入设备 -->
+<ng-template #content let-c="close" let-d="dismiss">
+  <p *ngFor="let alert of alertsModal" class="lsq-alert">
+    <ngb-alert [type]="alert.type" (close)="closeAlertModal(alert)">{{ alert.message }}</ngb-alert>
+  </p>
+  <div class="modal-header">
+    <h4 class="modal-title">批量导入设备</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="form-group">
+      <img src="../../../../assets/imgs/num1.png">
+      <label class="control-label">下载产品模板，批量填写信息</label>
+      <button type="button" class="btn btn-outline-dark btn1" (click)="domnload()">下载</button>
+    </div>
+    <div class="form-group">
+      <img src="../../../../assets/imgs/num2.png">
+      <label class="control-label">上传填写好的信息表</label>
+      <!-- <button type="button" class="btn btn-outline-dark btn1">选择文件</button> -->
+      <!-- <span class="btn btn-outline-dark btn1">选择文件</span> -->
+      <!-- <input type="file" ng2FileSelect [uploader]="uploader" (change)="selectedFileOnChanged($event)" (onFileSelected)="fileSelected($event)"
+        multiple /><br /> -->
+
+    </div>
+    <div class="container">
+
+      <!-- <div class="navbar navbar-default">
+        <div class="navbar-header">
+          <a class="navbar-brand" href>Angular2 File Upload</a>
+        </div>
+      </div> -->
+
+      <div class="row">
+
+        <div class="col-md-12">
+
+          <!-- <h3>选择文件</h3> -->
+
+          <!-- <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="uploader"
+            class="well my-drop-zone">
+            Base drop zone
+          </div> -->
+
+          <!-- <div ng2FileDrop [ngClass]="{'another-file-over-class': hasAnotherDropZoneOver}" (fileOver)="fileOverAnother($event)"
+            [uploader]="uploader" class="well my-drop-zone">
+            Another drop zone
+          </div> -->
+
+          <!-- 支持多选 -->
+          <!-- <input type="file" ng2FileSelect [uploader]="uploader" (change)="selectedFileOnChanged($event)"  (onFileSelected)="fileSelected($event)" multiple /><br /> -->
+          <!-- <input type="file" ng2FileSelect [uploader]="uploader" multiple /><br /> -->
+
+          <!-- Single -->
+          <input type="file" ng2FileSelect [uploader]="uploader" (change)="selectedFileOnChanged($event)"  (onFileSelected)="fileSelected($event)"/>
+        </div>
+
+        <div class="col-md-12" style="margin-bottom: 40px">
+
+          <h3>上传队列</h3>
+          <p>队列大小: {{ uploader?.queue?.length }}</p>
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th width="50%">Name</th>
+                <th>大小</th>
+                <th>进程</th>
+                <th>状态</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of uploader.queue">
+                <td><strong>{{ item?.file?.name }}</strong></td>
+                <td *ngIf="uploader.options.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                <td *ngIf="uploader.options.isHTML5">
+                  <div class="progress" style="margin-bottom: 0;">
+                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                  </div>
+                </td>
+                <td class="text-center">
+                  <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                  <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                  <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                </td>
+                <td nowrap>
+                  <button type="button" class="btn btn-success btn-xs" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                    <span class="glyphicon glyphicon-upload"></span> 上传
+                  </button>
+                  <button type="button" class="btn btn-warning btn-xs" (click)="item.cancel()" [disabled]="!item.isUploading">
+                    <span class="glyphicon glyphicon-ban-circle"></span> 取消
+                  </button>
+                  <button type="button" class="btn btn-danger btn-xs" (click)="item.remove()">
+                    <span class="glyphicon glyphicon-trash"></span> 删除
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- <div>
+            <div>
+              队列上传进度:
+              <div class="progress" style="">
+                <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+              </div>
+            </div>
+            <button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+              <span class="glyphicon glyphicon-upload"></span> Upload all
+            </button>
+            <button type="button" class="btn btn-warning btn-s" (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+              <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+            </button>
+            <button type="button" class="btn btn-danger btn-s" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+              <span class="glyphicon glyphicon-trash"></span> Remove all
+            </button>
+          </div> -->
+
+        </div>
+
+      </div>
+
+      <br><br>
+
+      <!-- <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">反馈信息：</div>
+            <div class="panel-body">
+              {{ response }}
+            </div>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-info" (click)="c('Close click')">确认</button>
+    <button type="button" class="btn btn-outline-metal" (click)="d('Cross click')">取消</button>
+  </div>
+</ng-template>
+
+<!-- 新建/修改设备 -->
+<ng-template #content2 let-c="close" let-d="dismiss">
+  <p *ngFor="let alert of alertsModal" class="lsq-alert">
+    <ngb-alert [type]="alert.type" (close)="closeAlertModal(alert)">{{ alert.message }}</ngb-alert>
+  </p>
+  <div class="modal-header">
+    <h5 class="modal-title">{{addOrUpdate}}</h5>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row">
+      <!-- 左列 -->
+      <div class="col-3 div-left">
+
+        <!-- 未完成：客户绑定 -->
+        <div class="form-inline padding-15" *ngIf="!customerId">
+          <span >&nbsp;</span>
+          <label class="control-label">客户:</label>
+          <div class="area-selection1" *ngIf="visible == true">
+            <div class="d-inline-block area-selection-block" (mouseleave)="CustomerlistMouseleave()">
+        
+              <span class="cl-blue cur-pointer" (mouseover)="showCustomer()">
+                <span class="filter" *ngIf="currentCustomer.name" style="width: 200px;">{{currentCustomer.name}}</span>
+                <span class="filter" *ngIf="!currentCustomer.name" style="width: 200px;">选择客户</span>
+                <!-- <i class="fa fa-bell-o nav-icon " aria-hidden="true"></i> -->
+              </span>
+              <div class="city-panel dropdown_panel way-list" *ngIf="Customershow">
+                <div class="dropdown_panel_inner">
+                  <span class="menu_arrow_left"></span>
+                  <table class="table table-hover way-table">
+                    <thead class="table-header">
+                      <tr>
+                        <th>名称</th>
+                        <th>客户代码</th>
+        
+                      </tr>
+                    </thead>
+                    <tbody>
+        
+                      <tr *ngFor="let item of CustomerList" (click)="selecteCustomer(item)">
+                        <td>{{item.name}}</td>
+                        <td>{{item.code}}</td>
+        
+        
+                      </tr>
+                    </tbody>
+                  </table>
+        
+                  <!-- 判断显示无数据 -->
+                  <div *ngIf="CustomerList.length === 0 || !CustomerList">无数据！</div>
+                  <!-- 判断显示页面 -->
+                  <div *ngIf="CustomerList.length > 0">
+                    <ngb-pagination [collectionSize]=total3 [(page)]="page2" [pageSize]="5" [maxSize]="5" [rotate]="true" [ellipses]="false"
+                      [boundaryLinks]="true" (pageChange)="pageChange2()"></ngb-pagination>
+                  </div>
+        
+                </div>
+              </div>
+        
+        
+            </div>
+        
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label"><span style="color:red;">*</span>&nbsp;设备型号:</label>
+          <select name="profile1" [(ngModel)]="device.model" class="form-control">
+            <option *ngFor="let index of deviceModels1" [ngValue]="index">
+              {{ index.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label"><span style="color:red;">*</span>&nbsp;设备编号:</label>
+          <input type="text" [(ngModel)]="device.name" class="form-control" placeholder="" maxlength="30">
+          <span *ngIf="device.name.length > 30" class="control-label" style="color: red">长度不可大于30！</span>
+        </div>
+        <div class="form-group">
+          <label class="control-label"><span style="color:red;">*</span>&nbsp;设备名称:</label>
+          <input type="text" [(ngModel)]="device.descr" class="form-control" id="add-product-name" placeholder=""
+            maxlength="30">
+          <span *ngIf="device.descr && device.descr.length > 30" class="control-label" style="color: red">长度不可大于30！</span>
+
+        </div>
+      </div>
+      <div class="col-9 row">
+        <div class="col-12" style="margin-bottom: 10px;">
+          <label class="control-label">
+            <b>位置绑定</b>
+          </label>
+        </div>
+        <div class="col-12 row">
+          <div class="col-12 col-md-6">
+            <div class="form-inline ">
+              <div class="label-mid">
+                <label class="control-label">选择区域:</label>
+              </div>
+              <!-- 选择区域 -->
+              <div class="area-selection" *ngIf="visible == true">
+                <!-- 城市列表 -->
+                <div class="d-inline-block area-selection-block" (mouseleave)="citylistMouseleave()">
+
+                  <span class="cl-blue cur-pointer" (mouseover)="showCiyt()">
+                    <span class="filter" *ngIf="currentCity">{{currentCity.name}}</span>
+                    <span class="filter" *ngIf="!currentCity">选择城市</span>
+                    <!-- <i class="fa fa-bell-o nav-icon " aria-hidden="true"></i> -->
+                  </span>
+                  <div id="city-panel" class="city-panel dropdown_panel" *ngIf="cityshow">
+                    <div class="dropdown_panel_inner">
+                      <span class="menu_arrow_left"></span>
+
+                      <dl *ngFor="let item of cityList">
+                        <dt>{{item.name}}</dt>
+                        <dd *ngIf="item.children && item.children.length > 0">
+                          <a title="智慧城市" *ngFor="let itemc of item.children" (click)="selecteCity(itemc)">{{itemc.name}}</a>
+                        </dd>
+                      </dl>
+                    </div>
+
+                  </div>
+                </div>
+
+                <!-- 区域列表 -->
+                <div class="d-inline-block area-selection-block" (mouseleave)="arealistMouseleave()">
+
+                  <span class="cl-blue cur-pointer" (mouseover)="showArea()">
+                    <span class="filter" *ngIf="!currentRegion">选择区域</span>
+                    <span class="filter" *ngIf="currentRegion">{{currentRegion.name}}</span>
+                  </span>
+
+                  <div class="arealist-wrap dropdown_panel" *ngIf="areashow">
+                    <div class="dropdown_panel_inner">
+                      <span class="menu_arrow_left"></span>
+
+                      <ul class="arealist" data-type="area">
+                        <li class="arealist-item" *ngFor="let node of currentAreaList" (mouseover)="arealistMouseover(node)">
+                          <em (click)="selecteblock(node)">{{node.name}}</em>
+                        </li>
+                      </ul>
+                      <div class="blocklist-wrap" *ngIf="currentBlock">
+                        <ul class="blocklist" data-type="block">
+                          <li *ngFor="let block of currentBlock" (click)="selecteblock(block)">{{block.name}}</li>
+                        </ul>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-inline query-div ">
+              <div class="label-mid">
+                <label class="control-label">检索位置:</label>
+              </div>
+              <input type="text" id="sole-input1" [(ngModel)]="queryStrPosi" class="form-control" name="word1"
+                autocomplete="off" maxlength="30" placeholder="检索编号、名称" value="">
+              <i *ngIf="currentArea" class="fa fa-search fa-lg query-btn" (click)="execQueryPosi()" aria-hidden="true"></i>
+            </div>
+          </div>
+
+
+
+
+
+        </div>
+        <!-- 中列 -->
+        <div class="col-6" style="height: 497px;">
+          <div #map2 id="survey_map" class="map_container"></div>
+          <label class="control-label" style="margin-top: 15px;"><span style="color:red;">*</span>&nbsp;已选位置：</label>
+          <span *ngIf="bindedPosition">{{bindedPosition.name}}-{{bindedPosition.number}}</span>
+        </div>
+
+        <!-- 右列 -->
+        <div class="col-6">
+          <table class="table table-bordered table-hover small-size">
+            <thead class="table-header">
+              <tr>
+
+                <th>位置编号</th>
+                <th>位置名称</th>
+                <th>位置经纬</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let position of posiListByRegion" class="lineheight cur-pointer" (click)="bindPosition(position)">
+                <td>{{position.number}}</td>
+                <td>{{position.name}}</td>
+
+                <td><span *ngIf="position.point && position.point.lng"></span>X:{{position.point.lng}} Y:{{position.point.lat}}</td>
+              </tr>
+            </tbody>
+
+          </table>
+          <div *ngIf="posiListByRegion.length === 0 || !posiListByRegion">无数据！</div>
+          <div *ngIf="posiListByRegion.length > 0">
+            <ngb-pagination [collectionSize]=total1 [(page)]="pagePosi" [maxSize]="5" [rotate]="true" [ellipses]="false"
+              [boundaryLinks]="true" (pageChange)="pageChangePosi()"></ngb-pagination>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-info" (click)="addorUpdate(addOrUpdate)" [disabled]="!device.descr || device.descr == '' || !device.name || device.name == '' 
+        ">确认</button>
+    <button type="button" class="btn btn-outline-metal" (click)="d('Cross click')">取消</button>
+  </div>
+</ng-template>
+
+<!-- 删除位置 -->
+<ng-template #contentDelDevice let-c="close" let-d="dismiss">
+  <app-sq-modal [input]="modelData" (output)="closeDevice($event)"></app-sq-modal>
+</ng-template>
+<div class="bodyofclass cart-over">
+  <p *ngFor="let alert of alerts" class="lsq-alert">
+    <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">>{{ alert.message }}</ngb-alert>
+  </p>
+
+  <div class="card card-primary panel-default cart-min">
+    <div class="card-header">
+      <span>设备管理</span>
+      <div class="add-survey">
+        <a class="theme-text btn-a cur-pointer" (click)="openAddSurveys(content)">批量导入设备</a>
+        <a class="theme-text btn-a cur-pointer" (click)="output()">导出设备</a>
+        <a class="theme-text btn-a cur-pointer" (click)="openNewSurvey(content2)">新建设备</a>&nbsp;
+        <!-- Single button -->
+        <!-- 日志出现 -->
+        <div class="d-inline-block device-issues-block" (mouseleave)="messageListMouseleave_2()">
+          <span class="cl-blue cur-pointer" (mouseover)="showOnprogressList()">
+              <span class="filter">日志</span>
+          </span>
+          <div class="messagelist-wrap" *ngIf="showonprogresslist && logList">
+              <div class="dropdown_panel_inner">
+                  <span class="menu_arrow_left"></span>
+                  <ul class="messagelist" data-type="area">
+                      <!-- 点击跳转具体日志页面 -->
+                      <li class="messagelist-item" *ngFor="let log of logList" (click)="goToZheRoute(log.url)">
+                          <span>{{log.name}}</span>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 搜索设备 -->
+    <div class="row card-block search-survey">
+      <!-- 搜索设备 -->
+      <form class="form-inline search-options">
+        <span>设备型号：</span>
+        <select name="profile" [(ngModel)]="currentModel" (change)="deviceTypeChange()" class="form-control">
+          <option *ngFor="let index of deviceModels" [ngValue]="index">
+            {{ index.name }}
+          </option>
+        </select>
+
+
+        <!-- 日期，功能不明 -->
+        <div class="form-group inner-addon left-addon ">
+          <input id="sole-input2" [(ngModel)]="queryStr" class="form-control searchbox-content-common" type="text" name="word"
+            autocomplete="off" maxlength="30" placeholder="检索编号、名称" (keydown)="onKeydown($event)">
+        </div>
+        <button class="btn btn-bg extral-marg" (click)="execQuery()">搜索</button>
+        <div *ngIf="parentDescription !== ''" class="parentDescription">
+          <span style="color: #41AEE6 ">
+            {{parentDescription}}
+          </span>
+          <span (click)="descriptionClose()" style="color: #41AEE6 " class="cur-pointer">关闭</span>
+        </div>
+
+      </form>
+    </div>
+
+
+    <!-- 显示已有设备 -->
+    <div class="card-block">
+      <table class="table table-hover">
+        <thead class="table-header">
+          <tr>
+            <th>序号</th>
+            <th>所属客户</th>
+            <th>设备描述</th>
+            <th>设备状态</th>
+            <th>设备编号</th>
+            <th>设备型号</th>
+            <th>绑定位置</th>
+            <th style="text-align: center;">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let device of deviceslist; let i = index" class="lineheight">
+            <td>{{i + 1}}</td>
+            <td>
+              <span *ngIf="device.customerId">{{device.customerName}}</span>
+              <span *ngIf="!device.customerId">平台用户</span>
+            </td>
+            <td>{{device.description}}</td>
+            <td>
+              <p *ngIf="device.online === true">在线</p>
+              <p *ngIf="device.online === false">离线</p>
+            </td>
+            <td>{{device.name}}</td>
+            <td>{{device.modelName}}</td>
+            <td><span *ngIf="device.point && device.point.lng">{{device.point.lng}}/{{device.point.lat}}</span></td>
+
+            <td style="text-align: center">
+              <div class="modify-strategy d-inline">
+                <a class="cur-pointer btn-a theme-text d-inline" *ngIf="isGateway(device.modelId)" (click)="searchSubDevice(device.id,device.description)">子设备</a>
+                <a class="cur-pointer btn-a theme-text d-inline" (click)="goToZheRoute('home/device/devices/devices-detail',device.id, device.modelId,device.name)"
+                  *ngIf="getture('DM-0010')">查看</a>
+                <a class="cur-pointer btn-a theme-text d-inline" (click)="openUpdataDevice(content2, device, i)">修改</a>
+                <a class="cur-pointer btn-a theme-text d-inline" (click)="openDelDevice(contentDelDevice, device)">删除</a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="deviceslist.length === 0 || !deviceslist">无数据！</div>
+      <div *ngIf="deviceslist.length > 0">
+        <ngb-pagination [collectionSize]=total [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false"
+          [boundaryLinks]="true" (pageChange)="pageChange()"> </ngb-pagination>
+      </div>
+    </div>
+  </div>
+</div>
