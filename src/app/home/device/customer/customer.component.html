@@ -7,21 +7,21 @@
     <h4 class="modal-title">{{AddorUpdate}}</h4>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
-    </button>
+    </button> 
   </div>
   <div class="modal-body add-user-modal">
     <div class="row">
-      <div class="col-5">
-            <div class="form-group">
-              <label class="control-label"><span style="color:red;">*</span>客户名称:</label>
-              <input type="text" [(ngModel)]="customerModelDate.name" class="form-control" placeholder="" maxlength="30">
-            </div>
+      <div class="col-4">
             <div class="form-group">
               <label class="control-label"><span style="color:red;">*</span>客户编号:</label>
               <input type="text" [(ngModel)]="customerModelDate.code" class="form-control" placeholder="" maxlength="30">
             </div>
+            <div class="form-group">
+              <label class="control-label"><span style="color:red;">*</span>客户名称:</label>
+              <input type="text" [(ngModel)]="customerModelDate.name" class="form-control" placeholder="" maxlength="30">
+            </div>
       </div>
-      <div class="col-7">
+      <div class="col-4">
         <!-- 新建信息表单 -->
         <div class="user-info">
           <label class="control-label"><span style="color:red;">*</span>设备安装区域:</label>
@@ -30,6 +30,15 @@
             <!-- 树状 -->
             <ul id="treeDemo" class="ztree"></ul>
         
+          </div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="user-info">
+          <label class="control-label"><span style="color:red;">*</span>权限设置:</label>
+          <div style="padding: 20px;">
+             <!-- 添加的权限的树 -->
+              <ul id="rTreeDemo" class="ztree"></ul>                
           </div>
         </div>
       </div>
@@ -82,6 +91,7 @@
             <th>客户名称</th>
             <th>客户编码</th>
             <th>安装区域</th>
+            <th>客户权限</th>
             <th style="text-align: center">操作</th>
           </tr>
         </thead>
@@ -92,7 +102,9 @@
             <td>{{item.code}}</td>
             <td>
               <span *ngFor="let  item1 of item.installZone">{{item1.fullName}};</span>
-              </td>
+            </td>
+            <td>{{ getVaule(item.authorities) }}</td>
+
             <td style="text-align: center">
               <div class="modify-strategy d-inline">
                 <a class="cur-pointer btn-a theme-text d-inline" (click)="openUpdata(content, item)">修改</a>

@@ -37,7 +37,6 @@ export class CoverService {
                 return res;
             }));
     }
-   
 
     // 获取指定设备的事件
     getDeviceIssues(deviceId: number, state: number): Observable<any> {

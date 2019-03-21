@@ -37,6 +37,7 @@ export class CustomerService {
 
         return this.http.get(`/api/customer?page=${page}&pageSize=${pageSize}&queryStr=${queryStr}`)
             .pipe(map((res: Response) => {
+                console.log(res);
                 return res;
             }));
     }
@@ -57,6 +58,7 @@ export class CustomerService {
 
     // 新增Customer
     addNewCustomer(body): Observable<any> {
+        console.log('body: ' + body);
         return this.http.post('/api/customer', body)
             .pipe(map((res: Response) => { // 相当于一种映射
                 return res;

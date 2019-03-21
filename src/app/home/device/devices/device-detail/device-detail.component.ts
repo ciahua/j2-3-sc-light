@@ -90,7 +90,6 @@ export class DeviceDetailComponent implements OnInit {
     this.router.navigate([para, { deviceId: this.deviceId, dataKey: dataKey }]);
   }
 
-
   // 获取设备信息
   getDevice() {
     const that = this;
@@ -155,9 +154,8 @@ export class DeviceDetailComponent implements OnInit {
             message: `${item.dataKey}的值不能为空！`,
           });
           return;
-      } else
-      if ((item.dataType.toLowerCase() === 'int' || item.dataType.toLowerCase() === 'float' || item.dataType.toLowerCase() === 'double')
-       && item.value === null)  {
+      } else if ((item.dataType.toLowerCase() === 'int' || item.dataType.toLowerCase() === 'float' ||
+      item.dataType.toLowerCase() === 'double') && item.value === null)  {
         that.alertsModal.push({
           id: 1,
           type: 'danger',
@@ -188,9 +186,9 @@ export class DeviceDetailComponent implements OnInit {
             type: 'success',
             message: '服务调用成功！',
           });
-          if (that.inPutList.length !== 0) { // 有模态框弹出，才需要关闭
-            // that.mr.close();
-          }
+          // if (that.inPutList.length !== 0) { // 有模态框弹出，才需要关闭
+          //   that.mr.close();
+          // }
         },
         complete: function() {
           // that.getDeviceService();

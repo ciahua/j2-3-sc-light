@@ -68,7 +68,7 @@ export class DeviceHistoryService {
     getlogs(userId, page, pageSize, queryStr, fromdate, todate): Observable<any> {
         let url = '';
         if (!userId) {
-            url = `/api/device/online_log/?page=${page}&pageSize=${pageSize}&queryStr=${queryStr}&from=${fromdate}&to=${todate}`;
+            url = `/api/device/online_log?page=${page}&pageSize=${pageSize}&queryStr=${queryStr}&from=${fromdate}&to=${todate}`;
         } else {
             url = `api/install?userId=${userId}&page=${page}&pageSize=${pageSize}&queryStr=${queryStr}&from=${fromdate}&to=${todate}`;
         }

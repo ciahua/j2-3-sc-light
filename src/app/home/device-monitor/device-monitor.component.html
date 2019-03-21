@@ -98,13 +98,13 @@
       <span class="device-close float-right" (click)="closeDetail()">X</span>
     </div>
     <div style="border-bottom: 1px solid #39c32f;">
-      <p>设备总数：{{currentDevice.deviceChild && currentDevice.deviceChild.length}}</p>
+      <p>设备总数：{{total}}</p>
       <p>设备搜索：</p>
       <p style="position: relative">
-              <input type="text" [(ngModel)]="queryStr" class="form-control search-input2" autocomplete="off" maxlength="30"
+              <input type="text" [(ngModel)]="queryStr1" class="form-control search-input2" autocomplete="off" maxlength="30"
                 placeholder="检索设备编号">
-              <!-- <span class="search-icon2" (click)="execQueryId()"><i class="fa fa-search" aria-hidden="true"></i></span> -->
-              <span class="search-icon2" ><i class="fa fa-search" aria-hidden="true"></i></span>
+              <span class="search-icon2" (click)="execQuery()"><i class="fa fa-search" aria-hidden="true"></i></span>
+              <!-- <span class="search-icon2" ><i class="fa fa-search" aria-hidden="true"></i></span> -->
            
       </p>
 
@@ -138,6 +138,14 @@
           <td>{{items.Unit}}</td>
         </tr>
       </table>
-    </div>
+    
   </div>
+  <div *ngIf="currentDevice.deviceChild.length === 0 || !currentDevice.deviceChild">无数据！</div>
+  <div *ngIf="currentDevice.deviceChild.length > 0">
+
+     <ngb-pagination [collectionSize]=total [(page)]="page" [pageSize]="pageSize" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"
+
+      (pageChange)="pageChange()"></ngb-pagination>
+  </div>
+</div>
 </div>
