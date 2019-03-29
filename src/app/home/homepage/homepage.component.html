@@ -21,7 +21,7 @@
         </div>
       </div>
       <!-- 系统管理标题 -->
-      <div class="col-md-2 padding-left-0" >
+      <div class="col-md-2 padding-left-0" *ngIf="!customerId">
         <div class="row align-items-center justify-content-center dash-item-first">
           <div class="col-md-12 content" (click)="goToZheRoute('/home/homepage')">
             <h5>系统管理</h5>
@@ -218,9 +218,8 @@
       <!-- 5列 -->
       <div class="col-md-2 col-12 padding-left-0 margin-right-22" >
         <!-- 行政区域管理 -->
-        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/device/administration')" 
-        [ngClass]="{showme: getture('DM-004'), hideme: !getture('DM-004')}"
-        >
+        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/user/administration')" 
+        [ngClass]="{showme: getture('DM-004'), hideme: !getture('DM-004')}" *ngIf="!customerId">
           <div class="col-md-12 content" >
             <p>
               <span>
@@ -243,23 +242,25 @@
             <p>道路</p>
           </div>
         </div>
-        <!-- 客户管理-->
-        <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/device/customer')"
-        [ngClass]="{showme: getture('DM-007'), hideme: !getture('DM-007')}" 
-       >
-          <div class="col-md-12 content" >
-            <p>
-              <span>
-                <i class="fa fa-user-circle"></i>
-              </span>
-            </p>
-            <p>客户管理</p>
-          </div>
+        <!-- app下载 -->
+        <div class="row align-items-center justify-content-center dash-item-second btn1 showme" (click)="goToChange()" *ngIf="flag">
+  
+            <div class="col-md-12 content pp" >               
+              <p>
+                <span>
+                    <i class="fa fa-download nav-icon" ></i>
+                </span>
+              </p>
+              <p class="app">APP下载</p>
+            </div>
+
         </div>
+        
+
       </div>
        
       <!-- 用户管理 -->
-      <div class="col-md-2 col-12 padding-left-0">
+      <div class="col-md-2 col-12 padding-left-0" *ngIf="!customerId">
         <!-- 用户管理 -->
         <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/user/admin')" 
         [ngClass]="{showme: getture('SM-001'), hideme: !getture('SM-001')}"
@@ -286,19 +287,19 @@
             <p>角色管理</p>
           </div>
         </div>
-        <!-- app下载 -->
-        <div class="row align-items-center justify-content-center dash-item-second btn1 showme" (click)="goToChange()" *ngIf="flag">
-          
-            <div class="col-md-12 content pp" >               
-              <p>
-                <span>
-                    <i class="fa fa-download nav-icon" ></i>
-                </span>
-              </p>
-              <p class="app">APP下载</p>
-            </div>
-
-        </div>
+         <!-- 客户管理-->
+         <div class="row align-items-center justify-content-center dash-item-second" (click)="goToZheRoute('home/user/customer')"
+         [ngClass]="{showme: getture('DM-007'), hideme: !getture('DM-007')}" 
+        >
+           <div class="col-md-12 content" >
+             <p>
+               <span>
+                 <i class="fa fa-user-circle"></i>
+               </span>
+             </p>
+             <p>客户管理</p>
+           </div>
+         </div>
         <div class="row align-items-center justify-content-center dash-item-second1 erWei" *ngIf="!flag" (click)="goToChange()">               
             <!-- <img src="../../../assets/imgs/user-profile.png" alt=""> -->
         </div>
@@ -557,23 +558,23 @@
             </div>
 
           </div>
-          <!-- 客户管理 -->
-          <div class="col-4 padding-left-0 " 
-          [ngClass]="{showme: getture('DM-007'), hideme: !getture('DM-007')}"
-          >
-            <div class="row align-items-center justify-content-center dash-item-second-phone" >
-              <div class="col-md-12 " (click)="goToZheRoute('home/device/customer')">
-                <p>
-                  <span>
-                    <i class="fa fa-user-circle"></i>
-                  </span>
-                </p>
-                <p>客户管理</p>
-              </div>
-        
+          <!-- app下载 -->
+          <div class="col-4 padding-left-0 ">
+              <div class="row align-items-center justify-content-center dash-item-second-phone btn1 showme" (click)="goToChange() " *ngIf="flag">
+                <div class="col-md-12 pp">
+                  <p>
+                    <span>
+                      <i class="fa fa-download nav-icon" ></i>
+                    </span>
+                  </p>
+                  <p class="app">APP下载</p>
+                </div>        
+              </div>  
+              <div class="row align-items-center justify-content-center dash-item-second-phone1 erWei" *ngIf="!flag" (click)="goToChange()">               
+                  <!-- <img src="../../../assets/imgs/user-profile.png" alt=""> -->
+              </div>    
             </div>
 
-          </div>
         </div>
 
         <!-- 系统管理标题 -->
@@ -614,21 +615,22 @@
               </div>        
             </div>        
           </div>
-          <!-- app下载 -->
-          <div class="col-4 padding-left-0 ">
-            <div class="row align-items-center justify-content-center dash-item-second-phone btn1 showme" (click)="goToChange() " *ngIf="flag">
-              <div class="col-md-12 pp">
+          <!-- 客户管理 -->
+          <div class="col-4 padding-left-0 " 
+          [ngClass]="{showme: getture('DM-007'), hideme: !getture('DM-007')}"
+          >
+            <div class="row align-items-center justify-content-center dash-item-second-phone" >
+              <div class="col-md-12 " (click)="goToZheRoute('home/user/customer')">
                 <p>
                   <span>
-                    <i class="fa fa-download nav-icon" ></i>
+                    <i class="fa fa-user-circle"></i>
                   </span>
                 </p>
-                <p class="app">APP下载</p>
-              </div>        
-            </div>  
-            <div class="row align-items-center justify-content-center dash-item-second-phone1 erWei" *ngIf="!flag" (click)="goToChange()">               
-                <!-- <img src="../../../assets/imgs/user-profile.png" alt=""> -->
-            </div>    
+                <p>客户管理</p>
+              </div>
+        
+            </div>
+
           </div>
           
         </div>

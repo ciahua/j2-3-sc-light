@@ -1,0 +1,53 @@
+@import '../../../../assets/css/variable.scss';
+@import '../../../../assets/css/xylg.scss';
+.bodyofproduct {
+    width: calc(100vw - 50px);
+    height: 100vh;
+    padding: 30px;
+    position: relative;
+}
+.card-header {
+    border-bottom: 0px;
+    position: relative;
+}
+.add-product {
+    margin: 0px;
+    text-align: right;
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+
+}
+
+.search-product {
+    font-size: 14px;
+    min-height: 38px;
+    .search-options {
+
+        .form-control {
+            font-size: 14px;
+            width: auto;
+            height: 38px;
+            margin-right: 5px;
+        }
+        
+        .search-icon {
+            font-size: 20px;
+            margin: 5px;
+        }
+    }
+}
+.btn-search {
+    font-size: 14px;
+    margin-right: 5px;
+    margin-top: 5px;
+    background-color: $color-brand-color;
+}
+.btn-search:focus, .btn-search:hover, .btn-search:active, {
+    background-color: $color-hover-color;
+}
+
+.user-info {
+    height: 400px;
+    overflow-y: auto;
+}

@@ -1,0 +1,131 @@
+<!-- 新建/修改用户信息 -->
+<ng-template #content let-c="close" let-d="dismiss">
+  <p *ngFor="let alert of alertsModal" class="lsq-alert">
+    <ngb-alert [type]="alert.type" (close)="closeAlertModal(alert)">{{ alert.message }}</ngb-alert>
+  </p>
+  <div class="modal-header">
+    <h4 class="modal-title">{{AddorUpdate}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button> 
+  </div>
+  <div class="modal-body add-user-modal">
+    <div class="row">
+      <div class="col-4">
+            <div class="form-group">
+              <label class="control-label"><span style="color:red;">*</span>客户编号:</label>
+              <input type="text" [(ngModel)]="customerModelDate.code" class="form-control" placeholder="" maxlength="30">
+            </div>
+            <div class="form-group">
+              <label class="control-label"><span style="color:red;">*</span>客户名称:</label>
+              <input type="text" [(ngModel)]="customerModelDate.name" class="form-control" placeholder="" maxlength="30">
+            </div>
+      </div>
+      <div class="col-4">
+        <!-- 新建信息表单 -->
+        <div class="user-info">
+          <label class="control-label"><span style="color:red;">*</span>设备安装区域:</label>
+          <!-- 行政区域列表 -->
+          <div style="padding: 20px;">
+            <!-- 树状 -->
+            <ul id="treeDemo" class="ztree"></ul>
+        
+          </div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="user-info">
+          <label class="control-label"><span style="color:red;">*</span>权限设置:</label>
+          <div style="padding: 20px;">
+             <!-- 添加的权限的树 -->
+              <ul id="rTreeDemo" class="ztree"></ul>                
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-info" (click)="addorUpdt()" [disabled]="">确定</button>
+    <button type="button" class="btn btn-outline-metal" (click)="d('Cross click')">取消</button>
+  </div>
+</ng-template>
+<!-- 删除位置 -->
+<ng-template #contentDelUser let-c="close" let-d="dismiss">
+  <app-sq-modal [input]="InstallData" (output)="closeCustomer($event)"></app-sq-modal>
+</ng-template>
+
+<!-- 安装区域管理页面 -->
+<div class="bodyofproduct cart-over">
+  <div class="card card-primary panel-default cart-min">
+    <div class="card-header">
+      <span>客户管理</span>
+      <div class="card-block add-product">
+        <a class="cur-pointer theme-text btn-a" (click)="openNewInstallZone(content)">新增客户</a>
+      </div>
+    </div>
+    <!-- 搜索产品 -->
+    <div class="row card-block search-product">
+      <!-- 表单，搜索安装区域 -->
+      <form class="form-inline search-options">
+        <!-- 输入框 -->
+        <div class="form-group inner-addon left-addon ">
+          <div class="form-group">
+            <!-- <input id="sole-input3" [(ngModel)]="queryStr" class="form-control searchbox-content-common" type="text" 
+                      name="word" autocomplete="off" maxlength="30" placeholder="检索区域名称" (keydown)="onKeydown($event)"> -->
+            <input id="sole-input3" class="form-control searchbox-content-common" type="text" name="word" autocomplete="off"
+              placeholder="检索区域名称" [(ngModel)]="queryStr">
+          </div>
+        </div>
+        <button class="btn btn-bg" (click)="execQuery()">搜索</button>
+      </form>
+    </div>
+
+    <!-- 显示已有产品 -->
+    <div class="card-block">
+      <table class="table table-hover">
+        <thead class="table-header">
+          <tr>
+            <th>客户名称</th>
+            <th>客户编码</th>
+            <th>安装区域</th>
+            <th>客户权限</th>
+            <th style="text-align: center">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr *ngFor="let item of List">
+            <td>{{item.name}}</td>
+            <td>{{item.code}}</td>
+            <td>
+              <span *ngFor="let  item1 of item.installZone">{{item1.fullName}};</span>
+            </td>
+            <td>{{ getVaule(item.authorities) }}</td>
+
+            <td style="text-align: center">
+              <div class="modify-strategy d-inline">
+                <a class="cur-pointer btn-a theme-text d-inline" (click)="openUpdata(content, item)">修改</a>
+                <a class="cur-pointer btn-a theme-text d-inline" (click)="openDel(contentDelUser, item)">删除</a>
+              </div>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- 判断显示无数据 -->
+      <div *ngIf="List.length === 0 || !List">无数据！</div>
+      <!-- 判断显示页面 -->
+      <div *ngIf="List.length > 0">
+        <ngb-pagination [collectionSize]=total [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false"
+          [boundaryLinks]="true" (pageChange)="pageChange()"></ngb-pagination>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+

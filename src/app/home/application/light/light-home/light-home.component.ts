@@ -87,6 +87,7 @@ export class LightHomeComponent implements OnInit, OnDestroy  {
 
   queryString: any;
   queryStr: any;
+  deviceTypeId = 2; // 路灯
   @Input()
   public alerts: Array<IAlert> = [];
 
@@ -642,7 +643,7 @@ export class LightHomeComponent implements OnInit, OnDestroy  {
   getCity() {
     const that = this;
 
-    this.monitorService.getZoneDefault().subscribe({
+    this.monitorService.getZoneDefault(this.deviceTypeId).subscribe({
       next: function (val) {
         that.cityList = val.regions;
         // that.zoom = that.switchZone(val.zone.level);

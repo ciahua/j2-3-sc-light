@@ -30,11 +30,13 @@ export class LoginComponent {
     this.authService.login(this.model.username, this.model.password)
     .subscribe({
       next: function(val) {
+        console.log(val);
         if (that.authService.isLoggedIn) {
+          console.log(that.authService.isLoggedIn);
           // Get the redirect URL from our auth service
           // If no redirect has been set, use the default
           const redirect = that.authService.redirectUrl ? that.authService.redirectUrl : '/home';
-
+          console.log(redirect);
           // Set our navigation extras object
           // that passes on our global query params and fragment
           const navigationExtras: NavigationExtras = {

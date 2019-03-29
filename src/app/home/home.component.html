@@ -14,19 +14,22 @@
             <!-- 一级菜单 -->
             <li *ngFor="let routes of routeTree " class="cur-pointer nav-item ">
               <!-- 没有子菜单 -->
-              <a *ngIf="getture(routes.id) && !routes.children" [routerLink]="[routes.routeLink]" routerLinkActive="active" class="nav-link">
+              <a *ngIf="getture(routes.id) && !routes.children && !(customerId && routes.id == 'SM-000')" [routerLink]="[routes.routeLink]" routerLinkActive="active" class="nav-link"
+               >
                 <i class={{routes.icon}}></i>
                 <p class="p-left">{{routes.routeTitel}}</p>
               </a>
               <!-- 有子菜单 -->
-              <a *ngIf=" routes.children" (click)="routes.isCollapsed = !routes.isCollapsed" class="nav-link">
+              <a *ngIf=" routes.children && !(customerId && routes.id == 'SM-000')" (click)="routes.isCollapsed = !routes.isCollapsed" class="nav-link">
+               
                 <i class={{routes.icon}}></i>
                 <p class="p-left">{{routes.routeTitel}}</p>
                 <span class="angle" *ngIf="routes.isCollapsed"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
                 <span class="angle" *ngIf="!routes.isCollapsed"><i class="fa fa-angle-down" aria-hidden="true"></i></span>
               </a>
               <!-- 二级菜单 -->
-              <ul [ngbCollapse]="routes.isCollapsed" *ngIf=" routes.children" class="sec-menu">
+              <ul [ngbCollapse]="routes.isCollapsed" *ngIf=" routes.children" class="sec-menu"  
+              >
                 <li *ngFor="let children of routes.children" class="cur-pointer nav-item ">
                   <!-- <a *ngIf="getture(children.id)" [routerLink]="[children.routeLink]" routerLinkActive="active" class="nav-link"> -->
                   <a *ngIf="getture(children.id)" [routerLink]="[children.routeLink]" routerLinkActive="active" class="nav-link">

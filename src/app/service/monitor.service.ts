@@ -25,10 +25,12 @@ export class MonitorService {
     }
 
     // 城市列表
-    getZoneDefault(): Observable<any> {
-        // return Observable.of(ARTICLESTYPE);
-
-        return this.http.get('/api/zone/default')
+    getZoneDefault(...deviceTypeId): Observable<any> {
+        let url = '/api/zone/default';
+        if (deviceTypeId) {
+            url = `/api/zone/default?deviceTypeId=${deviceTypeId}`;
+        }
+        return this.http.get(url)
             .pipe(map((res: Response) => {
                 return res;
             }));

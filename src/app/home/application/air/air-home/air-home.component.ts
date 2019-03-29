@@ -63,6 +63,7 @@ export class AirHomeComponent implements OnInit, OnDestroy {
     },
   ];
   timer: any; // 定时器
+  deviceTypeId = 4; // 环境检测
 
   constructor(private monitorService: MonitorService, private airmonitorService: AirmonitorService,
     public router: Router) {
@@ -311,7 +312,7 @@ export class AirHomeComponent implements OnInit, OnDestroy {
   getCity() {
     const that = this;
 
-    this.monitorService.getZoneDefault().subscribe({
+    this.monitorService.getZoneDefault(this.deviceTypeId).subscribe({
       next: function (val) {
         that.map_model.cityList = val.regions;
         // that.node = that.getNode(val.regions, val.zone.region_id);

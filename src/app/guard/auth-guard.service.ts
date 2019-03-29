@@ -8,6 +8,7 @@ import {
 } from '@angular/router';
 import { CookieService } from 'ngx-cookie';
 import { AUTHORITYTREECOPY} from '../data/Authority.tree.copy';
+import { AUTHSYSTEM} from '../data/Auth.system';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 
@@ -102,6 +103,16 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
         }
         if (this.customerId && str === 'DM-007') {
             res = false;
+            return res;
+        }
+        if (this.customerId) {
+            res = true;
+            AUTHSYSTEM.map(item => {
+                if (item.id === str) {
+                    res = false;
+                    return res;
+                }
+            });
             return res;
         }
         arr.map(item => {

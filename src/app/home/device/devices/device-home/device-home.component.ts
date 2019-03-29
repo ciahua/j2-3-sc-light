@@ -76,6 +76,7 @@ export class DeviceHomeComponent implements OnInit {
   Customershow = false;
   customerId: null; // 平台客户
   curPosition: any;
+  parentId = 0; // 父组件id
 
   showonprogresslist = false; // 默认不显示日志消息
   logList = [
@@ -140,8 +141,6 @@ export class DeviceHomeComponent implements OnInit {
 
     this.uploader.response.subscribe(res => {
       this.response = res;
-      console.log(res.errors);
-      console.log(typeof(res));
       if (typeof (res) === 'string') {
         const res1 = JSON.parse(res);
         if (res1.errors) {
@@ -206,16 +205,11 @@ export class DeviceHomeComponent implements OnInit {
   }
 
   selectedFileOnChanged(event: any) {
-    console.log(event.target.value);
-    console.log(this.uploader);
     this.fileUrl = event.target.value;
   }
   // 属性页面
   goToZheRoute(para, ...id) {
     if (id) {
-      console.log(id);
-      console.log(id[0]);
-      console.log(id[1]);
       this.router.navigate([para, { deviceId: id[0], modelId: id[1],  deviceName: id[2]}]);
     } else {
       this.router.navigate([para]);
@@ -445,7 +439,7 @@ export class DeviceHomeComponent implements OnInit {
   // 新增设备
   addDevice() {
     const that = this;
-
+    console.log(this.device);
     const body = {
       'name': this.device.name,
       'modelId': this.device.model.id,
@@ -456,6 +450,7 @@ export class DeviceHomeComponent implements OnInit {
         'lng': this.bindedPosition && this.bindedPosition.point.lng
       },
       'customerId': this.currentCustomer.id || this.customerId,
+      'parentId': this.currentCustomer.parentId
     };
 
     this.deviceService.addNewDevice(body).subscribe({
@@ -489,7 +484,7 @@ export class DeviceHomeComponent implements OnInit {
     const that = this;
     // this.alertsModal = [];
     this.getPosiById(item.positionId); // device.positionId -> position. (设备->位置点)
-
+    console.log(this.device.parentId);
     this.device.updateId = item.id;
     this.device.name = item.name;
     this.device.point = item.point;

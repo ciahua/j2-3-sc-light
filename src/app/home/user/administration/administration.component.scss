@@ -1,0 +1,162 @@
+
+.padding-15{
+    padding-bottom: 15px;
+}
+.map_container{
+    height: 400px;
+    width: 450px;
+}
+.regionsList {
+    padding: 15px;
+    height: calc(100% - 50px);
+    overflow: auto;
+}
+.thetree {
+    background: #fff;
+    padding: 25px;
+    border-radius: 5px;
+}
+.air-data-report {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    // flex-wrap: wrap;
+    .air-left {
+        width: 300px;
+        height: calc(100vh);
+        background-color: rgb(233, 237, 241);
+    }
+    .title {
+        padding: 10px 15px;
+        background-color: rgba(153, 153, 153, 0.5);
+        font-size: 20px;
+    }
+    .title-right {
+        padding: 0;
+        font-size: 20px;
+    }
+    .air-right {
+        width: calc(100vw - 350px);
+        height: 100%;
+        position: relative;
+    }
+}
+
+// 左侧
+.sidebar-inner {
+    background-color: rgb(233, 237, 241);
+}
+.first-menu {
+    padding-left: 0px;
+
+    .nav-item:hover>.nav-link {
+        color: #b8eefa;
+        background-color: white;
+    }
+    .nav-item {
+        span {
+            padding: 0 15px;
+        }
+    }
+}
+
+// 右侧
+.info-top {
+    height: 150px;
+    // background-color: wheat;
+    // padding: 15px 15px 0;
+    margin: 15px;
+    position: relative;
+    .extral-margin {
+        margin-right: 80px;
+    }
+    .text-label {
+        border: none;
+        padding-left: 0px;
+        background: #000000;
+    }
+    .backtoair {
+        position: absolute;
+        right: 35px;
+    }
+    .brief-info {
+        position: absolute;
+        bottom: 20px;
+    }
+    .form-control {
+        font-size: 14px;
+        height: 37px;
+    }
+}
+.extral-margin {
+    margin-right: 10px;
+}
+.search-btn {
+    height: calc(2.25rem + 2px);
+    margin-bottom: 5px;
+}
+.info-form {
+    margin: 15px;
+
+
+}
+.btns {
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.modal-header, .modal-footer {
+    padding: 5px 15px;
+}
+
+.dash{
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.first-menu {
+    li {
+        height: 56px;
+        line-height: 56px;
+        border-bottom: 1px solid #ccc;
+    }
+    li:hover {
+        background-color: rgba(0, 0, 0, 0.075);
+    }
+}
+.input-group {
+    .form-control {
+        width: 120px;
+    }
+}
+
+.card-block {
+    margin: 5px 0px 0px;
+    min-height: 38px;
+}
+.search-product {
+    font-size: 14px;
+    min-height: 38px;
+    .search-options {
+
+        .form-control {
+            font-size: 14px;
+            width: auto;
+            height: 38px;
+            margin-right: 5px;
+        }
+        
+        .search-icon {
+            font-size: 20px;
+            margin: 5px;
+        }
+    }
+}
+.card-block {
+    margin: 5px 0px 0px;
+    min-height: 38px;
+}
+.fr {
+    float: right;
+}

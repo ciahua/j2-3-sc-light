@@ -50,6 +50,7 @@ export class TrafficComponent implements OnInit {
 
   parentNode = null; // 用于递归查询JSON树 父子节点
   node = null; // 用于递归查询JSON树 父子节点
+  deviceTypeId = 3; // 视频监控
 
 
   constructor(private monitorService: MonitorService, public router: Router,
@@ -306,7 +307,7 @@ export class TrafficComponent implements OnInit {
   getCity() {
     const that = this;
 
-    this.monitorService.getZoneDefault().subscribe({
+    this.monitorService.getZoneDefault(this.deviceTypeId).subscribe({
       next: function (val) {
         that.map_model.cityList = val.regions;
         that.zone = val.zone;

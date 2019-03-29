@@ -63,6 +63,8 @@ export class CalamityComponent implements OnInit, OnDestroy {
   showonprogresslist = false; // 默认不显示“处理中”的异常消息
   showfinishedlist = false; // 默认不显示“已处理”的异常消息
 
+  deviceTypeId = 8; // 灾害预警
+
   constructor(private monitorService: MonitorService, private videoService: VideoService,
     public router: Router) {
     this.model.deviceType = 8; // 灾害
@@ -560,7 +562,7 @@ export class CalamityComponent implements OnInit, OnDestroy {
   getCity() {
     const that = this;
 
-    this.monitorService.getZoneDefault().subscribe({
+    this.monitorService.getZoneDefault(this.deviceTypeId).subscribe({
       next: function (val) {
         that.map_model.cityList = val.regions;
         // that.zoom = that.switchZone(val.zone.level);

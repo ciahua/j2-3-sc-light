@@ -4,6 +4,8 @@ import { AuthGuard } from '../../guard/auth-guard.service';
 import { AdminComponent } from './admin/admin.component';
 import { RightComponent } from './right/right.component';
 import { UserComponent } from './user.component';
+import { CustomerComponent } from './customer/customer.component';
+import { AdministrationComponent } from './administration/administration.component';
 
 const routes: Routes = [
 
@@ -18,7 +20,9 @@ const routes: Routes = [
         children: [
           { path: '', redirectTo: 'admin', pathMatch: 'full' },
           { path: 'admin', component: AdminComponent },
-          { path: 'right', component: RightComponent }
+          { path: 'right', component: RightComponent },
+          { path: 'customer', component: CustomerComponent },
+          { path: 'administration', component: AdministrationComponent}
 
         ]
       }

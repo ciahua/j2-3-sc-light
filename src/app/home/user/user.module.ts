@@ -9,6 +9,8 @@ import { UserComponent } from './user.component';
 
 import { AdminComponent } from './admin/admin.component';
 import { RightComponent } from './right/right.component';
+import { CustomerComponent } from './customer/customer.component';
+import { AdministrationComponent } from './administration/administration.component';
 
 @NgModule({
   imports: [
@@ -18,7 +20,7 @@ import { RightComponent } from './right/right.component';
     UserRoutingModule,
     NgbModule.forRoot(),
   ],
-  declarations: [UserComponent, AdminComponent, RightComponent],
+  declarations: [UserComponent, AdminComponent, RightComponent, CustomerComponent, AdministrationComponent],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,
     NO_ERRORS_SCHEMA

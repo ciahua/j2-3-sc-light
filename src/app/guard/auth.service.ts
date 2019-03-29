@@ -25,11 +25,11 @@ export class AuthService {
 
     }
 
-
     login(userName: String, password: String): Observable<any> {
         return this.http.post('/security/login', { 'userName': userName, 'password': password }, { responseType: 'text' })
             .pipe(map((res) => {
                 const token = res;
+                console.log(res);
                 if (token) {
                     this.token = token;
                     // 设置全局变量
@@ -46,6 +46,7 @@ export class AuthService {
                 }
             }));
     }
+
     logout(): void {
         this.isLoggedIn = false;
         this.token = null;
@@ -72,7 +73,6 @@ export class AuthService {
         const promise = new Promise(function (resolve, reject) {
             that.rightService.getAuthoritiesByUserId(id).subscribe({
                 next: function (val) {
-                    console.log('获取用户权限');
                     const res = that.getVaule(val);
                     that.routerList = [];
                     res.map((item, i) => {
@@ -91,8 +91,6 @@ export class AuthService {
         return promise;
 
     }
-
-
     // 获取对象value
     getkeys(obj) {
         if (!obj) {

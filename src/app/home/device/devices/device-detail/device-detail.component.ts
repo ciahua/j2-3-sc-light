@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DeviceHistoryService } from '../../../../service/device-history.service';
-import { IAlert } from '../../customer/customer.component';
+import { IAlert } from '../device-home/device-home.component';
 
 @Component({
   selector: 'app-device-detail',

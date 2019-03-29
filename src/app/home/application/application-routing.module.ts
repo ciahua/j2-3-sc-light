@@ -5,7 +5,7 @@ import { CoverComponent } from './cover/cover.component';
 import { CalamityComponent } from './calamity/calamity.component';
 import { ApplicationComponent } from './application.component';
 // import { LightComponent } from './light/light.component';
-import { SecurityComponent } from './security/security.component';
+// import { SecurityComponent } from './security/security.component';
 import { TrafficComponent } from './traffic/traffic.component';
 import { WaterComponent } from './water/water.component';
 // import { AirComponent } from './air/air.component';
@@ -30,7 +30,7 @@ const routes: Routes = [
           { path: 'issuedata', loadChildren: './issuedata/issuedata.module#IssuedataModule' },
           { path: 'cover', component: CoverComponent },
           { path: 'calamity', component: CalamityComponent },
-          { path: 'security', component: SecurityComponent },
+          // { path: 'security', component: SecurityComponent },
           { path: 'traffic', component: TrafficComponent },
           { path: 'water', component: WaterComponent },
           { path: 'electrical', component: ElectricalComponent },

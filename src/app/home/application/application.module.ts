@@ -8,7 +8,6 @@ import { ApplicationRoutingModule } from './application-routing.module';
 import { ApplicationComponent } from './application.component';
 import { CoverComponent } from './cover/cover.component';
 import { CalamityComponent } from './calamity/calamity.component';
-import { SecurityComponent } from './security/security.component';
 import { TrafficComponent } from './traffic/traffic.component';
 import { WaterComponent } from './water/water.component';
 import { ElectricalComponent } from './electrical/electrical.component';
@@ -25,7 +24,6 @@ import { LightModule } from './light/light.module';
     declarations: [
         ApplicationComponent,
         CoverComponent, CalamityComponent,
-        SecurityComponent,
         TrafficComponent, WaterComponent,
         ElectricalComponent,
 

@@ -1,0 +1,155 @@
+<!-- 新建/修改 -->
+<ng-template #contentAdd let-c="close" let-d="dismiss">
+  <p *ngFor="let alert of alertsModal" class="lsq-alert">
+    <ngb-alert [type]="alert.type" (close)="closeAlertModal(alert)">{{ alert.message }}</ngb-alert>
+  </p>
+  <div class="modal-header">
+    <h4 class="modal-title">新建位置</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  
+  <div class="row modal-body">
+    <!-- 左列 -->
+    <div class="col-12 col-md-4">
+  
+      <div class="form-inline padding-15">
+        <span class="text-danger">*</span>
+        <label class="control-label">名称:</label>
+        <input type="text" class="form-control" placeholder="" [(ngModel)]="RegionMODEL.name" maxlength="50">
+      </div>
+
+      <!-- 手动输入坐标定位 -->
+      <div class="form-inline padding-15">
+        <span class="text-danger">*</span>
+        <label class="control-label">经度:</label>
+        <input type="text" class="form-control border-none" autocomplete [(ngModel)]="RegionMODEL.center.lng" required />
+      </div>
+      <div class="form-inline padding-15">
+        <span class="text-danger">*</span>
+        <label class="control-label">纬度:</label>
+        <input type="text" class="form-control border-none" autocomplete [(ngModel)]="RegionMODEL.center.lat" required />
+      </div>
+      <!-- <div class="form-inline padding-15" *ngIf="errorMess.length > 0">
+        <span *ngFor="let mes of errorMess" class="errMes">{{mes}}</span>
+      </div> -->
+  
+    </div>
+    <!-- 右列 -->
+    <div class="col-12 col-md-8">
+      <!-- <input type="text" [(ngModel)]="address">
+      <button (click)="adGeocoder(address)">搜索</button> -->
+      <div class="form-inline inner-addon left-addon " style="margin-bottom: 15px;">
+
+          <input [(ngModel)]="address" class="form-control searchbox-content-common" type="text" name="word" autocomplete="off"
+            placeholder="地址搜索" style="width: 75%">
+          <button class="btn btn-bg" (click)="adGeocoder(address)" style="margin-left: 5px">搜索</button>
+      </div>
+
+      <div #map1 id="position_map" class="map_container"></div>
+    </div>
+  </div>
+  
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-info" (click)="addorUpdate()">确认</button>
+    <button type="button" class="btn btn-outline-metal" (click)="d('Cross click')">取消</button>
+  </div>
+</ng-template>
+<!-- 删除 -->
+<ng-template #contentDel let-c="close" let-d="dismiss">
+  <app-sq-modal [input]="modelData" (output)="closeDelRegions($event)"></app-sq-modal>
+</ng-template>
+<div class="air-data-report">
+  <!-- 左侧 -->
+  <div class="air-left">
+      <div class="title">
+        <span>行政区域管理</span>
+      </div>
+      <!-- 行政区域列表 -->
+      <div class="regionsList thetree">
+          <!-- 树状 -->
+          <!-- <span class="cur-pointer"><a (click)="allRegions()">所有-</a></span> -->
+          <ul id="treeDemo" class="ztree ">
+
+          </ul>
+      </div>
+  </div>
+
+  <!-- 右侧 -->
+  <div class="air-right">
+    <!-- 监测点信息 -->
+    <div  class="point-info">
+        <!-- 右侧，下半部-->
+        <div class="panel-default info-form">
+
+            <!-- 右侧，上半部，头部，简短信息 -->
+            <div class="card-header extral-margin">
+                <span>区域范围名称：{{parent.name}}</span>
+                <span class="fr">
+                  <a class="cur-pointer theme-text btn-a " (click)="openDel(contentDel, parent)" *ngIf="parent.name !== '所有'">删除</a>
+                  <a class="cur-pointer theme-text btn-a " (click)="openNew(contentAdd)">新增区域</a>
+
+                </span>      
+            </div>
+            <!-- 搜索行政区域 -->
+            <div class="row card-block search-product ">
+              <!-- 表单，搜索行政区域 -->
+              <form class="form-inline search-options">
+                <!-- 输入框 -->
+                <div class="form-group inner-addon left-addon ">
+                    <div class="form-group">
+                      <!-- <input id="sole-input3" [(ngModel)]="queryStr" class="form-control searchbox-content-common" type="text" 
+                        name="word" autocomplete="off" maxlength="30" placeholder="检索区域名称" (keydown)="onKeydown($event)"> -->
+                      <input [(ngModel)]="queryStr"  class="form-control searchbox-content-common" type="text" 
+                      name="word" autocomplete="off" placeholder="检索行政区域名称">
+                    </div>
+                </div>
+                <button class="btn btn-bg" (click)="execQuery()">搜索</button>
+              </form>
+            </div>
+            <!--当前设备详细数据展示-->
+            <div id="exportableTable" class="card-block">
+              <table class="table table-hover">
+                <thead class="table-header">
+                  <tr>
+                    <th>序号</th>
+                    <th>名称</th>
+                    <th>行政级别</th>
+                    <th>经/纬度</th>
+                    <th style="text-align: center">操作</th>
+                  </tr>
+                </thead>
+                <tbody >
+              
+                  <tr *ngFor="let item of regionsListChildren;let i = index"> 
+                    <td>{{i + 1}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.level}}</td>
+                    <td>{{item.center.lng}}/{{item.center.lat}}</td>
+                    <td style="text-align: center">
+                      <div class="modify-strategy d-inline">
+                        <a class="cur-pointer btn-a theme-text d-inline"  (click)="openUpdata(contentAdd, item)">修改</a>
+                        <a class="cur-pointer btn-a theme-text d-inline"  (click)="openDel(contentDel, item)">删除</a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <!-- 判断显示无数据 -->
+              <div *ngIf="regionsListChildren.length === 0 || !regionsListChildren">无数据！</div>
+              <!-- 判断显示页面 -->
+              <div *ngIf="regionsListChildren.length > 0">
+                <ngb-pagination [collectionSize]=total [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false"
+                  [boundaryLinks]="true" (pageChange)="pageChange()"></ngb-pagination>
+              </div>
+            </div>
+
+
+
+        </div>
+    </div>
+  </div>
+
+</div>

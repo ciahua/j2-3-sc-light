@@ -62,6 +62,7 @@ export class CoverComponent implements OnInit, OnDestroy {
   showonprogresslist = false; // 默认不显示“处理中”的异常消息
   showfinishedlist = false; // 默认不显示“已处理”的异常消息
   timer: any; // 定时器
+  deviceTypeId = 5; // 井盖
 
   constructor(private coverService: CoverService, private monitorService: MonitorService, public messService: MessService,
     public router: Router) {
@@ -566,7 +567,7 @@ export class CoverComponent implements OnInit, OnDestroy {
   getCity() {
     const that = this;
 
-    this.monitorService.getZoneDefault().subscribe({
+    this.monitorService.getZoneDefault(this.deviceTypeId).subscribe({
       next: function (val) {
         that.map_model.cityList = val.regions;
         // that.zoom = that.switchZone(val.zone.level);
