@@ -1,12 +1,12 @@
 {
     "/api": {
-        "target": "http://test1.siid.com.cn"
+        "target": "http://147.28.77.81:10002"
     },
     "/security": {
-        "target": "http://test1.siid.com.cn"
+        "target": "http://147.28.77.81:10003"
     },
     "/led-api": {
-        "target": "http://test1.siid.com.cn",
+        "target": "http://147.28.77.81/led-api",
         "pathRewrite": {
             "^/led-api": ""
         }
